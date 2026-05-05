@@ -1,0 +1,77 @@
+{
+  "manifest_version": 3,
+  "name": "AI Chat Exporter",
+  "version": "1.0.6",
+  "description": "Simple, private tool to export AI chats from ChatGPT, Claude, Gemini & more to Markdown.",
+  "homepage_url": "https://ai-chat-export.covai.org/",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": [
+    "*://chatgpt.com/*",
+    "*://gemini.google.com/*",
+    "*://claude.ai/*",
+    "*://qwen.ai/*",
+    "*://chat.qwen.ai/*",
+    "*://www.perplexity.ai/*",
+    "*://chat.deepseek.com/*",
+    "*://www.meta.ai/*",
+    "*://meta.ai/*"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://chatgpt.com/*",
+        "*://gemini.google.com/*",
+        "*://claude.ai/*",
+        "*://qwen.ai/*",
+        "*://chat.qwen.ai/*",
+        "*://www.perplexity.ai/*",
+        "*://chat.deepseek.com/*",
+        "*://www.meta.ai/*",
+        "*://meta.ai/*"
+      ],
+      "js": ["content/main.js"],
+      "run_at": "document_idle",
+      "type": "module"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content/main.js",
+        "content/loader.js",
+        "content/claude_react_reader.js",
+        "content/lib/*.js",
+        "content/utils/*.js",
+        "content/parsers/*.js",
+        "content/formatters/*.js"
+      ],
+      "matches": [
+        "*://chatgpt.com/*",
+        "*://gemini.google.com/*",
+        "*://claude.ai/*",
+        "*://qwen.ai/*",
+        "*://chat.qwen.ai/*",
+        "*://www.perplexity.ai/*",
+        "*://chat.deepseek.com/*",
+        "*://www.meta.ai/*",
+        "*://meta.ai/*"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
