@@ -6,6 +6,7 @@ import { QwenParser } from './parsers/qwen.js';
 import { PerplexityParser } from './parsers/perplexity.js';
 import { DeepSeekParser } from './parsers/deepseek.js';
 import { MetaParser } from './parsers/meta.js';
+import { MistralParser } from './parsers/mistral.js';
 
 import { MarkdownFormatter } from './formatters/markdown.js';
 
@@ -19,7 +20,8 @@ const parsers = [
     new QwenParser(),
     new PerplexityParser(),
     new DeepSeekParser(),
-    new MetaParser()
+    new MetaParser(),
+    new MistralParser()
 ];
 
 // Registry of formatters
