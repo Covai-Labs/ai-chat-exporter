@@ -23,7 +23,7 @@ export class MistralParser extends ChatParser {
             const role = el.getAttribute('data-message-author-role');
             
             if (role === 'user') {
-                const contentEl = el.querySelector('.whitespace-pre-wrap') || el.querySelector('.select-text');
+                const contentEl = el.querySelector('.select-text') || el.querySelector('.whitespace-pre-wrap');
                 if (contentEl) {
                     messages.push({
                         role: 'User',
