@@ -56,6 +56,11 @@ h1 {
   gap: 10px;
 }
 
+.button-row {
+  display: flex;
+  gap: 8px;
+}
+
 select {
   padding: 8px;
   border-radius: 6px;
@@ -67,6 +72,7 @@ select {
   background-color: #3498db;
   color: white;
   border: none;
+  flex: 1;
   padding: 10px;
   border-radius: 6px;
   font-size: 14px;
@@ -79,9 +85,27 @@ select {
   background-color: #2980b9;
 }
 
-.primary-btn:disabled {
+.primary-btn:disabled,
+.secondary-btn:disabled {
   background-color: #bdc3c7;
   cursor: not-allowed;
+}
+
+.secondary-btn {
+  background-color: #ecf0f1;
+  color: #2c3e50;
+  border: 1px solid #bdc3c7;
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.secondary-btn:hover {
+  background-color: #dfe6e9;
 }
 
 .error {

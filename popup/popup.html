@@ -23,7 +23,10 @@
           <option value="json" disabled>JSON (Coming Soon)</option>
           <option value="pdf" disabled>PDF (Coming Soon)</option>
         </select>
-        <button id="export-btn" class="primary-btn">Export Chat</button>
+        <div class="button-row">
+          <button id="export-btn" class="primary-btn">Export Chat</button>
+          <button id="copy-btn" class="secondary-btn hidden">Copy to Clipboard</button>
+        </div>
       </div>
 
       <div class="error hidden" id="error-msg">
