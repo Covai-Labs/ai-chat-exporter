@@ -15,9 +15,14 @@ test("popup sends a COPY_CHAT message for clipboard actions", () => {
 });
 
 test("copy button is enabled for markdown and json formats only", () => {
-  assert.match(
-    popupJs,
-    /copyableFormats\s*=\s*new Set\(\["markdown", "json"\]\)/,
+  const copyableFormatsMatch = popupJs.match(
+    /copyableFormats\s*=\s*new Set\(\[([\s\S]*?)\]\)/,
   );
-  assert.doesNotMatch(popupJs, /copyableFormats\s*=\s*new Set\([^)]*"pdf"/);
+
+  assert.ok(copyableFormatsMatch, "copyableFormats Set should be defined");
+
+  const copyableFormatsSource = copyableFormatsMatch[1];
+  assert.match(copyableFormatsSource, /["']markdown["']/);
+  assert.match(copyableFormatsSource, /["']json["']/);
+  assert.doesNotMatch(copyableFormatsSource, /["']pdf["']/);
 });
