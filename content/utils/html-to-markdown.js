@@ -135,6 +135,44 @@ export function convertToMarkdown(htmlContent, options = {}) {
     // Clone the element to avoid modifying the original
     const clone = htmlContent.cloneNode(true);
 
+    // Convert math equations (KaTeX and data-math) to standard markdown math blocks
+    // 1. Process block display KaTeX
+    clone.querySelectorAll('.katex-display').forEach((el) => {
+      const annotation = el.querySelector('annotation[encoding="application/x-tex"]');
+      if (annotation) {
+        const latex = annotation.textContent.trim();
+        const textNode = clone.ownerDocument.createTextNode(`\n\n$$${latex}$$\n\n`);
+        el.parentNode.replaceChild(textNode, el);
+      } else {
+        const textNode = clone.ownerDocument.createTextNode(`\n\n$$${el.textContent.trim()}$$\n\n`);
+        el.parentNode.replaceChild(textNode, el);
+      }
+    });
+
+    // 2. Process inline KaTeX
+    clone.querySelectorAll('.katex').forEach((el) => {
+      if (!el.parentNode) return;
+      const annotation = el.querySelector('annotation[encoding="application/x-tex"]');
+      if (annotation) {
+        const latex = annotation.textContent.trim();
+        const textNode = clone.ownerDocument.createTextNode(`$${latex}$`);
+        el.parentNode.replaceChild(textNode, el);
+      } else {
+        const textNode = clone.ownerDocument.createTextNode(`$${el.textContent.trim()}$`);
+        el.parentNode.replaceChild(textNode, el);
+      }
+    });
+
+    // 3. Process Gemini-style data-math attributes
+    clone.querySelectorAll('[data-math]').forEach((el) => {
+      if (!el.parentNode) return;
+      const latex = el.getAttribute('data-math');
+      const isBlock = el.classList.contains('math-block') || el.tagName === 'DIV';
+      const replacementText = isBlock ? `\n\n$$${latex}$$\n\n` : `$${latex}$`;
+      const textNode = clone.ownerDocument.createTextNode(replacementText);
+      el.parentNode.replaceChild(textNode, el);
+    });
+
     // Remove noise elements (buttons, icons, etc.)
     // Note: Exclude elements inside qwen-markdown-code to preserve Monaco editor content
     const noiseSelectors = [

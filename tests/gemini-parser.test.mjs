@@ -53,6 +53,7 @@ test('GeminiParser correctly parses chat content from fixture', async () => {
       '| India | ~$3,000 | 48 | 15 | ~10% |\n' +
       '| Pakistan | ~$1,500 | 48 | 14 | ~5% |\n' +
       '| Nigeria | ~$1,800 | 40 | 15 | ~12% |\n\n' +
-      '> *Note: Wage and union figures are approximate global estimates and can vary based on specific industries and current exchange rates.*',
+      '> *Note: Wage and union figures are approximate global estimates and can vary based on specific industries and current exchange rates.*\n\n' +
+      '$$e^{i\\\\pi} + 1 = 0$$',
   );
 });
