@@ -26,10 +26,15 @@ export class GoogleSearchAIParser extends ChatParser {
       try {
         const url = new URL(window.location.href);
         userQuery = url.searchParams.get('q');
-      } catch (e) {}
+      } catch {
+        // Ignore invalid URLs
+      }
     }
     if (!userQuery) {
-      const textarea = document.querySelector('textarea.gLFyf') || document.querySelector('textarea.ITIRGe') || document.querySelector('input[name="q"]');
+      const textarea =
+        document.querySelector('textarea.gLFyf') ||
+        document.querySelector('textarea.ITIRGe') ||
+        document.querySelector('input[name="q"]');
       if (textarea) {
         userQuery = textarea.value || textarea.textContent;
       }
@@ -40,8 +45,9 @@ export class GoogleSearchAIParser extends ChatParser {
     }
 
     // 2. Extract the SGE / AI Overview response
-    const responseContainer = document.querySelector('[data-container-id="main-col"]') || 
-                              document.querySelector('[data-container-id="model-response-placeholder"]');
+    const responseContainer =
+      document.querySelector('[data-container-id="main-col"]') ||
+      document.querySelector('[data-container-id="model-response-placeholder"]');
 
     if (responseContainer) {
       const text = convertToMarkdown(responseContainer);

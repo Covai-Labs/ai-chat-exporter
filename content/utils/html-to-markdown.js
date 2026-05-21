@@ -181,13 +181,13 @@ export function convertToMarkdown(htmlContent, options = {}) {
       if (!container.parentNode) return;
 
       const latex = el.getAttribute('data-xpm-latex');
-      
+
       // Determine if it is block math
       let isBlock = false;
       const parent = container.parentNode;
       if (parent) {
         const parentText = parent.textContent.replace(container.textContent, '').trim();
-        isBlock = (parentText === '');
+        isBlock = parentText === '';
       }
 
       const replacementText = isBlock ? `\n\n$$${latex}$$\n\n` : `$${latex}$`;
@@ -199,7 +199,8 @@ export function convertToMarkdown(htmlContent, options = {}) {
     clone.querySelectorAll('pre').forEach((pre) => {
       const container = pre.closest('.pHpOfb') || pre.parentElement?.parentElement;
       if (container) {
-        const langEl = container.querySelector('.vVRw1d') || container.firstElementChild?.firstElementChild;
+        const langEl =
+          container.querySelector('.vVRw1d') || container.firstElementChild?.firstElementChild;
         if (langEl && langEl !== pre) {
           const language = langEl.textContent.trim().toLowerCase();
           const code = pre.querySelector('code');

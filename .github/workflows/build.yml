@@ -18,21 +18,18 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: publish/package.json
+          cache-dependency-path: package.json
 
       - name: Install dependencies
         run: npm ci
-        working-directory: publish
 
       - name: Run lint & formatting checks
         run: |
           npm run lint
           npm run format:check
-        working-directory: publish
 
       - name: Run tests
         run: npm test
-        working-directory: publish
 
       - name: Setup Python
         uses: actions/setup-python@v5
