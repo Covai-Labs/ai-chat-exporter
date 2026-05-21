@@ -87,14 +87,7 @@
           "$ref": "#/$defs/Metadata"
         }
       },
-      "required": [
-        "$schema",
-        "schemaVersion",
-        "exportedAt",
-        "source",
-        "messages",
-        "metadata"
-      ],
+      "required": ["$schema", "schemaVersion", "exportedAt", "source", "messages", "metadata"],
       "additionalProperties": false
     }
   }
