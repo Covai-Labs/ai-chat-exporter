@@ -1,12 +1,225 @@
 import { ChatParser } from './base.js';
 import { convertToMarkdown } from '../utils/html-to-markdown.js';
+import {
+    collectMountedTurnMessages,
+    findChatGPTScrollRoot,
+    getConversationTurns
+} from './chatgpt_scroll_collector.js';
 
 export class ChatGPTParser extends ChatParser {
     isAvailable(url) {
         return url.includes('chatgpt.com');
     }
 
-    async parse() {
+    getRoleElement(container) {
+        if (container.matches?.('[data-message-author-role]')) return container;
+        return container.querySelector?.('[data-message-author-role]') || null;
+    }
+
+    getRoleElements(container) {
+        if (container.matches?.('[data-message-author-role]')) return [container];
+        return Array.from(container.querySelectorAll?.('[data-message-author-role]') || []);
+    }
+
+    getMessageRole(container, roleElement) {
+        const roleAttr = roleElement?.getAttribute('data-message-author-role');
+        if (roleAttr) return roleAttr === 'user' ? 'User' : 'ChatGPT';
+
+        const text = container.innerText || '';
+        if (text.startsWith('You\n') || text.includes('\nYou\n')) return 'User';
+
+        return 'ChatGPT';
+    }
+
+    getContentElement(container, roleElement) {
+        if (roleElement?.getAttribute('data-message-author-role') === 'user') {
+            return roleElement;
+        }
+
+        const selectors = ['.markdown', '.prose', '.whitespace-pre-wrap'];
+        for (const selector of selectors) {
+            const contentElement = container.querySelector?.(selector);
+            if (contentElement) return contentElement;
+        }
+
+        return roleElement || (container.matches?.('article') ? container : null);
+    }
+
+    getContentElements(container, roleElements) {
+        const contentElements = [];
+
+        roleElements.forEach(roleElement => {
+            const contentElement = this.getContentElement(roleElement, roleElement);
+            if (contentElement) contentElements.push(contentElement);
+        });
+
+        if (contentElements.length > 0) return contentElements;
+
+        const fallback = this.getContentElement(container, roleElements[0]);
+        return fallback ? [fallback] : [];
+    }
+
+    cleanContent(content) {
+        return content
+            .replace(/^Show moreShow less$/gm, '')
+            .replace(/\n{3,}/g, '\n\n')
+            .trim();
+    }
+
+    getMessageKey(container, roleElement, role, content) {
+        const idElement = roleElement?.closest?.('[data-message-id]') ||
+            container.querySelector?.('[data-message-id]');
+        const messageId = idElement?.getAttribute('data-message-id');
+        if (messageId) return messageId;
+
+        const turnId = container.getAttribute?.('data-testid');
+        if (turnId) return `${turnId}:${role}`;
+
+        return `${role}:${content.replace(/\s+/g, ' ').trim()}`;
+    }
+
+    extractAttachments(container) {
+        const attachments = [];
+        const rawContent = container.textContent || container.innerText || '';
+        const filePatterns = [
+            /([a-zA-Z0-9_-]+\.tex)/g,
+            /([a-zA-Z0-9_-]+\.txt)/g,
+            /([a-zA-Z0-9_-]+\.md)/g,
+            /([a-zA-Z0-9_-]+\.pdf)/g,
+            /([a-zA-Z0-9_-]+\.doc)/g
+        ];
+        const foundFiles = new Set();
+
+        filePatterns.forEach(pattern => {
+            const matches = rawContent.match(pattern);
+            if (matches) matches.forEach(match => foundFiles.add(match));
+        });
+
+        foundFiles.forEach(fileName => {
+            const fileExt = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+            const typeMap = {
+                tex: 'LaTeX',
+                txt: 'Text',
+                md: 'Markdown',
+                pdf: 'PDF',
+                doc: 'Document',
+                docx: 'Document'
+            };
+            attachments.push({ name: fileName, type: typeMap[fileExt] || 'File' });
+        });
+
+        return attachments;
+    }
+
+    extractImages(container) {
+        const seenSrcs = new Set();
+        const capturedImages = [];
+
+        container.querySelectorAll?.('img').forEach(img => {
+            const src = img.getAttribute('src');
+            const alt = img.getAttribute('alt') || 'Image';
+            const isContentImage = src?.includes('backend-api') ||
+                src?.includes('files') ||
+                src?.startsWith('blob:') ||
+                alt.includes('Uploaded') ||
+                alt.includes('Generated');
+
+            if (src && !seenSrcs.has(src) && isContentImage) {
+                seenSrcs.add(src);
+                capturedImages.push(`![${alt}](${src})`);
+            }
+        });
+
+        return capturedImages;
+    }
+
+    appendAttachments(content, attachments, capturedImages) {
+        const attachmentLines = [];
+        const groupedAttachments = {};
+
+        attachments.forEach(attachment => {
+            groupedAttachments[attachment.type] ||= [];
+            groupedAttachments[attachment.type].push(attachment.name);
+        });
+
+        Object.entries(groupedAttachments).forEach(([type, files]) => {
+            attachmentLines.push(`**${type} Files:**`);
+            files.forEach(file => attachmentLines.push(`- ${file}`));
+            attachmentLines.push('');
+        });
+
+        if (capturedImages.length > 0) {
+            if (attachmentLines.length > 0) attachmentLines.push('');
+            attachmentLines.push('**Images:**');
+            capturedImages.forEach(image => attachmentLines.push(`- ${image}`));
+        }
+
+        if (attachmentLines.length === 0) return content;
+        return `${content}\n\n**Attachments & Images:**\n${attachmentLines.join('\n')}`;
+    }
+
+    convertContentElement(contentElement) {
+        return convertToMarkdown(contentElement);
+    }
+
+    extractMessage(container) {
+        const roleElements = this.getRoleElements(container);
+        const roleElement = roleElements[0] || this.getRoleElement(container);
+        const contentElements = this.getContentElements(container, roleElements);
+        if (contentElements.length === 0) return null;
+
+        const role = this.getMessageRole(container, roleElement);
+        const noiseSelectors = ['.flex.gap-2', 'button', '.sr-only', '[role="button"]'];
+        const contentParts = contentElements
+            .map(contentElement => {
+                const clone = contentElement.cloneNode(true);
+                noiseSelectors.forEach(selector => {
+                    clone.querySelectorAll(selector).forEach(node => node.remove());
+                });
+                return this.cleanContent(this.convertContentElement(clone));
+            })
+            .filter(Boolean);
+
+        let content = contentParts.join('\n\n');
+        content = this.appendAttachments(
+            content,
+            this.extractAttachments(container),
+            this.extractImages(container)
+        );
+
+        if (!content) return null;
+
+        return {
+            role,
+            content,
+            key: this.getMessageKey(container, roleElement, role, content)
+        };
+    }
+
+    extractMountedMessages() {
+        const articles = Array.from(document.querySelectorAll('article'));
+        const containers = articles.length > 0 ?
+            articles :
+            Array.from(document.querySelectorAll('[data-message-author-role]'));
+
+        return containers
+            .map(container => this.extractMessage(container))
+            .filter(Boolean)
+            .map(({ role, content }) => ({ role, content }));
+    }
+
+    async extractAllConversationTurns() {
+        const turns = getConversationTurns(document);
+        if (turns.length === 0) return [];
+
+        return collectMountedTurnMessages({
+            turns,
+            scrollRoot: findChatGPTScrollRoot(turns, document),
+            extractMessage: turn => this.extractMessage(turn)
+        });
+    }
+
+    async parse(options = {}) {
         const title = document.title || 'ChatGPT Session';
         const messages = [];
 
@@ -129,198 +342,13 @@ export class ChatGPTParser extends ChatParser {
             return { title, messages };
         }
 
-        // Strategy: ChatGPT messages are almost always wrapped in <article> tags.
-        // Identify them by finding all articles in the conversation container.
-        // (Usually main > div > div > div > div...)
-
-        const articles = document.querySelectorAll('article');
-
-        articles.forEach((article, index) => {
-            console.log(`=== Processing article ${index} ===`); // Debug
-            let role = 'Unknown';
-            let content = '';
-
-            // 1. Role Detection
-            // Check for explicit data attribute
-            const roleAttr = article.querySelector('[data-message-author-role]')?.getAttribute('data-message-author-role');
-            if (roleAttr) {
-                role = roleAttr === 'user' ? 'User' : 'ChatGPT';
-            } else {
-                // Heuristic: Check for specific icon containers or classes
-                // User usually has an avatar or specific initials container
-                // Assistant has the SVG logo.
-                // Often, user has .justify-end (right side) or specific layout? No, usually stacked.
-
-                // Try checking for "You" text label in the header part
-                if (article.innerText.startsWith('You\n') || article.innerText.includes('\nYou\n')) {
-                    role = 'User';
-                } else {
-                    role = 'ChatGPT'; // Default to Assistant if not explicitly user
-                }
-            }
-            
-            console.log(`Detected role: ${role}`); // Debug
-
-            // 2. Content Extraction
-            // We want the text content, usually in particular classes.
-            // .markdown is common for Assistant.
-            // User messages are often just text in a div.
-
-            // Try specific content containers
-            const contentCandidates = [
-                '.markdown',
-                '.prose',
-                '[data-message-author-role="user"]', // Sometimes the role element IS the container
-                '.whitespace-pre-wrap'
-            ];
-
-            let contentEl = null;
-            for (const selector of contentCandidates) {
-                contentEl = article.querySelector(selector);
-                if (contentEl) break;
-            }
-
-            // Fallback: Use the article text but try to strip metadata
-            if (!contentEl) {
-                contentEl = article;
-            }
-
-            // 3. Image and File Extraction (MOVED UP - before DOM cleaning)
-            // ChatGPT often includes images (uploaded or generated) and file attachments
-            // We should try to capture both.
-            
-            console.log('=== Starting attachment extraction ==='); // Debug
-            // Extract file attachments using regex from content
-            const attachments = [];
-            
-            // Get the raw text content to find file names
-            const rawContent = article.textContent || article.innerText;
-            console.log('Raw content:', rawContent.substring(0, 200)); // Debug
-            
-            // Match file extensions in the content
-            const filePatterns = [
-                /([a-zA-Z0-9_\-]+\.tex)/g,
-                /([a-zA-Z0-9_\-]+\.txt)/g,
-                /([a-zA-Z0-9_\-]+\.md)/g,
-                /([a-zA-Z0-9_\-]+\.pdf)/g,
-                /([a-zA-Z0-9_\-]+\.doc)/g
-            ];
-            
-            const foundFiles = new Set();
-            filePatterns.forEach(pattern => {
-                const matches = rawContent.match(pattern);
-                if (matches) {
-                    matches.forEach(match => {
-                        foundFiles.add(match);
-                    });
-                }
-            });
-            
-            console.log('Found files:', Array.from(foundFiles)); // Debug
-            
-            foundFiles.forEach(fileName => {
-                const fileExt = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
-                
-                // Determine file type
-                let fileType = 'File';
-                if (['tex', 'txt', 'md', 'pdf', 'doc', 'docx'].includes(fileExt)) {
-                    const typeMap = {
-                        'tex': 'LaTeX',
-                        'txt': 'Text', 
-                        'md': 'Markdown',
-                        'pdf': 'PDF',
-                        'doc': 'Document',
-                        'docx': 'Document'
-                    };
-                    fileType = typeMap[fileExt] || 'File';
-                }
-                
-                console.log('Adding attachment:', fileName, fileType); // Debug
-                attachments.push({
-                    name: fileName,
-                    type: fileType
-                });
-            });
-
-            // Common selectors: img.rounded-md, img[src*="backend-api"], or keys like "Uploaded image"
-            const images = article.querySelectorAll('img');
-            const seenSrcs = new Set();
-            const capturedImages = [];
-
-            images.forEach(img => {
-                const src = img.getAttribute('src');
-                const alt = img.getAttribute('alt') || 'Image';
-
-                // Filter out small icons/avatars
-                if (src && !seenSrcs.has(src) && (src.includes('backend-api') || src.includes('files') || src.startsWith('blob:') || alt.includes('Uploaded') || alt.includes('Generated'))) {
-                    seenSrcs.add(src);
-                    capturedImages.push(`![${alt}](${src})`);
-                }
-            });
-
-            // Text Extraction
-            // We need to be careful not to extract "Copy code", "Regenerate", etc.
-            // Cloning the node to clean it up is safer.
-            const clone = contentEl.cloneNode(true);
-
-            // Remove known noise elements (but NOT file tiles)
-            const noiseSelectors = ['.flex.gap-2', 'button', '.sr-only', '[role="button"]'];
-            noiseSelectors.forEach(sel => {
-                clone.querySelectorAll(sel).forEach(n => n.remove());
-            });
-
-            // Convert HTML to markdown to preserve formatting
-            content = convertToMarkdown(clone);
-
-            // Append attachments and images to content
-            const allAttachments = [];
-            
-            if (attachments.length > 0) {
-                // Group by file type for better organization
-                const groupedAttachments = {};
-                attachments.forEach(att => {
-                    if (!groupedAttachments[att.type]) {
-                        groupedAttachments[att.type] = [];
-                    }
-                    groupedAttachments[att.type].push(att.name);
-                });
-                
-                // Create organized attachment list
-                Object.entries(groupedAttachments).forEach(([type, files]) => {
-                    allAttachments.push(`**${type} Files:**`);
-                    files.forEach(file => {
-                        allAttachments.push(`- ${file}`);
-                    });
-                    allAttachments.push(''); // Empty line between file types
-                });
-            }
-            
-            if (capturedImages.length > 0) {
-                if (allAttachments.length > 0) allAttachments.push(''); // Add spacing
-                allAttachments.push('**Images:**');
-                capturedImages.forEach(img => {
-                    allAttachments.push(`- ${img}`);
-                });
-            }
-            
-            if (allAttachments.length > 0) {
-                content = content + '\n\n**Attachments & Images:**\n' + allAttachments.join('\n');
-            }
-
-            if (content) {
-                messages.push({ role, content });
-            }
-        });
-
-        // Fallback: If no articles found (legacy UI or update?), try the old data-message-author-role selector
-        if (messages.length === 0) {
-            const messageElements = document.querySelectorAll('[data-message-author-role]');
-            messageElements.forEach(el => {
-                const role = el.getAttribute('data-message-author-role') === 'user' ? 'User' : 'ChatGPT';
-                const contentEl = el.querySelector('.markdown') || el.querySelector('.prose') || el;
-                messages.push({ role, content: convertToMarkdown(contentEl) });
-            });
-        }
+        const fullExport = options.full !== false;
+        const extractedMessages = fullExport ?
+            await this.extractAllConversationTurns() :
+            this.extractMountedMessages();
+        messages.push(...(extractedMessages.length > 0 ?
+            extractedMessages :
+            this.extractMountedMessages()));
 
         const metadata = {
             'Source': 'ChatGPT',

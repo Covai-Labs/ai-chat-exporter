@@ -50,7 +50,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             // return true to indicate async response
             (async () => {
                 try {
-                    const conversation = await activeParser.parse();
+                    const conversation = await activeParser.parse({ full: false });
                     console.log('Parsed conversation with', conversation.messages.length, 'messages');
                     sendResponse({
                         available: true,
@@ -86,7 +86,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
         (async () => {
             try {
-                const conversation = await activeParser.parse();
+                const conversation = await activeParser.parse({ full: true });
                 console.log('Parsed conversation with', conversation.messages.length, 'messages');
                 const content = formatter.format(conversation);
                 const blob = new Blob([content], { type: formatter.getMimeType() });
