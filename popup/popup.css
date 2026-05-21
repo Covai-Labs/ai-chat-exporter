@@ -56,7 +56,17 @@ h1 {
   gap: 10px;
 }
 
-.button-row {
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.primary-row {
+  display: flex;
+}
+
+.secondary-row {
   display: flex;
   gap: 8px;
 }

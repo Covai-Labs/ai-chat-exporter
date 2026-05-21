@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const msgCountEl = document.getElementById("message-count");
   const exportBtn = document.getElementById("export-btn");
   const copyBtn = document.getElementById("copy-btn");
+  const previewBtn = document.getElementById("preview-btn");
   const formatSelect = document.getElementById("format-select");
   const copyableFormats = new Set(["markdown", "json"]);
 
@@ -63,7 +64,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   await checkAvailability();
 
   function updateCopyButtonVisibility() {
-    copyBtn.classList.toggle("hidden", !copyableFormats.has(formatSelect.value));
+    const isCopyable = copyableFormats.has(formatSelect.value);
+    copyBtn.classList.toggle("hidden", !isCopyable);
+    previewBtn.classList.toggle("hidden", !isCopyable);
   }
 
   function showError() {
@@ -121,6 +124,40 @@ document.addEventListener("DOMContentLoaded", async () => {
     } finally {
       copyBtn.disabled = false;
       copyBtn.textContent = "Copy to Clipboard";
+    }
+  });
+
+  previewBtn.addEventListener("click", async () => {
+    const format = formatSelect.value;
+    previewBtn.disabled = true;
+    previewBtn.textContent = "Opening...";
+
+    try {
+      const response = await chrome.tabs.sendMessage(tab.id, {
+        action: "COPY_CHAT",
+        format: format,
+      });
+
+      if (response && response.success) {
+        await chrome.storage.local.set({
+          previewContent: response.content,
+          previewTitle: tab.title || "Untitled Chat",
+          previewFormat: format
+        });
+
+        await chrome.tabs.create({
+          url: chrome.runtime.getURL("popup/preview.html")
+        });
+
+        statusEl.textContent = "Opened in New Tab!";
+      } else {
+        statusEl.textContent = "Preview Failed: " + (response?.error || "Unknown");
+      }
+    } catch (e) {
+      statusEl.textContent = "Error: " + e.message;
+    } finally {
+      previewBtn.disabled = false;
+      previewBtn.textContent = "Open in Tab";
     }
   });
 });

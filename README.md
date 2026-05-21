@@ -2,6 +2,8 @@
 
 A simple, privacy-focused browser extension to export AI chats from ChatGPT, Claude, Gemini, Qwen, Perplexity, DeepSeek, and Meta AI to Markdown format.
 
+> This extension was developed for personal use and is not very polished. Additionally, formatting of exported items from certain chats is currently not working well.
+
 ## Features
 
 - **Privacy First**: All processing happens locally in your browser. No data is sent to external servers.
@@ -34,6 +36,7 @@ A simple, privacy-focused browser extension to export AI chats from ChatGPT, Cla
 Firefox users can install the extension directly from the [Firefox Add-ons store](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/).
 
 Alternatively, to install it manually/temporarily:
+
 1. Download `ai-chat-exporter-firefox.zip` from the [releases page](https://github.com/Rat-S/ai-chat-exporter/releases)
 2. Open Firefox and navigate to `about:debugging`
 3. Click "This Firefox" → "Load Temporary Add-on..."

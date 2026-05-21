@@ -26,3 +26,13 @@ test("copy button is enabled for markdown and json formats only", () => {
   assert.match(copyableFormatsSource, /["']json["']/);
   assert.doesNotMatch(copyableFormatsSource, /["']pdf["']/);
 });
+
+test("popup includes an open in tab button", () => {
+  assert.match(popupHtml, /id="preview-btn"/);
+  assert.match(popupHtml, /Open in Tab/);
+});
+
+test("preview button triggers local storage and opens preview.html tab", () => {
+  assert.match(popupJs, /chrome\.storage\.local\.set/);
+  assert.match(popupJs, /url:\s*chrome\.runtime\.getURL\(\s*["']popup\/preview\.html["']\s*\)/);
+});
