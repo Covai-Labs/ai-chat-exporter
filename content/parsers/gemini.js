@@ -129,7 +129,11 @@ export class GeminiParser extends ChatParser {
             const queryText = userQuery.querySelector('.query-text');
             if (queryText) {
               console.log('[Gemini Parser] Found query text...');
-              const userText = queryText.innerText.trim();
+              const clone = queryText.cloneNode(true);
+              clone
+                .querySelectorAll('.cdk-visually-hidden, [class*="screen-reader"]')
+                .forEach((el) => el.remove());
+              const userText = clone.innerText.trim();
               if (userText && !seenTexts.has(userText)) {
                 seenTexts.add(userText);
                 messages.push({
@@ -639,7 +643,11 @@ export class GeminiParser extends ChatParser {
     );
     console.log('[Gemini Parser] Found user elements:', userElements.length);
     userElements.forEach((el) => {
-      const content = el.innerText.trim();
+      const clone = el.cloneNode(true);
+      clone
+        .querySelectorAll('.cdk-visually-hidden, [class*="screen-reader"]')
+        .forEach((subEl) => subEl.remove());
+      const content = clone.innerText.trim();
       if (content.length > 20) {
         sections.push({
           role: 'User',

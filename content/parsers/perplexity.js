@@ -7,11 +7,12 @@ export class PerplexityParser extends ChatParser {
   }
 
   async parse() {
-    const title =
+    const rawTitle =
       document.querySelector('.share-title-section h1')?.textContent ||
       document.querySelector('h1')?.textContent ||
       document.title ||
       'Perplexity Search';
+    const title = rawTitle.trim().replace(/\s+/g, ' ');
 
     const messages = [];
 

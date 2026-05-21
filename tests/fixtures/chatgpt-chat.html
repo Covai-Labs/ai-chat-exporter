@@ -1,0 +1,1114 @@
+<div
+  data-scroll-root=""
+  class="@w-sm/main:[scrollbar-gutter:var(--stage-scroll-gutter)] touch:[scrollbar-width:none] group/scroll-root relative flex min-h-0 min-w-0 flex-1 flex-col [scrollbar-gutter:stable] not-print:overflow-x-clip not-print:overflow-y-auto group-data-stream-active/scroll-root:[overflow-anchor:none] scroll-pt-(--header-height) [--sticky-padding-top:var(--header-height)] [--sticky-padding-bottom:0px] [--scroll-root-safe-area-inset-top:calc(var(--sticky-padding-top)+env(safe-area-inset-top,0px))] [--scroll-root-safe-area-inset-bottom:calc(var(--sticky-padding-bottom)+var(--screen-keyboard-height,0px)+env(safe-area-inset-bottom,0px))] [--scroll-root-safe-area-height:calc(100lvh-var(--scroll-root-safe-area-inset-top)-var(--scroll-root-safe-area-inset-bottom))] has-data-[fixed-header=less-than-xl]:@w-xl/main:scroll-pt-0 has-data-[fixed-header=less-than-xl]:@w-xl/main:[--sticky-padding-top:0px] has-data-[fixed-header=less-than-xxl]:@w-2xl/main:scroll-pt-0 has-data-[fixed-header=less-than-xxl]:@w-2xl/main:[--sticky-padding-top:0px]"
+  style="--sticky-padding-bottom: 88px"
+  data-scroll-from-end=""
+>
+  <header
+    id="page-header"
+    data-fixed-header="less-than-xl"
+    class="draggable no-draggable-children sticky top-0 p-2 touch:p-2.5 flex items-center justify-between z-20 h-header-height bg-token-bg-primary dark-oled:bg-token-bg-secondary-surface pointer-events-none select-none [view-transition-name:var(--vt-page-header)] *:pointer-events-auto transition-none motion-safe:transition-none data-[fixed-header=less-than-xxl]:@w-2xl/main:bg-transparent data-[fixed-header=less-than-xxl]:@w-2xl/main:shadow-none! data-[fixed-header=less-than-xl]:@w-xl/main:bg-transparent data-[fixed-header=less-than-xl]:@w-xl/main:shadow-none! [box-shadow:var(--sharp-edge-top-shadow-placeholder)] group-data-scroll-from-top/scroll-root:[box-shadow:var(--sharp-edge-top-shadow)]"
+  >
+    <div
+      class="pointer-events-none absolute start-0 flex flex-col items-center gap-2 lg:start-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2"
+    ></div>
+    <div class="pointer-events-none! flex flex-1 items-center *:pointer-events-auto">
+      <div class="flex items-center gap-2">
+        <button
+          aria-label="Model selector"
+          data-testid="model-switcher-dropdown-button"
+          type="button"
+          id="radix-_R_bjrtcsqooceicl35_"
+          aria-haspopup="menu"
+          aria-expanded="false"
+          data-state="closed"
+          style="view-transition-name: var(--vt-thread-model-switcher)"
+          class="group flex cursor-pointer justify-center items-center gap-1 rounded-lg min-h-9 touch:min-h-10 px-2.5 text-lg hover:bg-token-surface-hover focus-visible:bg-token-surface-hover font-normal whitespace-nowrap focus-visible:outline-none"
+        >
+          <span class="inline-flex items-center gap-1"
+            ><div><span class="header-wordmark">ChatGPT</span></div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              aria-hidden="true"
+              class="icon-sm text-token-text-tertiary"
+            >
+              <use
+                href="/cdn/assets/sprites-core-bc53276c.svg#ba3792"
+                fill="currentColor"
+              ></use></svg
+          ></span>
+        </button>
+      </div>
+      <div class="block lg:hidden"></div>
+    </div>
+    <div
+      class="flex items-center justify-center gap-3 overflow-x-hidden"
+      data-testid="thread-header-right-actions-container"
+    >
+      <div class="shrink-0"></div>
+      <div
+        class="flex items-center justify-end [scrollbar-width:none] overflow-x-hidden"
+        data-testid="thread-header-right-actions"
+      >
+        <div class="flex items-center" id="conversation-header-actions">
+          <button
+            class="btn relative group-focus-within/dialog:focus-visible:[outline-width:1.5px] group-focus-within/dialog:focus-visible:[outline-offset:2.5px] group-focus-within/dialog:focus-visible:[outline-style:solid] group-focus-within/dialog:focus-visible:[outline-color:var(--text-primary)] btn-ghost text-token-text-primary hover:bg-token-surface-hover keyboard-focused:bg-token-surface-hover rounded-lg max-sm:hidden"
+            aria-label="Share"
+            data-testid="share-chat-button"
+            style="view-transition-name: var(--vt_share_chat_wide_button)"
+          >
+            <div class="flex w-full items-center justify-center gap-1.5">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                aria-label=""
+                class="-ms-0.5 icon"
+              >
+                <use
+                  href="/cdn/assets/sprites-core-bc53276c.svg#630ca2"
+                  fill="currentColor"
+                ></use></svg
+              >Share
+            </div>
+          </button>
+          <div class="flex items-center">
+            <div
+              class="relative"
+              type="button"
+              id="radix-_R_7gqrrtcsqooceicl35_"
+              aria-haspopup="menu"
+              aria-expanded="false"
+              data-state="closed"
+            >
+              <button
+                aria-label="Open conversation options"
+                data-testid="conversation-options-button"
+                class="text-token-text-primary contrast-high:not-dark:keyboard-focused:focus-ring no-draggable hover:bg-token-surface-hover keyboard-focused:bg-token-surface-hover touch:h-10 touch:w-10 flex h-9 w-9 items-center justify-center rounded-lg outline-none disabled:opacity-50"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  aria-hidden="true"
+                  class="icon"
+                >
+                  <use
+                    href="/cdn/assets/sprites-core-bc53276c.svg#f6d0e2"
+                    fill="currentColor"
+                  ></use>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main
+    class="not-keyboard-focused:outline-none min-h-0 flex-1"
+    id="main"
+    tabindex="-1"
+    z-index="-1"
+  >
+    <div
+      id="thread"
+      class="group/thread flex flex-col min-h-full"
+      style="--thread-show-context-pct: 1/3"
+    >
+      <div role="presentation" class="composer-parent flex flex-1 flex-col focus-visible:outline-0">
+        <div
+          class="relative basis-auto flex-col -mb-(--composer-overlap-px) pb-(--composer-overlap-px) [--composer-overlap-px:28px] grow flex"
+        >
+          <div class="flex flex-col text-sm">
+            <div class="qMYqUG_convSearchResultHighlightRoot">
+              <span style="display: none"></span>
+              <div
+                class=""
+                data-turn-id-container="05d32391-4046-4fdc-bd49-6a2b9c72a3bb"
+                data-is-intersecting="true"
+              >
+                <section
+                  class="text-token-text-primary w-full focus:outline-none has-data-writing-block:pointer-events-none [&amp;:has([data-writing-block])&gt;*]:pointer-events-auto R6Vx5W_threadScrollVars scroll-mb-[calc(var(--scroll-root-safe-area-inset-bottom,0px)+var(--thread-response-height))] scroll-mt-(--header-height)"
+                  dir="auto"
+                  data-turn-id="05d32391-4046-4fdc-bd49-6a2b9c72a3bb"
+                  data-turn-id-container="05d32391-4046-4fdc-bd49-6a2b9c72a3bb"
+                  data-testid="conversation-turn-1"
+                  data-scroll-anchor="false"
+                  data-turn="user"
+                >
+                  <h4 class="sr-only select-none">You said:</h4>
+                  <div
+                    class="text-base my-auto mx-auto pt-3 [--thread-content-margin:var(--thread-content-margin-xs,calc(var(--spacing)*4))] @w-sm/main:[--thread-content-margin:var(--thread-content-margin-sm,calc(var(--spacing)*6))] @w-lg/main:[--thread-content-margin:var(--thread-content-margin-lg,calc(var(--spacing)*16))] px-(--thread-content-margin)"
+                  >
+                    <div
+                      class="[--thread-content-max-width:40rem] @w-lg/main:[--thread-content-max-width:48rem] mx-auto max-w-(--thread-content-max-width) flex-1 group/turn-messages focus-visible:outline-hidden relative flex w-full min-w-0 flex-col"
+                    >
+                      <div class="flex max-w-full flex-col gap-4 grow">
+                        <div
+                          data-message-author-role="user"
+                          data-message-id="05d32391-4046-4fdc-bd49-6a2b9c72a3bb"
+                          dir="auto"
+                          class="min-h-8 text-message relative flex w-full flex-col items-end gap-2 text-start break-words whitespace-normal outline-none keyboard-focused:focus-ring [.text-message+&amp;]:mt-1"
+                        >
+                          <div
+                            class="flex w-full flex-col gap-1 empty:hidden items-end rtl:items-start"
+                          >
+                            <div
+                              class="flex flex-col w-fit max-w-(--user-chat-width,70%) items-start self-end rtl:items-end rtl:self-start"
+                            >
+                              <div
+                                class="user-message-bubble-color corner-superellipse/0.98 relative min-w-0 overflow-hidden rounded-[22px] px-4 py-2.5 leading-6 w-full"
+                              >
+                                <div
+                                  data-custom-highlighting-behavior="boundary"
+                                  class="A_HxFq_root"
+                                  data-testid="collapsible-user-message-root"
+                                >
+                                  <div
+                                    id="_r_4s_"
+                                    data-testid="collapsible-user-message-content"
+                                    class="A_HxFq_content"
+                                  >
+                                    <div
+                                      class="max-w-full min-w-0 [overflow-wrap:anywhere] whitespace-pre-wrap"
+                                    >
+                                      Please write a short response that includes: 1. A paragraph
+                                      containing **bold text**, *italic text*, and a [link to
+                                      deadrat.in](https://www.deadrat.in/). 2. A code block in
+                                      Elixir showing a hello world. 3. A simple table of a few
+                                      countries (maybe denmark, sweden, USA, India, Pakistan,
+                                      Nigeria) showing: median wages, average work hours per week,
+                                      paid leave days, and union membership rate. 4. A math equation
+                                      using LaTeX, maybe Euler's Identity.
+                                    </div>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    aria-controls="_r_4s_"
+                                    aria-expanded="false"
+                                    class="A_HxFq_toggleControl select-none"
+                                    data-testid="collapsible-user-message-toggle"
+                                  >
+                                    <span class="A_HxFq_showMoreLabel">Show more</span
+                                    ><span class="A_HxFq_showLessLabel">Show less</span>
+                                    <div
+                                      class="A_HxFq_toggleIconWrapper motion-safe:transition-transform motion-safe:duration-150"
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        aria-hidden="true"
+                                        class="A_HxFq_toggleIcon"
+                                      >
+                                        <use
+                                          href="/cdn/assets/sprites-core-bc53276c.svg#ba3792"
+                                          fill="currentColor"
+                                        ></use>
+                                      </svg>
+                                    </div>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="z-0 flex justify-end">
+                        <div
+                          aria-label="Your message actions"
+                          class="touch:-me-2 touch:-ms-3.5 -ms-2.5 -me-1 flex flex-wrap items-center gap-y-4 p-1 select-none focus-within:transition-none hover:transition-none touch:pointer-events-auto touch:opacity-100 duration-300 group-hover/turn-messages:delay-300 pointer-events-none opacity-0 motion-safe:transition-opacity group-hover/turn-messages:pointer-events-auto group-hover/turn-messages:opacity-100 group-focus-within/turn-messages:pointer-events-auto group-focus-within/turn-messages:opacity-100 has-data-[state=open]:pointer-events-auto has-data-[state=open]:opacity-100"
+                          role="group"
+                          tabindex="-1"
+                          style="mask-position: 0% 0%"
+                        >
+                          <button
+                            class="text-token-text-secondary hover:bg-token-bg-secondary rounded-lg"
+                            aria-label="Copy message"
+                            data-testid="copy-turn-action-button"
+                            data-state="closed"
+                          >
+                            <span class="flex items-center justify-center touch:w-10 h-8 w-8"
+                              ><svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                aria-hidden="true"
+                                class="icon"
+                              >
+                                <use
+                                  href="/cdn/assets/sprites-core-bc53276c.svg#ce3544"
+                                  fill="currentColor"
+                                ></use></svg
+                            ></span></button
+                          ><button
+                            class="text-token-text-secondary hover:bg-token-bg-secondary rounded-lg"
+                            aria-label="Edit message"
+                            data-state="closed"
+                          >
+                            <span class="flex items-center justify-center touch:w-10 h-8 w-8"
+                              ><svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                aria-hidden="true"
+                                class="icon"
+                              >
+                                <use
+                                  href="/cdn/assets/sprites-core-bc53276c.svg#6d87e1"
+                                  fill="currentColor"
+                                ></use></svg
+                            ></span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="sr-only"><br /></span>
+                </section>
+              </div>
+              <div
+                class=""
+                data-turn-id-container="bfe23fbf-04b7-46db-82d7-81baadc30c47"
+                data-is-intersecting="true"
+              >
+                <section
+                  class="text-token-text-primary w-full focus:outline-none has-data-writing-block:pointer-events-none [&amp;:has([data-writing-block])&gt;*]:pointer-events-auto R6Vx5W_threadScrollVars scroll-mb-[calc(var(--scroll-root-safe-area-inset-bottom,0px)+var(--thread-response-height))] scroll-mt-[calc(var(--header-height)+min(200px,max(70px,20svh)))]"
+                  dir="auto"
+                  data-turn-id="bfe23fbf-04b7-46db-82d7-81baadc30c47"
+                  data-turn-id-container="bfe23fbf-04b7-46db-82d7-81baadc30c47"
+                  data-testid="conversation-turn-2"
+                  data-scroll-anchor="false"
+                  data-turn="assistant"
+                >
+                  <h4 class="sr-only select-none">ChatGPT said:</h4>
+                  <div
+                    class="text-base my-auto mx-auto pb-10 [--thread-content-margin:var(--thread-content-margin-xs,calc(var(--spacing)*4))] @w-sm/main:[--thread-content-margin:var(--thread-content-margin-sm,calc(var(--spacing)*6))] @w-lg/main:[--thread-content-margin:var(--thread-content-margin-lg,calc(var(--spacing)*16))] px-(--thread-content-margin)"
+                  >
+                    <div
+                      class="[--thread-content-max-width:40rem] @w-lg/main:[--thread-content-max-width:48rem] mx-auto max-w-(--thread-content-max-width) flex-1 group/turn-messages focus-visible:outline-hidden relative flex w-full min-w-0 flex-col agent-turn"
+                    >
+                      <div class="flex max-w-full flex-col gap-4 grow">
+                        <div
+                          data-message-author-role="assistant"
+                          data-message-id="172f098a-ebb5-4061-9140-9c59e14af4fc"
+                          data-turn-start-message="true"
+                          dir="auto"
+                          tabindex="0"
+                          data-message-model-slug="gpt-5-5"
+                          class="min-h-8 text-message relative flex w-full flex-col items-end gap-2 text-start break-words whitespace-normal outline-none keyboard-focused:focus-ring [.text-message+&amp;]:mt-1"
+                        >
+                          <div class="flex w-full flex-col gap-1 empty:hidden">
+                            <div
+                              class="markdown prose dark:prose-invert wrap-break-word w-full light markdown-new-styling"
+                            >
+                              <p data-start="0" data-end="63">
+                                Here is a short example response with the requested formatting:
+                              </p>
+                              <p data-start="65" data-end="276">
+                                This paragraph contains
+                                <strong data-start="89" data-end="102">bold text</strong>,
+                                <em data-start="104" data-end="117">italic text</em>, and a link to
+                                <span class="" data-state="closed"
+                                  ><a
+                                    target="_blank"
+                                    class="decorated-link"
+                                    rel="noopener"
+                                    href="https://www.deadrat.in/?utm_source=chatgpt.com"
+                                    >deadrat.in<span
+                                      aria-hidden="true"
+                                      class="ms-0.5 inline-block align-middle leading-none select-none"
+                                      ><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="20"
+                                        height="20"
+                                        aria-hidden="true"
+                                        data-rtl-flip=""
+                                        class="block h-[0.75em] w-[0.75em] stroke-current stroke-[0.75] select-none"
+                                      >
+                                        <use
+                                          href="/cdn/assets/sprites-core-bc53276c.svg#304883"
+                                          fill="currentColor"
+                                        ></use></svg></span></a></span
+                                >. Markdown formatting is commonly used because it is simple,
+                                readable, and portable across many platforms.
+                              </p>
+                              <pre
+                                class="overflow-visible! px-0!"
+                                data-start="278"
+                                data-end="379"
+                              ><div class="relative w-full mt-4 mb-1"><div class=""><div class="relative"><div class="h-full min-h-0 min-w-0"><div class="h-full min-h-0 min-w-0" style="width: 100%; transform: none;"><div class="border border-token-border-light border-radius-3xl corner-superellipse/1.1 rounded-3xl"><div class="h-full w-full border-radius-3xl bg-token-bg-elevated-secondary corner-superellipse/1.1 overflow-clip rounded-3xl lxnfua_clipPathFallback"><div class="sticky top-(--sticky-padding-top) z-2 select-none"><div class="flex w-full items-center justify-between py-1.5 ps-4 pe-1.5 font-sans md:ps-5 bg-token-bg-elevated-secondary"><div class="flex max-w-[75%] min-w-0 cursor-default items-center text-sm font-medium justify-self-start text-token-text-primary"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" class="icon-sm me-2.5 shrink-0"><use href="/cdn/assets/sprites-core-bc53276c.svg#e45ab3" fill="currentColor"></use></svg>elixir</div><div class="flex flex-row items-center gap-0.5 justify-self-end"><button type="button" class="flex gap-1 items-center select-none py-2 text-sm font-medium hover:bg-black/5 dark:hover:bg-white/10 size-9 rounded-full px-2" aria-label="Copy" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-hidden="true" class="icon-md"><use href="/cdn/assets/sprites-core-bc53276c.svg#ce3544" fill="currentColor"></use></svg></button></div></div></div><div class="pointer-events-none absolute inset-x-4 top-12 bottom-4"><div class="pointer-events-none sticky z-40 shrink-0 z-1!" style="top: calc(calc(var(--sticky-padding-top) + 48px) - 1px * 3); margin-bottom: calc(-4px); height: calc(4px); mask-image: linear-gradient(transparent 25%, white 75%);"><div class="sticky bg-token-border-light" style="top: calc(var(--sticky-padding-top) + 48px); height: 1px;"></div></div></div><div class="relative"><div class="" style="transform: none;"><div class="relative z-0 flex max-w-full"><div id="code-block-viewer" dir="ltr" class="q9tKkq_viewer cm-editor z-10 light:cm-light dark:cm-light flex h-full w-full flex-col items-stretch ͼd ͼr"><div class="cm-scroller"><pre class="cm-content q9tKkq_readonly m-0"><code><span>defmodule Hello do</span><br><span>  def world do</span><br><span>    IO.puts("Hello, world!")</span><br><span>  end</span><br><span>end</span><br><br><span>Hello.world()</span></code></pre></div></div></div></div></div></div></div></div></div><div class=""><div class="" style="width: 100%; transform: none;"></div></div></div></div></div></pre>
+                              <div class="TyagGW_tableContainer">
+                                <div
+                                  tabindex="-1"
+                                  class="group TyagGW_tableWrapper flex flex-col-reverse w-fit"
+                                >
+                                  <table
+                                    data-start="381"
+                                    data-end="720"
+                                    class="w-fit min-w-(--thread-content-width)"
+                                  >
+                                    <thead data-start="381" data-end="494">
+                                      <tr data-start="381" data-end="494">
+                                        <th
+                                          data-start="381"
+                                          data-end="391"
+                                          data-col-size="sm"
+                                          class="last:pe-10"
+                                        >
+                                          Country
+                                        </th>
+                                        <th
+                                          data-start="391"
+                                          data-end="427"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                          class="last:pe-10"
+                                        >
+                                          Median Monthly Wage (USD approx.)
+                                        </th>
+                                        <th
+                                          data-start="427"
+                                          data-end="451"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                          class="last:pe-10"
+                                        >
+                                          Avg Work Hours / Week
+                                        </th>
+                                        <th
+                                          data-start="451"
+                                          data-end="469"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                          class="last:pe-10"
+                                        >
+                                          Paid Leave Days
+                                        </th>
+                                        <th
+                                          data-start="469"
+                                          data-end="494"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                          class="last:pe-10"
+                                        >
+                                          Union Membership Rate
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody data-start="521" data-end="720">
+                                      <tr data-start="521" data-end="556">
+                                        <td data-start="521" data-end="531" data-col-size="sm">
+                                          Denmark
+                                        </td>
+                                        <td
+                                          data-start="531"
+                                          data-end="539"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          5,500
+                                        </td>
+                                        <td
+                                          data-start="539"
+                                          data-end="544"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          37
+                                        </td>
+                                        <td
+                                          data-start="544"
+                                          data-end="549"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          25
+                                        </td>
+                                        <td
+                                          data-start="549"
+                                          data-end="556"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          67%
+                                        </td>
+                                      </tr>
+                                      <tr data-start="557" data-end="591">
+                                        <td data-start="557" data-end="566" data-col-size="sm">
+                                          Sweden
+                                        </td>
+                                        <td
+                                          data-start="566"
+                                          data-end="574"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          4,200
+                                        </td>
+                                        <td
+                                          data-start="574"
+                                          data-end="579"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          36
+                                        </td>
+                                        <td
+                                          data-start="579"
+                                          data-end="584"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          25
+                                        </td>
+                                        <td
+                                          data-start="584"
+                                          data-end="591"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          65%
+                                        </td>
+                                      </tr>
+                                      <tr data-start="592" data-end="623">
+                                        <td data-start="592" data-end="598" data-col-size="sm">
+                                          USA
+                                        </td>
+                                        <td
+                                          data-start="598"
+                                          data-end="606"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          4,000
+                                        </td>
+                                        <td
+                                          data-start="606"
+                                          data-end="611"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          38
+                                        </td>
+                                        <td
+                                          data-start="611"
+                                          data-end="616"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          10
+                                        </td>
+                                        <td
+                                          data-start="616"
+                                          data-end="623"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          10%
+                                        </td>
+                                      </tr>
+                                      <tr data-start="624" data-end="654">
+                                        <td data-start="624" data-end="632" data-col-size="sm">
+                                          India
+                                        </td>
+                                        <td
+                                          data-start="632"
+                                          data-end="638"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          350
+                                        </td>
+                                        <td
+                                          data-start="638"
+                                          data-end="643"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          48
+                                        </td>
+                                        <td
+                                          data-start="643"
+                                          data-end="648"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          12
+                                        </td>
+                                        <td
+                                          data-start="648"
+                                          data-end="654"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          7%
+                                        </td>
+                                      </tr>
+                                      <tr data-start="655" data-end="688">
+                                        <td data-start="655" data-end="666" data-col-size="sm">
+                                          Pakistan
+                                        </td>
+                                        <td
+                                          data-start="666"
+                                          data-end="672"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          220
+                                        </td>
+                                        <td
+                                          data-start="672"
+                                          data-end="677"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          48
+                                        </td>
+                                        <td
+                                          data-start="677"
+                                          data-end="682"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          14
+                                        </td>
+                                        <td
+                                          data-start="682"
+                                          data-end="688"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          5%
+                                        </td>
+                                      </tr>
+                                      <tr data-start="689" data-end="720">
+                                        <td data-start="689" data-end="699" data-col-size="sm">
+                                          Nigeria
+                                        </td>
+                                        <td
+                                          data-start="699"
+                                          data-end="705"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          180
+                                        </td>
+                                        <td
+                                          data-start="705"
+                                          data-end="710"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          45
+                                        </td>
+                                        <td
+                                          data-start="710"
+                                          data-end="714"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          6
+                                        </td>
+                                        <td
+                                          data-start="714"
+                                          data-end="720"
+                                          data-col-size="sm"
+                                          style="text-align: right"
+                                        >
+                                          4%
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  <div class="relative h-0 self-end select-none">
+                                    <div
+                                      class="absolute end-0 flex items-end"
+                                      style="height: 48.75px"
+                                    >
+                                      <span class="" data-state="closed"
+                                        ><button
+                                          aria-label="Copy table"
+                                          class="hover:bg-token-bg-tertiary text-token-text-secondary relative z-10 my-1 rounded-sm p-1 transition-opacity group-[:not(:hover):not(:focus-within)]:pointer-events-none group-[:not(:hover):not(:focus-within)]:opacity-0"
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="20"
+                                            height="20"
+                                            aria-hidden="true"
+                                            class="icon"
+                                          >
+                                            <use
+                                              href="/cdn/assets/sprites-core-bc53276c.svg#ce3544"
+                                              fill="currentColor"
+                                            ></use>
+                                          </svg></button
+                                      ></span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p data-start="722" data-end="739">Euler’s Identity:</p>
+                              <p
+                                data-start="741"
+                                data-end="778"
+                                data-is-last-node=""
+                                data-is-only-node=""
+                              >
+                                <span class="inline-block align-middle"
+                                  ><span class="katex"
+                                    ><span class="katex-mathml"
+                                      ><math xmlns="http://www.w3.org/1998/Math/MathML"
+                                        ><semantics
+                                          ><mrow
+                                            ><msup
+                                              ><mi>e</mi><mrow><mi>i</mi><mi>π</mi></mrow></msup
+                                            ><mo>+</mo><mn>1</mn><mo>=</mo><mn>0</mn></mrow
+                                          ><annotation encoding="application/x-tex"
+                                            >e^{i\pi}+1=0</annotation
+                                          ></semantics
+                                        ></math
+                                      ></span
+                                    ><span class="katex-html" aria-hidden="true"
+                                      ><span class="base"
+                                        ><span
+                                          class="strut"
+                                          style="height: 0.908em; vertical-align: -0.0833em"
+                                        ></span
+                                        ><span class="mord"
+                                          ><span class="mord mathnormal">e</span
+                                          ><span class="msupsub"
+                                            ><span class="vlist-t"
+                                              ><span class="vlist-r"
+                                                ><span class="vlist" style="height: 0.8247em"
+                                                  ><span style="top: -3.063em; margin-right: 0.05em"
+                                                    ><span
+                                                      class="pstrut"
+                                                      style="height: 2.7em"
+                                                    ></span
+                                                    ><span class="sizing reset-size6 size3 mtight"
+                                                      ><span class="mord mtight"
+                                                        ><span
+                                                          class="mord mathnormal mtight"
+                                                          style="margin-right: 0.03588em"
+                                                          >iπ</span
+                                                        ></span
+                                                      ></span
+                                                    ></span
+                                                  ></span
+                                                ></span
+                                              ></span
+                                            ></span
+                                          ></span
+                                        ><span class="mspace" style="margin-right: 0.2222em"></span
+                                        ><span class="mbin">+</span
+                                        ><span
+                                          class="mspace"
+                                          style="margin-right: 0.2222em"
+                                        ></span></span
+                                      ><span class="base"
+                                        ><span class="strut" style="height: 0.6444em"></span
+                                        ><span class="mord">1</span
+                                        ><span class="mspace" style="margin-right: 0.2778em"></span
+                                        ><span class="mrel">=</span
+                                        ><span
+                                          class="mspace"
+                                          style="margin-right: 0.2778em"
+                                        ></span></span
+                                      ><span class="base"
+                                        ><span class="strut" style="height: 0.6444em"></span
+                                        ><span class="mord">0</span></span
+                                      ></span
+                                    ></span
+                                  ></span
+                                >
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="z-0 flex min-h-[46px] justify-start">
+                        <div
+                          aria-label="Response actions"
+                          class="touch:-me-2 touch:-ms-3.5 -ms-2.5 -me-1 flex flex-wrap items-center gap-y-4 p-1 select-none touch:w-[calc(100%+--spacing(3.5))] -mt-1 w-[calc(100%+--spacing(2.5))] duration-[1.5s] focus-within:transition-none hover:transition-none touch:pointer-events-auto pointer-events-none [mask-image:linear-gradient(to_right,black_33%,transparent_66%)] [mask-size:300%_100%] [mask-position:100%_0%] motion-safe:transition-[mask-position] group-hover/turn-messages:pointer-events-auto group-hover/turn-messages:[mask-position:0_0] group-focus-within/turn-messages:pointer-events-auto group-focus-within/turn-messages:[mask-position:0_0] has-data-[state=open]:pointer-events-auto has-data-[state=open]:[mask-position:0_0]"
+                          role="group"
+                          tabindex="-1"
+                          style="mask-position: 0% 0%"
+                        >
+                          <button
+                            class="text-token-text-secondary hover:bg-token-bg-secondary rounded-lg"
+                            aria-label="Copy response"
+                            data-testid="copy-turn-action-button"
+                            data-state="closed"
+                          >
+                            <span class="flex items-center justify-center touch:w-10 h-8 w-8"
+                              ><svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                aria-hidden="true"
+                                class="icon"
+                              >
+                                <use
+                                  href="/cdn/assets/sprites-core-bc53276c.svg#ce3544"
+                                  fill="currentColor"
+                                ></use></svg
+                            ></span></button
+                          ><button
+                            class="text-token-text-secondary hover:bg-token-bg-secondary rounded-lg"
+                            aria-label="Share"
+                            data-state="closed"
+                          >
+                            <span class="flex items-center justify-center touch:w-10 h-8 w-8"
+                              ><svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                aria-hidden="true"
+                                class="icon"
+                              >
+                                <use
+                                  href="/cdn/assets/sprites-core-bc53276c.svg#630ca2"
+                                  fill="currentColor"
+                                ></use></svg
+                            ></span></button
+                          ><span class="" data-state="closed"
+                            ><button
+                              type="button"
+                              id="radix-_r_53_"
+                              aria-haspopup="menu"
+                              aria-expanded="false"
+                              data-state="closed"
+                              class="cursor-pointer touch:px-2.5 text-token-text-secondary hover:bg-token-bg-secondary h-[30px] rounded-md px-1.5"
+                              aria-label="Switch model"
+                            >
+                              <div class="flex items-center">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="20"
+                                  height="20"
+                                  aria-hidden="true"
+                                  class="icon"
+                                >
+                                  <use
+                                    href="/cdn/assets/sprites-core-bc53276c.svg#ec66f0"
+                                    fill="currentColor"
+                                  ></use>
+                                </svg>
+                              </div></button></span
+                          ><button
+                            class="text-token-text-secondary hover:bg-token-bg-secondary touch:w-10 flex h-8 w-8 items-center justify-center rounded-lg"
+                            aria-label="More actions"
+                            type="button"
+                            id="radix-_r_56_"
+                            aria-haspopup="menu"
+                            aria-expanded="false"
+                            data-state="closed"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              aria-hidden="true"
+                              class="icon"
+                            >
+                              <use
+                                href="/cdn/assets/sprites-core-bc53276c.svg#f6d0e2"
+                                fill="currentColor"
+                              ></use>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+            <div
+              aria-hidden="true"
+              class="pointer-events-none -mt-px h-px translate-y-[calc(var(--scroll-root-safe-area-inset-bottom)-14*var(--spacing))]"
+            ></div>
+            <div
+              class="pointer-events-none translate-y-(--scroll-root-safe-area-inset-bottom) R6Vx5W_threadScrollVars min-h-(--gutter-remaining-height,0px) group-data-stream-active/scroll-root:h-[calc(var(--thread-response-height)-16*var(--spacing))]"
+              style="--gutter-remaining-height: -0.1500244140625px"
+            ></div>
+          </div>
+        </div>
+        <div
+          id="thread-bottom-container"
+          class="sticky bottom-0 z-10 group/thread-bottom-container relative isolate w-full basis-auto has-data-has-thread-error:pt-2 has-data-has-thread-error:[box-shadow:var(--sharp-edge-bottom-shadow)] md:border-transparent md:pt-0 dark:border-white/20 md:dark:border-transparent print:hidden content-fade single-line flex flex-col"
+        >
+          <div class="relative mx-auto h-0" style="--thread-scroll-to-bottom-banner-offset: 0px">
+            <div
+              class="flex h-0 items-end justify-center motion-safe:transition-all motion-safe:delay-300 motion-safe:duration-300 group-[:not([data-scroll-from-end])]/scroll-root:scale-50 group-[:not([data-scroll-from-end])]/scroll-root:translate-y-2 group-[:not([data-scroll-from-end])]/scroll-root:opacity-0 group-[:not([data-scroll-from-end])]/scroll-root:pointer-events-none group-[:not([data-scroll-from-end])]/scroll-root:duration-100 group-[:not([data-scroll-from-end])]/scroll-root:delay-0 absolute start-1/2 z-10 -translate-x-1/2 bottom-[calc(100%+6*var(--spacing)+var(--thread-scroll-to-bottom-banner-offset,0px))]"
+            >
+              <button
+                aria-hidden="true"
+                tabindex="-1"
+                class="relative flex h-8 w-8 cursor-pointer items-center justify-center overflow-hidden rounded-full outline-hidden select-none btn-secondary bg-token-bg-primary/65! hover:bg-token-main-surface-secondary/75! shadow-short box-content backdrop-blur-[2px] backdrop-filter sm:shadow-md dark:shadow-none! group-data-stream-active/scroll-root:squircle *:absolute *:inset-0 *:m-auto group-data-stream-active/scroll-root:w-10 motion-safe:transition-[width] motion-safe:duration-120 motion-safe:ease-out *:motion-safe:transition-opacity *:motion-safe:duration-120 *:motion-safe:ease-out absolute start-1/2 z-10 -translate-x-1/2 bottom-[calc(100%+6*var(--spacing)+var(--thread-scroll-to-bottom-banner-offset,0px))]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  aria-hidden="true"
+                  class="icon opacity-100 group-data-stream-active/scroll-root:opacity-0"
+                >
+                  <use
+                    href="/cdn/assets/sprites-core-bc53276c.svg#ac89a7"
+                    fill="currentColor"
+                  ></use></svg
+                ><span
+                  aria-hidden="true"
+                  class="*:bg-token-text-primary/70 absolute inset-0 flex items-center justify-center gap-0.75 *:h-1 *:w-1 *:rounded-full opacity-0 group-data-stream-active/scroll-root:opacity-100"
+                  ><span class="e33vkq_waveDot"></span><span class="e33vkq_waveDot"></span
+                  ><span class="e33vkq_waveDot"></span
+                ></span>
+              </button>
+            </div>
+          </div>
+          <div id="thread-bottom">
+            <div>
+              <div
+                class="text-base mx-auto [--thread-content-margin:var(--thread-content-margin-xs,calc(var(--spacing)*4))] @w-sm/main:[--thread-content-margin:var(--thread-content-margin-sm,calc(var(--spacing)*6))] @w-lg/main:[--thread-content-margin:var(--thread-content-margin-lg,calc(var(--spacing)*16))] px-(--thread-content-margin)"
+              >
+                <div>
+                  <div
+                    class="[--thread-content-max-width:40rem] @w-lg/main:[--thread-content-max-width:48rem] mx-auto max-w-(--thread-content-max-width) flex-1 mb-[var(--thread-component-gap,1rem)]"
+                  >
+                    <div class="w-full">
+                      <div class="flex justify-center empty:hidden"></div>
+                      <div
+                        class="pointer-events-auto relative z-1 flex h-(--composer-container-height,100%) max-w-full flex-(--composer-container-flex,1) flex-col"
+                      >
+                        <div class="absolute start-0 end-0 bottom-full z-20"></div>
+                        <form
+                          class="group/composer w-full"
+                          style="view-transition-name: var(--vt-composer)"
+                          data-type="unified-composer"
+                        >
+                          <div class="hidden">
+                            <input
+                              multiple=""
+                              type="file"
+                              style="
+                                border: 0;
+                                clip: rect(0, 0, 0, 0);
+                                clip-path: inset(50%);
+                                height: 1px;
+                                margin: 0 -1px -1px 0;
+                                overflow: hidden;
+                                padding: 0;
+                                position: absolute;
+                                width: 1px;
+                                white-space: nowrap;
+                              "
+                              tabindex="-1"
+                              id="upload-files"
+                            />
+                          </div>
+                          <div class="">
+                            <div
+                              class="bg-token-bg-primary dark:bg-token-bg-elevated-primary dark-oled:bg-token-bg-primary corner-superellipse/1.1 relative cursor-text overflow-clip bg-clip-padding p-2.5 contain-inline-size motion-safe:transition-colors motion-safe:duration-200 motion-safe:ease-in-out grid grid-cols-[auto_1fr_auto] [grid-template-areas:'header_header_header'_'leading_primary_trailing'_'._footer_.'] group-data-expanded/composer:[grid-template-areas:'header_header_header'_'primary_primary_primary'_'leading_footer_trailing'] max-sm:[grid-template-areas:'header_header_header'_'primary_primary_primary'_'leading_footer_trailing'] shadow-short-composer"
+                              data-composer-surface="true"
+                              style="border-radius: 28px"
+                            >
+                              <div class="[grid-area:leading]">
+                                <span class="flex" data-state="closed"
+                                  ><button
+                                    type="button"
+                                    class="composer-btn"
+                                    data-testid="composer-plus-btn"
+                                    aria-label="Add files and more"
+                                    id="composer-plus-btn"
+                                    aria-haspopup="menu"
+                                    aria-expanded="false"
+                                    data-state="closed"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="20"
+                                      height="20"
+                                      aria-hidden="true"
+                                      class="icon"
+                                    >
+                                      <use
+                                        href="/cdn/assets/sprites-core-bc53276c.svg#6be74c"
+                                        fill="currentColor"
+                                      ></use>
+                                    </svg></button
+                                ></span>
+                              </div>
+                              <div
+                                class="-my-2.5 flex overflow-x-hidden px-1.5 [grid-area:primary] group-data-expanded/composer:mb-0 group-data-expanded/composer:px-2.5 min-h-14 items-center"
+                              >
+                                <div
+                                  class="wcDTda_prosemirror-parent text-token-text-primary max-h-[max(30svh,5rem)] max-h-52 min-h-[var(--deep-research-composer-extra-height,unset)] flex-1 overflow-auto [scrollbar-width:thin] firefox vertical-scroll-fade-mask"
+                                >
+                                  <textarea
+                                    class="wcDTda_fallbackTextarea"
+                                    name="prompt-textarea"
+                                    autofocus=""
+                                    placeholder="Ask anything"
+                                    aria-label="Chat with ChatGPT"
+                                    data-virtualkeyboard="true"
+                                    style="display: none"
+                                  ></textarea>
+                                  <script nonce="">
+                                    window.__oai_logHTML
+                                      ? window.__oai_logHTML()
+                                      : (window.__oai_SSR_HTML =
+                                          window.__oai_SSR_HTML || Date.now());
+                                    requestAnimationFrame(function () {
+                                      window.__oai_logTTI
+                                        ? window.__oai_logTTI()
+                                        : (window.__oai_SSR_TTI =
+                                            window.__oai_SSR_TTI || Date.now());
+                                    });
+                                  </script>
+                                  <div
+                                    contenteditable="true"
+                                    translate="no"
+                                    class="ProseMirror"
+                                    id="prompt-textarea"
+                                    data-virtualkeyboard="true"
+                                    role="textbox"
+                                    aria-multiline="true"
+                                    aria-label="Chat with ChatGPT"
+                                  >
+                                    <p data-placeholder="Ask anything" class="placeholder">
+                                      <br class="ProseMirror-trailingBreak" />
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="flex items-center gap-1.5 [grid-area:trailing]">
+                                <div class="ms-auto flex items-center gap-1.5">
+                                  <div
+                                    id="_r_m_"
+                                    popover="hint"
+                                    role="tooltip"
+                                    class="fixed inset-s-[anchor(center)] inset-e-auto top-[calc(anchor(bottom)+var(--spacing))] bottom-auto h-fit -translate-x-1/2 [position-try-fallbacks:flip-block] overflow-visible bg-transparent z-50"
+                                    style="position-anchor: --anchor-_r_m_"
+                                  ></div>
+                                  <button
+                                    aria-label="Start dictation"
+                                    type="button"
+                                    class="composer-btn h-9 min-h-9 w-9 min-w-9"
+                                    aria-describedby="_r_m_"
+                                    interestfor="_r_m_"
+                                    style="anchor-name: --anchor-_r_m_"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="20"
+                                      height="20"
+                                      aria-label=""
+                                      class="icon"
+                                      font-size="inherit"
+                                    >
+                                      <use
+                                        href="/cdn/assets/sprites-core-bc53276c.svg#29f921"
+                                        fill="currentColor"
+                                      ></use>
+                                    </svg>
+                                  </button>
+                                  <div>
+                                    <div class="inline-flex">
+                                      <div>
+                                        <div
+                                          id="_r_n_"
+                                          popover="hint"
+                                          role="tooltip"
+                                          class="fixed inset-s-[anchor(center)] inset-e-auto top-[calc(anchor(bottom)+var(--spacing))] bottom-auto h-fit -translate-x-1/2 [position-try-fallbacks:flip-block] overflow-visible bg-transparent z-50"
+                                          style="position-anchor: --anchor-_r_n_"
+                                        ></div>
+                                        <button
+                                          aria-describedby="_r_n_"
+                                          interestfor="_r_n_"
+                                          type="button"
+                                          aria-label="Start Voice"
+                                          class="composer-submit-button-color text-submit-btn-text keyboard-focused:focus-ring relative flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:opacity-70 disabled:text-[#f4f4f4] disabled:opacity-30"
+                                          style="
+                                            anchor-name: --anchor-_r_n_;
+                                            view-transition-name: var(--vt-composer-speech-button);
+                                          "
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="20"
+                                            height="20"
+                                            aria-hidden="true"
+                                            class="h-5 w-5"
+                                          >
+                                            <use
+                                              href="/cdn/assets/sprites-core-bc53276c.svg#f8aa74"
+                                              fill="currentColor"
+                                            ></use>
+                                          </svg>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <input
+                        class="sr-only select-none"
+                        type="file"
+                        tabindex="-1"
+                        aria-hidden="true"
+                        id="upload-photos"
+                        data-testid="upload-photos-input"
+                        accept="image/*"
+                        multiple=""
+                      /><input
+                        class="sr-only select-none"
+                        type="file"
+                        tabindex="-1"
+                        aria-hidden="true"
+                        id="upload-camera"
+                        accept="image/*"
+                        capture="environment"
+                        multiple=""
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="-mt-4 text-token-text-secondary dark-oled:text-token-text-tertiary relative w-full overflow-hidden text-center text-xs [view-transition-name:var(--vt-disclaimer)] md:px-[60px]"
+            style="height: auto; opacity: 1; transform: none"
+          >
+            <div
+              class="text-base mx-auto [--thread-content-margin:var(--thread-content-margin-xs,calc(var(--spacing)*4))] @w-sm/main:[--thread-content-margin:var(--thread-content-margin-sm,calc(var(--spacing)*6))] @w-lg/main:[--thread-content-margin:var(--thread-content-margin-lg,calc(var(--spacing)*16))] px-(--thread-content-margin)"
+            >
+              <div
+                class="[--thread-content-max-width:40rem] @w-lg/main:[--thread-content-max-width:48rem] mx-auto max-w-(--thread-content-max-width) flex-1"
+              >
+                <div
+                  class="select-none active:select-auto data-has-range-start:select-auto flex min-h-8 w-full items-center justify-center p-2 text-xs"
+                >
+                  <div
+                    class="text-token-text-secondary dark-oled:text-token-text-tertiary pointer-events-auto"
+                  >
+                    <div>ChatGPT can make mistakes. Check important info.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

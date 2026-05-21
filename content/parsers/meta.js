@@ -20,11 +20,25 @@ export class MetaParser extends ChatParser {
     const messages = [];
 
     // Find all possible message elements directly to avoid missing any that don't have a wrapper
-    const messageElements = document.querySelectorAll(
-      '[data-message-type="user"], [data-testid="assistant-message"], [data-message-id$="_user"], [data-message-id$="_assistant"]',
+    const messageElements = Array.from(
+      document.querySelectorAll(
+        '[data-message-type="user"], [data-testid="assistant-message"], [data-message-id$="_user"], [data-message-id$="_assistant"]',
+      ),
     );
 
-    messageElements.forEach((el) => {
+    // Keep only the outer-most elements if there are nested matches
+    const uniqueElements = messageElements.filter((el) => {
+      let parent = el.parentElement;
+      while (parent) {
+        if (messageElements.includes(parent)) {
+          return false;
+        }
+        parent = parent.parentElement;
+      }
+      return true;
+    });
+
+    uniqueElements.forEach((el) => {
       let role = 'Unknown';
       let content = '';
 

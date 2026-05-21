@@ -1,0 +1,1744 @@
+<div
+  class="group/scroller flex flex-col overflow-hidden z-0 scrollbar-hide relative perspective-[1px] perspective-origin-top-right transform-3d overflow-y-auto overscroll-y-contain h-full px-6"
+  style="container: chat-scroller / inline-size; --composer-overlap: 168px"
+>
+  <div
+    data-slot="flexbox"
+    class="min-h-0 min-w-0 flex justify-between items-center shrink-0 touch:px-4 sticky top-0 z-10 h-14 pointer-events-none md:-mx-6 md:px-6"
+  >
+    <div
+      data-slot="flexbox"
+      class="min-h-0 flex items-center me-4 min-w-0 flex-1 pointer-events-none"
+    >
+      <div class="relative flex min-w-0 flex-1 items-center sm:max-w-xl">
+        <div
+          class="flex min-w-0 flex-1 items-center gap-1 transition-opacity duration-200 pointer-events-none absolute opacity-0"
+        >
+          <input
+            placeholder="Conversation title"
+            tabindex="-1"
+            class="text-body-medium bg-fill-blur-thick backdrop-blur-elevation-01 rounded-12 h-8 max-w-full min-w-0 flex-1 px-3 py-1.5 -outline-offset-1 focus-visible:outline disabled:opacity-50 sm:max-w-xl"
+            type="text"
+            value=""
+          />
+          <div class="flex shrink-0 items-center gap-1">
+            <div class="contents">
+              <button
+                aria-label="Cancel"
+                class="enabled:active:scale-98 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-round focus:not-focus-visible:outline-none transition-transform duration-150 ease-in-out disabled:pointer-events-none disabled:opacity-50 select-none size-8 hover:enabled:bg-fill-secondary-elevated enabled:active:filter-[brightness(0.965)] dark:enabled:active:filter-[brightness(0.9)] text-text-secondary bg-fill-blur-thick backdrop-blur-elevation-01 -outline-offset-2"
+                data-slot="tooltip-trigger"
+                data-state="closed"
+              >
+                <svg viewBox="0 0 32 32" fill="none" width="20" height="20" class="m-0.5">
+                  <path
+                    d="M22.88 24.12a.877.877 0 0 0 1.239-1.239l-6.881-6.88 6.88-6.882a.876.876 0 0 0-1.238-1.238L16 14.761l-6.881-6.88A.876.876 0 0 0 7.88 9.119L14.761 16l-6.88 6.881a.877.877 0 0 0 1.238 1.238l6.88-6.88 6.881 6.88z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+            <div class="contents">
+              <button
+                aria-label="Rename"
+                class="enabled:active:scale-98 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-round focus:not-focus-visible:outline-none transition-transform duration-150 ease-in-out disabled:pointer-events-none disabled:opacity-50 select-none size-8 hover:enabled:bg-fill-secondary-elevated enabled:active:filter-[brightness(0.965)] dark:enabled:active:filter-[brightness(0.9)] text-text-primary-link bg-fill-blur-thick backdrop-blur-elevation-01 -outline-offset-2"
+                data-slot="tooltip-trigger"
+                data-state="closed"
+              >
+                <svg viewBox="0 0 32 32" fill="none" width="20" height="20" class="m-0.5">
+                  <path
+                    d="M24.285 7.542a.878.878 0 0 1 1.22-.21.868.868 0 0 1 .21 1.214l-12 16.912a.877.877 0 0 1-1.415.02l-6-7.958a.868.868 0 0 1 .175-1.22.879.879 0 0 1 1.225.175l5.279 7L24.285 7.542z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="contents">
+          <button
+            class="enabled:active:scale-98 inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-0.5 focus:not-focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 rounded-round h-9 px-3.5 hover:enabled:bg-fill-secondary-elevated enabled:active:filter-[brightness(0.965)] dark:enabled:active:filter-[brightness(0.9)] text-body-medium touch:max-w-[calc(100vw-10rem)] pointer-events-auto max-w-xl min-w-0 !shrink overflow-hidden transition-opacity not-focus-visible:transition-all duration-400 ease-in-out opacity-100"
+            data-slot="button"
+          >
+            <span class="truncate">Creating a varied response</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      data-slot="flexbox"
+      class="min-h-0 min-w-0 flex items-center gap-x-2 gap-y-2 pointer-events-auto"
+    >
+      <div class="contents">
+        <button
+          aria-label="Share"
+          class="enabled:active:scale-98 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-round focus:not-focus-visible:outline-none transition-transform disabled:pointer-events-none disabled:opacity-50 select-none size-9 hover:enabled:bg-fill-secondary-elevated enabled:active:filter-[brightness(0.965)] dark:enabled:active:filter-[brightness(0.9)] not-focus-visible:transition-all duration-400 ease-in-out"
+          data-slot="button"
+        >
+          <svg viewBox="0 0 32 32" fill="none" width="20" height="20" class="m-0.5">
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M24.692 4.965c.331-.091.768-.179 1.202-.031.551.187.985.62 1.172 1.172.148.434.06.87-.031 1.202-.097.351-.262.789-.452 1.296L20.34 25.25c-.228.61-.42 1.123-.6 1.5-.162.34-.41.79-.858 1.024a1.875 1.875 0 0 1-1.544.087l-.21-.095-.158-.1c-.346-.25-.55-.633-.688-.933-.176-.379-.362-.894-.585-1.506l-1.754-4.824c-.297-.818-.399-1.075-.544-1.282a2.126 2.126 0 0 0-.521-.521c-.208-.145-.465-.247-1.283-.544l-4.823-1.754c-.612-.223-1.127-.409-1.507-.585-.342-.16-.793-.401-1.032-.847a1.876 1.876 0 0 1-.103-1.544l.094-.21c.235-.448.684-.695 1.025-.857.377-.18.89-.372 1.5-.6l16.647-6.243c.507-.19.945-.355 1.296-.452zM15.26 17.961c-.105.109-.212.217-.318.325.245.405.413.88.646 1.52l1.753 4.823c.235.645.391 1.074.528 1.368.06.129.103.2.127.236a.119.119 0 0 0 .034 0c.024-.035.069-.106.13-.235.14-.293.301-.72.542-1.362l6.21-16.563-9.652 9.888zm-7.896-4.663c-.642.24-1.07.402-1.362.542-.13.061-.201.105-.237.129a.12.12 0 0 0 0 .034c.036.023.108.068.238.128.294.137.723.293 1.368.527l4.823 1.754c.638.232 1.114.4 1.518.645l.327-.318c3.295-3.216 6.589-6.434 9.883-9.651l-16.558 6.21z"
+              fill="currentColor"
+            ></path>
+          </svg>
+        </button>
+      </div>
+      <div class="contents">
+        <button
+          aria-label="Menu"
+          class="enabled:active:scale-98 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-round focus:not-focus-visible:outline-none transition-transform disabled:pointer-events-none disabled:opacity-50 select-none size-9 hover:enabled:bg-fill-secondary-elevated enabled:active:filter-[brightness(0.965)] dark:enabled:active:filter-[brightness(0.9)] not-focus-visible:transition-all duration-400 ease-in-out"
+          data-slot="dropdown-menu-trigger"
+          type="button"
+          id="radix-_r_46_"
+          aria-haspopup="menu"
+          aria-expanded="false"
+          data-state="closed"
+        >
+          <svg viewBox="0 0 32 32" fill="none" width="20" height="20" class="m-0.5">
+            <path
+              d="M8 14.125a1.875 1.875 0 1 1 0 3.75 1.875 1.875 0 0 1 0-3.75zm8 0a1.875 1.875 0 1 1 0 3.75 1.875 1.875 0 0 1 0-3.75zm8 0a1.875 1.875 0 1 1 0 3.75 1.875 1.875 0 0 1 0-3.75z"
+              fill="currentColor"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col relative grow-1">
+    <div class="top-0 pointer-events-none absolute size-px opacity-0"></div>
+    <div
+      class="mx-auto box-border flex w-full max-w-[1920px] shrink-0 flex-col"
+      style="--composer-overlap: 155px; padding-bottom: 0px"
+    >
+      <div class="flex flex-col">
+        <div class="pointer-events-none absolute h-px w-px opacity-0" aria-hidden="true"></div>
+        <div
+          data-message-item="true"
+          data-message-id="d6feeb65-bf42-43f6-a5fa-a4021eb5dbd3_7463135159531973145_user"
+          class="starting:opacity-0 starting:translate-y-[20vh] [transition:transform_0.3s_var(--ease-spring-snappy),opacity_150ms]"
+        >
+          <div
+            data-message-type="user"
+            class="group/user-message mx-auto w-full max-w-3xl shrink-0"
+          >
+            <div data-slot="flexbox" class="min-h-0 min-w-0 flex gap-x-4 gap-y-4 justify-end">
+              <div
+                class="relative flex max-w-[calc(100%-2rem)] flex-col items-end sm:max-w-[520px]"
+              >
+                <div
+                  class="bg-fill-secondary text-text-primary rounded-22 relative z-[1] max-w-[100%] px-4 py-2.25"
+                >
+                  <div class="relative">
+                    <div
+                      class="overflow-hidden pe-8 transition-[max-height] duration-200 ease-out"
+                      style="max-height: 130px"
+                    >
+                      <span
+                        dir="auto"
+                        data-slot="text"
+                        class="mx-0 outline-none break-words text-response text-text-primary whitespace-pre-wrap"
+                        style="margin-top: -0.4628em; margin-bottom: -0.4623em"
+                        >Please write a short response that includes: 1. A paragraph containing
+                        **bold text**, *italic text*, and a [link to
+                        deadrat.in](https://www.deadrat.in/). 2. A code block in Elixir showing a
+                        hello world. 3. A simple table of a few countries (maybe denmark, sweden,
+                        USA, India, Pakistan, Nigeria) showing: median wages, average work hours per
+                        week, paid leave days, and union membership rate. 4. A math equation using
+                        LaTeX, maybe Euler's Identity.</span
+                      >
+                    </div>
+                    <button
+                      type="button"
+                      class="text-text-secondary hover:text-text-primary absolute end-0 top-0 cursor-pointer rounded-full p-1.5 transition-colors hover:bg-black/10 dark:hover:bg-white/10"
+                      aria-label="Expand message"
+                    >
+                      <svg
+                        viewBox="0 0 32 32"
+                        fill="none"
+                        width="20"
+                        height="20"
+                        class="transition-transform duration-150"
+                      >
+                        <path
+                          d="M24.62 12.38a.876.876 0 0 1 0 1.24l-8 8a.876.876 0 0 1-1.24 0l-8-8a.876.876 0 0 1 1.24-1.24L16 19.763l7.38-7.381a.876.876 0 0 1 1.24 0z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div style="opacity: 1; transform: none">
+                  <div
+                    data-slot="flexbox"
+                    class="min-h-0 min-w-0 flex justify-end items-center gap-x-1 gap-y-1 touch:opacity-100 mt-1 opacity-0 group-hover/user-message:opacity-100 has-focus-visible:opacity-100"
+                  >
+                    <span data-state="closed" data-slot="tooltip-trigger"
+                      ><span
+                        dir="auto"
+                        data-slot="text"
+                        class="mx-0 outline-none break-words text-caption-1 text-text-secondary me-2 cursor-default"
+                        >Today</span
+                      ></span
+                    >
+                    <div class="contents">
+                      <button
+                        aria-label="Edit message"
+                        class="enabled:active:scale-98 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-round focus:not-focus-visible:outline-none transition-transform duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 select-none size-7 hover:enabled:bg-fill-secondary-elevated enabled:active:filter-[brightness(0.965)] dark:enabled:active:filter-[brightness(0.9)] text-text-secondary"
+                        data-slot="tooltip-trigger"
+                        data-state="closed"
+                      >
+                        <svg viewBox="0 0 32 32" fill="none" width="20" height="20" class="m-0.5">
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M20.63 6.631a3.35 3.35 0 0 1 4.74 4.738L13.402 23.334a5.878 5.878 0 0 1-2.146 1.367l-4.458 1.622a.876.876 0 0 1-1.12-1.123l1.62-4.458a5.882 5.882 0 0 1 1.368-2.146L20.631 6.63zM9.904 19.834a4.129 4.129 0 0 0-.96 1.508l-.98 2.694 2.695-.98a4.128 4.128 0 0 0 1.508-.96l9.781-9.782a7.026 7.026 0 0 0-2.261-2.262l-9.783 9.782zM24.131 7.87a1.599 1.599 0 0 0-2.262 0l-.74.74a9.04 9.04 0 0 1 2.262 2.261l.74-.739a1.6 1.6 0 0 0 0-2.262z"
+                            fill="currentColor"
+                          ></path>
+                        </svg>
+                      </button>
+                    </div>
+                    <div class="contents">
+                      <button
+                        aria-label="Copy response"
+                        class="enabled:active:scale-98 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-round focus:not-focus-visible:outline-none transition-transform duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 select-none size-7 hover:enabled:bg-fill-secondary-elevated enabled:active:filter-[brightness(0.965)] dark:enabled:active:filter-[brightness(0.9)] text-text-secondary"
+                        data-slot="tooltip-trigger"
+                        data-state="closed"
+                      >
+                        <div class="relative">
+                          <div class="">
+                            <svg
+                              viewBox="0 0 32 32"
+                              fill="none"
+                              width="20"
+                              height="20"
+                              class="m-0.5"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M17.3 10.125c-.826 0-1.497 0-2.041.044-.554.045-1.053.141-1.518.378a3.879 3.879 0 0 0-1.694 1.694c-.237.465-.333.964-.378 1.518-.045.544-.044 1.216-.044 2.04V22.2c0 .826 0 1.497.044 2.041.045.554.141 1.053.378 1.518.371.729.965 1.323 1.694 1.694.465.237.964.333 1.518.378.544.044 1.215.044 2.04.044H20.7c.826 0 1.497 0 2.041-.044.554-.045 1.053-.141 1.518-.378a3.879 3.879 0 0 0 1.694-1.694c.237-.465.333-.964.378-1.518.044-.544.044-1.215.044-2.04V15.8c0-.825 0-1.497-.044-2.041-.045-.554-.141-1.053-.378-1.518a3.879 3.879 0 0 0-1.694-1.694c-.465-.237-.964-.333-1.518-.378-.544-.045-1.215-.044-2.04-.044H17.3zm3.4 1.75c.855 0 1.443 0 1.9.038.445.037.688.103.865.193.4.204.725.53.929.93.09.176.157.418.193.864.037.457.038 1.045.038 1.9v6.4c0 .855 0 1.443-.038 1.9-.037.445-.103.688-.193.865-.204.4-.53.725-.93.929-.176.09-.418.157-.864.193-.457.037-1.045.038-1.9.038h-3.4c-.855 0-1.443 0-1.9-.038-.446-.037-.688-.103-.865-.193a2.126 2.126 0 0 1-.929-.93c-.09-.176-.156-.418-.193-.864-.037-.457-.038-1.045-.038-1.9v-6.4c0-.855 0-1.443.038-1.9.037-.446.103-.688.193-.865.204-.4.53-.725.93-.929.176-.09.418-.156.864-.193.457-.037 1.045-.038 1.9-.038h3.4z"
+                                fill="currentColor"
+                              ></path>
+                              <path
+                                d="M11.3 4.125c-.825 0-1.497 0-2.041.044-.554.045-1.053.141-1.518.378A3.879 3.879 0 0 0 6.047 6.24c-.237.465-.333.964-.378 1.518-.044.544-.044 1.215-.044 2.04V16.2c0 .826 0 1.497.044 2.041.045.554.141 1.053.378 1.518.371.729.965 1.323 1.694 1.694.465.237.964.333 1.518.378.117.01.241.016.37.021V20.1c-.08-.005-.156-.007-.229-.013-.445-.037-.688-.103-.865-.193a2.126 2.126 0 0 1-.929-.93c-.09-.176-.156-.418-.193-.864-.037-.457-.038-1.045-.038-1.9V9.8c0-.855 0-1.443.038-1.9.037-.445.103-.688.193-.865.204-.4.53-.725.93-.929.176-.09.419-.156.864-.193.457-.037 1.045-.038 1.9-.038h3.4c.855 0 1.443 0 1.9.038.445.037.688.103.865.193.4.204.725.53.929.93.09.176.157.419.193.864.006.073.01.15.014.23h1.752a10.24 10.24 0 0 0-.022-.371c-.045-.554-.141-1.053-.378-1.518a3.879 3.879 0 0 0-1.694-1.694c-.465-.237-.964-.333-1.518-.378-.544-.044-1.216-.044-2.04-.044H11.3z"
+                                fill="currentColor"
+                              ></path>
+                            </svg>
+                          </div>
+                          <svg
+                            viewBox="0 0 32 32"
+                            fill="none"
+                            width="20"
+                            height="20"
+                            class="pointer-events-none absolute inset-0 m-0.5 invisible"
+                          >
+                            <path
+                              d="M24.285 7.542a.878.878 0 0 1 1.22-.21.868.868 0 0 1 .21 1.214l-12 16.912a.877.877 0 0 1-1.415.02l-6-7.958a.868.868 0 0 1 .175-1.22.879.879 0 0 1 1.225.175l5.279 7L24.285 7.542z"
+                              fill="currentColor"
+                            ></path>
+                          </svg>
+                          <div class="pointer-events-none absolute inset-0 m-0.5 opacity-0">
+                            <div
+                              class="relative inline-block overflow-hidden"
+                              style="width: 20px; height: 20px"
+                            >
+                              <div
+                                class="absolute start-0 top-0"
+                                style="
+                                  display: inline-block;
+                                  line-height: 0;
+                                  font-size: 0px;
+                                  width: 20px;
+                                  height: 20px;
+                                  overflow: hidden;
+                                "
+                              >
+                                <div
+                                  style="
+                                    position: relative;
+                                    display: inline-block;
+                                    box-sizing: border-box;
+                                    padding: 0px;
+                                    margin: 0px;
+                                  "
+                                >
+                                  <canvas
+                                    width="26"
+                                    height="26"
+                                    style="width: 20px; height: 20px"
+                                  ></canvas>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          data-message-item="true"
+          data-message-id="d6feeb65-bf42-43f6-a5fa-a4021eb5dbd3_7463135159531973146_assistant"
+          class="mt-4 starting:opacity-0 starting:translate-y-[20vh] [transition:transform_0.3s_var(--ease-spring-snappy),opacity_150ms]"
+          style="padding-bottom: var(--composer-overlap, 0px)"
+        >
+          <div data-slot="flexbox" class="min-h-0 min-w-0 flex flex-col gap-x-0 gap-y-0 shrink-0">
+            <div class="w-full min-w-0">
+              <div
+                class="group/assistant-message relative min-w-0"
+                data-testid="assistant-message"
+                data-streaming-state="DONE"
+                data-streaming-complete="true"
+              >
+                <div class="mx-auto flex w-full max-w-3xl items-start gap-3 min-h-[26px]">
+                  <div class="-ms-1 flex shrink-0 items-center">
+                    <div class="" style="width: 24px; height: 24px" aria-hidden="true">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 1000 1000"
+                        width="1000"
+                        height="1000"
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          transform: translate3d(0px, 0px, 0px);
+                          content-visibility: visible;
+                        "
+                        preserveAspectRatio="xMidYMid meet"
+                      >
+                        <defs>
+                          <clipPath id="__lottie_element_2">
+                            <rect width="1000" height="1000" x="0" y="0"></rect>
+                          </clipPath>
+                          <g id="__lottie_element_4">
+                            <g
+                              clip-path="url(#__lottie_element_5)"
+                              style="display: block"
+                              transform="matrix(1,0,0,1,0,0)"
+                              opacity="1"
+                            >
+                              <g
+                                style="display: block"
+                                transform="matrix(-0.48918455839157104,0.8721802830696106,-0.8721802830696106,-0.48918455839157104,612.7960205078125,739.9660034179688)"
+                                opacity="1"
+                              >
+                                <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+                                  <path
+                                    fill="rgb(50,53,255)"
+                                    fill-opacity="1"
+                                    d=" M0,123.47799682617188 C-45.4640007019043,123.47799682617188 -82.31900024414062,68.19499969482422 -82.31900024414062,0 C-82.31900024414062,-68.19499969482422 -45.4640007019043,-123.47799682617188 0,-123.47799682617188 C45.4640007019043,-123.47799682617188 82.31900024414062,-68.19499969482422 82.31900024414062,0 C82.31900024414062,68.19499969482422 45.4640007019043,123.47799682617188 0,123.47799682617188z"
+                                  ></path>
+                                </g>
+                              </g>
+                              <g
+                                style="display: block"
+                                transform="matrix(-0.986900806427002,0.16132822632789612,-0.16132822632789612,-0.986900806427002,382.7149963378906,737.8040161132812)"
+                                opacity="1"
+                              >
+                                <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+                                  <path
+                                    fill="rgb(50,53,255)"
+                                    fill-opacity="1"
+                                    d=" M0,123.47799682617188 C-45.4640007019043,123.47799682617188 -82.31900024414062,68.19499969482422 -82.31900024414062,0 C-82.31900024414062,-68.19499969482422 -45.4640007019043,-123.47799682617188 0,-123.47799682617188 C45.4640007019043,-123.47799682617188 82.31900024414062,-68.19499969482422 82.31900024414062,0 C82.31900024414062,68.19499969482422 45.4640007019043,123.47799682617188 0,123.47799682617188z"
+                                  ></path>
+                                </g>
+                              </g>
+                              <g
+                                style="display: block"
+                                transform="matrix(-0.7414608001708984,-0.6709961891174316,0.6709961891174316,-0.7414608001708984,240.9510040283203,556.5709838867188)"
+                                opacity="1"
+                              >
+                                <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+                                  <path
+                                    fill="rgb(50,53,255)"
+                                    fill-opacity="1"
+                                    d=" M0,123.47799682617188 C-45.4640007019043,123.47799682617188 -82.31900024414062,68.19499969482422 -82.31900024414062,0 C-82.31900024414062,-68.19499969482422 -45.4640007019043,-123.47799682617188 0,-123.47799682617188 C45.4640007019043,-123.47799682617188 82.31900024414062,-68.19499969482422 82.31900024414062,0 C82.31900024414062,68.19499969482422 45.4640007019043,123.47799682617188 0,123.47799682617188z"
+                                  ></path>
+                                </g>
+                              </g>
+                              <g
+                                style="display: block"
+                                transform="matrix(0.062320202589035034,-0.9980562329292297,0.9980562329292297,0.062320202589035034,294.2569885253906,332.739013671875)"
+                                opacity="1"
+                              >
+                                <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+                                  <path
+                                    fill="rgb(50,53,255)"
+                                    fill-opacity="1"
+                                    d=" M0,123.47799682617188 C-45.4640007019043,123.47799682617188 -82.31900024414062,68.19499969482422 -82.31900024414062,0 C-82.31900024414062,-68.19499969482422 -45.4640007019043,-123.47799682617188 0,-123.47799682617188 C45.4640007019043,-123.47799682617188 82.31900024414062,-68.19499969482422 82.31900024414062,0 C82.31900024414062,68.19499969482422 45.4640007019043,123.47799682617188 0,123.47799682617188z"
+                                  ></path>
+                                </g>
+                              </g>
+                              <g
+                                style="display: block"
+                                transform="matrix(0.8191720843315125,-0.5735478401184082,0.5735478401184082,0.8191720843315125,502.49200439453125,234.85800170898438)"
+                                opacity="1"
+                              >
+                                <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+                                  <path
+                                    fill="rgb(50,53,255)"
+                                    fill-opacity="1"
+                                    d=" M0,123.47799682617188 C-45.4640007019043,123.47799682617188 -82.31900024414062,68.19499969482422 -82.31900024414062,0 C-82.31900024414062,-68.19499969482422 -45.4640007019043,-123.47799682617188 0,-123.47799682617188 C45.4640007019043,-123.47799682617188 82.31900024414062,-68.19499969482422 82.31900024414062,0 C82.31900024414062,68.19499969482422 45.4640007019043,123.47799682617188 0,123.47799682617188z"
+                                  ></path>
+                                </g>
+                              </g>
+                              <g
+                                style="display: block"
+                                transform="matrix(0.9591659903526306,0.2828437089920044,-0.2828437089920044,0.9591659903526306,708.8499755859375,336.635009765625)"
+                                opacity="1"
+                              >
+                                <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+                                  <path
+                                    fill="rgb(50,53,255)"
+                                    fill-opacity="1"
+                                    d=" M0,123.47799682617188 C-45.4640007019043,123.47799682617188 -82.31900024414062,68.19499969482422 -82.31900024414062,0 C-82.31900024414062,-68.19499969482422 -45.4640007019043,-123.47799682617188 0,-123.47799682617188 C45.4640007019043,-123.47799682617188 82.31900024414062,-68.19499969482422 82.31900024414062,0 C82.31900024414062,68.19499969482422 45.4640007019043,123.47799682617188 0,123.47799682617188z"
+                                  ></path>
+                                </g>
+                              </g>
+                              <g
+                                style="display: block"
+                                transform="matrix(0.37688717246055603,0.9262591600418091,-0.9262591600418091,0.37688717246055603,757.9400024414062,561.4290161132812)"
+                                opacity="1"
+                              >
+                                <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+                                  <path
+                                    fill="rgb(50,53,255)"
+                                    fill-opacity="1"
+                                    d=" M0,123.47799682617188 C-45.4640007019043,123.47799682617188 -82.31900024414062,68.19499969482422 -82.31900024414062,0 C-82.31900024414062,-68.19499969482422 -45.4640007019043,-123.47799682617188 0,-123.47799682617188 C45.4640007019043,-123.47799682617188 82.31900024414062,-68.19499969482422 82.31900024414062,0 C82.31900024414062,68.19499969482422 45.4640007019043,123.47799682617188 0,123.47799682617188z"
+                                  ></path>
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                          <clipPath id="__lottie_element_5">
+                            <path d="M0,0 L1000,0 L1000,1000 L0,1000z"></path>
+                          </clipPath>
+                          <linearGradient
+                            id="__lottie_element_32"
+                            spreadMethod="pad"
+                            gradientUnits="userSpaceOnUse"
+                            x1="62.152000427246094"
+                            y1="-436.093994140625"
+                            x2="256.6470031738281"
+                            y2="297.9259948730469"
+                          >
+                            <stop offset="0%" stop-color="rgb(243,86,255)"></stop>
+                            <stop offset="100%" stop-color="rgb(70,65,255)"></stop>
+                          </linearGradient>
+                          <mask id="__lottie_element_4_1" mask-type="alpha">
+                            <use xlink:href="#__lottie_element_4"></use>
+                          </mask>
+                        </defs>
+                        <g clip-path="url(#__lottie_element_2)">
+                          <g style="display: block" mask="url(#__lottie_element_4_1)">
+                            <g
+                              transform="matrix(1,0,0,1,507.2560119628906,493.43701171875)"
+                              opacity="1"
+                            >
+                              <g
+                                opacity="1"
+                                transform="matrix(1,0,0,1,-6.388999938964844,9.222999572753906)"
+                              >
+                                <path
+                                  fill="url(#__lottie_element_32)"
+                                  fill-opacity="1"
+                                  d=" M500,-500 C500,-500 500,500 500,500 C500,500 -500,500 -500,500 C-500,500 -500,-500 -500,-500 C-500,-500 500,-500 500,-500z"
+                                ></path>
+                              </g>
+                            </g>
+                          </g>
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="min-w-0 flex-1"><div class="w-full min-w-0"></div></div>
+                </div>
+                <div class="mt-4">
+                  <div class="w-full min-w-0">
+                    <div class="min-w-0 space-y-6">
+                      <div class="min-w-0">
+                        <div class="markdown-content min-w-0">
+                          <div
+                            class="stack mx-auto flex max-w-3xl min-w-0 flex-col items-center overflow-visible"
+                          >
+                            <div class="min-w-0 w-full">
+                              <div>
+                                <div
+                                  dir="auto"
+                                  class="ur-markdown prose prose-trimmed citation-aware"
+                                >
+                                  <div
+                                    class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                  >
+                                    <p>
+                                      <span class="font-semibold" data-streamdown="strong"
+                                        >Bold ideas</span
+                                      >
+                                      travel fast, <em>italic doubts</em> linger longer, and a good
+                                      rabbit hole is worth a click:
+                                      <a
+                                        href="https://l.meta.ai/?u=https%3A%2F%2Fwww.deadrat.in%2F&amp;h=AUCUnVe5a0NTVUBMcXxzVf79rctObmK3S54gfnnKpTE6Ia0GtN-dhqGiiuTg6YsjpyIr0u-TmRBaQZYEIvY6lL0vBRRxABBRZHBBqlWlpgfJgH-0SFaG6dvuo9KRI1QoTlj7rWIePmXvoLZ9edhossOQCM0JyVYt4464xw"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="text-primary underline hover:no-underline"
+                                        >link to deadrat.in</a
+                                      >.
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="min-w-0">
+                        <div class="markdown-content min-w-0">
+                          <div
+                            class="stack mx-auto flex max-w-3xl min-w-0 flex-col items-center overflow-visible"
+                          >
+                            <div class="min-w-0 w-full">
+                              <div>
+                                <div class="ur-code-block">
+                                  <div class="ur-code-block__header">
+                                    <div class="ur-code-block__header-left">
+                                      <span class="ur-code-block__metadata">Elixir</span>
+                                    </div>
+                                    <div class="ur-code-block__header-right">
+                                      <div class="contents">
+                                        <button
+                                          aria-label="Copy response"
+                                          class="enabled:active:scale-98 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-round focus:not-focus-visible:outline-none transition-transform duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 select-none size-7 hover:enabled:bg-fill-secondary-elevated enabled:active:filter-[brightness(0.965)] dark:enabled:active:filter-[brightness(0.9)] text-text-secondary"
+                                          data-slot="tooltip-trigger"
+                                          data-state="closed"
+                                        >
+                                          <div class="relative">
+                                            <div class="">
+                                              <svg
+                                                viewBox="0 0 32 32"
+                                                fill="none"
+                                                width="20"
+                                                height="20"
+                                                class="m-0.5"
+                                              >
+                                                <path
+                                                  fill-rule="evenodd"
+                                                  clip-rule="evenodd"
+                                                  d="M17.3 10.125c-.826 0-1.497 0-2.041.044-.554.045-1.053.141-1.518.378a3.879 3.879 0 0 0-1.694 1.694c-.237.465-.333.964-.378 1.518-.045.544-.044 1.216-.044 2.04V22.2c0 .826 0 1.497.044 2.041.045.554.141 1.053.378 1.518.371.729.965 1.323 1.694 1.694.465.237.964.333 1.518.378.544.044 1.215.044 2.04.044H20.7c.826 0 1.497 0 2.041-.044.554-.045 1.053-.141 1.518-.378a3.879 3.879 0 0 0 1.694-1.694c.237-.465.333-.964.378-1.518.044-.544.044-1.215.044-2.04V15.8c0-.825 0-1.497-.044-2.041-.045-.554-.141-1.053-.378-1.518a3.879 3.879 0 0 0-1.694-1.694c-.465-.237-.964-.333-1.518-.378-.544-.045-1.215-.044-2.04-.044H17.3zm3.4 1.75c.855 0 1.443 0 1.9.038.445.037.688.103.865.193.4.204.725.53.929.93.09.176.157.418.193.864.037.457.038 1.045.038 1.9v6.4c0 .855 0 1.443-.038 1.9-.037.445-.103.688-.193.865-.204.4-.53.725-.93.929-.176.09-.418.157-.864.193-.457.037-1.045.038-1.9.038h-3.4c-.855 0-1.443 0-1.9-.038-.446-.037-.688-.103-.865-.193a2.126 2.126 0 0 1-.929-.93c-.09-.176-.156-.418-.193-.864-.037-.457-.038-1.045-.038-1.9v-6.4c0-.855 0-1.443.038-1.9.037-.446.103-.688.193-.865.204-.4.53-.725.93-.929.176-.09.418-.156.864-.193.457-.037 1.045-.038 1.9-.038h3.4z"
+                                                  fill="currentColor"
+                                                ></path>
+                                                <path
+                                                  d="M11.3 4.125c-.825 0-1.497 0-2.041.044-.554.045-1.053.141-1.518.378A3.879 3.879 0 0 0 6.047 6.24c-.237.465-.333.964-.378 1.518-.044.544-.044 1.215-.044 2.04V16.2c0 .826 0 1.497.044 2.041.045.554.141 1.053.378 1.518.371.729.965 1.323 1.694 1.694.465.237.964.333 1.518.378.117.01.241.016.37.021V20.1c-.08-.005-.156-.007-.229-.013-.445-.037-.688-.103-.865-.193a2.126 2.126 0 0 1-.929-.93c-.09-.176-.156-.418-.193-.864-.037-.457-.038-1.045-.038-1.9V9.8c0-.855 0-1.443.038-1.9.037-.445.103-.688.193-.865.204-.4.53-.725.93-.929.176-.09.419-.156.864-.193.457-.037 1.045-.038 1.9-.038h3.4c.855 0 1.443 0 1.9.038.445.037.688.103.865.193.4.204.725.53.929.93.09.176.157.419.193.864.006.073.01.15.014.23h1.752a10.24 10.24 0 0 0-.022-.371c-.045-.554-.141-1.053-.378-1.518a3.879 3.879 0 0 0-1.694-1.694c-.465-.237-.964-.333-1.518-.378-.544-.044-1.216-.044-2.04-.044H11.3z"
+                                                  fill="currentColor"
+                                                ></path>
+                                              </svg>
+                                            </div>
+                                            <svg
+                                              viewBox="0 0 32 32"
+                                              fill="none"
+                                              width="20"
+                                              height="20"
+                                              class="pointer-events-none absolute inset-0 m-0.5 invisible"
+                                            >
+                                              <path
+                                                d="M24.285 7.542a.878.878 0 0 1 1.22-.21.868.868 0 0 1 .21 1.214l-12 16.912a.877.877 0 0 1-1.415.02l-6-7.958a.868.868 0 0 1 .175-1.22.879.879 0 0 1 1.225.175l5.279 7L24.285 7.542z"
+                                                fill="currentColor"
+                                              ></path>
+                                            </svg>
+                                            <div
+                                              class="pointer-events-none absolute inset-0 m-0.5 opacity-0"
+                                            >
+                                              <div
+                                                class="relative inline-block overflow-hidden"
+                                                style="width: 20px; height: 20px"
+                                              >
+                                                <div
+                                                  class="absolute start-0 top-0"
+                                                  style="
+                                                    display: inline-block;
+                                                    line-height: 0;
+                                                    font-size: 0px;
+                                                    width: 20px;
+                                                    height: 20px;
+                                                    overflow: hidden;
+                                                  "
+                                                >
+                                                  <div
+                                                    style="
+                                                      position: relative;
+                                                      display: inline-block;
+                                                      box-sizing: border-box;
+                                                      padding: 0px;
+                                                      margin: 0px;
+                                                    "
+                                                  >
+                                                    <canvas
+                                                      width="26"
+                                                      height="26"
+                                                      style="width: 20px; height: 20px"
+                                                    ></canvas>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </button>
+                                      </div>
+                                      <div class="contents">
+                                        <button
+                                          aria-label="Download"
+                                          class="enabled:active:scale-98 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-round focus:not-focus-visible:outline-none transition-transform duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 select-none size-7 hover:enabled:bg-fill-secondary-elevated enabled:active:filter-[brightness(0.965)] dark:enabled:active:filter-[brightness(0.9)] text-text-secondary"
+                                          data-slot="tooltip-trigger"
+                                          data-state="closed"
+                                        >
+                                          <svg
+                                            viewBox="0 0 32 32"
+                                            fill="none"
+                                            width="20"
+                                            height="20"
+                                            class="m-0.5"
+                                          >
+                                            <path
+                                              d="M6.125 14.8c0-.825 0-1.497.044-2.041.045-.554.141-1.053.378-1.518A3.879 3.879 0 0 1 8.24 9.547c.465-.237.964-.333 1.518-.378.544-.044 1.216-.044 2.04-.044h.33v1.75h-.33c-.854 0-1.442 0-1.899.038-.445.037-.688.103-.865.193-.4.204-.725.53-.929.93-.09.176-.156.418-.193.864-.037.457-.038 1.045-.038 1.9v5.9c0 .855 0 1.443.038 1.9.037.445.103.688.193.865.204.4.53.725.93.929.176.09.419.157.864.193.457.037 1.045.038 1.9.038h8.4c.855 0 1.443 0 1.9-.038.445-.037.688-.103.865-.193.4-.204.725-.53.929-.93.09-.176.157-.418.193-.864.037-.457.038-1.045.038-1.9v-5.9c0-.855 0-1.443-.038-1.9-.037-.446-.103-.688-.193-.865a2.126 2.126 0 0 0-.93-.929c-.176-.09-.418-.156-.864-.193-.457-.037-1.045-.038-1.9-.038h-.33v-1.75h.33c.826 0 1.497 0 2.041.044.554.045 1.053.141 1.518.378a3.88 3.88 0 0 1 1.694 1.694c.237.465.333.964.378 1.518.044.544.044 1.216.044 2.04V20.7c0 .826 0 1.497-.044 2.041-.045.554-.141 1.053-.378 1.518a3.879 3.879 0 0 1-1.694 1.694c-.465.237-.964.333-1.518.378-.544.044-1.215.044-2.04.044H11.8c-.825 0-1.497 0-2.041-.044-.554-.045-1.053-.141-1.518-.378a3.879 3.879 0 0 1-1.694-1.694c-.237-.465-.333-.964-.378-1.518-.044-.544-.044-1.215-.044-2.04V14.8z"
+                                              fill="currentColor"
+                                            ></path>
+                                            <path
+                                              d="M11.12 15.006a.89.89 0 0 1 .262-.625.89.89 0 0 1 .625-.262.83.83 0 0 1 .612.263l.386.414c.698.747 1.407 1.483 2.12 2.216V4a.875.875 0 0 1 1.75 0v13.006a151.522 151.522 0 0 0 2.507-2.625.83.83 0 0 1 .612-.262.89.89 0 0 1 .625.263.89.89 0 0 1 .262.625.83.83 0 0 1-.263.612l-.414.386a153.944 153.944 0 0 0-3.663 3.54.759.759 0 0 1-1.09 0 153.955 153.955 0 0 0-4.07-3.927.83.83 0 0 1-.262-.612z"
+                                              fill="currentColor"
+                                            ></path>
+                                          </svg>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="ur-code-block__content">
+                                    <div dir="auto" class="prose">
+                                      <div
+                                        class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                      >
+                                        <div
+                                          class="my-4 flex w-full flex-col gap-2 rounded-xl border border-border bg-sidebar p-2"
+                                          data-language="elixir"
+                                          data-streamdown="code-block"
+                                          style="
+                                            content-visibility: auto;
+                                            contain-intrinsic-size: auto 200px;
+                                          "
+                                        >
+                                          <div
+                                            class="flex h-8 items-center text-muted-foreground text-xs"
+                                            data-language="elixir"
+                                            data-streamdown="code-block-header"
+                                          >
+                                            <span class="ml-1 font-mono lowercase">elixir</span>
+                                          </div>
+                                          <div
+                                            class="language-elixir overflow-x-auto rounded-md border border-border bg-background p-4 text-sm"
+                                            data-language="elixir"
+                                            data-streamdown="code-block-body"
+                                          >
+                                            <pre
+                                              class="language-elixir bg-[var(--sdm-bg,inherit] dark:bg-[var(--shiki-dark-bg,var(--sdm-bg,inherit)]"
+                                              style=""
+                                            ><code class="[counter-increment:line_0] [counter-reset:line]"><span class="block before:content-[counter(line)] before:inline-block before:[counter-increment:line] before:w-6 before:mr-4 before:text-[13px] before:text-right before:text-muted-foreground/50 before:font-mono before:select-none"><span class="text-[var(--sdm-c,inherit)] dark:text-[var(--shiki-dark,var(--sdm-c,inherit))]" style="--sdm-c: #6F42C1; --shiki-dark: #B392F0;">IO</span><span class="text-[var(--sdm-c,inherit)] dark:text-[var(--shiki-dark,var(--sdm-c,inherit))]" style="--sdm-c: #212121; --shiki-dark: #BBBBBB;">.</span><span class="text-[var(--sdm-c,inherit)] dark:text-[var(--shiki-dark,var(--sdm-c,inherit))]" style="--sdm-c: #6F42C1; --shiki-dark: #B392F0;">puts</span><span class="text-[var(--sdm-c,inherit)] dark:text-[var(--shiki-dark,var(--sdm-c,inherit))]" style="--sdm-c: #24292EFF; --shiki-dark: #B392F0;">(</span><span class="text-[var(--sdm-c,inherit)] dark:text-[var(--shiki-dark,var(--sdm-c,inherit))]" style="--sdm-c: #22863A; --shiki-dark: #FFAB70;">"Hello, world!"</span><span class="text-[var(--sdm-c,inherit)] dark:text-[var(--shiki-dark,var(--sdm-c,inherit))]" style="--sdm-c: #24292EFF; --shiki-dark: #B392F0;">)</span></span></code></pre>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="min-w-0">
+                        <div class="markdown-content min-w-0">
+                          <div
+                            class="stack mx-auto flex max-w-3xl min-w-0 flex-col items-center overflow-visible"
+                          >
+                            <div class="min-w-0 w-full">
+                              <div>
+                                <div
+                                  dir="auto"
+                                  class="ur-markdown prose prose-trimmed citation-aware"
+                                >
+                                  <div
+                                    class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                  >
+                                    <h2
+                                      class="mt-6 mb-2 font-semibold text-2xl"
+                                      data-streamdown="heading-2"
+                                    >
+                                      Labor snapshot
+                                    </h2>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="min-w-0">
+                        <div class="markdown-content min-w-0">
+                          <div
+                            class="stack mx-auto flex max-w-3xl min-w-0 flex-col items-center overflow-visible"
+                          >
+                            <div class="min-w-0 w-full">
+                              <div class="group/table">
+                                <div class="w-full -mt-3">
+                                  <div class="w-full overflow-x-auto pb-2 ur-table__wrapper">
+                                    <table class="table-auto" style="min-width: 900px">
+                                      <thead
+                                        class="bg-color-(--surface-quaternary) border-color-(--fill-divider) border-b-2 border-solid"
+                                      >
+                                        <tr>
+                                          <th
+                                            class="text-subheadline text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline [&amp;_*]:font-semibold"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>Country</p>
+                                              </div>
+                                            </div>
+                                          </th>
+                                          <th
+                                            class="text-subheadline text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline [&amp;_*]:font-semibold"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>Median wages</p>
+                                              </div>
+                                            </div>
+                                          </th>
+                                          <th
+                                            class="text-subheadline text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline [&amp;_*]:font-semibold"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>Average work hours per week</p>
+                                              </div>
+                                            </div>
+                                          </th>
+                                          <th
+                                            class="text-subheadline text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline [&amp;_*]:font-semibold"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>Paid leave days</p>
+                                              </div>
+                                            </div>
+                                          </th>
+                                          <th
+                                            class="text-subheadline text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline [&amp;_*]:font-semibold"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>Union membership rate</p>
+                                              </div>
+                                            </div>
+                                          </th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr
+                                          class="border-color-(--fill-divider) border-t border-solid"
+                                        >
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline [&amp;_*]:font-medium"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>Denmark</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ $58,000 /yr</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ 33 hrs</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>35-40 days</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ 60-64%</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                        <tr
+                                          class="border-color-(--fill-divider) border-t border-solid"
+                                        >
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline [&amp;_*]:font-medium"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>Sweden</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ $46,000 /yr</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ 31 hrs</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>34 days</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ 68%</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                        <tr
+                                          class="border-color-(--fill-divider) border-t border-solid"
+                                        >
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline [&amp;_*]:font-medium"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>USA</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ $62,000 /yr</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ 38-40 hrs</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>0 statutory</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ 10%</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                        <tr
+                                          class="border-color-(--fill-divider) border-t border-solid"
+                                        >
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline [&amp;_*]:font-medium"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>India</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ $4,000 /yr</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ 48 hrs</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>25-35 days</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ 10-15%</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                        <tr
+                                          class="border-color-(--fill-divider) border-t border-solid"
+                                        >
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline [&amp;_*]:font-medium"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>Pakistan</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ $3,500 /yr</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ 48 hrs</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>35 days</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ 2-3%</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                        <tr
+                                          class="border-color-(--fill-divider) border-t border-solid"
+                                        >
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline [&amp;_*]:font-medium"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>Nigeria</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ $2,500 /yr</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ 40 hrs</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ 5-20 days</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td
+                                            class="text-subheadline leading-[22px] text-text-primary py-2 px-4 text-start align-top break-words first:ps-0"
+                                          >
+                                            <div
+                                              dir="auto"
+                                              class="prose [&amp;&gt;div]:mb-0 [&amp;&gt;div]:gap-0 [&amp;_*]:text-subheadline"
+                                            >
+                                              <div
+                                                class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                              >
+                                                <p>~ 10%</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                                <div class="flex justify-end">
+                                  <div class="contents">
+                                    <button
+                                      aria-label="Copy table"
+                                      class="enabled:active:scale-98 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-round focus:not-focus-visible:outline-none transition-transform duration-150 ease-in-out disabled:pointer-events-none disabled:opacity-50 select-none size-8 hover:enabled:bg-fill-secondary-elevated enabled:active:filter-[brightness(0.965)] dark:enabled:active:filter-[brightness(0.9)]"
+                                      data-slot="tooltip-trigger"
+                                      data-state="closed"
+                                    >
+                                      <div class="relative">
+                                        <div class="">
+                                          <svg
+                                            viewBox="0 0 32 32"
+                                            fill="none"
+                                            width="20"
+                                            height="20"
+                                            class="m-0.5"
+                                          >
+                                            <path
+                                              fill-rule="evenodd"
+                                              clip-rule="evenodd"
+                                              d="M17.3 10.125c-.826 0-1.497 0-2.041.044-.554.045-1.053.141-1.518.378a3.879 3.879 0 0 0-1.694 1.694c-.237.465-.333.964-.378 1.518-.045.544-.044 1.216-.044 2.04V22.2c0 .826 0 1.497.044 2.041.045.554.141 1.053.378 1.518.371.729.965 1.323 1.694 1.694.465.237.964.333 1.518.378.544.044 1.215.044 2.04.044H20.7c.826 0 1.497 0 2.041-.044.554-.045 1.053-.141 1.518-.378a3.879 3.879 0 0 0 1.694-1.694c.237-.465.333-.964.378-1.518.044-.544.044-1.215.044-2.04V15.8c0-.825 0-1.497-.044-2.041-.045-.554-.141-1.053-.378-1.518a3.879 3.879 0 0 0-1.694-1.694c-.465-.237-.964-.333-1.518-.378-.544-.045-1.215-.044-2.04-.044H17.3zm3.4 1.75c.855 0 1.443 0 1.9.038.445.037.688.103.865.193.4.204.725.53.929.93.09.176.157.418.193.864.037.457.038 1.045.038 1.9v6.4c0 .855 0 1.443-.038 1.9-.037.445-.103.688-.193.865-.204.4-.53.725-.93.929-.176.09-.418.157-.864.193-.457.037-1.045.038-1.9.038h-3.4c-.855 0-1.443 0-1.9-.038-.446-.037-.688-.103-.865-.193a2.126 2.126 0 0 1-.929-.93c-.09-.176-.156-.418-.193-.864-.037-.457-.038-1.045-.038-1.9v-6.4c0-.855 0-1.443.038-1.9.037-.446.103-.688.193-.865.204-.4.53-.725.93-.929.176-.09.418-.156.864-.193.457-.037 1.045-.038 1.9-.038h3.4z"
+                                              fill="currentColor"
+                                            ></path>
+                                            <path
+                                              d="M11.3 4.125c-.825 0-1.497 0-2.041.044-.554.045-1.053.141-1.518.378A3.879 3.879 0 0 0 6.047 6.24c-.237.465-.333.964-.378 1.518-.044.544-.044 1.215-.044 2.04V16.2c0 .826 0 1.497.044 2.041.045.554.141 1.053.378 1.518.371.729.965 1.323 1.694 1.694.465.237.964.333 1.518.378.117.01.241.016.37.021V20.1c-.08-.005-.156-.007-.229-.013-.445-.037-.688-.103-.865-.193a2.126 2.126 0 0 1-.929-.93c-.09-.176-.156-.418-.193-.864-.037-.457-.038-1.045-.038-1.9V9.8c0-.855 0-1.443.038-1.9.037-.445.103-.688.193-.865.204-.4.53-.725.93-.929.176-.09.419-.156.864-.193.457-.037 1.045-.038 1.9-.038h3.4c.855 0 1.443 0 1.9.038.445.037.688.103.865.193.4.204.725.53.929.93.09.176.157.419.193.864.006.073.01.15.014.23h1.752a10.24 10.24 0 0 0-.022-.371c-.045-.554-.141-1.053-.378-1.518a3.879 3.879 0 0 0-1.694-1.694c-.465-.237-.964-.333-1.518-.378-.544-.044-1.216-.044-2.04-.044H11.3z"
+                                              fill="currentColor"
+                                            ></path>
+                                          </svg>
+                                        </div>
+                                        <svg
+                                          viewBox="0 0 32 32"
+                                          fill="none"
+                                          width="20"
+                                          height="20"
+                                          class="pointer-events-none absolute inset-0 m-0.5 invisible"
+                                        >
+                                          <path
+                                            d="M24.285 7.542a.878.878 0 0 1 1.22-.21.868.868 0 0 1 .21 1.214l-12 16.912a.877.877 0 0 1-1.415.02l-6-7.958a.868.868 0 0 1 .175-1.22.879.879 0 0 1 1.225.175l5.279 7L24.285 7.542z"
+                                            fill="currentColor"
+                                          ></path>
+                                        </svg>
+                                        <div
+                                          class="pointer-events-none absolute inset-0 m-0.5 opacity-0"
+                                        >
+                                          <div
+                                            class="relative inline-block overflow-hidden"
+                                            style="width: 20px; height: 20px"
+                                          >
+                                            <div
+                                              class="absolute start-0 top-0"
+                                              style="
+                                                display: inline-block;
+                                                line-height: 0;
+                                                font-size: 0px;
+                                                width: 20px;
+                                                height: 20px;
+                                                overflow: hidden;
+                                              "
+                                            >
+                                              <div
+                                                style="
+                                                  position: relative;
+                                                  display: inline-block;
+                                                  box-sizing: border-box;
+                                                  padding: 0px;
+                                                  margin: 0px;
+                                                "
+                                              >
+                                                <canvas
+                                                  width="26"
+                                                  height="26"
+                                                  style="width: 20px; height: 20px"
+                                                ></canvas>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="min-w-0">
+                        <div class="markdown-content min-w-0">
+                          <div
+                            class="stack mx-auto flex max-w-3xl min-w-0 flex-col items-center overflow-visible"
+                          >
+                            <div class="min-w-0 w-full">
+                              <div>
+                                <div
+                                  dir="auto"
+                                  class="ur-markdown prose prose-trimmed citation-aware"
+                                >
+                                  <div
+                                    class="space-y-4 whitespace-normal [&amp;&gt;*:first-child]:mt-0 [&amp;&gt;*:last-child]:mb-0 mb-4 flex flex-col gap-6"
+                                  >
+                                    <p>
+                                      Paid leave combines statutory vacation plus public holidays
+                                      where reported; union density is employee membership as share
+                                      of employees. Figures are approximate 2024-2025 averages and
+                                      vary by sector, state, and data source.
+                                      <a
+                                        data-testid="citation-pill"
+                                        class="bg-fill-secondary hover:bg-fill-tertiary relative -top-0.5 inline-flex h-[18px] w-[18px] cursor-pointer items-center justify-center rounded-full align-middle text-inherit no-underline transition-colors"
+                                        aria-label="en.wikipedia.org"
+                                        data-state="closed"
+                                        data-slot="hover-card-trigger"
+                                        ><svg
+                                          viewBox="0 0 16 16"
+                                          fill="currentColor"
+                                          width="1em"
+                                          height="1em"
+                                          class="text-text-secondary h-2.5 w-2.5"
+                                        >
+                                          <g clip-path="url(#_r_4g_)">
+                                            <path
+                                              d="M4.94 6.542a3.41 3.41 0 0 1 4.807 0 .759.759 0 0 1 0 1.075.767.767 0 0 1-1.08 0 1.878 1.878 0 0 0-2.648 0L4.29 9.34a2.42 2.42 0 0 0-.001 3.432 2.445 2.445 0 0 0 3.447 0l1.198-1.193a.766.766 0 0 1 1.08 0 .759.759 0 0 1 0 1.076l-1.198 1.192a3.976 3.976 0 0 1-5.607 0 3.936 3.936 0 0 1 .001-5.582l1.73-1.724z"
+                                            ></path>
+                                            <path
+                                              d="M7.468 2.432a3.976 3.976 0 0 1 5.607 0 3.936 3.936 0 0 1 0 5.582l-1.732 1.724a3.409 3.409 0 0 1-4.806 0 .758.758 0 0 1 0-1.075.766.766 0 0 1 1.08 0 1.878 1.878 0 0 0 2.647 0l1.73-1.724a2.42 2.42 0 0 0 0-3.432 2.445 2.445 0 0 0-3.446 0L7.35 4.7a.766.766 0 0 1-1.08 0 .758.758 0 0 1 0-1.075l1.198-1.193z"
+                                            ></path>
+                                          </g>
+                                          <defs>
+                                            <clipPath id="_r_4g_">
+                                              <path d="M0 0H16V16H0z"></path>
+                                            </clipPath>
+                                          </defs></svg
+                                      ></a>
+                                    </p>
+                                    <h2
+                                      class="mt-6 mb-2 font-semibold text-2xl"
+                                      data-streamdown="heading-2"
+                                    >
+                                      Math
+                                    </h2>
+                                    <p>Euler's identity:</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="animate-in fade-in-0 min-w-0 duration-300 ease-out">
+                        <div class="markdown-content min-w-0">
+                          <div
+                            class="stack mx-auto flex max-w-3xl min-w-0 flex-col items-center overflow-visible"
+                          >
+                            <div class="flex min-w-0 w-full justify-center">
+                              <img
+                                alt="e^{i\pi}+1=0"
+                                class="my-1 inline-block max-w-full align-middle dark:invert"
+                                style="height: 25.5744px"
+                                src="https://scontent.xx.fbcdn.net/v/t58.90637-6/703145812_2421541465016638_8152434616996485308_n.png/latex.png?_nc_ht=scontent.xx.fbcdn.net&amp;_nc_cat=110&amp;_nc_ohc=QbWgLdVcyOgQ7kNvwEcmMI5&amp;ccb=14-4&amp;oh=00_Af4lbVHB3MzJLoi0P2SsGqf4l7XeNmwQgYkfA0svUaO9qg&amp;oe=6A10A180&amp;_nc_sid=9d332d"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="group/assistant-message-actions mx-auto flex min-h-11 max-w-3xl items-center select-none"
+                    >
+                      <div
+                        data-slot="flexbox"
+                        class="min-h-0 min-w-0 flex items-center gap-x-1 gap-y-1 [&amp;&gt;*:first-child]:-ms-1"
+                      >
+                        <div class="flex items-center gap-1">
+                          <div class="flex" data-state="closed" data-slot="tooltip-trigger">
+                            <div class="contents">
+                              <button
+                                aria-label="Regenerate response"
+                                class="enabled:active:scale-98 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-round focus:not-focus-visible:outline-none transition-transform duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 select-none size-7 hover:enabled:bg-fill-secondary-elevated enabled:active:filter-[brightness(0.965)] dark:enabled:active:filter-[brightness(0.9)] text-text-secondary"
+                                data-slot="dropdown-menu-trigger"
+                                type="button"
+                                id="radix-_r_4b_"
+                                aria-haspopup="menu"
+                                aria-expanded="false"
+                                data-state="closed"
+                              >
+                                <svg
+                                  viewBox="0 0 32 32"
+                                  fill="none"
+                                  width="20"
+                                  height="20"
+                                  class="m-0.5"
+                                >
+                                  <path
+                                    d="M15.852 6.96a.876.876 0 0 1 .943-.804 9.84 9.84 0 0 1 6.187 2.861c3.403 3.403 3.802 8.67 1.2 12.512l.965.966a1 1 0 0 1-.444 1.672l-4.008 1.093a1 1 0 0 1-1.228-1.227l1.093-4.009a1 1 0 0 1 1.672-.444l.683.683a8.125 8.125 0 0 0-6.26-12.362.875.875 0 0 1-.803-.942zM6.851 9.503a1 1 0 0 1 .444-1.672l4.008-1.093a1 1 0 0 1 1.228 1.228l-1.093 4.008a1 1 0 0 1-1.672.444l-.683-.683a8.127 8.127 0 0 0 6.265 12.362.875.875 0 0 1-.14 1.745 9.84 9.84 0 0 1-6.19-2.86c-3.404-3.403-3.802-8.67-1.2-12.512l-.967-.967z"
+                                    fill="currentColor"
+                                  ></path>
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                          <div class="contents">
+                            <button
+                              aria-label="Like this response"
+                              class="enabled:active:scale-98 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-round focus:not-focus-visible:outline-none transition-transform duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 select-none size-7 hover:enabled:bg-fill-secondary-elevated enabled:active:filter-[brightness(0.965)] dark:enabled:active:filter-[brightness(0.9)] text-text-secondary"
+                              data-slot="tooltip-trigger"
+                              data-state="closed"
+                            >
+                              <div
+                                class="m-0.5 flex size-5 items-center justify-center overflow-visible"
+                              >
+                                <div
+                                  class="lottie-fill-current shrink-0"
+                                  style="width: 24px; height: 24px"
+                                  aria-hidden="true"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    viewBox="0 0 720 720"
+                                    width="720"
+                                    height="720"
+                                    style="
+                                      width: 100%;
+                                      height: 100%;
+                                      transform: translate3d(0px, 0px, 0px);
+                                      content-visibility: visible;
+                                    "
+                                    preserveAspectRatio="xMidYMid meet"
+                                  >
+                                    <defs>
+                                      <clipPath id="__lottie_element_34">
+                                        <rect width="720" height="720" x="0" y="0"></rect>
+                                      </clipPath>
+                                      <clipPath id="__lottie_element_44">
+                                        <path d="M0,0 L108,0 L108,108 L0,108z"></path>
+                                      </clipPath>
+                                    </defs>
+                                    <g clip-path="url(#__lottie_element_34)">
+                                      <g
+                                        clip-path="url(#__lottie_element_44)"
+                                        style="display: none"
+                                      >
+                                        <g style="display: none">
+                                          <g><path></path></g>
+                                        </g>
+                                        <g style="display: none">
+                                          <g><path></path></g>
+                                        </g>
+                                        <g style="display: none">
+                                          <g><path></path></g>
+                                        </g>
+                                        <g style="display: none">
+                                          <g><path></path></g>
+                                        </g>
+                                        <g style="display: none">
+                                          <g><path></path></g>
+                                        </g>
+                                        <g style="display: none">
+                                          <g><path></path></g>
+                                        </g>
+                                        <g style="display: none">
+                                          <g><path></path></g>
+                                        </g>
+                                      </g>
+                                      <g
+                                        class="svg"
+                                        style="display: block"
+                                        transform="matrix(16.660667419433594,0,0,16.660667419433594,160.07228088378906,160.32200622558594)"
+                                        opacity="1"
+                                      >
+                                        <g
+                                          opacity="1"
+                                          transform="matrix(1,0,0,1,12.088000297546387,11.75)"
+                                        >
+                                          <path
+                                            fill="rgb(0,0,0)"
+                                            fill-opacity="1"
+                                            d=" M-6.0879998207092285,0.550000011920929 C-6.089000225067139,0.5889999866485596 -6.089000225067139,0.6269999742507935 -6.089000225067139,0.6660000085830688 C-6.089000225067139,0.6660000085830688 -6.089000225067139,9.25 -6.089000225067139,9.25 C-6.089000225067139,9.25 -9.088000297546387,9.25 -9.088000297546387,9.25 C-9.36400032043457,9.25 -9.588000297546387,9.026000022888184 -9.588000297546387,8.75 C-9.588000297546387,8.75 -9.588000297546387,0.75 -9.588000297546387,0.75 C-9.588000297546387,0.4740000069141388 -9.36400032043457,0.25 -9.088000297546387,0.25 C-9.088000297546387,0.25 -6.0879998207092285,0.25 -6.0879998207092285,0.25 C-6.0879998207092285,0.25 -6.0879998207092285,0.550000011920929 -6.0879998207092285,0.550000011920929z M-4.0879998207092285,9.25 C-4.0879998207092285,9.25 -4.0879998207092285,0.5680000185966492 -4.0879998207092285,0.5680000185966492 C-4.072999954223633,-0.17499999701976776 -3.8929998874664307,-0.9049999713897705 -3.561000108718872,-1.5700000524520874 C-3.561000108718872,-1.5700000524520874 -2.6710000038146973,-3.3480000495910645 -2.6710000038146973,-3.3480000495910645 C-1.9589999914169312,-4.7729997634887695 -1.5889999866485596,-6.3429999351501465 -1.5889999866485596,-7.935999870300293 C-1.5889999866485596,-7.935999870300293 -1.5889999866485596,-8.75 -1.5889999866485596,-8.75 C-1.5889999866485596,-9.026000022888184 -1.3650000095367432,-9.25 -1.0889999866485596,-9.25 C0.01600000075995922,-9.25 0.9110000133514404,-8.354999542236328 0.9110000133514404,-7.25 C0.9110000133514404,-7.25 0.9110000133514404,-3.240000009536743 0.9110000133514404,-3.240000009536743 C0.9110000133514404,-2.4170000553131104 1.5789999961853027,-1.75 2.4019999504089355,-1.75 C2.4019999504089355,-1.75 7.6620001792907715,-1.75 7.6620001792907715,-1.75 C8.489999771118164,-1.75 9.161999702453613,-1.0779999494552612 9.161999702453613,-0.25 C9.161999702453613,-0.0020000000949949026 9.10099983215332,0.24199999868869781 8.982999801635742,0.460999995470047 C8.791999816894531,0.8149999976158142 8.831000328063965,1.2489999532699585 9.083000183105469,1.562999963760376 C9.60099983215332,2.2079999446868896 9.49899959564209,3.1510000228881836 8.854000091552734,3.6689999103546143 C8.809000015258789,3.7049999237060547 8.762999534606934,3.73799991607666 8.71399974822998,3.7690000534057617 C8.312999725341797,4.0229997634887695 8.147000312805176,4.52400016784668 8.3149995803833,4.9679999351501465 C8.57699966430664,5.6570000648498535 8.298999786376953,6.434000015258789 7.659999847412109,6.801000118255615 C7.323999881744385,6.99399995803833 7.130000114440918,7.364999771118164 7.1620001792907715,7.750999927520752 C7.1620001792907715,8.579000473022461 6.489999771118164,9.25100040435791 5.6620001792907715,9.25100040435791 C5.6620001792907715,9.25100040435791 5.6620001792907715,9.25100040435791 5.6620001792907715,9.25100040435791 C5.6620001792907715,9.25100040435791 1.4119999408721924,9.25100040435791 1.4119999408721924,9.25100040435791 C1.4119999408721924,9.25100040435791 1.3910000324249268,9.25 1.3910000324249268,9.25 C1.3910000324249268,9.25 -4.0879998207092285,9.25 -4.0879998207092285,9.25z M-1.0889999866485596,-11.25 C-2.4700000286102295,-11.25 -3.5889999866485596,-10.130999565124512 -3.5889999866485596,-8.75 C-3.5889999866485596,-8.75 -3.5889999866485596,-7.935999870300293 -3.5889999866485596,-7.935999870300293 C-3.5889999866485596,-6.6539998054504395 -3.88700008392334,-5.388999938964844 -4.460999965667725,-4.242000102996826 C-4.460999965667725,-4.242000102996826 -5.349999904632568,-2.4639999866485596 -5.349999904632568,-2.4639999866485596 C-5.466000080108643,-2.2320001125335693 -5.568999767303467,-1.99399995803833 -5.658999919891357,-1.75 C-5.658999919891357,-1.75 -9.088000297546387,-1.75 -9.088000297546387,-1.75 C-10.468999862670898,-1.75 -11.588000297546387,-0.6309999823570251 -11.588000297546387,0.75 C-11.588000297546387,0.75 -11.588000297546387,8.75 -11.588000297546387,8.75 C-11.588000297546387,10.130999565124512 -10.468999862670898,11.25 -9.088000297546387,11.25 C-9.088000297546387,11.25 -5.877999782562256,11.23799991607666 -5.085000038146973,11.25 C-4.291999816894531,11.26200008392334 5.6620001792907715,11.25 5.6620001792907715,11.25 C7.419000148773193,11.25 8.902999877929688,9.947999954223633 9.131999969482422,8.206000328063965 C10.083999633789062,7.426000118255615 10.555999755859375,6.203999996185303 10.37399959564209,4.986999988555908 C11.038999557495117,4.329999923706055 11.413000106811523,3.434999942779541 11.411999702453613,2.5 C11.411999702453613,1.8980000019073486 11.258999824523926,1.3300000429153442 10.989999771118164,0.8339999914169312 C11.58899974822998,-1.003999948501587 10.583999633789062,-2.9790000915527344 8.746000289916992,-3.578000068664551 C8.395999908447266,-3.691999912261963 8.029999732971191,-3.75 7.6620001792907715,-3.75 C7.6620001792907715,-3.75 2.9110000133514404,-3.75 2.9110000133514404,-3.75 C2.9110000133514404,-3.75 2.9110000133514404,-7.25 2.9110000133514404,-7.25 C2.9110000133514404,-9.458999633789062 1.1200000047683716,-11.25 -1.0889999866485596,-11.25z"
+                                          ></path>
+                                        </g>
+                                      </g>
+                                      <g class="svg" style="display: none">
+                                        <g><path></path></g>
+                                        <g><path></path></g>
+                                      </g>
+                                    </g>
+                                  </svg>
+                                </div>
+                              </div>
+                            </button>
+                          </div>
+                          <div class="contents">
+                            <button
+                              aria-label="Dislike this response"
+                              class="enabled:active:scale-98 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-round focus:not-focus-visible:outline-none transition-transform duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 select-none size-7 hover:enabled:bg-fill-secondary-elevated enabled:active:filter-[brightness(0.965)] dark:enabled:active:filter-[brightness(0.9)] text-text-secondary"
+                              data-slot="tooltip-trigger"
+                              data-state="closed"
+                            >
+                              <div
+                                class="m-0.5 flex size-5 items-center justify-center overflow-visible"
+                              >
+                                <div
+                                  class="lottie-fill-current shrink-0"
+                                  style="width: 24px; height: 24px"
+                                  aria-hidden="true"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    viewBox="0 0 720 720"
+                                    width="720"
+                                    height="720"
+                                    style="
+                                      width: 100%;
+                                      height: 100%;
+                                      transform: translate3d(0px, 0px, 0px);
+                                      content-visibility: visible;
+                                    "
+                                    preserveAspectRatio="xMidYMid meet"
+                                  >
+                                    <defs>
+                                      <clipPath id="__lottie_element_69">
+                                        <rect width="720" height="720" x="0" y="0"></rect>
+                                      </clipPath>
+                                      <clipPath id="__lottie_element_79">
+                                        <path d="M0,0 L108,0 L108,108 L0,108z"></path>
+                                      </clipPath>
+                                    </defs>
+                                    <g clip-path="url(#__lottie_element_69)">
+                                      <g
+                                        clip-path="url(#__lottie_element_79)"
+                                        style="display: none"
+                                      >
+                                        <g style="display: none">
+                                          <g><path></path></g>
+                                        </g>
+                                        <g style="display: none">
+                                          <g><path></path></g>
+                                        </g>
+                                        <g style="display: none">
+                                          <g><path></path></g>
+                                        </g>
+                                        <g style="display: none">
+                                          <g><path></path></g>
+                                        </g>
+                                        <g style="display: none">
+                                          <g><path></path></g>
+                                        </g>
+                                        <g style="display: none">
+                                          <g><path></path></g>
+                                        </g>
+                                        <g style="display: none">
+                                          <g><path></path></g>
+                                        </g>
+                                      </g>
+                                      <g
+                                        class="svg"
+                                        style="display: block"
+                                        transform="matrix(-16.660667419433594,0,0,-16.660667419433594,559.927734375,559.677978515625)"
+                                        opacity="1"
+                                      >
+                                        <g
+                                          opacity="1"
+                                          transform="matrix(1,0,0,1,12.088000297546387,11.75)"
+                                        >
+                                          <path
+                                            fill="rgb(0,0,0)"
+                                            fill-opacity="1"
+                                            d=" M-6.0879998207092285,0.550000011920929 C-6.089000225067139,0.5889999866485596 -6.089000225067139,0.6269999742507935 -6.089000225067139,0.6660000085830688 C-6.089000225067139,0.6660000085830688 -6.089000225067139,9.25 -6.089000225067139,9.25 C-6.089000225067139,9.25 -9.088000297546387,9.25 -9.088000297546387,9.25 C-9.36400032043457,9.25 -9.588000297546387,9.026000022888184 -9.588000297546387,8.75 C-9.588000297546387,8.75 -9.588000297546387,0.75 -9.588000297546387,0.75 C-9.588000297546387,0.4740000069141388 -9.36400032043457,0.25 -9.088000297546387,0.25 C-9.088000297546387,0.25 -6.0879998207092285,0.25 -6.0879998207092285,0.25 C-6.0879998207092285,0.25 -6.0879998207092285,0.550000011920929 -6.0879998207092285,0.550000011920929z M-4.0879998207092285,9.25 C-4.0879998207092285,9.25 -4.0879998207092285,0.5680000185966492 -4.0879998207092285,0.5680000185966492 C-4.072999954223633,-0.17499999701976776 -3.8929998874664307,-0.9049999713897705 -3.561000108718872,-1.5700000524520874 C-3.561000108718872,-1.5700000524520874 -2.6710000038146973,-3.3480000495910645 -2.6710000038146973,-3.3480000495910645 C-1.9589999914169312,-4.7729997634887695 -1.5889999866485596,-6.3429999351501465 -1.5889999866485596,-7.935999870300293 C-1.5889999866485596,-7.935999870300293 -1.5889999866485596,-8.75 -1.5889999866485596,-8.75 C-1.5889999866485596,-9.026000022888184 -1.3650000095367432,-9.25 -1.0889999866485596,-9.25 C0.01600000075995922,-9.25 0.9110000133514404,-8.354999542236328 0.9110000133514404,-7.25 C0.9110000133514404,-7.25 0.9110000133514404,-3.240000009536743 0.9110000133514404,-3.240000009536743 C0.9110000133514404,-2.4170000553131104 1.5789999961853027,-1.75 2.4019999504089355,-1.75 C2.4019999504089355,-1.75 7.6620001792907715,-1.75 7.6620001792907715,-1.75 C8.489999771118164,-1.75 9.161999702453613,-1.0779999494552612 9.161999702453613,-0.25 C9.161999702453613,-0.0020000000949949026 9.10099983215332,0.24199999868869781 8.982999801635742,0.460999995470047 C8.791999816894531,0.8149999976158142 8.831000328063965,1.2489999532699585 9.083000183105469,1.562999963760376 C9.60099983215332,2.2079999446868896 9.49899959564209,3.1510000228881836 8.854000091552734,3.6689999103546143 C8.809000015258789,3.7049999237060547 8.762999534606934,3.73799991607666 8.71399974822998,3.7690000534057617 C8.312999725341797,4.0229997634887695 8.147000312805176,4.52400016784668 8.3149995803833,4.9679999351501465 C8.57699966430664,5.6570000648498535 8.298999786376953,6.434000015258789 7.659999847412109,6.801000118255615 C7.323999881744385,6.99399995803833 7.130000114440918,7.364999771118164 7.1620001792907715,7.750999927520752 C7.1620001792907715,8.579000473022461 6.489999771118164,9.25100040435791 5.6620001792907715,9.25100040435791 C5.6620001792907715,9.25100040435791 5.6620001792907715,9.25100040435791 5.6620001792907715,9.25100040435791 C5.6620001792907715,9.25100040435791 1.4119999408721924,9.25100040435791 1.4119999408721924,9.25100040435791 C1.4119999408721924,9.25100040435791 1.3910000324249268,9.25 1.3910000324249268,9.25 C1.3910000324249268,9.25 -4.0879998207092285,9.25 -4.0879998207092285,9.25z M-1.0889999866485596,-11.25 C-2.4700000286102295,-11.25 -3.5889999866485596,-10.130999565124512 -3.5889999866485596,-8.75 C-3.5889999866485596,-8.75 -3.5889999866485596,-7.935999870300293 -3.5889999866485596,-7.935999870300293 C-3.5889999866485596,-6.6539998054504395 -3.88700008392334,-5.388999938964844 -4.460999965667725,-4.242000102996826 C-4.460999965667725,-4.242000102996826 -5.349999904632568,-2.4639999866485596 -5.349999904632568,-2.4639999866485596 C-5.466000080108643,-2.2320001125335693 -5.568999767303467,-1.99399995803833 -5.658999919891357,-1.75 C-5.658999919891357,-1.75 -9.088000297546387,-1.75 -9.088000297546387,-1.75 C-10.468999862670898,-1.75 -11.588000297546387,-0.6309999823570251 -11.588000297546387,0.75 C-11.588000297546387,0.75 -11.588000297546387,8.75 -11.588000297546387,8.75 C-11.588000297546387,10.130999565124512 -10.468999862670898,11.25 -9.088000297546387,11.25 C-9.088000297546387,11.25 -5.877999782562256,11.23799991607666 -5.085000038146973,11.25 C-4.291999816894531,11.26200008392334 5.6620001792907715,11.25 5.6620001792907715,11.25 C7.419000148773193,11.25 8.902999877929688,9.947999954223633 9.131999969482422,8.206000328063965 C10.083999633789062,7.426000118255615 10.555999755859375,6.203999996185303 10.37399959564209,4.986999988555908 C11.038999557495117,4.329999923706055 11.413000106811523,3.434999942779541 11.411999702453613,2.5 C11.411999702453613,1.8980000019073486 11.258999824523926,1.3300000429153442 10.989999771118164,0.8339999914169312 C11.58899974822998,-1.003999948501587 10.583999633789062,-2.9790000915527344 8.746000289916992,-3.578000068664551 C8.395999908447266,-3.691999912261963 8.029999732971191,-3.75 7.6620001792907715,-3.75 C7.6620001792907715,-3.75 2.9110000133514404,-3.75 2.9110000133514404,-3.75 C2.9110000133514404,-3.75 2.9110000133514404,-7.25 2.9110000133514404,-7.25 C2.9110000133514404,-9.458999633789062 1.1200000047683716,-11.25 -1.0889999866485596,-11.25z"
+                                          ></path>
+                                        </g>
+                                      </g>
+                                      <g class="svg" style="display: none">
+                                        <g><path></path></g>
+                                        <g><path></path></g>
+                                      </g>
+                                    </g>
+                                  </svg>
+                                </div>
+                              </div>
+                            </button>
+                          </div>
+                          <div class="contents">
+                            <button
+                              aria-label="Copy response"
+                              class="enabled:active:scale-98 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-round focus:not-focus-visible:outline-none transition-transform duration-150 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 select-none size-7 hover:enabled:bg-fill-secondary-elevated enabled:active:filter-[brightness(0.965)] dark:enabled:active:filter-[brightness(0.9)] text-text-secondary"
+                              data-slot="tooltip-trigger"
+                              data-state="closed"
+                            >
+                              <div class="relative">
+                                <div class="">
+                                  <svg
+                                    viewBox="0 0 32 32"
+                                    fill="none"
+                                    width="20"
+                                    height="20"
+                                    class="m-0.5"
+                                  >
+                                    <path
+                                      fill-rule="evenodd"
+                                      clip-rule="evenodd"
+                                      d="M17.3 10.125c-.826 0-1.497 0-2.041.044-.554.045-1.053.141-1.518.378a3.879 3.879 0 0 0-1.694 1.694c-.237.465-.333.964-.378 1.518-.045.544-.044 1.216-.044 2.04V22.2c0 .826 0 1.497.044 2.041.045.554.141 1.053.378 1.518.371.729.965 1.323 1.694 1.694.465.237.964.333 1.518.378.544.044 1.215.044 2.04.044H20.7c.826 0 1.497 0 2.041-.044.554-.045 1.053-.141 1.518-.378a3.879 3.879 0 0 0 1.694-1.694c.237-.465.333-.964.378-1.518.044-.544.044-1.215.044-2.04V15.8c0-.825 0-1.497-.044-2.041-.045-.554-.141-1.053-.378-1.518a3.879 3.879 0 0 0-1.694-1.694c-.465-.237-.964-.333-1.518-.378-.544-.045-1.215-.044-2.04-.044H17.3zm3.4 1.75c.855 0 1.443 0 1.9.038.445.037.688.103.865.193.4.204.725.53.929.93.09.176.157.418.193.864.037.457.038 1.045.038 1.9v6.4c0 .855 0 1.443-.038 1.9-.037.445-.103.688-.193.865-.204.4-.53.725-.93.929-.176.09-.418.157-.864.193-.457.037-1.045.038-1.9.038h-3.4c-.855 0-1.443 0-1.9-.038-.446-.037-.688-.103-.865-.193a2.126 2.126 0 0 1-.929-.93c-.09-.176-.156-.418-.193-.864-.037-.457-.038-1.045-.038-1.9v-6.4c0-.855 0-1.443.038-1.9.037-.446.103-.688.193-.865.204-.4.53-.725.93-.929.176-.09.418-.156.864-.193.457-.037 1.045-.038 1.9-.038h3.4z"
+                                      fill="currentColor"
+                                    ></path>
+                                    <path
+                                      d="M11.3 4.125c-.825 0-1.497 0-2.041.044-.554.045-1.053.141-1.518.378A3.879 3.879 0 0 0 6.047 6.24c-.237.465-.333.964-.378 1.518-.044.544-.044 1.215-.044 2.04V16.2c0 .826 0 1.497.044 2.041.045.554.141 1.053.378 1.518.371.729.965 1.323 1.694 1.694.465.237.964.333 1.518.378.117.01.241.016.37.021V20.1c-.08-.005-.156-.007-.229-.013-.445-.037-.688-.103-.865-.193a2.126 2.126 0 0 1-.929-.93c-.09-.176-.156-.418-.193-.864-.037-.457-.038-1.045-.038-1.9V9.8c0-.855 0-1.443.038-1.9.037-.445.103-.688.193-.865.204-.4.53-.725.93-.929.176-.09.419-.156.864-.193.457-.037 1.045-.038 1.9-.038h3.4c.855 0 1.443 0 1.9.038.445.037.688.103.865.193.4.204.725.53.929.93.09.176.157.419.193.864.006.073.01.15.014.23h1.752a10.24 10.24 0 0 0-.022-.371c-.045-.554-.141-1.053-.378-1.518a3.879 3.879 0 0 0-1.694-1.694c-.465-.237-.964-.333-1.518-.378-.544-.044-1.216-.044-2.04-.044H11.3z"
+                                      fill="currentColor"
+                                    ></path>
+                                  </svg>
+                                </div>
+                                <svg
+                                  viewBox="0 0 32 32"
+                                  fill="none"
+                                  width="20"
+                                  height="20"
+                                  class="pointer-events-none absolute inset-0 m-0.5 invisible"
+                                >
+                                  <path
+                                    d="M24.285 7.542a.878.878 0 0 1 1.22-.21.868.868 0 0 1 .21 1.214l-12 16.912a.877.877 0 0 1-1.415.02l-6-7.958a.868.868 0 0 1 .175-1.22.879.879 0 0 1 1.225.175l5.279 7L24.285 7.542z"
+                                    fill="currentColor"
+                                  ></path>
+                                </svg>
+                                <div class="pointer-events-none absolute inset-0 m-0.5 opacity-0">
+                                  <div
+                                    class="relative inline-block overflow-hidden"
+                                    style="width: 20px; height: 20px"
+                                  >
+                                    <div
+                                      class="absolute start-0 top-0"
+                                      style="
+                                        display: inline-block;
+                                        line-height: 0;
+                                        font-size: 0px;
+                                        width: 20px;
+                                        height: 20px;
+                                        overflow: hidden;
+                                      "
+                                    >
+                                      <div
+                                        style="
+                                          position: relative;
+                                          display: inline-block;
+                                          box-sizing: border-box;
+                                          padding: 0px;
+                                          margin: 0px;
+                                        "
+                                      >
+                                        <canvas
+                                          width="26"
+                                          height="26"
+                                          style="width: 20px; height: 20px"
+                                        ></canvas>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        class="inline-flex cursor-pointer items-center gap-1 -outline-offset-1 transition-colors focus-visible:outline rounded-round hover:bg-fill-secondary active:bg-fill-tertiary px-3 py-1.5"
+                        data-slot="pill"
+                        data-testid="sources-pill"
+                      >
+                        <span
+                          dir="auto"
+                          data-slot="text"
+                          class="mx-0 outline-none break-words text-text-secondary text-sm"
+                          >Sources</span
+                        >
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pointer-events-none h-0" aria-hidden="true"></div>
+      <div
+        class="pointer-events-none sticky bottom-[var(--composer-overlap)] z-10 flex h-0 justify-center"
+      >
+        <div class="pointer-events-auto h-8 -translate-y-3/4" style="opacity: 1; transform: none">
+          <div class="contents">
+            <button
+              aria-label="Scroll to bottom"
+              class="enabled:active:scale-98 inline-flex shrink-0 cursor-pointer items-center justify-center rounded-round focus:not-focus-visible:outline-none transition-transform duration-150 ease-in-out disabled:pointer-events-none disabled:opacity-50 select-none size-8 shadow-blur-elevation-01 backdrop-blur-elevation-01 enabled:hover:filter-[brightness(0.99)] enabled:active:filter-[brightness(0.975)] dark:enabled:active:filter-[brightness(0.9)] text-text-primary relative enabled:hover:after:absolute enabled:hover:after:inset-0 enabled:hover:after:rounded-round enabled:hover:after:bg-[rgba(255,255,255,0.025)] enabled:hover:after:content-[''] dark:enabled:hover:filter-none bg-fill-primary"
+              data-slot="button"
+            >
+              <svg viewBox="0 0 32 32" fill="none" width="20" height="20" class="m-0.5">
+                <path
+                  d="M24.62 12.38a.876.876 0 0 1 0 1.24l-8 8a.876.876 0 0 1-1.24 0l-8-8a.876.876 0 0 1 1.24-1.24L16 19.763l7.38-7.381a.876.876 0 0 1 1.24 0z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="bg-transparent hidden absolute box-content top-0 end-0 z-20 opacity-0 w-[16px] h-full transition-opacity duration-500 ease-[ease] hover:opacity-30"
+    data-thumb="1"
+    style="display: block; height: 1253px; right: 0px"
+  ></div>
+  <div
+    class="border-box hidden end-0 pointer-events-none absolute top-0 p-[4px] z-20 opacity-0 transition-opacity duration-300 ease-[ease] origin-top-right w-[16px] group-hover/scroller:opacity-100 group-hover/scroller:duration-0"
+    data-thumb="1"
+    style="
+      display: block;
+      height: 393.299px;
+      right: 0px;
+      transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1) scale(1.7849)
+        translateZ(-0.7849px) translateZ(-2px);
+    "
+  >
+    <div class="w-full h-full rounded-4 bg-(--scroll-thumb)"></div>
+  </div>
+</div>
