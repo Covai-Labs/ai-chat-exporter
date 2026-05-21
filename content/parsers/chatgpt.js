@@ -16,6 +16,11 @@ export class ChatGPTParser extends ChatParser {
         return container.querySelector?.('[data-message-author-role]') || null;
     }
 
+    getRoleElements(container) {
+        if (container.matches?.('[data-message-author-role]')) return [container];
+        return Array.from(container.querySelectorAll?.('[data-message-author-role]') || []);
+    }
+
     getMessageRole(container, roleElement) {
         const roleAttr = roleElement?.getAttribute('data-message-author-role');
         if (roleAttr) return roleAttr === 'user' ? 'User' : 'ChatGPT';
@@ -38,6 +43,20 @@ export class ChatGPTParser extends ChatParser {
         }
 
         return roleElement || (container.matches?.('article') ? container : null);
+    }
+
+    getContentElements(container, roleElements) {
+        const contentElements = [];
+
+        roleElements.forEach(roleElement => {
+            const contentElement = this.getContentElement(roleElement, roleElement);
+            if (contentElement) contentElements.push(contentElement);
+        });
+
+        if (contentElements.length > 0) return contentElements;
+
+        const fallback = this.getContentElement(container, roleElements[0]);
+        return fallback ? [fallback] : [];
     }
 
     cleanContent(content) {
@@ -139,19 +158,29 @@ export class ChatGPTParser extends ChatParser {
         return `${content}\n\n**Attachments & Images:**\n${attachmentLines.join('\n')}`;
     }
 
+    convertContentElement(contentElement) {
+        return convertToMarkdown(contentElement);
+    }
+
     extractMessage(container) {
-        const roleElement = this.getRoleElement(container);
-        const contentElement = this.getContentElement(container, roleElement);
-        if (!contentElement) return null;
+        const roleElements = this.getRoleElements(container);
+        const roleElement = roleElements[0] || this.getRoleElement(container);
+        const contentElements = this.getContentElements(container, roleElements);
+        if (contentElements.length === 0) return null;
 
         const role = this.getMessageRole(container, roleElement);
-        const clone = contentElement.cloneNode(true);
         const noiseSelectors = ['.flex.gap-2', 'button', '.sr-only', '[role="button"]'];
-        noiseSelectors.forEach(selector => {
-            clone.querySelectorAll(selector).forEach(node => node.remove());
-        });
+        const contentParts = contentElements
+            .map(contentElement => {
+                const clone = contentElement.cloneNode(true);
+                noiseSelectors.forEach(selector => {
+                    clone.querySelectorAll(selector).forEach(node => node.remove());
+                });
+                return this.cleanContent(this.convertContentElement(clone));
+            })
+            .filter(Boolean);
 
-        let content = this.cleanContent(convertToMarkdown(clone));
+        let content = contentParts.join('\n\n');
         content = this.appendAttachments(
             content,
             this.extractAttachments(container),
