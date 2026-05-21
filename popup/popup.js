@@ -6,7 +6,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const chatTitleEl = document.getElementById("chat-title");
   const msgCountEl = document.getElementById("message-count");
   const exportBtn = document.getElementById("export-btn");
+  const copyBtn = document.getElementById("copy-btn");
   const formatSelect = document.getElementById("format-select");
+  const copyableFormats = new Set(["markdown", "json"]);
 
   // Get current tab
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -60,10 +62,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await checkAvailability();
 
+  function updateCopyButtonVisibility() {
+    copyBtn.classList.toggle("hidden", !copyableFormats.has(formatSelect.value));
+  }
+
   function showError() {
     statusEl.textContent = "Not Supported";
     errorEl.classList.remove("hidden");
   }
+
+  formatSelect.addEventListener("change", updateCopyButtonVisibility);
+  updateCopyButtonVisibility();
 
   exportBtn.addEventListener("click", async () => {
     const format = formatSelect.value;
@@ -87,6 +96,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     } finally {
       exportBtn.disabled = false;
       exportBtn.textContent = "Export Chat";
+    }
+  });
+
+  copyBtn.addEventListener("click", async () => {
+    const format = formatSelect.value;
+    copyBtn.disabled = true;
+    copyBtn.textContent = "Copying...";
+
+    try {
+      const response = await chrome.tabs.sendMessage(tab.id, {
+        action: "COPY_CHAT",
+        format: format,
+      });
+
+      if (response && response.success) {
+        await navigator.clipboard.writeText(response.content);
+        statusEl.textContent = "Copied to Clipboard!";
+      } else {
+        statusEl.textContent = "Copy Failed: " + (response?.error || "Unknown");
+      }
+    } catch (e) {
+      statusEl.textContent = "Error: " + e.message;
+    } finally {
+      copyBtn.disabled = false;
+      copyBtn.textContent = "Copy to Clipboard";
     }
   });
 });

@@ -117,6 +117,38 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         })();
         return true; // Indicates async response
     }
+
+    if (request.action === 'COPY_CHAT') {
+        if (!activeParser) {
+            sendResponse({ success: false, error: 'No parser available' });
+            return true;
+        }
+
+        const formatter = formatters[request.format];
+        if (!formatter) {
+            sendResponse({ success: false, error: 'Invalid format' });
+            return true;
+        }
+
+        (async () => {
+            try {
+                const conversation = await activeParser.parse();
+                console.log(
+                    'Parsed conversation with',
+                    conversation.messages.length,
+                    'messages'
+                );
+                sendResponse({
+                    success: true,
+                    content: formatter.format(conversation)
+                });
+            } catch (e) {
+                console.error(e);
+                sendResponse({ success: false, error: e.message });
+            }
+        })();
+        return true;
+    }
 });
 
 // Initial detection
