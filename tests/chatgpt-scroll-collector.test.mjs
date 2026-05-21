@@ -53,5 +53,8 @@ test('collectMountedTurnMessages scrolls turns and dedupes extracted messages', 
     { role: 'ChatGPT', content: 'hello' },
   ]);
   assert.equal(scrollRoot.scrollTop, 120);
-  assert.deepEqual(turns.map((turn) => turn.scrollCount), [1, 1, 1]);
+  assert.deepEqual(
+    turns.map((turn) => turn.scrollCount),
+    [1, 1, 1],
+  );
 });

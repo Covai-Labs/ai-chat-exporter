@@ -4,12 +4,7 @@ import { test } from 'node:test';
 import { ChatGPTParser } from '../content/parsers/chatgpt.js';
 
 class FakeElement {
-  constructor({
-    attributes = {},
-    children = [],
-    html = '',
-    text = '',
-  } = {}) {
+  constructor({ attributes = {}, children = [], html = '', text = '' } = {}) {
     this.attributes = attributes;
     this.children = children;
     this.innerHTML = html;
@@ -22,8 +17,10 @@ class FakeElement {
   }
 
   matches(selector) {
-    return selector === '[data-message-author-role]' &&
-      Boolean(this.attributes['data-message-author-role']);
+    return (
+      selector === '[data-message-author-role]' &&
+      Boolean(this.attributes['data-message-author-role'])
+    );
   }
 
   querySelector(selector) {
@@ -32,11 +29,11 @@ class FakeElement {
 
   querySelectorAll(selector) {
     if (selector === '[data-message-author-role]') {
-      return this.children.filter(child => child.matches(selector));
+      return this.children.filter((child) => child.matches(selector));
     }
 
     if (selector === '.markdown' || selector === '.prose') {
-      return this.children.filter(child => child.attributes.class === selector.slice(1));
+      return this.children.filter((child) => child.attributes.class === selector.slice(1));
     }
 
     return [];
@@ -60,7 +57,7 @@ global.HTMLElement = FakeElement;
 
 test('extractMessage combines multiple assistant blocks in one ChatGPT turn', () => {
   const parser = new ChatGPTParser();
-  parser.convertContentElement = element => element.textContent;
+  parser.convertContentElement = (element) => element.textContent;
   const preThinkingMarkdown = new FakeElement({
     attributes: { class: 'markdown' },
     html: '<p>I will inspect the provided documents first.</p>',
@@ -91,6 +88,6 @@ test('extractMessage combines multiple assistant blocks in one ChatGPT turn', ()
   assert.equal(
     message.content,
     'I will inspect the provided documents first.\n\n' +
-      'Final answer content after thinking mode.'
+      'Final answer content after thinking mode.',
   );
 });

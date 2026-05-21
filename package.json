@@ -1,0 +1,16 @@
+{
+  "name": "ai-chat-exporter",
+  "version": "1.0.9",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/chatgpt-parser.test.mjs tests/chatgpt-scroll-collector.test.mjs tests/popup-copy-button.test.js",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "eslint": "^9.3.0",
+    "globals": "^15.3.0",
+    "prettier": "^3.2.5"
+  }
+}

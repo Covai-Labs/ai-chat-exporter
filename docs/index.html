@@ -1,91 +1,110 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI Chat Exporter</title>
     <style>
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            color: #333;
-            background-color: #f9fafb;
-            text-align: center;
-        }
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        color: #333;
+        background-color: #f9fafb;
+        text-align: center;
+      }
 
-        h1 {
-            margin-bottom: 10px;
-        }
+      h1 {
+        margin-bottom: 10px;
+      }
 
-        .subtitle {
-            color: #666;
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-        }
+      .subtitle {
+        color: #666;
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+      }
 
-        .btn {
-            display: inline-block;
-            background: #2563eb;
-            color: white;
-            padding: 12px 24px;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
-            margin: 10px;
-        }
+      .btn {
+        display: inline-block;
+        background: #2563eb;
+        color: white;
+        padding: 12px 24px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        margin: 10px;
+      }
 
-        .btn-outline {
-            background: transparent;
-            border: 2px solid #2563eb;
-            color: #2563eb;
-        }
+      .btn-outline {
+        background: transparent;
+        border: 2px solid #2563eb;
+        color: #2563eb;
+      }
 
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
 
-        footer {
-            margin-top: 50px;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-            color: #888;
-            font-size: 0.9rem;
-        }
+      footer {
+        margin-top: 50px;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+        color: #888;
+        font-size: 0.9rem;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <h1>AI Chat Exporter</h1>
-    <img src="icons/icon48.png" alt="AI Chat Exporter Icon" style="width: 64px; height: 64px; margin-bottom: 20px;">
+    <img
+      src="icons/icon48.png"
+      alt="AI Chat Exporter Icon"
+      style="width: 64px; height: 64px; margin-bottom: 20px"
+    />
     <p class="subtitle">Export your AI conversations to Markdown/JSON with one click.</p>
 
-    <div style="margin: 30px 0;">
-        <a href="https://gitlab.com/tit/ai-chat-export-extension" class="btn">View on GitLab</a>
-        <a href="privacy.html" class="btn btn-outline">Privacy Policy</a>
+    <div style="margin: 30px 0">
+      <a href="https://gitlab.com/tit/ai-chat-export-extension" class="btn">View on GitLab</a>
+      <a href="privacy.html" class="btn btn-outline">Privacy Policy</a>
     </div>
 
-    <h2 style="margin-top: 40px;">Browser Extensions</h2>
-    <div style="display: flex; gap: 20px; justify-content: center; margin: 20px 0;">
-        <a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" style="display: flex; align-items: center; gap: 10px; text-decoration: none; background: #f0f0f0; padding: 12px 20px; border-radius: 8px;">
-            <img src="icons/firefox-icon.png" alt="Firefox" style="width: 24px; height: 24px;">
-            <span style="color: #333; font-weight: 500;">Firefox Add-on</span>
-        </a>
+    <h2 style="margin-top: 40px">Browser Extensions</h2>
+    <div style="display: flex; gap: 20px; justify-content: center; margin: 20px 0">
+      <a
+        href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/"
+        style="
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          text-decoration: none;
+          background: #f0f0f0;
+          padding: 12px 20px;
+          border-radius: 8px;
+        "
+      >
+        <img src="icons/firefox-icon.png" alt="Firefox" style="width: 24px; height: 24px" />
+        <span style="color: #333; font-weight: 500">Firefox Add-on</span>
+      </a>
     </div>
 
     <h2>Features</h2>
-    <ul style="list-style: none; padding: 0;">
-        <li>✅ Supports ChatGPT, Gemini, Claude, and more</li>
-        <li>✅ 100% Local Processing - No server involved</li>
-        <li>✅ Export to clean Markdown</li>
-        <li>✅ Preserves original chat formatting and timestamps</li>
+    <ul style="list-style: none; padding: 0">
+      <li>✅ Supports ChatGPT, Gemini, Claude, and more</li>
+      <li>✅ 100% Local Processing - No server involved</li>
+      <li>✅ Export to clean Markdown</li>
+      <li>✅ Preserves original chat formatting and timestamps</li>
     </ul>
 
     <footer>
-        <p>Hosted on GitLab Pages.</p>
-        <p><a href="privacy.html">Privacy Policy</a></p>
+      <p>Hosted on GitLab Pages.</p>
+      <p><a href="privacy.html">Privacy Policy</a></p>
     </footer>
-</body>
-
+  </body>
 </html>

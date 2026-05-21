@@ -1,38 +1,38 @@
-document.addEventListener("DOMContentLoaded", async () => {
-  const titleEl = document.getElementById("preview-title");
-  const codeEl = document.getElementById("preview-code");
-  const copyBtn = document.getElementById("copy-btn");
-  const downloadBtn = document.getElementById("download-btn");
+document.addEventListener('DOMContentLoaded', async () => {
+  const titleEl = document.getElementById('preview-title');
+  const codeEl = document.getElementById('preview-code');
+  const copyBtn = document.getElementById('copy-btn');
+  const downloadBtn = document.getElementById('download-btn');
 
-  let content = "";
-  let title = "Untitled Chat";
-  let format = "markdown";
+  let content = '';
+  let title = 'Untitled Chat';
+  let format = 'markdown';
 
   try {
     const data = await chrome.storage.local.get([
-      "previewContent",
-      "previewTitle",
-      "previewFormat",
+      'previewContent',
+      'previewTitle',
+      'previewFormat',
     ]);
 
-    content = data.previewContent || "";
-    title = data.previewTitle || "Untitled Chat";
-    format = data.previewFormat || "markdown";
+    content = data.previewContent || '';
+    title = data.previewTitle || 'Untitled Chat';
+    format = data.previewFormat || 'markdown';
 
     titleEl.textContent = title;
     codeEl.textContent = content;
 
-    const badgeEl = document.querySelector(".badge");
+    const badgeEl = document.querySelector('.badge');
     if (badgeEl) {
-      badgeEl.textContent = format === "json" ? "JSON Preview" : "Markdown Preview";
+      badgeEl.textContent = format === 'json' ? 'JSON Preview' : 'Markdown Preview';
     }
   } catch (error) {
-    console.error("Failed to load preview data:", error);
-    codeEl.textContent = "Error loading content: " + error.message;
+    console.error('Failed to load preview data:', error);
+    codeEl.textContent = 'Error loading content: ' + error.message;
   }
 
   // Copy button logic
-  copyBtn.addEventListener("click", async () => {
+  copyBtn.addEventListener('click', async () => {
     if (!content) return;
     copyBtn.disabled = true;
     const originalText = copyBtn.innerHTML;
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }, 2000);
     } catch (e) {
       console.error(e);
-      copyBtn.textContent = "Copy Failed";
+      copyBtn.textContent = 'Copy Failed';
       setTimeout(() => {
         copyBtn.innerHTML = originalText;
         copyBtn.disabled = false;
@@ -58,27 +58,27 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   // Download button logic
-  downloadBtn.addEventListener("click", () => {
+  downloadBtn.addEventListener('click', () => {
     if (!content) return;
 
-    const ext = format === "json" ? "json" : "md";
-    const mimeType = format === "json" ? "application/json" : "text/markdown";
+    const ext = format === 'json' ? 'json' : 'md';
+    const mimeType = format === 'json' ? 'application/json' : 'text/markdown';
     const sanitizedTitle = title
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
-    
-    const filename = `${sanitizedTitle || "chat-export"}.${ext}`;
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+
+    const filename = `${sanitizedTitle || 'chat-export'}.${ext}`;
 
     const blob = new Blob([content], { type: `${mimeType};charset=utf-8` });
     const url = URL.createObjectURL(blob);
-    
-    const a = document.createElement("a");
+
+    const a = document.createElement('a');
     a.href = url;
     a.download = filename;
     document.body.appendChild(a);
     a.click();
-    
+
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   });

@@ -1,44 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="popup.css">
-</head>
-<body>
-  <div class="container">
-    <header>
-      <h1>AI Chat Exporter</h1>
-      <div id="status" class="status">Detecting...</div>
-    </header>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>AI Chat Exporter</h1>
+        <div id="status" class="status">Detecting...</div>
+      </header>
 
-    <main>
-      <div class="chat-info hidden" id="chat-info">
-        <h2 id="chat-title">Chat Title</h2>
-        <p id="message-count">0 messages found</p>
-      </div>
+      <main>
+        <div class="chat-info hidden" id="chat-info">
+          <h2 id="chat-title">Chat Title</h2>
+          <p id="message-count">0 messages found</p>
+        </div>
 
-      <div class="actions hidden" id="actions">
-        <select id="format-select">
-          <option value="markdown">Markdown (.md)</option>
-          <option value="json" disabled>JSON (Coming Soon)</option>
-          <option value="pdf" disabled>PDF (Coming Soon)</option>
-        </select>
-        <div class="button-group">
-          <div class="primary-row">
-            <button id="export-btn" class="primary-btn">Export Chat</button>
-          </div>
-          <div class="secondary-row">
-            <button id="copy-btn" class="secondary-btn hidden">Copy to Clipboard</button>
-            <button id="preview-btn" class="secondary-btn hidden">Open in Tab</button>
+        <div class="actions hidden" id="actions">
+          <select id="format-select">
+            <option value="markdown">Markdown (.md)</option>
+            <option value="json" disabled>JSON (Coming Soon)</option>
+            <option value="pdf" disabled>PDF (Coming Soon)</option>
+          </select>
+          <div class="button-group">
+            <div class="primary-row">
+              <button id="export-btn" class="primary-btn">Export Chat</button>
+            </div>
+            <div class="secondary-row">
+              <button id="copy-btn" class="secondary-btn hidden">Copy to Clipboard</button>
+              <button id="preview-btn" class="secondary-btn hidden">Open in Tab</button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="error hidden" id="error-msg">
-        No compatible chat found on this tab.
-      </div>
-    </main>
-  </div>
-  <script src="popup.js"></script>
-</body>
+        <div class="error hidden" id="error-msg">No compatible chat found on this tab.</div>
+      </main>
+    </div>
+    <script src="popup.js"></script>
+  </body>
 </html>

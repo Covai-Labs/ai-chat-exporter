@@ -1,36 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat Export Preview</title>
-  <link rel="stylesheet" href="preview.css">
-</head>
-<body>
-  <div class="preview-container">
-    <header class="preview-header">
-      <div class="header-main">
-        <span class="badge">Markdown Preview</span>
-        <h1 id="preview-title">Chat Title</h1>
-      </div>
-      <div class="action-buttons">
-        <button id="copy-btn" class="btn secondary-btn">
-          <svg viewBox="0 0 24 24" class="icon"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-          Copy Code
-        </button>
-        <button id="download-btn" class="btn primary-btn">
-          <svg viewBox="0 0 24 24" class="icon"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"/></svg>
-          Download File
-        </button>
-      </div>
-    </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Export Preview</title>
+    <link rel="stylesheet" href="preview.css" />
+  </head>
+  <body>
+    <div class="preview-container">
+      <header class="preview-header">
+        <div class="header-main">
+          <span class="badge">Markdown Preview</span>
+          <h1 id="preview-title">Chat Title</h1>
+        </div>
+        <div class="action-buttons">
+          <button id="copy-btn" class="btn secondary-btn">
+            <svg viewBox="0 0 24 24" class="icon">
+              <path
+                d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
+              />
+            </svg>
+            Copy Code
+          </button>
+          <button id="download-btn" class="btn primary-btn">
+            <svg viewBox="0 0 24 24" class="icon">
+              <path
+                d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"
+              />
+            </svg>
+            Download File
+          </button>
+        </div>
+      </header>
 
-    <main class="preview-main">
-      <div class="code-wrapper">
-        <pre><code id="preview-code">Loading content...</code></pre>
-      </div>
-    </main>
-  </div>
-  <script src="preview.js"></script>
-</body>
+      <main class="preview-main">
+        <div class="code-wrapper">
+          <pre><code id="preview-code">Loading content...</code></pre>
+        </div>
+      </main>
+    </div>
+    <script src="preview.js"></script>
+  </body>
 </html>
