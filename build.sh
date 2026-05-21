@@ -18,7 +18,7 @@ for TARGET in "${TARGETS[@]}"; do
     mkdir -p dist
 
     # Copy all files
-    cp -r background content docs/icons popup dist/
+    cp -r background content docs/icons popup schemas dist/
 
     # Parse/Modify manifest using Python for reliability
     python3 build.py "$TARGET"

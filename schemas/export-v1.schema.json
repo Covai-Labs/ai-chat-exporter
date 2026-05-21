@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/ChatExport",
+  "$defs": {
+    "NormalizedRole": {
+      "type": "string",
+      "enum": ["user", "assistant", "system", "tool", "artifact", "unknown"],
+      "description": "Normalized message role for cross-platform consumers."
+    },
+    "Source": {
+      "type": "object",
+      "properties": {
+        "platform": {
+          "type": "string",
+          "description": "Detected chat platform, such as ChatGPT, Claude, Gemini, or Mistral."
+        },
+        "url": {
+          "type": ["string", "null"],
+          "description": "Conversation URL at export time, if available."
+        },
+        "title": {
+          "type": "string",
+          "description": "Conversation title, with a fallback when unavailable."
+        }
+      },
+      "required": ["platform", "url", "title"],
+      "additionalProperties": false
+    },
+    "Message": {
+      "type": "object",
+      "properties": {
+        "index": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Zero-based message position in exported order."
+        },
+        "role": {
+          "$ref": "#/$defs/NormalizedRole"
+        },
+        "displayRole": {
+          "type": "string",
+          "description": "Original parser role label, such as User, ChatGPT, or Claude Artifact."
+        },
+        "content": {
+          "type": "string",
+          "description": "Message content as markdown-compatible text."
+        }
+      },
+      "required": ["index", "role", "displayRole", "content"],
+      "additionalProperties": false
+    },
+    "Metadata": {
+      "type": "object",
+      "additionalProperties": {
+        "type": ["string", "number", "boolean", "null"]
+      },
+      "description": "Platform-specific metadata preserved from parsers."
+    },
+    "ChatExport": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "description": "Schema URL or relative schema path for this export."
+        },
+        "schemaVersion": {
+          "type": "integer",
+          "const": 1,
+          "description": "Chat export schema version."
+        },
+        "exportedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp when the export was generated."
+        },
+        "source": {
+          "$ref": "#/$defs/Source"
+        },
+        "messages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Message"
+          },
+          "description": "Conversation messages in display order."
+        },
+        "metadata": {
+          "$ref": "#/$defs/Metadata"
+        }
+      },
+      "required": [
+        "$schema",
+        "schemaVersion",
+        "exportedAt",
+        "source",
+        "messages",
+        "metadata"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

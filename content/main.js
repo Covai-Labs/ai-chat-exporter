@@ -10,6 +10,7 @@ import { MistralParser } from './parsers/mistral.js';
 import { GoogleSearchAIParser } from './parsers/google_search_ai.js';
 
 import { MarkdownFormatter } from './formatters/markdown.js';
+import { JsonFormatter } from './formatters/json.js';
 
 console.log('AI Chat Exporter script loaded');
 
@@ -29,6 +30,7 @@ const parsers = [
 // Registry of formatters
 const formatters = {
   markdown: new MarkdownFormatter(),
+  json: new JsonFormatter(),
 };
 
 let activeParser = null;
