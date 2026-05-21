@@ -40,7 +40,14 @@
         "*://chat.deepseek.com/*",
         "*://www.meta.ai/*",
         "*://meta.ai/*",
-        "*://chat.mistral.ai/*"
+        "*://chat.mistral.ai/*",
+        "*://*.google.com/search*",
+        "*://*.google.co.in/search*",
+        "*://*.google.co.uk/search*",
+        "*://*.google.ca/search*",
+        "*://*.google.com.au/search*",
+        "*://*.google.de/search*",
+        "*://*.google.fr/search*"
       ],
       "js": ["content/main.js"],
       "run_at": "document_idle",
@@ -68,7 +75,14 @@
         "*://chat.deepseek.com/*",
         "*://www.meta.ai/*",
         "*://meta.ai/*",
-        "*://chat.mistral.ai/*"
+        "*://chat.mistral.ai/*",
+        "*://*.google.com/search*",
+        "*://*.google.co.in/search*",
+        "*://*.google.co.uk/search*",
+        "*://*.google.ca/search*",
+        "*://*.google.com.au/search*",
+        "*://*.google.de/search*",
+        "*://*.google.fr/search*"
       ]
     }
   ],

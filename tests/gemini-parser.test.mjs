@@ -41,8 +41,7 @@ test('GeminiParser correctly parses chat content from fixture', async () => {
   assert.equal(
     result.messages[1].content,
     "Here is a concise response combining your requested elements. It features **bold text** to grab your attention, *italic text* for emphasis, and a quick [link to deadrat.in](https://www.deadrat.in/) to fulfill your prompt's requirements.\n\n" +
-      'Elixir\n\n' +
-      '```\n' +
+      '```elixir\n' +
       'IO.puts("Hello, World!")\n' +
       '```\n\n' +
       '| Country | Est. Median Wage (USD/yr) | Avg Work Hours/Week | Min. Paid Leave Days | Est. Union Membership |\n' +

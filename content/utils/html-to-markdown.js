@@ -173,6 +173,51 @@ export function convertToMarkdown(htmlContent, options = {}) {
       el.parentNode.replaceChild(textNode, el);
     });
 
+    // 4. Process Google Search SGE LaTeX images with [data-xpm-latex]
+    clone.querySelectorAll('[data-xpm-latex]').forEach((el) => {
+      const copyRoot = el.closest('[data-xpm-copy-root]');
+      if (!copyRoot) return;
+      const container = el.closest('.cPGBZb') || copyRoot;
+      if (!container.parentNode) return;
+
+      const latex = el.getAttribute('data-xpm-latex');
+      
+      // Determine if it is block math
+      let isBlock = false;
+      const parent = container.parentNode;
+      if (parent) {
+        const parentText = parent.textContent.replace(container.textContent, '').trim();
+        isBlock = (parentText === '');
+      }
+
+      const replacementText = isBlock ? `\n\n$$${latex}$$\n\n` : `$${latex}$`;
+      const textNode = clone.ownerDocument.createTextNode(replacementText);
+      container.parentNode.replaceChild(textNode, container);
+    });
+
+    // Preprocess Google Search SGE code blocks to assign language class and remove label
+    clone.querySelectorAll('pre').forEach((pre) => {
+      const container = pre.closest('.pHpOfb') || pre.parentElement?.parentElement;
+      if (container) {
+        const langEl = container.querySelector('.vVRw1d') || container.firstElementChild?.firstElementChild;
+        if (langEl && langEl !== pre) {
+          const language = langEl.textContent.trim().toLowerCase();
+          const code = pre.querySelector('code');
+          if (code) {
+            code.className = `language-${language}`;
+          }
+          langEl.remove();
+        }
+      }
+    });
+
+    // Remove SGE "Use code with caution" text blocks
+    clone.querySelectorAll('*').forEach((el) => {
+      if (el.textContent.trim() === 'Use code with caution.') {
+        el.remove();
+      }
+    });
+
     // Remove noise elements (buttons, icons, etc.)
     // Note: Exclude elements inside qwen-markdown-code to preserve Monaco editor content
     const noiseSelectors = [

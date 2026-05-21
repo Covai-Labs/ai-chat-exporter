@@ -7,6 +7,7 @@ import { PerplexityParser } from './parsers/perplexity.js';
 import { DeepSeekParser } from './parsers/deepseek.js';
 import { MetaParser } from './parsers/meta.js';
 import { MistralParser } from './parsers/mistral.js';
+import { GoogleSearchAIParser } from './parsers/google_search_ai.js';
 
 import { MarkdownFormatter } from './formatters/markdown.js';
 
@@ -22,6 +23,7 @@ const parsers = [
   new DeepSeekParser(),
   new MetaParser(),
   new MistralParser(),
+  new GoogleSearchAIParser(),
 ];
 
 // Registry of formatters
