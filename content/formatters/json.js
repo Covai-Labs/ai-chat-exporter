@@ -3,6 +3,14 @@ import { ExportFormatter } from './base.js';
 const SCHEMA_PATH = './schemas/export-v1.schema.json';
 
 export class JsonFormatter extends ExportFormatter {
+    /**
+     * Creates a JSON export formatter.
+     *
+     * @param {object} [options] Export defaults used when parser output is incomplete.
+     * @param {string} [options.platform] Fallback platform name for the `source` block.
+     * @param {string} [options.url] Fallback conversation URL for the `source` block.
+     * @param {string} [options.exportedAt] Fixed ISO timestamp, mainly for deterministic tests.
+     */
     constructor(options = {}) {
         super();
         this.platform = options.platform || null;
@@ -10,10 +18,30 @@ export class JsonFormatter extends ExportFormatter {
         this.exportedAt = options.exportedAt || null;
     }
 
+    /**
+     * Formats parser output as a pretty-printed schema v1 JSON export.
+     *
+     * @param {object} conversation Parsed conversation returned by a platform parser.
+     * @returns {string} JSON text suitable for download or clipboard export.
+     */
     format(conversation) {
         return JSON.stringify(this.toSchema(conversation), null, 2);
     }
 
+    /**
+     * Converts parser-specific conversation output into the stable export schema.
+     *
+     * Parser implementations do not all expose the same metadata fields, so this
+     * method normalizes the fields consumers need while preserving parser metadata
+     * under `metadata`.
+     *
+     * @param {object} conversation Parsed conversation returned by a platform parser.
+     * @param {string} [conversation.title] Conversation title.
+     * @param {string} [conversation.url] Conversation URL.
+     * @param {Array<{role?: string, content?: string}>} [conversation.messages] Messages to export.
+     * @param {Record<string, string|number|boolean|null>} [conversation.metadata] Parser metadata.
+     * @returns {object} Export object conforming to `schemas/export-v1.schema.json`.
+     */
     toSchema(conversation) {
         const metadata = conversation.metadata || {};
         const source = metadata.Source || this.platform || 'Unknown';
@@ -39,15 +67,31 @@ export class JsonFormatter extends ExportFormatter {
         };
     }
 
+    /**
+     * Returns the file extension used for JSON downloads.
+     *
+     * @returns {string} The `json` file extension.
+     */
     getFileExtension() {
         return 'json';
     }
 
+    /**
+     * Returns the MIME type used for JSON downloads.
+     *
+     * @returns {string} The JSON MIME type.
+     */
     getMimeType() {
         return 'application/json';
     }
 }
 
+/**
+ * Maps platform-specific role labels onto the schema's normalized role enum.
+ *
+ * @param {string} role Parser-provided role label.
+ * @returns {'user'|'assistant'|'system'|'tool'|'artifact'|'unknown'} Normalized schema role.
+ */
 function normalizeRole(role) {
     const normalized = String(role || '').toLowerCase();
 
