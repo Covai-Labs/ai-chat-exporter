@@ -20,6 +20,9 @@ A simple, privacy-focused browser extension to export AI chats from ChatGPT, Cla
 
 ### Chrome / Edge / Brave / Chromium-based browsers
 
+> [!NOTE]
+> Please note that the developer does not test this extension with Chromium-based browsers, and it may or may not work.
+
 1. Download `ai-chat-exporter-chromium.zip` from the [releases page](https://github.com/Rat-S/ai-chat-exporter/releases)
 2. Extract the zip file to a folder
 3. Open Chrome and navigate to `chrome://extensions/`
@@ -28,6 +31,9 @@ A simple, privacy-focused browser extension to export AI chats from ChatGPT, Cla
 
 ### Firefox
 
+Firefox users can install the extension directly from the [Firefox Add-ons store](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/).
+
+Alternatively, to install it manually/temporarily:
 1. Download `ai-chat-exporter-firefox.zip` from the [releases page](https://github.com/Rat-S/ai-chat-exporter/releases)
 2. Open Firefox and navigate to `about:debugging`
 3. Click "This Firefox" → "Load Temporary Add-on..."
