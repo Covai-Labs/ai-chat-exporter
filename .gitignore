@@ -3,4 +3,5 @@ dist/
 *.log
 node_modules/
 internal/
-publish/ 
+publish/
+/.worktrees
