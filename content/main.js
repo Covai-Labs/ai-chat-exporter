@@ -11,6 +11,7 @@ import { GoogleSearchAIParser } from './parsers/google_search_ai.js';
 
 import { MarkdownFormatter } from './formatters/markdown.js';
 import { JsonFormatter } from './formatters/json.js';
+import { HtmlFormatter } from './formatters/html.js';
 
 console.log('AI Chat Exporter script loaded');
 
@@ -31,6 +32,7 @@ const parsers = [
 const formatters = {
   markdown: new MarkdownFormatter(),
   json: new JsonFormatter(),
+  html: new HtmlFormatter(),
 };
 
 let activeParser = null;

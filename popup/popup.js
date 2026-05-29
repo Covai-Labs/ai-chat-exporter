@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const copyBtn = document.getElementById('copy-btn');
   const previewBtn = document.getElementById('preview-btn');
   const formatSelect = document.getElementById('format-select');
-  const copyableFormats = new Set(['markdown', 'json']);
+  const copyableFormats = new Set(['markdown', 'json', 'html']);
 
   // Get current tab
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });

@@ -4,9 +4,37 @@ document.addEventListener('DOMContentLoaded', async () => {
   const copyBtn = document.getElementById('copy-btn');
   const downloadBtn = document.getElementById('download-btn');
 
+  // Toggle view elements
+  const viewToggleContainer = document.getElementById('view-toggle-container');
+  const viewCodeBtn = document.getElementById('view-code-btn');
+  const viewRenderBtn = document.getElementById('view-render-btn');
+  const codeWrapper = document.getElementById('code-wrapper');
+  const renderWrapper = document.getElementById('render-wrapper');
+  const previewRendered = document.getElementById('preview-rendered');
+
   let content = '';
   let title = 'Untitled Chat';
   let format = 'markdown';
+
+  const switchView = (view) => {
+    if (view === 'code') {
+      viewCodeBtn.classList.add('active');
+      viewRenderBtn.classList.remove('active');
+      codeWrapper.classList.remove('hidden');
+      renderWrapper.classList.add('hidden');
+    } else {
+      viewCodeBtn.classList.remove('active');
+      viewRenderBtn.classList.add('active');
+      codeWrapper.classList.add('hidden');
+      renderWrapper.classList.remove('hidden');
+      if (previewRendered.srcdoc !== content) {
+        previewRendered.srcdoc = content;
+      }
+    }
+  };
+
+  viewCodeBtn.addEventListener('click', () => switchView('code'));
+  viewRenderBtn.addEventListener('click', () => switchView('render'));
 
   try {
     const data = await chrome.storage.local.get([
@@ -24,7 +52,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const badgeEl = document.querySelector('.badge');
     if (badgeEl) {
-      badgeEl.textContent = format === 'json' ? 'JSON Preview' : 'Markdown Preview';
+      if (format === 'json') {
+        badgeEl.textContent = 'JSON Preview';
+      } else if (format === 'html') {
+        badgeEl.textContent = 'HTML Preview';
+        viewToggleContainer.classList.remove('hidden');
+        switchView('render');
+      } else {
+        badgeEl.textContent = 'Markdown Preview';
+      }
     }
   } catch (error) {
     console.error('Failed to load preview data:', error);
@@ -61,8 +97,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   downloadBtn.addEventListener('click', () => {
     if (!content) return;
 
-    const ext = format === 'json' ? 'json' : 'md';
-    const mimeType = format === 'json' ? 'application/json' : 'text/markdown';
+    let ext = 'md';
+    let mimeType = 'text/markdown';
+    if (format === 'json') {
+      ext = 'json';
+      mimeType = 'application/json';
+    } else if (format === 'html') {
+      ext = 'html';
+      mimeType = 'text/html';
+    }
     const sanitizedTitle = title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')

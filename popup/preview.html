@@ -13,6 +13,10 @@
           <span class="badge">Markdown Preview</span>
           <h1 id="preview-title">Chat Title</h1>
         </div>
+        <div id="view-toggle-container" class="segmented-control hidden">
+          <button id="view-code-btn" class="control-btn active">Source Code</button>
+          <button id="view-render-btn" class="control-btn">Live Preview</button>
+        </div>
         <div class="action-buttons">
           <button id="copy-btn" class="btn secondary-btn">
             <svg viewBox="0 0 24 24" class="icon">
@@ -34,8 +38,11 @@
       </header>
 
       <main class="preview-main">
-        <div class="code-wrapper">
+        <div class="code-wrapper" id="code-wrapper">
           <pre><code id="preview-code">Loading content...</code></pre>
+        </div>
+        <div class="render-wrapper hidden" id="render-wrapper">
+          <iframe id="preview-rendered" sandbox="allow-scripts"></iframe>
         </div>
       </main>
     </div>
