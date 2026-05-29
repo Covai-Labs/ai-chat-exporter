@@ -5,19 +5,20 @@ export class HtmlFormatter extends ExportFormatter {
     const { title, messages } = conversation;
     const now = new Date();
     const formattedDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.toLocaleTimeString('en-US', { hour12: false })}`;
-    
+
     const platform = conversation.metadata?.Source || 'AI';
     const link = conversation.url || conversation.metadata?.Link || '';
 
     // Convert messages
-    const formattedMessages = messages.map((msg) => {
-      const isUser = msg.role === 'User';
-      const roleClass = isUser ? 'role-user' : 'role-assistant';
-      const roleName = isUser ? 'User' : platform;
-      const avatarText = isUser ? 'U' : platform[0];
-      const htmlContent = markdownToHtml(msg.content);
+    const formattedMessages = messages
+      .map((msg) => {
+        const isUser = msg.role === 'User';
+        const roleClass = isUser ? 'role-user' : 'role-assistant';
+        const roleName = isUser ? 'User' : platform;
+        const avatarText = isUser ? 'U' : platform[0];
+        const htmlContent = markdownToHtml(msg.content);
 
-      return `
+        return `
         <div class="message-card ${roleClass}">
           <div class="message-header">
             <div class="message-avatar">${avatarText}</div>
@@ -28,7 +29,8 @@ export class HtmlFormatter extends ExportFormatter {
           </div>
         </div>
       `;
-    }).join('\n');
+      })
+      .join('\n');
 
     return `<!DOCTYPE html>
 <html lang="en">
@@ -502,7 +504,7 @@ function inlineParse(text) {
     const id = `{{MATHBLOCK${tokenCounter++}}}`;
     placeholders.push({
       id,
-      html: `<span class="math-block">$$${math}$$</span>`
+      html: `<span class="math-block">$$${math}$$</span>`,
     });
     return id;
   });
@@ -512,7 +514,7 @@ function inlineParse(text) {
     const id = `{{MATHINLINE${tokenCounter++}}}`;
     placeholders.push({
       id,
-      html: `<span class="math-inline">$${math}$</span>`
+      html: `<span class="math-inline">$${math}$</span>`,
     });
     return id;
   });
@@ -523,7 +525,7 @@ function inlineParse(text) {
     const escapedCode = escapeHtml(code);
     placeholders.push({
       id,
-      html: `<code>${escapedCode}</code>`
+      html: `<code>${escapedCode}</code>`,
     });
     return id;
   });
@@ -555,11 +557,11 @@ function inlineParse(text) {
 
 function renderTable(rows) {
   if (rows.length === 0) return '';
-  
-  const isSeparator = (r) => /^[|\s:\-]+$/.test(r);
-  
-  const parsedRows = rows.map(r => {
-    const cells = r.split('|').map(c => c.trim());
+
+  const isSeparator = (r) => /^[|\s:-]+$/.test(r);
+
+  const parsedRows = rows.map((r) => {
+    const cells = r.split('|').map((c) => c.trim());
     if (cells[0] === '') cells.shift();
     if (cells[cells.length - 1] === '') cells.pop();
     return cells;
@@ -572,11 +574,11 @@ function renderTable(rows) {
   for (let i = 0; i < parsedRows.length; i++) {
     const rawRow = rows[i];
     const cells = parsedRows[i];
-    
+
     if (i === 0) {
       headerCells = cells;
     } else if (isSeparator(rawRow)) {
-      alignments = cells.map(cell => {
+      alignments = cells.map((cell) => {
         const left = cell.startsWith(':');
         const right = cell.endsWith(':');
         if (left && right) return 'center';
@@ -589,7 +591,7 @@ function renderTable(rows) {
   }
 
   let tableHtml = '<div class="table-wrapper"><table>\n';
-  
+
   if (headerCells.length > 0) {
     tableHtml += '<thead><tr>\n';
     headerCells.forEach((cell, idx) => {
@@ -601,7 +603,7 @@ function renderTable(rows) {
 
   if (bodyRows.length > 0) {
     tableHtml += '<tbody>\n';
-    bodyRows.forEach(row => {
+    bodyRows.forEach((row) => {
       tableHtml += '<tr>\n';
       row.forEach((cell, idx) => {
         const align = alignments[idx] ? ` style="text-align: ${alignments[idx]};"` : '';
@@ -611,7 +613,7 @@ function renderTable(rows) {
     });
     tableHtml += '</tbody>\n';
   }
-  
+
   tableHtml += '</table></div>\n';
   return tableHtml;
 }
@@ -620,20 +622,20 @@ export function markdownToHtml(mdText) {
   if (!mdText) return '';
   const lines = mdText.split(/\r?\n/);
   let html = '';
-  
+
   let inCodeBlock = false;
   let codeLines = [];
   let codeLang = '';
-  
+
   let inList = false;
   let listType = '';
-  
+
   let inTable = false;
   let tableRows = [];
-  
+
   let inBlockquote = false;
   let blockquoteContent = [];
-  
+
   let inParagraph = false;
   let paragraphContent = [];
 
@@ -656,25 +658,25 @@ export function markdownToHtml(mdText) {
       codeLines = [];
       codeLang = '';
     }
-    
+
     if (inList) {
       html += `</${listType}>\n`;
       inList = false;
       listType = '';
     }
-    
+
     if (inTable) {
       html += renderTable(tableRows);
       inTable = false;
       tableRows = [];
     }
-    
+
     if (inBlockquote) {
       html += `<blockquote>${inlineParse(blockquoteContent.join(' '))}</blockquote>\n`;
       inBlockquote = false;
       blockquoteContent = [];
     }
-    
+
     if (inParagraph) {
       html += `<p>${inlineParse(paragraphContent.join(' '))}</p>\n`;
       inParagraph = false;
@@ -745,7 +747,7 @@ export function markdownToHtml(mdText) {
 
     const ulMatch = line.match(/^([*\-+])\s+(.*)$/);
     const olMatch = line.match(/^(\d+)\.\s+(.*)$/);
-    
+
     if (ulMatch) {
       if (inList && listType !== 'ul') {
         closeAllBlocks();
@@ -759,7 +761,7 @@ export function markdownToHtml(mdText) {
       html += `<li>${inlineParse(ulMatch[2])}</li>\n`;
       continue;
     }
-    
+
     if (olMatch) {
       if (inList && listType !== 'ol') {
         closeAllBlocks();
@@ -777,7 +779,7 @@ export function markdownToHtml(mdText) {
     if (inList || inBlockquote || inTable) {
       closeAllBlocks();
     }
-    
+
     if (!inParagraph) {
       inParagraph = true;
     }

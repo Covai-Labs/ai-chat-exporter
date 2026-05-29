@@ -38,12 +38,16 @@ test('HTML formatter converts parsed conversation into structured HTML document'
     title: 'Self-Consistency Test',
     messages: [
       { role: 'User', content: 'What is 2+2? Answer in code.\n\n```python\nprint(2+2)\n```' },
-      { role: 'Assistant', content: 'The answer is 4. Let us look at a table:\n\n| Expression | Value |\n|---|---|\n| 2+2 | 4 |\n\nAnd some math:\n$$x^2 + y^2 = z^2$$\n\nGood luck!' }
+      {
+        role: 'Assistant',
+        content:
+          'The answer is 4. Let us look at a table:\n\n| Expression | Value |\n|---|---|\n| 2+2 | 4 |\n\nAnd some math:\n$$x^2 + y^2 = z^2$$\n\nGood luck!',
+      },
     ],
     metadata: {
       Source: 'ChatGPT',
       Model: 'GPT-4',
-    }
+    },
   };
 
   const output = formatter.format(conversation);
