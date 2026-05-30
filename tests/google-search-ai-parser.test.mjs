@@ -56,3 +56,53 @@ test('GoogleSearchAIParser correctly parses chat content from fixture', async ()
       '$$e^{i\\\\pi }+1=0$$',
   );
 });
+
+test('GoogleSearchAIParser correctly parses multi-turn SGE chat content from fixture', async () => {
+  const html = fs.readFileSync(
+    path.join(__dirname, 'fixtures/google-search-ai-multiturn.html'),
+    'utf8',
+  );
+  const { window, document, HTMLElement, Node, DOMParser } = parseHTML(html);
+
+  global.window = window;
+  global.document = document;
+  global.HTMLElement = HTMLElement;
+  global.Node = Node;
+  global.DOMParser = DOMParser;
+
+  window.location = { href: 'https://www.google.com/search?q=Please+write+a+short+response' };
+
+  const { GoogleSearchAIParser } = await import('../content/parsers/google_search_ai.js');
+  const parser = new GoogleSearchAIParser();
+
+  const result = await parser.parse();
+
+  assert.equal(result.title, 'Google Search AI Overview');
+  assert.equal(result.messages.length, 4);
+
+  // Turn 1
+  assert.equal(result.messages[0].role, 'User');
+  assert.ok(result.messages[0].content.includes('Please write a short response that includes:'));
+  assert.equal(result.messages[1].role, 'Model');
+  assert.ok(
+    result.messages[1].content.includes(
+      'Here are the requested elements tailored to your specific formatting needs',
+    ),
+  );
+  assert.ok(result.messages[1].content.includes('```elixir'));
+  assert.ok(result.messages[1].content.includes('| Country |'));
+
+  // Turn 2
+  assert.equal(result.messages[2].role, 'User');
+  assert.ok(
+    result.messages[2].content.includes(
+      'What do they mean by "உலகத் தொழிலாளர்களே, ஒன்றுபடுங்கள்!"',
+    ),
+  );
+  assert.equal(result.messages[3].role, 'Model');
+  assert.ok(
+    result.messages[3].content.includes(
+      '"உலகத் தொழிலாளர்களே, ஒன்றுபடுங்கள்!" என்பது புகழ்பெற்ற **கம்யூனிச எழுச்சி முழக்கம்** ஆகும்',
+    ),
+  );
+});

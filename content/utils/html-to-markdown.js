@@ -229,6 +229,17 @@ export function convertToMarkdown(htmlContent, options = {}) {
       'svg:not(.qwen-markdown-code *)',
       '.icon:not(.qwen-markdown-code *)',
       '[aria-hidden="true"]:not(.qwen-markdown-code *)',
+      '[id^="shrproxy"]',
+      '[id^="fbproxy"]',
+      'div.HvurC',
+      '.DBd2Wb',
+      '.oLpkLe',
+      '.OUQe0e',
+      '.UrecDd',
+      '[aria-label="Share public link"]',
+      'aside.L9AUvd',
+      'aside.UL0w9b',
+      'div.qacuz',
     ];
 
     noiseSelectors.forEach((selector) => {
