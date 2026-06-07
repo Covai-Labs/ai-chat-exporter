@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const copyBtn = document.getElementById('copy-btn');
   const previewBtn = document.getElementById('preview-btn');
   const formatSelect = document.getElementById('format-select');
+  const includeImagesCheckbox = document.getElementById('include-images-checkbox');
   const previewableFormats = new Set(['markdown', 'json', 'html', 'pdf']);
   const copyableFormats = new Set(['markdown', 'json', 'html']);
 
@@ -88,6 +89,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const response = await chrome.tabs.sendMessage(tab.id, {
           action: 'COPY_CHAT',
           format: 'html',
+          includeImages: includeImagesCheckbox.checked,
         });
 
         if (response && response.success) {
@@ -110,6 +112,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const response = await chrome.tabs.sendMessage(tab.id, {
           action: 'EXPORT_CHAT',
           format: format,
+          includeImages: includeImagesCheckbox.checked,
         });
 
         if (response && response.success) {
@@ -135,6 +138,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const response = await chrome.tabs.sendMessage(tab.id, {
         action: 'COPY_CHAT',
         format: format,
+        includeImages: includeImagesCheckbox.checked,
       });
 
       if (response && response.success) {
@@ -161,6 +165,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const response = await chrome.tabs.sendMessage(tab.id, {
         action: 'COPY_CHAT',
         format: formatToRequest,
+        includeImages: includeImagesCheckbox.checked,
       });
 
       if (response && response.success) {

@@ -35,6 +35,32 @@ const formatters = {
   html: new HtmlFormatter(),
 };
 
+function stripImages(content) {
+  if (!content) return '';
+  // 1. Remove markdown images
+  let cleaned = content.replace(/!\[.*?\]\(.*?\)/g, '');
+
+  // 2. Clean up leftover bullet points that are now empty
+  cleaned = cleaned.replace(/^\s*[-*+]\s*$/gm, '');
+
+  // 3. Remove **Images:** header if it has no bullets under it
+  cleaned = cleaned.replace(/\*\*Images:\*\*\s*(?=\*\*|$)/gi, '');
+
+  // 4. Remove **Attachments & Images:** section if it has no remaining attachments
+  const attachmentSectionIndex = cleaned.indexOf('**Attachments & Images:**');
+  if (attachmentSectionIndex !== -1) {
+    const afterHeader = cleaned.slice(attachmentSectionIndex + '**Attachments & Images:**'.length);
+    if (!/- \S/g.test(afterHeader)) {
+      cleaned = cleaned.slice(0, attachmentSectionIndex);
+    }
+  }
+
+  // 5. Collapse consecutive newlines
+  cleaned = cleaned.replace(/\n{3,}/g, '\n\n').trim();
+
+  return cleaned;
+}
+
 let activeParser = null;
 
 function detectParser() {
@@ -93,6 +119,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     (async () => {
       try {
         const conversation = await activeParser.parse({ full: true });
+        if (request.includeImages === false) {
+          conversation.messages.forEach((msg) => {
+            if (msg.content) {
+              msg.content = stripImages(msg.content);
+            }
+          });
+        }
         console.log('Parsed conversation with', conversation.messages.length, 'messages');
         const content = formatter.format(conversation);
         const blob = new Blob([content], { type: formatter.getMimeType() });
@@ -139,6 +172,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     (async () => {
       try {
         const conversation = await activeParser.parse();
+        if (request.includeImages === false) {
+          conversation.messages.forEach((msg) => {
+            if (msg.content) {
+              msg.content = stripImages(msg.content);
+            }
+          });
+        }
         console.log('Parsed conversation with', conversation.messages.length, 'messages');
         sendResponse({
           success: true,
