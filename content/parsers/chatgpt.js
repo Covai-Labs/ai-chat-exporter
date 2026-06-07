@@ -48,7 +48,7 @@ function fetchConversation(convId, token, includeImages) {
     const timer = setTimeout(() => {
       window.removeEventListener('message', handler);
       reject(new Error('Request timed out'));
-    }, 60000);
+    }, 30000);
 
     window.addEventListener('message', handler);
     window.postMessage(
