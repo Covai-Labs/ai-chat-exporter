@@ -54,3 +54,22 @@ test('cleanMarkdown utility collapses consecutive blank lines and strips trailin
   const cleaned = cleanMarkdown(rawMarkdown);
   assert.equal(cleaned, 'Paragraph 1\n\nParagraph 2\n\n* * *');
 });
+
+test('converts wrapped code blocks and preserves line breaks', () => {
+  const el = document.createElement('div');
+  el.innerHTML = `
+    <pre class="outer-wrapper">
+      <div class="header">
+        <svg>icon</svg>elixir
+      </div>
+      <pre class="inner-pre">
+        <code><span>defmodule Hello do</span><br><span>  def world do</span><br><span>    IO.puts("Hello")</span><br><span>  end</span><br><span>end</span></code>
+      </pre>
+    </pre>
+  `;
+  const md = convertToMarkdown(el);
+  assert.equal(
+    md,
+    '```elixir\ndefmodule Hello do\n  def world do\n    IO.puts("Hello")\n  end\nend\n```',
+  );
+});

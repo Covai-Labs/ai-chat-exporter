@@ -530,6 +530,14 @@ function inlineParse(text) {
     return id;
   });
 
+  // 3.5. Extract backslash escapes to prevent them from being formatted as markdown
+  const escapePlaceholders = [];
+  text = text.replace(/\\([\\`*_#+[\]()!.-])/g, (match, char) => {
+    const id = `{{ESCAPECHAR${tokenCounter++}}}`;
+    escapePlaceholders.push({ id, char });
+    return id;
+  });
+
   // 4. HTML escape remaining text
   text = escapeHtml(text);
 
@@ -547,7 +555,12 @@ function inlineParse(text) {
     return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
   });
 
-  // 8. Restore placeholders
+  // 8. Restore escape placeholders first
+  escapePlaceholders.forEach(({ id, char }) => {
+    text = text.replace(id, () => escapeHtml(char));
+  });
+
+  // 9. Restore placeholders
   placeholders.forEach(({ id, html }) => {
     text = text.replace(id, () => html);
   });

@@ -77,3 +77,28 @@ test('HTML formatter converts parsed conversation into structured HTML document'
   // Check math rendering wrapper
   assert.ok(output.includes('<span class="math-block">$$x^2 + y^2 = z^2$$</span>'));
 });
+
+test('HTML formatter unescapes backslash escapes inside headers and paragraphs', async () => {
+  const { HtmlFormatter } = await importFormatter();
+  const formatter = new HtmlFormatter();
+
+  const conversation = {
+    title: 'Escape Test',
+    messages: [
+      {
+        role: 'User',
+        content:
+          '### 1\\. Heading\n\nThis contains \\*\\*bold\\*\\* and \\*italic\\* and \\[link\\](https://example.com) and 2\\. item.',
+      },
+    ],
+  };
+
+  const output = formatter.format(conversation);
+
+  assert.ok(output.includes('<h3>1. Heading</h3>'));
+  assert.ok(
+    output.includes(
+      '<p>This contains **bold** and *italic* and [link](https://example.com) and 2. item.</p>',
+    ),
+  );
+});

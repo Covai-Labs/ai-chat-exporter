@@ -6,6 +6,171 @@ import {
   getConversationTurns,
 } from './chatgpt_scroll_collector.js';
 
+function getAccessToken() {
+  try {
+    const el = typeof document !== 'undefined' && document.getElementById('client-bootstrap');
+    if (!el) return null;
+    return JSON.parse(el.textContent).session.accessToken;
+  } catch {
+    return null;
+  }
+}
+
+function getConversationId() {
+  try {
+    if (typeof window === 'undefined' || !window.location) return null;
+    const path = window.location.pathname || window.location.href || '';
+    return path.match(/\/c\/([^/?#]+)/)?.[1] ?? null;
+  } catch {
+    return null;
+  }
+}
+
+function fetchConversation(convId, token, includeImages) {
+  return new Promise((resolve, reject) => {
+    const requestId =
+      typeof crypto !== 'undefined' && crypto.randomUUID
+        ? crypto.randomUUID()
+        : Math.random().toString(36).substring(2) + Date.now().toString(36);
+
+    const handler = (event) => {
+      if (event.data?.source !== 'chatgpt-exporter-page') return;
+      if (event.data?.requestId !== requestId) return;
+      window.removeEventListener('message', handler);
+      clearTimeout(timer);
+      if (event.data.error) {
+        reject(new Error(event.data.error));
+      } else {
+        resolve({ data: event.data.data, images: event.data.images ?? {} });
+      }
+    };
+
+    const timer = setTimeout(() => {
+      window.removeEventListener('message', handler);
+      reject(new Error('Request timed out'));
+    }, 60000);
+
+    window.addEventListener('message', handler);
+    window.postMessage(
+      {
+        source: 'chatgpt-exporter-ext',
+        type: 'fetch_conversation',
+        convId,
+        token,
+        requestId,
+        includeImages,
+      },
+      'https://chatgpt.com',
+    );
+  });
+}
+
+function linearize(mapping, includeImages) {
+  const root = Object.values(mapping).find((n) => !n.parent || !mapping[n.parent]);
+
+  const subtreeSize = {};
+  function size(id) {
+    if (id in subtreeSize) return subtreeSize[id];
+    const node = mapping[id];
+    if (!node) return (subtreeSize[id] = 0);
+    const childSizes = (node.children ?? []).map((cid) => size(cid));
+    return (subtreeSize[id] = 1 + (childSizes.length ? Math.max(...childSizes) : 0));
+  }
+  for (const id of Object.keys(mapping)) size(id);
+
+  const messages = [];
+  let node = root;
+
+  while (node) {
+    const msg = node.message;
+    const role = msg?.author?.role;
+    if (role === 'user' || role === 'assistant' || role === 'tool') {
+      const segments = [];
+      const parts = msg.content?.parts ?? [];
+      for (const part of parts) {
+        let partText = '';
+        if (typeof part === 'string') {
+          partText = part;
+        } else if (part && typeof part === 'object') {
+          if (part.content_type === 'text' && typeof part.text === 'string') {
+            partText = part.text;
+          }
+        }
+
+        if (partText && role !== 'tool') {
+          const text = partText
+            .replace(/\u{E0000}[\u{E0000}-\u{E007F}]*/gu, '')
+            .replace(/citeturn\d+\w*/g, '')
+            .trim();
+          if (text) segments.push({ type: 'text', content: text });
+        } else if (
+          includeImages &&
+          part?.content_type === 'image_asset_pointer' &&
+          part?.asset_pointer
+        ) {
+          segments.push({ type: 'image', fileId: part.asset_pointer.split('://')[1] });
+        }
+      }
+      const displayRole = role === 'user' ? 'User' : 'ChatGPT';
+      if (segments.length) {
+        const citeMap = {};
+        for (const ref of msg.metadata?.content_references ?? []) {
+          if (ref.matched_text && ref.items?.length) citeMap[ref.matched_text] = ref.items;
+        }
+        messages.push({ role: displayRole, segments, citeMap });
+      }
+    }
+    const validChildren = (node.children ?? []).filter((cid) => cid in mapping);
+    node = validChildren.length
+      ? mapping[
+          validChildren.reduce((best, cid) => (subtreeSize[cid] > subtreeSize[best] ? cid : best))
+        ]
+      : null;
+  }
+
+  return messages;
+}
+
+function cleanMarkdownFromApi(text, citeMap) {
+  if (!text) return '';
+
+  // 1. Remove specific character ranges (like some PUA ranges)
+  text = text
+    .replace(/\u{E0000}[\u{E0000}-\u{E007F}]*/gu, '')
+    .replace(/citeturn\d+\w*/g, '')
+    .trim();
+
+  // 2. Replace ChatGPT PUA URL annotations: url{label}{href}
+  text = text.replace(
+    /\uE200url\uE202([^\uE202\uE201]+)\uE202([^\uE201]+)\uE201/g,
+    (_, label, href) => `[${label.trim()}](${href.trim()})`,
+  );
+
+  // 3. Replace ChatGPT PUA entity annotations: entity[\"type\",\"name\",...]
+  text = text.replace(/\uE200entity\uE202([^\uE201]+)\uE201/g, (_, json) => {
+    try {
+      const arr = JSON.parse(json.replace(/\\"/g, '"'));
+      const name = Array.isArray(arr) && arr[1] ? arr[1] : json;
+      return name;
+    } catch {
+      return json;
+    }
+  });
+
+  // 4. Replace ChatGPT PUA cite annotations
+  text = text.replace(/\uE200cite(?:\uE202[^\uE202\uE201]+)+\uE201/g, (match) => {
+    const items = citeMap?.[match] ?? [];
+    if (!items.length) return '';
+    const formatted = items.map((item) => {
+      const label = item.attribution || item.title || 'Source';
+      return `[${label}](${item.url})`;
+    });
+    return ` (${formatted.join(', ')})`;
+  });
+
+  return text;
+}
+
 export class ChatGPTParser extends ChatParser {
   isAvailable(url) {
     return url.includes('chatgpt.com');
@@ -224,6 +389,65 @@ export class ChatGPTParser extends ChatParser {
   async parse(options = {}) {
     const title = document.title || 'ChatGPT Session';
     const messages = [];
+
+    const token = getAccessToken();
+    const convId = getConversationId();
+
+    if (token && convId) {
+      try {
+        if (!document.getElementById('ai-export-chatgpt-helper')) {
+          const script = document.createElement('script');
+          script.src = chrome.runtime.getURL('content/chatgpt_helper.js');
+          script.id = 'ai-export-chatgpt-helper';
+          script.onload = function () {
+            this.remove();
+          };
+          (document.head || document.documentElement).appendChild(script);
+          await new Promise((r) => setTimeout(r, 100));
+        }
+
+        const includeImages = options.includeImages !== false;
+        const result = await fetchConversation(convId, token, includeImages);
+        const apiMessages = linearize(result.data.mapping, includeImages);
+
+        const convTitle = result.data.title || title;
+
+        for (const msg of apiMessages) {
+          let content = '';
+          for (const seg of msg.segments) {
+            if (seg.type === 'text') {
+              content += cleanMarkdownFromApi(seg.content, msg.citeMap) + '\n\n';
+            } else if (seg.type === 'image') {
+              const src = result.images[seg.fileId];
+              if (src) {
+                content += `![Image](${src})\n\n`;
+              }
+            }
+          }
+          content = content.trim();
+          if (content) {
+            messages.push({
+              role: msg.role,
+              content: content,
+            });
+          }
+        }
+
+        const metadata = {
+          Source: 'ChatGPT',
+          Date: new Date().toLocaleString(),
+          Link: window.location.href,
+          Model:
+            result.data.model_slug ||
+            document.querySelector('[data-testid="model-selector-dropdown"]')?.innerText ||
+            'ChatGPT',
+        };
+
+        return { title: convTitle, messages, metadata };
+      } catch (e) {
+        console.error('[AI Exporter] API parse failed, falling back to DOM:', e);
+      }
+    }
 
     // Check if we have iframe-based content (deep research feature)
     const iframes = document.querySelectorAll('iframe[src*="oaiusercontent.com"]');

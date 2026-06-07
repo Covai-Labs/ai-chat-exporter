@@ -60,6 +60,7 @@
         "content/main.js",
         "content/loader.js",
         "content/claude_react_reader.js",
+        "content/chatgpt_helper.js",
         "content/lib/*.js",
         "content/utils/*.js",
         "content/parsers/*.js",

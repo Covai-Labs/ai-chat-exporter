@@ -195,20 +195,73 @@ export function convertToMarkdown(htmlContent, options = {}) {
       container.parentNode.replaceChild(textNode, container);
     });
 
-    // Preprocess Google Search SGE code blocks to assign language class and remove label
+    // Preprocess code blocks (pre elements) to normalize formatting and language tags
     clone.querySelectorAll('pre').forEach((pre) => {
-      const container = pre.closest('.pHpOfb') || pre.parentElement?.parentElement;
-      if (container) {
-        const langEl =
-          container.querySelector('.vVRw1d') || container.firstElementChild?.firstElementChild;
-        if (langEl && langEl !== pre) {
-          const language = langEl.textContent.trim().toLowerCase();
-          const code = pre.querySelector('code');
-          if (code) {
-            code.className = `language-${language}`;
-          }
-          langEl.remove();
+      // Guard against processing detached/already-replaced pre elements
+      if (!clone.contains(pre)) return;
+
+      const innerPre = pre.querySelector('pre');
+      const codeElement = pre.querySelector('code');
+
+      if (innerPre && codeElement) {
+        // --- ChatGPT-style wrapped code block ---
+        // Find the language label from the header (usually next to an SVG icon)
+        let language = '';
+        const svg = pre.querySelector('svg');
+        if (svg && svg.parentElement) {
+          const parent = svg.parentElement;
+          svg.remove();
+          language = parent.textContent.trim().toLowerCase();
         }
+
+        // Replace all <br> elements inside the code block with actual newlines
+        codeElement.querySelectorAll('br').forEach((br) => {
+          if (br.parentNode) {
+            const newline = clone.ownerDocument.createTextNode('\n');
+            br.parentNode.replaceChild(newline, br);
+          }
+        });
+
+        const codeText = codeElement.textContent;
+
+        // Create a new clean pre and code element structure
+        const newPre = clone.ownerDocument.createElement('pre');
+        const newCode = clone.ownerDocument.createElement('code');
+        if (language) {
+          newCode.className = `language-${language}`;
+        }
+        newCode.textContent = codeText;
+        newPre.appendChild(newCode);
+
+        // Replace the outer pre with the new clean pre
+        if (pre.parentNode) {
+          pre.parentNode.replaceChild(newPre, pre);
+        }
+      } else {
+        // --- Standard/SGE-style code block ---
+        // Extract language label if available (e.g. from Google Search SGE containers)
+        const container = pre.closest('.pHpOfb') || pre.parentElement?.parentElement;
+        if (container) {
+          const langEl =
+            container.querySelector('.vVRw1d') || container.firstElementChild?.firstElementChild;
+          if (langEl && langEl !== pre) {
+            const language = langEl.textContent.trim().toLowerCase();
+            const code = pre.querySelector('code');
+            if (code) {
+              code.className = `language-${language}`;
+            }
+            langEl.remove();
+          }
+        }
+
+        // Replace all <br> elements inside the code block with actual newlines
+        const codeEl = pre.querySelector('code') || pre;
+        codeEl.querySelectorAll('br').forEach((br) => {
+          if (br.parentNode) {
+            const newline = clone.ownerDocument.createTextNode('\n');
+            br.parentNode.replaceChild(newline, br);
+          }
+        });
       }
     });
 
