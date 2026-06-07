@@ -102,3 +102,24 @@ test('HTML formatter unescapes backslash escapes inside headers and paragraphs',
     ),
   );
 });
+
+test('HTML formatter renders markdown images as img tags', async () => {
+  const { HtmlFormatter } = await importFormatter();
+  const formatter = new HtmlFormatter();
+
+  const conversation = {
+    title: 'Image Test',
+    messages: [
+      {
+        role: 'User',
+        content:
+          'Check out this image: ![Football Shoe](https://example.com/shoe.png) and another ![Chart](https://example.com/chart.jpg?param=1&val=2)',
+      },
+    ],
+  };
+
+  const output = formatter.format(conversation);
+
+  assert.ok(output.includes('<img src="https://example.com/shoe.png" alt="Football Shoe"'));
+  assert.ok(output.includes('<img src="https://example.com/chart.jpg?param=1&val=2" alt="Chart"'));
+});

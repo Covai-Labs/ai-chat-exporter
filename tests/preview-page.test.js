@@ -15,7 +15,7 @@ test('preview page includes code wrapper and sandboxed render wrapper with ifram
   assert.match(previewHtml, /id="code-wrapper"/);
   assert.match(previewHtml, /id="render-wrapper"/);
   assert.match(previewHtml, /id="preview-rendered"/);
-  assert.match(previewHtml, /sandbox="allow-scripts"/);
+  assert.match(previewHtml, /sandbox="allow-scripts( allow-modals)?"/);
 });
 
 test('preview script implements view toggling and listener attachment', () => {
@@ -28,4 +28,10 @@ test('preview script implements view toggling and listener attachment', () => {
   assert.match(previewJs, /switchView/);
   assert.match(previewJs, /viewCodeBtn\.addEventListener\('click'/);
   assert.match(previewJs, /viewRenderBtn\.addEventListener\('click'/);
+});
+
+test('preview script handles PDF format and autoPrint', () => {
+  assert.match(previewJs, /format === 'pdf'/);
+  assert.match(previewJs, /printIframe/);
+  assert.match(previewJs, /autoPrint/);
 });

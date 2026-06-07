@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const copyBtn = document.getElementById('copy-btn');
   const previewBtn = document.getElementById('preview-btn');
   const formatSelect = document.getElementById('format-select');
+  const previewableFormats = new Set(['markdown', 'json', 'html', 'pdf']);
   const copyableFormats = new Set(['markdown', 'json', 'html']);
 
   // Get current tab
@@ -64,8 +65,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   function updateCopyButtonVisibility() {
     const isCopyable = copyableFormats.has(formatSelect.value);
+    const isPreviewable = previewableFormats.has(formatSelect.value);
     copyBtn.classList.toggle('hidden', !isCopyable);
-    previewBtn.classList.toggle('hidden', !isCopyable);
+    previewBtn.classList.toggle('hidden', !isPreviewable);
   }
 
   function showError() {
@@ -82,15 +84,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     exportBtn.textContent = 'Exporting...';
 
     try {
-      const response = await chrome.tabs.sendMessage(tab.id, {
-        action: 'EXPORT_CHAT',
-        format: format,
-      });
+      if (format === 'pdf') {
+        const response = await chrome.tabs.sendMessage(tab.id, {
+          action: 'COPY_CHAT',
+          format: 'html',
+        });
 
-      if (response && response.success) {
-        statusEl.textContent = 'Export Successful!';
+        if (response && response.success) {
+          await chrome.storage.local.set({
+            previewContent: response.content,
+            previewTitle: tab.title || 'Untitled Chat',
+            previewFormat: 'pdf',
+            autoPrint: true,
+          });
+
+          await chrome.tabs.create({
+            url: chrome.runtime.getURL('popup/preview.html'),
+          });
+
+          statusEl.textContent = 'Export Successful!';
+        } else {
+          statusEl.textContent = 'Export Failed: ' + (response?.error || 'Unknown');
+        }
       } else {
-        statusEl.textContent = 'Export Failed: ' + (response?.error || 'Unknown');
+        const response = await chrome.tabs.sendMessage(tab.id, {
+          action: 'EXPORT_CHAT',
+          format: format,
+        });
+
+        if (response && response.success) {
+          statusEl.textContent = 'Export Successful!';
+        } else {
+          statusEl.textContent = 'Export Failed: ' + (response?.error || 'Unknown');
+        }
       }
     } catch (e) {
       statusEl.textContent = 'Error: ' + e.message;
@@ -131,9 +157,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     previewBtn.textContent = 'Opening...';
 
     try {
+      const formatToRequest = format === 'pdf' ? 'html' : format;
       const response = await chrome.tabs.sendMessage(tab.id, {
         action: 'COPY_CHAT',
-        format: format,
+        format: formatToRequest,
       });
 
       if (response && response.success) {
@@ -141,6 +168,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           previewContent: response.content,
           previewTitle: tab.title || 'Untitled Chat',
           previewFormat: format,
+          autoPrint: false,
         });
 
         await chrome.tabs.create({

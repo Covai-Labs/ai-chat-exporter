@@ -16,6 +16,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   let title = 'Untitled Chat';
   let format = 'markdown';
 
+  const printIframe = () => {
+    if (previewRendered && previewRendered.contentWindow) {
+      previewRendered.contentWindow.postMessage({ action: 'print' }, '*');
+    }
+  };
+
   const switchView = (view) => {
     if (view === 'code') {
       viewCodeBtn.classList.add('active');
@@ -41,11 +47,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       'previewContent',
       'previewTitle',
       'previewFormat',
+      'autoPrint',
     ]);
 
     content = data.previewContent || '';
     title = data.previewTitle || 'Untitled Chat';
     format = data.previewFormat || 'markdown';
+    const autoPrint = data.autoPrint || false;
 
     titleEl.textContent = title;
     codeEl.textContent = content;
@@ -57,6 +65,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       } else if (format === 'html') {
         badgeEl.textContent = 'HTML Preview';
         viewToggleContainer.classList.remove('hidden');
+        switchView('render');
+      } else if (format === 'pdf') {
+        badgeEl.textContent = 'PDF Export';
+        copyBtn.classList.add('hidden');
+        downloadBtn.innerHTML = `
+          <svg viewBox="0 0 24 24" class="icon">
+            <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
+          </svg>
+          Print / Save PDF
+        `;
+        if (autoPrint) {
+          previewRendered.onload = () => {
+            setTimeout(printIframe, 1000);
+          };
+        }
         switchView('render');
       } else {
         badgeEl.textContent = 'Markdown Preview';
@@ -96,6 +119,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Download button logic
   downloadBtn.addEventListener('click', () => {
     if (!content) return;
+
+    if (format === 'pdf') {
+      printIframe();
+      return;
+    }
 
     let ext = 'md';
     let mimeType = 'text/markdown';

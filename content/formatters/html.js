@@ -403,6 +403,36 @@ export class HtmlFormatter extends ExportFormatter {
     ::-webkit-scrollbar-thumb:hover {
       background: var(--text-secondary);
     }
+
+    @media print {
+      @page {
+        margin: 15mm;
+      }
+      body {
+        background-color: transparent !important;
+      }
+      .theme-switch-wrapper,
+      .copy-code-btn {
+        display: none !important;
+      }
+      .container {
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+      .message-card {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        box-shadow: none !important;
+      }
+      .code-card {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    }
   </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
@@ -471,6 +501,12 @@ export class HtmlFormatter extends ExportFormatter {
         console.error('Failed to copy text: ', err);
       }
     }
+
+    window.addEventListener('message', (event) => {
+      if (event.data && event.data.action === 'print') {
+        window.print();
+      }
+    });
   </script>
 </body>
 </html>`;
@@ -548,6 +584,12 @@ function inlineParse(text) {
   // 6. Replace italic *...* or _..._
   text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
   text = text.replace(/_(.*?)_/g, '<em>$1</em>');
+
+  // 6.5 Replace images ![alt](url)
+  text = text.replace(/!\[(.*?)\]\((.*?)\)/g, (match, altText, url) => {
+    const safeUrl = url.replace(/&amp;/g, '&');
+    return `<img src="${safeUrl}" alt="${altText}" style="max-width: 350px; width: 100%; height: auto; border-radius: 8px; margin: 0.5rem 0; display: block;" />`;
+  });
 
   // 7. Replace links [text](url)
   text = text.replace(/\[(.*?)\]\((.*?)\)/g, (match, linkText, url) => {
