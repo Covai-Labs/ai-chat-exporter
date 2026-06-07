@@ -23,6 +23,18 @@ Claude, Gemini, Qwen, Perplexity, DeepSeek, and Meta AI to Markdown or JSON.
 
 ## Installation
 
+### Firefox
+
+Firefox users can install the extension directly from the [Firefox Add-ons store](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/).
+
+Alternatively, to install it temporarily:
+
+1. Download `ai-chat-exporter-firefox.zip` from the
+   [releases page](https://github.com/Rat-S/ai-chat-exporter/releases)
+2. Open Firefox and navigate to `about:debugging`
+3. Click "This Firefox" → "Load Temporary Add-on..."
+4. Select the zip file
+
 ### Chrome / Edge / Brave / Chromium-based browsers
 
 > [!NOTE]
@@ -34,18 +46,6 @@ Claude, Gemini, Qwen, Perplexity, DeepSeek, and Meta AI to Markdown or JSON.
 3. Open Chrome and navigate to `chrome://extensions/`
 4. Enable "Developer mode" (toggle in top-right corner)
 5. Click "Load unpacked" and select the extracted folder
-
-### Firefox
-
-Firefox users can install the extension directly from the [Firefox Add-ons store](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/).
-
-Alternatively, to install it manually/temporarily:
-
-1. Download `ai-chat-exporter-firefox.zip` from the
-   [releases page](https://github.com/Rat-S/ai-chat-exporter/releases)
-2. Open Firefox and navigate to `about:debugging`
-3. Click "This Firefox" → "Load Temporary Add-on..."
-4. Select the zip file
 
 ## Usage
 
