@@ -15,7 +15,7 @@ test('preview page includes code wrapper and sandboxed render wrapper with ifram
   assert.match(previewHtml, /id="code-wrapper"/);
   assert.match(previewHtml, /id="render-wrapper"/);
   assert.match(previewHtml, /id="preview-rendered"/);
-  assert.match(previewHtml, /sandbox="allow-scripts( allow-modals)?"/);
+  assert.match(previewHtml, /sandbox="allow-scripts( allow-modals)?( allow-same-origin)?"/);
 });
 
 test('preview script implements view toggling and listener attachment', () => {

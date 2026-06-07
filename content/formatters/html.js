@@ -465,7 +465,16 @@ export class HtmlFormatter extends ExportFormatter {
 
   <script>
     const toggle = document.getElementById('theme-toggle-checkbox');
-    const storedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    let storedTheme = null;
+    try {
+      storedTheme = localStorage.getItem('theme');
+    } catch (e) {
+      console.warn('localStorage is not available:', e);
+    }
+    
+    if (!storedTheme) {
+      storedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
     
     if (storedTheme === 'dark') {
       document.documentElement.setAttribute('data-theme', 'dark');
@@ -475,10 +484,14 @@ export class HtmlFormatter extends ExportFormatter {
     toggle.addEventListener('change', (e) => {
       if (e.target.checked) {
         document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
+        try {
+          localStorage.setItem('theme', 'dark');
+        } catch (err) {}
       } else {
         document.documentElement.removeAttribute('data-theme');
-        localStorage.setItem('theme', 'light');
+        try {
+          localStorage.setItem('theme', 'light');
+        } catch (err) {}
       }
     });
 

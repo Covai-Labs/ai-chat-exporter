@@ -42,6 +42,60 @@ document.addEventListener('DOMContentLoaded', async () => {
   viewCodeBtn.addEventListener('click', () => switchView('code'));
   viewRenderBtn.addEventListener('click', () => switchView('render'));
 
+  previewRendered.addEventListener('load', () => {
+    try {
+      const doc = previewRendered.contentDocument || previewRendered.contentWindow.document;
+      if (!doc) return;
+
+      const toggle = doc.getElementById('theme-toggle-checkbox');
+      if (toggle) {
+        const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (isSystemDark) {
+          doc.documentElement.setAttribute('data-theme', 'dark');
+          toggle.checked = true;
+        } else {
+          doc.documentElement.removeAttribute('data-theme');
+          toggle.checked = false;
+        }
+
+        toggle.addEventListener('change', (e) => {
+          if (e.target.checked) {
+            doc.documentElement.setAttribute('data-theme', 'dark');
+          } else {
+            doc.documentElement.removeAttribute('data-theme');
+          }
+        });
+      }
+
+      // Handle copy code clicks since inline handlers are blocked by CSP inside the extension
+      doc.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.copy-code-btn');
+        if (btn) {
+          const codeBlock = btn.closest('.code-card').querySelector('code');
+          const span = btn.querySelector('span');
+          const originalBtnText = span.textContent;
+
+          try {
+            await navigator.clipboard.writeText(codeBlock.textContent);
+            span.textContent = 'Copied!';
+            btn.style.borderColor = '#10b981';
+            btn.style.color = '#10b981';
+
+            setTimeout(() => {
+              span.textContent = originalBtnText;
+              btn.style.borderColor = '';
+              btn.style.color = '';
+            }, 2000);
+          } catch (err) {
+            console.error('Failed to copy text: ', err);
+          }
+        }
+      });
+    } catch (err) {
+      console.error('Failed to initialize content inside iframe:', err);
+    }
+  });
+
   try {
     const data = await chrome.storage.local.get([
       'previewContent',
