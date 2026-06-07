@@ -1,6 +1,145 @@
 import { ChatParser } from './base.js';
 import { convertToMarkdown } from '../utils/html-to-markdown.js';
 
+async function getOrganizationId() {
+  try {
+    const response = await fetch('https://claude.ai/api/organizations', {
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+    if (!response.ok) return null;
+    const orgs = await response.json();
+    if (Array.isArray(orgs) && orgs.length > 0) {
+      const chatOrg = orgs.find((org) => org.capabilities && org.capabilities.includes('chat'));
+      return chatOrg ? chatOrg.uuid : orgs[0].uuid;
+    }
+  } catch (e) {
+    console.error('[AI Exporter] Failed to detect org ID:', e);
+  }
+  return null;
+}
+
+function getConversationId() {
+  try {
+    if (typeof window === 'undefined' || !window.location) return null;
+    return window.location.pathname.match(/\/chat\/([^/?#]+)/)?.[1] ?? null;
+  } catch {
+    return null;
+  }
+}
+
+async function fetchConversation(orgId, conversationId) {
+  const url = `https://claude.ai/api/organizations/${orgId}/chat_conversations/${conversationId}?tree=True&rendering_mode=messages&render_all_tools=true`;
+  const response = await fetch(url, {
+    credentials: 'include',
+    headers: {
+      Accept: 'application/json',
+    },
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch Claude conversation: ${response.status}`);
+  }
+  return response.json();
+}
+
+function getCurrentBranch(data) {
+  if (!data.chat_messages || !data.current_leaf_message_uuid) {
+    return [];
+  }
+  const messageMap = new Map();
+  data.chat_messages.forEach((msg) => {
+    if (msg && msg.uuid) {
+      messageMap.set(msg.uuid, msg);
+    }
+  });
+
+  const branch = [];
+  let currentUuid = data.current_leaf_message_uuid;
+  while (currentUuid && messageMap.has(currentUuid)) {
+    const message = messageMap.get(currentUuid);
+    branch.unshift(message);
+    currentUuid = message.parent_message_uuid;
+    if (!messageMap.has(currentUuid)) {
+      break;
+    }
+  }
+  return branch;
+}
+
+function extractArtifactsFromText(text) {
+  const artifactRegex = /<antArtifact[^>]*>([\s\S]*?)<\/antArtifact>/g;
+  const artifacts = [];
+  let match;
+  while ((match = artifactRegex.exec(text)) !== null) {
+    const fullTag = match[0];
+    const content = match[1];
+
+    const titleMatch = fullTag.match(/title="([^"]*)"/);
+    const languageMatch = fullTag.match(/language="([^"]*)"/);
+
+    artifacts.push({
+      title: titleMatch ? titleMatch[1] : 'Artifact',
+      language: languageMatch ? languageMatch[1] : 'text',
+      content: content.trim(),
+    });
+  }
+  return artifacts;
+}
+
+function extractArtifacts(message) {
+  const artifacts = [];
+  if (message.content && Array.isArray(message.content)) {
+    for (const content of message.content) {
+      if (
+        content.type === 'tool_use' &&
+        (content.name === 'artifacts' || content.name === 'create_file') &&
+        content.display_content
+      ) {
+        const displayContent = content.display_content;
+        if (displayContent.type === 'code_block' && displayContent.code) {
+          const filename = displayContent.filename || 'artifact';
+          const title = filename
+            .split('/')
+            .pop()
+            .replace(/\.[^.]+$/, '');
+          artifacts.push({
+            title: title || 'Artifact',
+            language: displayContent.language || 'text',
+            content: displayContent.code.trim(),
+          });
+        } else if (displayContent.type === 'json_block' && displayContent.json_block) {
+          try {
+            const data = JSON.parse(displayContent.json_block);
+            if (data.filename) {
+              const filename = data.filename;
+              const title = filename
+                .split('/')
+                .pop()
+                .replace(/\.[^.]+$/, '');
+              artifacts.push({
+                title: title || 'Artifact',
+                language: data.language || 'text',
+                content: (data.code || '').trim(),
+              });
+            }
+          } catch (e) {
+            console.warn('[AI Exporter] Failed to parse tool use artifact json:', e);
+          }
+        }
+      }
+      if (content.text) {
+        artifacts.push(...extractArtifactsFromText(content.text));
+      }
+    }
+  }
+  if (message.text) {
+    artifacts.push(...extractArtifactsFromText(message.text));
+  }
+  return artifacts;
+}
+
 export class ClaudeParser extends ChatParser {
   isAvailable(url) {
     return url.includes('claude.ai');
@@ -10,7 +149,114 @@ export class ClaudeParser extends ChatParser {
     const title = document.title || 'Claude Chat';
     const messages = [];
 
-    // Inject the React reader script if not already injected
+    const conversationId = getConversationId();
+    if (conversationId) {
+      const orgId = await getOrganizationId();
+      if (orgId) {
+        try {
+          const data = await fetchConversation(orgId, conversationId);
+          const branch = getCurrentBranch(data);
+
+          const convTitle = data.name || title;
+
+          for (const message of branch) {
+            const role = message.sender === 'human' ? 'User' : 'Claude';
+
+            let contentStr = '';
+
+            // Construct content
+            if (message.content && Array.isArray(message.content)) {
+              for (const block of message.content) {
+                if (block.type === 'thinking' && block.thinking) {
+                  contentStr += `> **Thinking Process:**\n> \n> ${block.thinking.replace(/\n/g, '\n> ')}\n\n`;
+                } else if (block.type === 'text' && block.text) {
+                  const cleanText = block.text
+                    .replace(/<antArtifact[^>]*>[\s\S]*?<\/antArtifact>/g, '')
+                    .trim();
+                  if (cleanText) {
+                    contentStr += `${cleanText}\n\n`;
+                  }
+                }
+              }
+            } else if (message.text) {
+              const cleanText = message.text
+                .replace(/<antArtifact[^>]*>[\s\S]*?<\/antArtifact>/g, '')
+                .trim();
+              if (cleanText) {
+                contentStr += `${cleanText}\n\n`;
+              }
+            }
+
+            // Append attachments (for user messages)
+            if (message.attachments && message.attachments.length > 0) {
+              for (const attachment of message.attachments) {
+                if (attachment.file_name) {
+                  let header = `### Attachment: ${attachment.file_name}`;
+                  const meta = [];
+                  if (attachment.file_size) {
+                    meta.push(`${(attachment.file_size / 1024).toFixed(1)} KB`);
+                  }
+                  if (attachment.file_type) {
+                    meta.push(attachment.file_type);
+                  }
+                  if (meta.length > 0) {
+                    header += ` _(${meta.join(', ')})_`;
+                  }
+                  contentStr += `\n\n${header}\n`;
+                  if (attachment.extracted_content) {
+                    contentStr += `\`\`\`\`\n${attachment.extracted_content}\n\`\`\`\`\n\n`;
+                  }
+                } else if (attachment.extracted_content) {
+                  contentStr += `\n\n### Pasted\n\`\`\`\`\n${attachment.extracted_content}\n\`\`\`\`\n\n`;
+                }
+              }
+            }
+
+            contentStr = contentStr.trim();
+            if (contentStr) {
+              messages.push({ role, content: contentStr });
+            }
+
+            // Extract and push artifacts
+            const artifacts = extractArtifacts(message);
+            for (const artifact of artifacts) {
+              let artContent = '';
+              const artTitle = artifact.title || 'Artifact';
+              const artText = artifact.content || '';
+              const artLang = artifact.language || 'text';
+
+              if (artLang === 'markdown' || artLang === 'text') {
+                const quotedContent = artText
+                  .split('\n')
+                  .map((line) => `> ${line}`)
+                  .join('\n');
+                artContent = `\n\n> **Artifact: ${artTitle}**\n\n${quotedContent}\n\n`;
+              } else {
+                artContent = `\n\n> **Artifact: ${artTitle}**\n\`\`\`${artLang}\n${artText}\n\`\`\`\n\n`;
+              }
+
+              messages.push({
+                role: 'Claude Artifact',
+                content: artContent.trim(),
+              });
+            }
+          }
+
+          const metadata = {
+            Source: 'Claude',
+            Date: new Date().toLocaleString(),
+            Link: window.location.href,
+            Model: data.model || 'Claude',
+          };
+
+          return { title: convTitle, messages, metadata };
+        } catch (e) {
+          console.error('[AI Exporter] Claude API parse failed, falling back to DOM:', e);
+        }
+      }
+    }
+
+    // Inject the React reader script if not already injected (DOM Fallback)
     if (!document.getElementById('ai-export-claude-reader')) {
       const script = document.createElement('script');
       script.src = chrome.runtime.getURL('content/claude_react_reader.js');
@@ -43,39 +289,6 @@ export class ClaudeParser extends ChatParser {
       });
     };
 
-    // Claude Structure 2024/2025 Refinement
-    // Messages are usually in a container. We want to capture the flow.
-    // User messages are reliably [data-testid="user-message"]
-
-    // Assistant messages are trickier. They often don't have a single specific class in newer builds.
-    // However, they adhere to a structure. usually .font-claude-message OR just the block that isn't a user message.
-    // Artifacts are .artifact-block-cell (which might be inside or outside the main text block depending on view)
-
-    // Strategy: Select ALL potential top-level message containers.
-    // A common pattern in Claude is a list of .group
-
-    // Let's rely on the specific semantic markers we know exist:
-    // 1. [data-testid="user-message"]
-    // 2. .font-claude-message (Legacy/Stable?)
-    // 3. .artifact-block-cell
-    // 4. If those fail for assistant, we might need to look for specific container classes found in research.
-
-    // Let's try a broad selection and filter.
-
-    // We need to capture the *sequence*.
-    // The most robust way is finding the main chat list container.
-    // Usually `div.flex-1.overflow-y-auto` or similar contains the chat.
-
-    // Let's assume the previous method of querying all specific items in document order is the safest fallback
-    // IF we ensure we catch the assistant text.
-
-    // UPDATED STRATEGY:
-    // 1. Find all `div` elements that *contain* text but aren't too deep, roughly looking like messages? Too risky.
-    // 2. Use the strict selectors but assume .font-claude-message might be missing.
-    //    Look for `div.font-serif` or classes sharing stylistic properties?
-
-    // Let's stick to the knowns but check strict ordering.
-    // Precise selectors (Best formatting)
     const strictSelectors = [
       '[data-testid="user-message"]',
       '.font-claude-message',
@@ -83,15 +296,11 @@ export class ClaudeParser extends ChatParser {
       '.artifact-block-cell',
     ].join(', ');
 
-    // Fallback selectors (Good for missing content, but maybe less formatting)
     const fallbackSelectors = ['div.font-serif'].join(', ');
 
     const strictCandidates = Array.from(document.querySelectorAll(strictSelectors));
     const fallbackCandidates = Array.from(document.querySelectorAll(fallbackSelectors));
 
-    // Filter fallbacks: Only keep them if they DO NOT overlap with any strict candidate
-    // If a fallback contains a strict candidate, we prefer the strict (child) for better formatting.
-    // If a fallback is inside a strict candidate, we prefer the strict (parent).
     const validFallbacks = fallbackCandidates.filter((fallback) => {
       const overlapsWithError = strictCandidates.some(
         (strict) => strict.contains(fallback) || fallback.contains(strict),
@@ -99,16 +308,12 @@ export class ClaudeParser extends ChatParser {
       return !overlapsWithError;
     });
 
-    // Combine and deduplicate
-    // Use a Set to ensure uniqueness just in case
     const combined = [...new Set([...strictCandidates, ...validFallbacks])];
 
-    // Sort by document position
     const allElements = combined.sort((a, b) => {
       return a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
     });
 
-    // Pre-calculate artifact indices
     const artifactElements = document.querySelectorAll('.artifact-block-cell');
     const artifactMap = new Map();
     artifactElements.forEach((el, index) => artifactMap.set(el, index));
@@ -119,7 +324,6 @@ export class ClaudeParser extends ChatParser {
 
       if (el.matches('[data-testid="user-message"]')) {
         role = 'User';
-        // Convert HTML to markdown
         const clone = el.cloneNode(true);
         clone.querySelectorAll('button').forEach((btn) => btn.remove());
         content = convertToMarkdown(clone);
@@ -129,7 +333,6 @@ export class ClaudeParser extends ChatParser {
         el.matches('div.font-serif')
       ) {
         role = 'Claude';
-        // Convert HTML to markdown
         const clone = el.cloneNode(true);
         clone.querySelectorAll('button').forEach((btn) => btn.remove());
         content = convertToMarkdown(clone);
@@ -144,7 +347,6 @@ export class ClaudeParser extends ChatParser {
             const artContent = info.content || '';
             const artLang = info.language || 'text';
             if (artLang === 'markdown' || artLang === 'text') {
-              // Render as quoted markdown block to allow formatting to be visible in preview
               const quotedContent = artContent
                 .split('\n')
                 .map((line) => `> ${line}`)
@@ -154,7 +356,6 @@ export class ClaudeParser extends ChatParser {
               content = `\n\n> **Artifact: ${artTitle}**\n\`\`\`${artLang}\n${artContent}\n\`\`\`\n\n`;
             }
           } else {
-            // Fallback: try to read the header from DOM
             const header =
               el.querySelector('.flex.items-center.gap-2') || el.querySelector('.font-bold');
             const fallbackTitle = header ? header.innerText.split('\n')[0] : 'Unknown Artifact';
@@ -167,8 +368,6 @@ export class ClaudeParser extends ChatParser {
         messages.push({ role, content });
       }
     }
-
-    // Backup heuristics removed as we now include .font-serif in the primary pass.
 
     const metadata = {
       Source: 'Claude',

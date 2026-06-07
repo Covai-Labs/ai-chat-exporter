@@ -1,6 +1,6 @@
 {
   "name": "ai-chat-exporter",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.*",
