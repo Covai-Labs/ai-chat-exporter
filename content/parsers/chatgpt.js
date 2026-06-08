@@ -172,6 +172,11 @@ function cleanMarkdownFromApi(text, citeMap) {
 }
 
 export class ChatGPTParser extends ChatParser {
+  constructor() {
+    super();
+    this.lastFetch = null;
+  }
+
   isAvailable(url) {
     return url.includes('chatgpt.com');
   }
@@ -395,19 +400,38 @@ export class ChatGPTParser extends ChatParser {
 
     if (token && convId) {
       try {
-        if (!document.getElementById('ai-export-chatgpt-helper')) {
-          const script = document.createElement('script');
-          script.src = chrome.runtime.getURL('content/chatgpt_helper.js');
-          script.id = 'ai-export-chatgpt-helper';
-          script.onload = function () {
-            this.remove();
+        const includeImages = options.includeImages !== false;
+        const now = Date.now();
+        let result;
+
+        if (
+          this.lastFetch &&
+          this.lastFetch.convId === convId &&
+          this.lastFetch.includeImages === includeImages &&
+          now - this.lastFetch.timestamp < 20000
+        ) {
+          result = this.lastFetch.result;
+        } else {
+          if (!document.getElementById('ai-export-chatgpt-helper')) {
+            const script = document.createElement('script');
+            script.src = chrome.runtime.getURL('content/chatgpt_helper.js');
+            script.id = 'ai-export-chatgpt-helper';
+            script.onload = function () {
+              this.remove();
+            };
+            (document.head || document.documentElement).appendChild(script);
+            await new Promise((r) => setTimeout(r, 100));
+          }
+
+          result = await fetchConversation(convId, token, includeImages);
+          this.lastFetch = {
+            convId,
+            includeImages,
+            timestamp: now,
+            result,
           };
-          (document.head || document.documentElement).appendChild(script);
-          await new Promise((r) => setTimeout(r, 100));
         }
 
-        const includeImages = options.includeImages !== false;
-        const result = await fetchConversation(convId, token, includeImages);
         const apiMessages = linearize(result.data.mapping, includeImages);
 
         const convTitle = result.data.title || title;

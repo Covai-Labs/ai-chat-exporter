@@ -141,6 +141,11 @@ function extractArtifacts(message) {
 }
 
 export class ClaudeParser extends ChatParser {
+  constructor() {
+    super();
+    this.lastFetch = null;
+  }
+
   isAvailable(url) {
     return url.includes('claude.ai');
   }
@@ -154,7 +159,24 @@ export class ClaudeParser extends ChatParser {
       const orgId = await getOrganizationId();
       if (orgId) {
         try {
-          const data = await fetchConversation(orgId, conversationId);
+          const now = Date.now();
+          let data;
+
+          if (
+            this.lastFetch &&
+            this.lastFetch.conversationId === conversationId &&
+            now - this.lastFetch.timestamp < 20000
+          ) {
+            data = this.lastFetch.data;
+          } else {
+            data = await fetchConversation(orgId, conversationId);
+            this.lastFetch = {
+              conversationId,
+              timestamp: now,
+              data,
+            };
+          }
+
           const branch = getCurrentBranch(data);
 
           const convTitle = data.name || title;
