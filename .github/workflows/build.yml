@@ -111,3 +111,30 @@ jobs:
             --api-secret="${{ secrets.AMO_JWT_SECRET }}" \
             --channel="listed" \
             --source-dir="dist"
+
+  publish-edge:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: extensions
+          path: releases/
+
+      - name: Publish to Microsoft Edge Add-ons
+        run: node publish-edge.js
+        env:
+          EDGE_PRODUCT_ID: ${{ secrets.EDGE_PRODUCT_ID }}
+          EDGE_CLIENT_ID: ${{ secrets.EDGE_CLIENT_ID }}
+          EDGE_API_KEY: ${{ secrets.EDGE_API_KEY }}
+          EDGE_ZIP_PATH: releases/ai-chat-exporter-chromium.zip

@@ -35,7 +35,11 @@ Alternatively, to install it temporarily:
 3. Click "This Firefox" → "Load Temporary Add-on..."
 4. Select the zip file
 
-### Chrome / Edge / Brave / Chromium-based browsers
+### Microsoft Edge
+
+Edge users can install the extension directly from the [Microsoft Edge Add-ons store](https://microsoftedge.microsoft.com/addons/detail/hbgckjgfhnaedlihmkogenclfcnobicg).
+
+### Chrome / Brave / Other Chromium-based browsers (Manual install)
 
 > [!NOTE]
 > Please note that the developer does not test this extension with Chromium-based browsers, and it may or may not work.
