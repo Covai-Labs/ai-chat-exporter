@@ -181,13 +181,20 @@
       <p>The extension requires the following permissions to function:</p>
       <ul>
         <li>
-          <strong>activeTab / Scripting:</strong> Required to access the content of the chat page
-          you initiate an export on.
+          <strong>activeTab &amp; Scripting:</strong> Allows the extension to interact with the
+          active page and inject the exporter logic. Scripting is also used on installation or
+          updates to inject the exporter script into already-open AI chat tabs so they function
+          without requiring a page refresh.
         </li>
         <li>
-          <strong>Storage:</strong> Used strictly to save your local preferences (e.g., export
-          format settings) within your browser profile. This data is not synced to us or any third
-          party.
+          <strong>Storage:</strong> Used strictly to save your local preferences (e.g., preferred
+          export format, image toggles) within your browser profile. This data is kept 100% offline
+          and is not synced to any servers.
+        </li>
+        <li>
+          <strong>Host Access (Match Patterns):</strong> Grants permission to run on specific AI
+          chat platforms (including ChatGPT, Gemini, Claude, Qwen, Perplexity, DeepSeek, Meta AI,
+          and Mistral) to read the conversation DOM and format the export.
         </li>
       </ul>
 
