@@ -4,74 +4,208 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Privacy Policy - AI Chat Exporter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <style>
+      :root {
+        --bg-base: #0b111e;
+        --bg-surface: rgba(19, 30, 49, 0.6);
+        --bg-surface-hover: rgba(30, 48, 77, 0.8);
+        --text-primary: #f8fafc;
+        --text-secondary: #94a3b8;
+        --color-primary: #3b82f6;
+        --color-success: #10b981;
+        --border-color: rgba(148, 163, 184, 0.08);
+        --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
       body {
-        font-family:
-          system-ui,
-          -apple-system,
-          sans-serif;
-        line-height: 1.6;
+        font-family: var(--font-sans);
+        background-color: var(--bg-base);
+        color: var(--text-primary);
+        line-height: 1.7;
+        padding: 40px 20px;
+        min-height: 100vh;
+      }
+
+      .container {
         max-width: 800px;
         margin: 0 auto;
-        padding: 20px;
-        color: #333;
-        background-color: #f9fafb;
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        padding: 40px;
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
       }
+
+      header {
+        margin-bottom: 30px;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 20px;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--color-primary);
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 20px;
+        font-size: 0.95rem;
+        transition: transform 0.2s ease;
+      }
+
+      .back-link:hover {
+        transform: translateX(-3px);
+      }
+
       h1 {
-        border-bottom: 2px solid #eee;
-        padding-bottom: 10px;
+        font-size: 2.25rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+        background: linear-gradient(to right, #ffffff, #cbd5e1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
-      h2 {
-        margin-top: 30px;
+
+      .updated-date {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
       }
-      .highlight {
-        background-color: #f0fdf4;
-        padding: 15px;
+
+      .highlight-box {
+        background: rgba(16, 185, 129, 0.06);
+        border-left: 4px solid var(--color-success);
+        padding: 20px;
         border-radius: 8px;
-        border-left: 4px solid #4ade80;
+        margin: 30px 0;
+        font-size: 1.05rem;
+      }
+
+      .highlight-box strong {
+        color: var(--color-success);
+      }
+
+      h2 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-top: 40px;
+        margin-bottom: 15px;
+        color: var(--text-primary);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        padding-bottom: 8px;
+      }
+
+      p,
+      ul {
+        color: var(--text-secondary);
+        margin-bottom: 20px;
+        font-size: 1.02rem;
+      }
+
+      ul {
+        padding-left: 20px;
+      }
+
+      li {
+        margin-bottom: 10px;
+      }
+
+      li strong {
+        color: var(--text-primary);
+      }
+
+      footer {
+        margin-top: 50px;
+        border-top: 1px solid var(--border-color);
+        padding-top: 20px;
+        text-align: center;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
       }
     </style>
   </head>
   <body>
-    <h1>Privacy Policy</h1>
-    <p>Last Updated: January 18, 2026</p>
+    <div class="container">
+      <header>
+        <a href="index.html" class="back-link" id="btn-back">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Back to home
+        </a>
+        <h1>Privacy Policy</h1>
+        <p class="updated-date">Last Updated: June 24, 2026</p>
+      </header>
 
-    <div class="highlight">
-      <strong>TL;DR:</strong> We do not collect, store, or transmit your personal data. The
-      extension runs entirely locally on your device.
+      <div class="highlight-box">
+        <strong>TL;DR:</strong> We do not collect, store, or transmit your personal data. The
+        extension runs entirely locally on your device.
+      </div>
+
+      <h2>1. Data Collection</h2>
+      <p>
+        <strong>AI Chat Exporter</strong> does not collect, store, or transmit any personal
+        identification information (PII) or usage data to external servers.
+      </p>
+      <p>
+        The extension functions by reading the content of the currently active web page (your chat
+        session) securely within your browser for the sole purpose of formatting it into a file
+        (Markdown/JSON) and saving it to your local Downloads folder.
+      </p>
+
+      <h2>2. Permissions</h2>
+      <p>The extension requires the following permissions to function:</p>
+      <ul>
+        <li>
+          <strong>activeTab / Scripting:</strong> Required to access the content of the chat page
+          you initiate an export on.
+        </li>
+        <li>
+          <strong>Storage:</strong> Used strictly to save your local preferences (e.g., export
+          format settings) within your browser profile. This data is not synced to us or any third
+          party.
+        </li>
+      </ul>
+
+      <h2>3. Third-Party Services</h2>
+      <p>
+        This extension does not use any third-party analytics or tracking services (like Google
+        Analytics).
+      </p>
+
+      <h2>4. Contact</h2>
+      <p>
+        If you have questions or concerns, please contact us through the official browser extension
+        stores.
+      </p>
+
+      <footer>
+        <p>&copy; 2026 AI Chat Exporter. All rights reserved.</p>
+      </footer>
     </div>
-
-    <h2>1. Data Collection</h2>
-    <p>
-      <strong>AI Chat Exporter</strong> does not collect, store, or transmit any personal
-      identification information (PII) or usage data to external servers.
-    </p>
-    <p>
-      The extension functions by reading the content of the currently active web page (your chat
-      session) securely within your browser for the sole purpose of formatting it into a file
-      (Markdown/JSON) and saving it to your local Downloads folder.
-    </p>
-
-    <h2>2. Permissions</h2>
-    <p>The extension requires the following permissions to function:</p>
-    <ul>
-      <li>
-        <strong>activeTab / Scripting:</strong> Required to access the content of the chat page you
-        initiate an export on.
-      </li>
-      <li>
-        <strong>Storage:</strong> Used strictly to save your local preferences (e.g., export format
-        settings) within your browser profile. This data is not synced to us.
-      </li>
-    </ul>
-
-    <h2>3. Third-Party Services</h2>
-    <p>
-      This extension does not use any third-party analytics or tracking services (like Google
-      Analytics).
-    </p>
-
-    <h2>4. Contact</h2>
-    <p>If you have questions or concerns, please contact us through the browser extension store.</p>
   </body>
 </html>
