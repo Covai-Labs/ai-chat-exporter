@@ -8,6 +8,7 @@ const TARGET_MATCHES = [
   '*://qwen.ai/*',
   '*://www.perplexity.ai/*',
   '*://chat.deepseek.com/*',
+  '*://chat.z.ai/*',
 ];
 
 chrome.runtime.onInstalled.addListener(async () => {

@@ -240,17 +240,24 @@ export function convertToMarkdown(htmlContent, options = {}) {
       } else {
         // --- Standard/SGE-style code block ---
         // Extract language label if available (e.g. from Google Search SGE containers)
-        const container = pre.closest('.pHpOfb') || pre.parentElement?.parentElement;
-        if (container) {
-          const langEl =
-            container.querySelector('.vVRw1d') || container.firstElementChild?.firstElementChild;
-          if (langEl && langEl !== pre) {
-            const language = langEl.textContent.trim().toLowerCase();
-            const code = pre.querySelector('code');
-            if (code) {
-              code.className = `language-${language}`;
+        const code = pre.querySelector('code');
+        const hasLanguage =
+          code &&
+          Array.from(code.classList).some(
+            (cls) => cls.startsWith('language-') && cls !== 'language-',
+          );
+        if (!hasLanguage) {
+          const container = pre.closest('.pHpOfb') || pre.parentElement?.parentElement;
+          if (container) {
+            const langEl =
+              container.querySelector('.vVRw1d') || container.firstElementChild?.firstElementChild;
+            if (langEl && langEl !== pre) {
+              const language = langEl.textContent.trim().toLowerCase();
+              if (code) {
+                code.className = `language-${language}`;
+              }
+              langEl.remove();
             }
-            langEl.remove();
           }
         }
 

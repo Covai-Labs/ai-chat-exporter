@@ -1,7 +1,7 @@
 # AI Chat Exporter
 
 A simple, privacy-focused browser extension to export AI chats from ChatGPT,
-Claude, Gemini, Qwen, Perplexity, DeepSeek, and Meta AI to Markdown or JSON.
+Claude, Gemini, Qwen, Perplexity, DeepSeek, Meta AI, and Z.ai to Markdown or JSON.
 
 > This extension was developed for personal use and is not very polished. Additionally, formatting of exported items from certain chats is currently not working well.
 
@@ -17,6 +17,7 @@ Claude, Gemini, Qwen, Perplexity, DeepSeek, and Meta AI to Markdown or JSON.
   - Perplexity (perplexity.ai)
   - DeepSeek (chat.deepseek.com)
   - Meta AI (meta.ai)
+  - Z.ai (chat.z.ai)
 - **Clean Markdown Export**: Properly formatted with code blocks, tables, and attachments preserved
 - **Schema-Based JSON Export**: Normalized JSON exports for predictable downstream use
 - **One-Click Export**: Simple popup interface for quick exports

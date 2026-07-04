@@ -8,6 +8,7 @@ import { DeepSeekParser } from './parsers/deepseek.js';
 import { MetaParser } from './parsers/meta.js';
 import { MistralParser } from './parsers/mistral.js';
 import { GoogleSearchAIParser } from './parsers/google_search_ai.js';
+import { ZAiParser } from './parsers/z_ai.js';
 
 import { MarkdownFormatter } from './formatters/markdown.js';
 import { JsonFormatter } from './formatters/json.js';
@@ -26,6 +27,7 @@ const parsers = [
   new MetaParser(),
   new MistralParser(),
   new GoogleSearchAIParser(),
+  new ZAiParser(),
 ];
 
 // Registry of formatters

@@ -15,7 +15,8 @@
     "*://chat.deepseek.com/*",
     "*://www.meta.ai/*",
     "*://meta.ai/*",
-    "*://chat.mistral.ai/*"
+    "*://chat.mistral.ai/*",
+    "*://chat.z.ai/*"
   ],
   "action": {
     "default_popup": "popup/popup.html",
@@ -41,6 +42,7 @@
         "*://www.meta.ai/*",
         "*://meta.ai/*",
         "*://chat.mistral.ai/*",
+        "*://chat.z.ai/*",
         "*://*.google.com/search*",
         "*://*.google.co.in/search*",
         "*://*.google.co.uk/search*",
@@ -78,6 +80,7 @@
         "*://www.meta.ai/*",
         "*://meta.ai/*",
         "*://chat.mistral.ai/*",
+        "*://chat.z.ai/*",
         "*://*.google.com/*",
         "*://*.google.co.in/*",
         "*://*.google.co.uk/*",
