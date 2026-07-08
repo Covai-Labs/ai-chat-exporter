@@ -13,33 +13,81 @@ export class GeminiParser extends ChatParser {
       //1. Title Extraction - Enhanced for Deep Research
       let title = '';
 
-      // Strategy 1: Check for Deep Research title patterns
-      console.log('[Gemini Parser] Strategy 1: Looking for Deep Research title patterns...');
-      const deepResearchTitle = document.querySelector(
-        'h1, .title, .conversation-title, [data-testid="title"]',
-      );
-      if (deepResearchTitle) {
-        const text = deepResearchTitle.innerText.trim();
-        console.log('[Gemini Parser] Found potential title:', text);
-        if (
-          text.length > 5 &&
-          !text.includes('Gemini') &&
-          !text.includes('Help') &&
-          !text.includes('Settings')
-        ) {
-          title = text;
-          console.log('[Gemini Parser] Title set from Strategy 1:', title);
+      const isInsideMessage = (el) => {
+        return !!el.closest(
+          'user-query, model-response, .conversation-container, message-content, .query-text, .markdown',
+        );
+      };
+
+      // Strategy 1: Using document.title
+      console.log('[Gemini Parser] Strategy 1: Looking at document.title...');
+      if (document.title) {
+        const cleanedDocTitle = document.title
+          .replace(/Google/g, '')
+          .replace(/Gemini/g, '')
+          .replace(/Advanced/g, '')
+          .replace(/- /g, '')
+          .replace(/—/g, '')
+          .trim();
+
+        const isGeneric =
+          !cleanedDocTitle ||
+          cleanedDocTitle.toLowerCase() === 'new chat' ||
+          cleanedDocTitle.toLowerCase() === 'help' ||
+          cleanedDocTitle.toLowerCase() === 'settings';
+
+        if (cleanedDocTitle && !isGeneric && cleanedDocTitle.length > 2) {
+          title = cleanedDocTitle;
+          console.log('[Gemini Parser] Title set from Strategy 1 (document.title):', title);
         }
       }
 
-      // Strategy 2: Look for title in page content (Deep Research reports often have titles in content)
+      // Strategy 2: Looking for active navigation
       if (!title) {
-        console.log('[Gemini Parser] Strategy 2: Looking for title in page content...');
+        console.log('[Gemini Parser] Strategy 2: Looking for active navigation...');
+        const activeNav = document.querySelector('a[aria-current="page"], .selected');
+        if (activeNav) {
+          const navText = activeNav.innerText
+            .replace(/more_vert/g, '')
+            .replace(/\n/g, ' ')
+            .trim();
+          if (navText && navText.length > 2 && !navText.toLowerCase().includes('new chat')) {
+            title = navText;
+            console.log('[Gemini Parser] Title set from Strategy 2 (active navigation):', title);
+          }
+        }
+      }
+
+      // Strategy 3: Check for Deep Research title patterns
+      if (!title) {
+        console.log('[Gemini Parser] Strategy 3: Looking for Deep Research title patterns...');
+        const deepResearchTitle = document.querySelector(
+          'h1, .title, .conversation-title, [data-testid="title"]',
+        );
+        if (deepResearchTitle && !isInsideMessage(deepResearchTitle)) {
+          const text = deepResearchTitle.innerText.trim();
+          console.log('[Gemini Parser] Found potential title:', text);
+          if (
+            text.length > 5 &&
+            !text.includes('Gemini') &&
+            !text.includes('Help') &&
+            !text.includes('Settings')
+          ) {
+            title = text;
+            console.log('[Gemini Parser] Title set from Strategy 3:', title);
+          }
+        }
+      }
+
+      // Strategy 4: Look for title in page content (Deep Research reports often have titles in content)
+      if (!title) {
+        console.log('[Gemini Parser] Strategy 4: Looking for title in page content...');
         const contentTitles = document.querySelectorAll(
           'main h1, main h2, article h1, article h2, .content h1, .content h2',
         );
         console.log('[Gemini Parser] Found content titles:', contentTitles.length);
         for (const el of contentTitles) {
+          if (isInsideMessage(el)) continue;
           const text = el.innerText.trim();
           if (
             text.length > 5 &&
@@ -50,21 +98,22 @@ export class GeminiParser extends ChatParser {
             !text.includes('Response:')
           ) {
             title = text;
-            console.log('[Gemini Parser] Title set from Strategy 2:', title);
+            console.log('[Gemini Parser] Title set from Strategy 4:', title);
             break;
           }
         }
       }
 
-      // Strategy 3: Top Bar or Sidebar (original logic)
+      // Strategy 5: Top Bar or Sidebar (original logic)
       if (!title) {
-        console.log('[Gemini Parser] Strategy 3: Looking for title in top bar/sidebar...');
+        console.log('[Gemini Parser] Strategy 5: Looking for title in top bar/sidebar...');
         const possibleHeaders = document.querySelectorAll(
           'h1, button[aria-haspopup="true"], button[aria-expanded]',
         );
         console.log('[Gemini Parser] Found possible headers:', possibleHeaders.length);
 
         for (const el of possibleHeaders) {
+          if (isInsideMessage(el)) continue;
           const text = el.innerText.trim();
           if (
             text.length > 5 &&
@@ -75,26 +124,11 @@ export class GeminiParser extends ChatParser {
             const rect = el.getBoundingClientRect();
             if (rect.top < 100 && rect.left > 50) {
               title = text;
-              console.log('[Gemini Parser] Title set from Strategy 3:', title);
+              console.log('[Gemini Parser] Title set from Strategy 5:', title);
               break;
             }
           }
         }
-      }
-
-      if (!title) {
-        console.log('[Gemini Parser] Strategy 4: Looking for active navigation...');
-        const activeNav = document.querySelector('a[aria-current="page"], .selected');
-        if (activeNav) title = activeNav.innerText;
-      }
-
-      if (!title) {
-        console.log('[Gemini Parser] Strategy 5: Using document.title...');
-        title = document.title
-          .replace(/Google/g, '')
-          .replace(/Gemini/g, '')
-          .replace(/- /g, '')
-          .trim();
       }
 
       if (!title || title.length < 2) {

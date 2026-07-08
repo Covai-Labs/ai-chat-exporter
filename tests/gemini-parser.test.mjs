@@ -56,3 +56,70 @@ test('GeminiParser correctly parses chat content from fixture', async () => {
       '$$e^{i\\\\pi} + 1 = 0$$',
   );
 });
+
+test('GeminiParser extracts title from document.title if valid', async () => {
+  const { window, document, HTMLElement, Node, DOMParser } = parseHTML('<div></div>');
+  global.window = window;
+  global.document = document;
+  global.HTMLElement = HTMLElement;
+  global.Node = Node;
+  global.DOMParser = DOMParser;
+
+  document.title = 'The Core Difference - Google Gemini';
+  window.location = { href: 'https://gemini.google.com/app' };
+
+  const { GeminiParser } = await import('../content/parsers/gemini.js');
+  const parser = new GeminiParser();
+  const result = await parser.parse();
+
+  assert.equal(result.title, 'The Core Difference');
+});
+
+test('GeminiParser extracts title from active navigation if document.title is generic', async () => {
+  const { window, document, HTMLElement, Node, DOMParser } = parseHTML(
+    '<div><a class="selected">Sidebar Title <span class="more-options">more_vert</span></a></div>',
+  );
+  global.window = window;
+  global.document = document;
+  global.HTMLElement = HTMLElement;
+  global.Node = Node;
+  global.DOMParser = DOMParser;
+
+  document.title = 'Gemini';
+  window.location = { href: 'https://gemini.google.com/app' };
+
+  const { GeminiParser } = await import('../content/parsers/gemini.js');
+  const parser = new GeminiParser();
+  const result = await parser.parse();
+
+  assert.equal(result.title, 'Sidebar Title');
+});
+
+test('GeminiParser does not extract title from headers inside chat messages', async () => {
+  const { window, document, HTMLElement, Node, DOMParser } = parseHTML(
+    '<div class="conversation-container">' +
+      '  <model-response>' +
+      '    <message-content>' +
+      '      <div class="markdown">' +
+      '        <h1>Header inside Message</h1>' +
+      '      </div>' +
+      '    </message-content>' +
+      '  </model-response>' +
+      '</div>',
+  );
+  global.window = window;
+  global.document = document;
+  global.HTMLElement = HTMLElement;
+  global.Node = Node;
+  global.DOMParser = DOMParser;
+
+  document.title = 'Gemini';
+  window.location = { href: 'https://gemini.google.com/app' };
+
+  const { GeminiParser } = await import('../content/parsers/gemini.js');
+  const parser = new GeminiParser();
+  const result = await parser.parse();
+
+  // Should fall back to 'Gemini Conversation' because the <h1> is inside a message
+  assert.equal(result.title, 'Gemini Conversation');
+});
