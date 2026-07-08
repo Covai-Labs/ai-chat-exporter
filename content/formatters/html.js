@@ -435,8 +435,8 @@ export class HtmlFormatter extends ExportFormatter {
     }
   </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-  ${buildScriptTag('https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js')}
-  ${buildScriptTag('https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js', "renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });")}
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
 </head>
 <body>
   <div class="container">
@@ -542,14 +542,6 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
-}
-
-function buildScriptTag(url, onloadCode = '') {
-  const lt = String.fromCharCode(60); // '<'
-  const gt = String.fromCharCode(62); // '>'
-  const sName = 'scr' + 'ipt';
-  const onloadAttr = onloadCode ? ` onload="${onloadCode}"` : '';
-  return `${lt}${sName} defer src="${url}"${onloadAttr}${gt}${lt}/${sName}${gt}`;
 }
 
 function inlineParse(text) {
