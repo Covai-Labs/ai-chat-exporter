@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "AI Chat Exporter",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "Export AI chats from ChatGPT, Claude, Gemini & more to Markdown or JSON.",
   "homepage_url": "https://ai-chat-export.covai.org/",
   "permissions": ["activeTab", "scripting", "storage"],
@@ -16,7 +16,8 @@
     "*://www.meta.ai/*",
     "*://meta.ai/*",
     "*://chat.mistral.ai/*",
-    "*://chat.z.ai/*"
+    "*://chat.z.ai/*",
+    "*://console.cloud.google.com/*"
   ],
   "action": {
     "default_popup": "popup/popup.html",
@@ -43,6 +44,7 @@
         "*://meta.ai/*",
         "*://chat.mistral.ai/*",
         "*://chat.z.ai/*",
+        "*://console.cloud.google.com/*",
         "*://*.google.com/search*",
         "*://*.google.co.in/search*",
         "*://*.google.co.uk/search*",
@@ -81,6 +83,7 @@
         "*://meta.ai/*",
         "*://chat.mistral.ai/*",
         "*://chat.z.ai/*",
+        "*://console.cloud.google.com/*",
         "*://*.google.com/*",
         "*://*.google.co.in/*",
         "*://*.google.co.uk/*",
