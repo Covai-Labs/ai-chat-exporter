@@ -165,4 +165,4 @@ jobs:
 #          CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
 #          CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
 #          CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
-#          CHROME_ZIP_PATH: releases/ai-chat-exporter-chromium.zip
+#          CHROME_ZIP_PATH: releases/ai-chat-exporter-chrome.zip

@@ -48,6 +48,23 @@ try:
         json.dump(manifest, f, indent=2)
     print('Successfully wrote dist/manifest.json')
 
+    # For chrome target, strip remote KaTeX scripts to comply with Chrome Web Store policy
+    if target == 'chrome':
+        html_formatter_path = 'dist/content/formatters/html.js'
+        if os.path.exists(html_formatter_path):
+            print("Stripping KaTeX remote scripts for chrome target...")
+            with open(html_formatter_path, 'r') as hf:
+                content = hf.read()
+            
+            # Locate the katexHeaders block and empty it
+            import re
+            pattern = r'const katexHeaders = `[\s\S]*?`;'
+            modified_content = re.sub(pattern, "const katexHeaders = '';", content)
+            
+            with open(html_formatter_path, 'w') as hf:
+                hf.write(modified_content)
+            print("Successfully stripped KaTeX scripts.")
+
 except Exception as error:
     print(f'Build failed: {error}')
     sys.exit(1)
