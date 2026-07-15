@@ -6,6 +6,19 @@ on:
     tags: ['v*']
   pull_request:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Select browser target to publish (or build only)'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - chrome
+          - edge
+          - firefox
+          - none
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
@@ -79,7 +92,7 @@ jobs:
   publish-firefox:
     needs: build
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && (inputs.target == 'all' || inputs.target == 'firefox'))
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -115,7 +128,7 @@ jobs:
   publish-edge:
     needs: build
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && (inputs.target == 'all' || inputs.target == 'edge'))
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -142,7 +155,7 @@ jobs:
   publish-chrome:
     needs: build
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && (inputs.target == 'all' || inputs.target == 'chrome'))
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

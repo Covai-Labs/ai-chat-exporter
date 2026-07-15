@@ -76,7 +76,7 @@ async function uploadPackage(accessToken) {
 
 async function publishExtension(accessToken) {
   console.log('Step 2: Publishing the uploaded extension...');
-  const publishUrl = `https://www.googleapis.com/webstore/v1.1/items/${EXTENSION_ID}/publish`;
+  const publishUrl = `https://www.googleapis.com/chromewebstore/v1.1/items/${EXTENSION_ID}/publish`;
   const response = await fetch(publishUrl, {
     method: 'POST',
     headers: {
