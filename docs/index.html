@@ -265,6 +265,87 @@
         color: #8ab4f8;
       }
 
+      .primary-download {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 40px;
+      }
+
+      .recommendation-badge {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #ff9166;
+        background: rgba(255, 113, 57, 0.1);
+        border: 1px solid rgba(255, 113, 57, 0.2);
+        padding: 4px 12px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        letter-spacing: 0.05em;
+      }
+
+      .store-btn.firefox.primary-btn {
+        padding: 18px 36px;
+        font-size: 1.1rem;
+        border-color: rgba(255, 113, 57, 0.3);
+        box-shadow: 0 4px 25px rgba(255, 113, 57, 0.15);
+      }
+
+      .store-btn.firefox.primary-btn:hover {
+        border-color: rgba(255, 113, 57, 0.6);
+        box-shadow: 0 0 35px var(--color-firefox-glow);
+        transform: translateY(-2px);
+      }
+
+      .secondary-downloads {
+        max-width: 600px;
+        margin: 0 auto 80px;
+        padding: 24px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        text-align: center;
+      }
+
+      .secondary-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 8px;
+      }
+
+      .secondary-subtitle {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-bottom: 20px;
+        line-height: 1.5;
+      }
+
+      .secondary-subtitle a {
+        color: var(--color-primary);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .secondary-subtitle a:hover {
+        text-decoration: underline;
+      }
+
+      .secondary-downloads .store-buttons {
+        margin-bottom: 0;
+        gap: 16px;
+      }
+
+      .secondary-downloads .store-btn {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+      }
+
+      .secondary-downloads .btn-label-main {
+        font-size: 0.95rem;
+      }
+
       .store-btn svg {
         width: 24px;
         height: 24px;
@@ -478,29 +559,11 @@
           DeepSeek, and more in one click.
         </p>
 
-        <div class="store-buttons">
-          <a
-            href="https://chrome.google.com/webstore/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
-            class="store-btn chrome"
-            target="_blank"
-            rel="noopener noreferrer"
-            id="btn-chrome"
-          >
-            <!-- Chrome Icon -->
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364zM12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728Z"
-              />
-            </svg>
-            <div>
-              <span class="btn-label-sub">Get it for</span>
-              <span class="btn-label-main">Chrome / Brave</span>
-            </div>
-          </a>
-
+        <div class="primary-download">
+          <span class="recommendation-badge">Recommended (Full-featured out of the box)</span>
           <a
             href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/"
-            class="store-btn firefox"
+            class="store-btn firefox primary-btn"
             target="_blank"
             rel="noopener noreferrer"
             id="btn-firefox"
@@ -516,25 +579,61 @@
               <span class="btn-label-main">Firefox</span>
             </div>
           </a>
+        </div>
 
-          <a
-            href="https://microsoftedge.microsoft.com/addons/detail/hbgckjgfhnaedlihmkogenclfcnobicg"
-            class="store-btn edge"
-            target="_blank"
-            rel="noopener noreferrer"
-            id="btn-edge"
-          >
-            <!-- Edge Icon -->
-            <svg viewBox="0 0 24 24">
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.79 13.79c-.39.39-1.02.39-1.41 0l-2.59-2.59c-.39-.39-.39-1.02 0-1.41l2.59-2.59c.39-.39 1.02-.39 1.41 0l2.59 2.59c.39.39.39 1.02 0 1.41l-2.59 2.59zm6.58-4.58c.39.39.39 1.02 0 1.41l-2.59 2.59c-.39.39-1.02.39-1.41 0l-2.59-2.59c-.39-.39-.39-1.02 0-1.41l2.59-2.59c.39-.39 1.02-.39 1.41 0l2.59 2.59z"
-              />
-            </svg>
-            <div>
-              <span class="btn-label-sub">Get it for</span>
-              <span class="btn-label-main">Microsoft Edge</span>
-            </div>
-          </a>
+        <div class="secondary-downloads">
+          <p class="secondary-title">
+            Also available for Chromium browsers (Chrome, Edge, Brave, Opera)
+          </p>
+          <p class="secondary-subtitle">
+            Web store builds lack KaTeX math equation rendering. For the full-featured version,
+            download the latest release manually from
+            <a
+              href="https://github.com/Rat-S/ai-chat-exporter/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub Releases</a
+            >.
+          </p>
+          <div class="store-buttons">
+            <a
+              href="https://chrome.google.com/webstore/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
+              class="store-btn chrome"
+              target="_blank"
+              rel="noopener noreferrer"
+              id="btn-chrome"
+            >
+              <!-- Chrome Icon -->
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364zM12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728Z"
+                />
+              </svg>
+              <div>
+                <span class="btn-label-sub">Get it for</span>
+                <span class="btn-label-main">Chrome / Brave</span>
+              </div>
+            </a>
+
+            <a
+              href="https://microsoftedge.microsoft.com/addons/detail/hbgckjgfhnaedlihmkogenclfcnobicg"
+              class="store-btn edge"
+              target="_blank"
+              rel="noopener noreferrer"
+              id="btn-edge"
+            >
+              <!-- Edge Icon -->
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.79 13.79c-.39.39-1.02.39-1.41 0l-2.59-2.59c-.39-.39-.39-1.02 0-1.41l2.59-2.59c.39-.39 1.02-.39 1.41 0l2.59 2.59c.39.39.39 1.02 0 1.41l-2.59 2.59zm6.58-4.58c.39.39.39 1.02 0 1.41l-2.59 2.59c-.39.39-1.02.39-1.41 0l-2.59-2.59c-.39-.39-.39-1.02 0-1.41l2.59-2.59c.39-.39 1.02-.39 1.41 0l2.59 2.59z"
+                />
+              </svg>
+              <div>
+                <span class="btn-label-sub">Get it for</span>
+                <span class="btn-label-main">Microsoft Edge</span>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
 
