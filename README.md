@@ -35,7 +35,7 @@ _Note: The developer primarily tests this extension on Firefox. If you experienc
 ## Features
 
 - **Privacy First**: All processing happens locally in your browser.
-  No data is sent to external servers.
+  No data is ever sent to third-party servers.
 - **Multi-Platform Support**: Works with all major AI chat platforms
   - ChatGPT (chatgpt.com)
   - Claude (claude.ai)
