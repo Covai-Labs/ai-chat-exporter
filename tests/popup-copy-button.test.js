@@ -34,3 +34,9 @@ test('preview button triggers local storage and opens preview.html tab', () => {
   assert.match(popupJs, /chrome\.storage\.local\.set/);
   assert.match(popupJs, /url:\s*chrome\.runtime\.getURL\(\s*["']popup\/preview\.html["']\s*\)/);
 });
+
+test('popup includes a custom filename input field', () => {
+  assert.match(popupHtml, /id="filename-input"/);
+  assert.match(popupHtml, /Filename/);
+  assert.match(popupJs, /customFilename:\s*customFilename/);
+});

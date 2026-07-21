@@ -92,6 +92,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             available: true,
             platform: activeParser.constructor.name.replace('Parser', ''),
             count: conversation.messages.length,
+            title: conversation.title || '',
           });
         } catch (e) {
           console.error('Check availability parse failed:', e);
@@ -99,6 +100,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             available: true,
             platform: activeParser.constructor.name.replace('Parser', ''),
             count: 0, // Fallback
+            title: '',
           });
         }
       })();
@@ -134,19 +136,26 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         const content = formatter.format(conversation);
         const blob = new Blob([content], { type: formatter.getMimeType() });
 
-        // Trigger download (simplest way from content script is usually creating a link)
-        // Alternatively, send data back to background to download (better for filenames)
-        // For now, let's try direct download link injection
+        // Trigger download
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        // Get platform name from parser
-        const platformName = activeParser.constructor.name.replace('Parser', '');
-        // Sanitize filename: replace spaces with underscores, keep dots/dashes, remove unsafe chars
-        const safeTitle = conversation.title
-          .replace(/[\\/:*?"<>|]/g, '') // Remove invalid chars
-          .replace(/\s+/g, '_'); // Replace spaces with underscores
-        a.download = `${platformName}-${safeTitle}.${formatter.getFileExtension()}`;
+
+        let downloadName;
+        if (request.customFilename && request.customFilename.trim().length > 0) {
+          const userCustom = request.customFilename.trim().replace(/[\\/:*?"<>|]/g, '');
+          downloadName = userCustom.endsWith(`.${formatter.getFileExtension()}`)
+            ? userCustom
+            : `${userCustom}.${formatter.getFileExtension()}`;
+        } else {
+          const platformName = activeParser.constructor.name.replace('Parser', '');
+          const safeTitle = (conversation.title || 'Untitled_Chat')
+            .replace(/[\\/:*?"<>|]/g, '')
+            .replace(/\s+/g, '_');
+          downloadName = `${platformName}-${safeTitle}.${formatter.getFileExtension()}`;
+        }
+
+        a.download = downloadName;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);

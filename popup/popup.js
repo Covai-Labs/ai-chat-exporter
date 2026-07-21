@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const previewBtn = document.getElementById('preview-btn');
   const formatSelect = document.getElementById('format-select');
   const includeImagesCheckbox = document.getElementById('include-images-checkbox');
+  const filenameInput = document.getElementById('filename-input');
   const previewableFormats = new Set(['markdown', 'json', 'html', 'pdf']);
   const copyableFormats = new Set(['markdown', 'json', 'html']);
 
@@ -35,8 +36,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
         if (response && response.available) {
           statusEl.textContent = `Detected: ${response.platform}`;
-          chatTitleEl.textContent = tab.title || 'Untitled Chat';
+          const displayTitle = response.title || tab.title || 'Untitled Chat';
+          chatTitleEl.textContent = displayTitle;
           msgCountEl.textContent = `${response.count || 0} messages found`;
+          if (filenameInput) {
+            const safeDefault = displayTitle.replace(/[\\/:*?"<>|]/g, '').replace(/\s+/g, '_');
+            filenameInput.value = safeDefault;
+          }
           chatInfoEl.classList.remove('hidden');
           actionsEl.classList.remove('hidden');
           return; // success — stop retrying
@@ -81,6 +87,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   exportBtn.addEventListener('click', async () => {
     const format = formatSelect.value;
+    const customFilename = filenameInput ? filenameInput.value.trim() : '';
     exportBtn.disabled = true;
     exportBtn.textContent = 'Exporting...';
 
@@ -95,7 +102,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (response && response.success) {
           await chrome.storage.local.set({
             previewContent: response.content,
-            previewTitle: tab.title || 'Untitled Chat',
+            previewTitle: customFilename || tab.title || 'Untitled Chat',
             previewFormat: 'pdf',
             autoPrint: true,
           });
@@ -113,6 +120,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           action: 'EXPORT_CHAT',
           format: format,
           includeImages: includeImagesCheckbox.checked,
+          customFilename: customFilename,
         });
 
         if (response && response.success) {
