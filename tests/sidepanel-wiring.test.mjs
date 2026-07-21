@@ -19,10 +19,12 @@ test('manifest.json declares sidePanel permission and side_panel default_path', 
   assert.equal(manifest.side_panel?.default_path, 'sidepanel/sidepanel.html');
 });
 
-test('build.py strips sidePanel and side_panel for firefox target', () => {
+test('build.py and build.sh strip sidepanel configuration for firefox target', () => {
+  const buildSh = fs.readFileSync('build.sh', 'utf8');
   assert.match(buildPy, /if target == ['"]firefox['"]/);
   assert.match(buildPy, /sidePanel/);
   assert.match(buildPy, /del manifest\['side_panel'\]/);
+  assert.match(buildSh, /if \[ "\$TARGET" != "firefox" \]; then/);
 });
 
 test('background.js syncs side panel behavior and handles OPEN_SIDE_PANEL', () => {

@@ -14,11 +14,17 @@ mkdir -p releases
 for TARGET in "${TARGETS[@]}"; do
     echo "Building for $TARGET..."
 
-    # Create dist directory
+    # Recreate clean dist directory
+    rm -rf dist
     mkdir -p dist
 
-    # Copy all files
+    # Copy base files
     cp -r background content docs/icons popup schemas dist/
+
+    # Copy sidepanel only for non-firefox targets
+    if [ "$TARGET" != "firefox" ]; then
+        cp -r sidepanel dist/
+    fi
 
     # Parse/Modify manifest using Python for reliability
     python3 build.py "$TARGET"
