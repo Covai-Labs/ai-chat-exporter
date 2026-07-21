@@ -306,7 +306,7 @@ export function convertToMarkdown(htmlContent, options = {}) {
       clone.querySelectorAll(selector).forEach((el) => el.remove());
     });
 
-    html = clone.innerHTML;
+    html = clone;
   } else {
     console.warn('Invalid input to convertToMarkdown:', htmlContent);
     return '';

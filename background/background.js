@@ -19,6 +19,7 @@ const PLATFORM_URLS = {
   perplexity: 'https://www.perplexity.ai/',
   qwen: 'https://chat.qwen.ai/',
   mistral: 'https://chat.mistral.ai/',
+  notebooklm: 'https://notebooklm.google.com/',
 };
 
 chrome.runtime.onInstalled.addListener(async () => {
