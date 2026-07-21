@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Microsoft Copilot: Global Work and Wage Comparison</title>
+</head>
+<body>
+  <main>
+    <div class="chat-container">
+      <!-- User message 1 -->
+      <div class="group/user-message space-y-1" role="article">
+        <h5 class="sr-only" aria-label="You said">You said</h5>
+        <div class="font-ligatures-none relative" data-content="user-message">
+          Please write a short response comparing Denmark, Sweden, and USA work hours.
+        </div>
+      </div>
+
+      <!-- AI message 1 -->
+      <div class="group/ai-message" data-content="ai-message" data-testid="ai-message" role="article">
+        <h6 class="sr-only" aria-label="Copilot said">Copilot said</h6>
+        <div data-testid="ai-message-body">
+          <div class="group/ai-message-item space-y-3 break-words">
+            <p>
+              <span class="font-ligatures-none whitespace-pre-wrap">Here is the comparison you requested:</span>
+            </p>
+            <p>
+              <span>This statement highlights <strong>bold findings</strong> and <em>key details</em>, with a reference to <span class="font-bold cursor-pointer" role="button" data-url="https://deadrat.in">deadrat.in</span>.</span>
+            </p>
+            <div class="rounded-xl">
+              <div class="flex items-center gap-2">
+                <span class="capitalize">elixir</span>
+              </div>
+              <div class="rounded-b-xl bg-background-static-850 px-4 pb-1.5">
+                <pre><code class="font-ligatures-none text-sm"><span class="hljs-title class_">IO</span>.puts <span class="hljs-string">"Hello, world!"</span></code></pre>
+              </div>
+            </div>
+            <div class="max-w-full">
+              <table class="t-table">
+                <thead>
+                  <tr>
+                    <th>Country</th>
+                    <th>Median Wages</th>
+                    <th>Avg. Work Hours/Week</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Denmark</td>
+                    <td>~$3,500</td>
+                    <td>37</td>
+                  </tr>
+                  <tr>
+                    <td>Sweden</td>
+                    <td>~$3,200</td>
+                    <td>40</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Reaction toolbar noise to strip -->
+          <div data-testid="message-item-reactions">
+            <button aria-label="Copy message" data-testid="copy-ai-message-button">Copy</button>
+            <button data-testid="message-thumbs-up-button">Like</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

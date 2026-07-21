@@ -9,6 +9,7 @@ const TARGET_MATCHES = [
   '*://www.perplexity.ai/*',
   '*://chat.deepseek.com/*',
   '*://chat.z.ai/*',
+  '*://copilot.microsoft.com/*',
 ];
 
 const PLATFORM_URLS = {
@@ -20,6 +21,7 @@ const PLATFORM_URLS = {
   qwen: 'https://chat.qwen.ai/',
   mistral: 'https://chat.mistral.ai/',
   notebooklm: 'https://notebooklm.google.com/',
+  copilot: 'https://copilot.microsoft.com/',
 };
 
 async function syncSidePanelBehavior() {

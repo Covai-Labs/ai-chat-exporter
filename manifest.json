@@ -22,7 +22,9 @@
     "*://chat.z.ai/*",
     "*://console.cloud.google.com/*",
     "*://aistudio.google.com/*",
-    "*://notebooklm.google.com/*"
+    "*://notebooklm.google.com/*",
+    "*://copilot.microsoft.com/*",
+    "*://www.copilot.microsoft.com/*"
   ],
   "action": {
     "default_popup": "popup/popup.html",
@@ -52,6 +54,8 @@
         "*://console.cloud.google.com/*",
         "*://aistudio.google.com/*",
         "*://notebooklm.google.com/*",
+        "*://copilot.microsoft.com/*",
+        "*://www.copilot.microsoft.com/*",
         "*://*.google.com/*",
         "*://*.google.com/search*",
         "*://*.google.co.in/search*",
@@ -92,6 +96,8 @@
         "*://chat.mistral.ai/*",
         "*://chat.z.ai/*",
         "*://console.cloud.google.com/*",
+        "*://copilot.microsoft.com/*",
+        "*://www.copilot.microsoft.com/*",
         "*://*.google.com/*",
         "*://*.google.co.in/*",
         "*://*.google.co.uk/*",
