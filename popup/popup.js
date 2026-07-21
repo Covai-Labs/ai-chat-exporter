@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const format = formatSelect.value;
     const customFilename = filenameInput ? filenameInput.value.trim() : '';
     exportBtn.disabled = true;
-    exportBtn.textContent = 'Exporting...';
+    exportBtn.textContent = format === 'png' ? 'Rendering PNG...' : 'Exporting...';
 
     try {
       if (format === 'pdf') {

@@ -15,6 +15,7 @@ import { GoogleAIStudioParser } from './parsers/google_ai_studio.js';
 import { MarkdownFormatter } from './formatters/markdown.js';
 import { JsonFormatter } from './formatters/json.js';
 import { HtmlFormatter } from './formatters/html.js';
+import { ImageFormatter } from './formatters/image.js';
 import { ContinuationFormatter } from './formatters/continuation.js';
 
 console.log('AI Chat Exporter script loaded');
@@ -87,7 +88,28 @@ const formatters = {
   markdown: new MarkdownFormatter(),
   json: new JsonFormatter(),
   html: new HtmlFormatter(),
+  png: new ImageFormatter(),
 };
+
+async function ensureHtml2CanvasLoaded() {
+  if (typeof window !== 'undefined' && window.html2canvas) return;
+  try {
+    const scriptUrl = chrome.runtime.getURL('content/lib/html2canvas.min.js');
+    await import(scriptUrl);
+  } catch (e) {
+    console.warn(
+      '[AI Exporter] Dynamic import of html2canvas failed, attempting script injection:',
+      e,
+    );
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = chrome.runtime.getURL('content/lib/html2canvas.min.js');
+      s.onload = resolve;
+      s.onerror = reject;
+      (document.head || document.documentElement).appendChild(s);
+    });
+  }
+}
 
 function stripImages(content) {
   if (!content) return '';
@@ -182,9 +204,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             }
           });
         }
+        if (request.format === 'png') {
+          await ensureHtml2CanvasLoaded();
+        }
         console.log('Parsed conversation with', conversation.messages.length, 'messages');
-        const content = formatter.format(conversation);
-        const blob = new Blob([content], { type: formatter.getMimeType() });
+        const formattedResult = await formatter.format(conversation);
+        const blob =
+          formattedResult instanceof Blob
+            ? formattedResult
+            : new Blob([formattedResult], { type: formatter.getMimeType() });
 
         // Trigger download
         const url = URL.createObjectURL(blob);
