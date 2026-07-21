@@ -7,11 +7,11 @@ Claude, Gemini, Qwen, Perplexity, DeepSeek, Meta AI, and Z.ai to Markdown or JSO
 
 - 🦊 **Firefox**: [Install from Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/)
 - 🌐 **Chromium-based browsers**: [Install from Chrome Web Store](https://chrome.google.com/webstore/detail/cgakhbhkplndjjknhgegfcipffflcaoj) _(Chrome, Brave, Edge, Opera, Yandex, Whale, etc.)_
-- 🌀 **Microsoft Edge**: [Install from Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/hbgckjgfhnaedlihmkogenclfcnobicg). Note that the Edge extension from the official store might be outdated as Microsoft often takes forever to approve.
+<!-- - 🌀 **Microsoft Edge**: [Install from Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/hbgckjgfhnaedlihmkogenclfcnobicg). Note that the Edge extension from the official store might be outdated as Microsoft often takes forever to approve. -->
 
 > [!NOTE]
-> **Limitations in Web Store Builds (Chrome & Edge):**
-> Due to strict Web Store policies on remotely-hosted code, the pre-built versions published to both the Chrome Web Store and Microsoft Edge Add-ons store **lack KaTeX math equations rendering** for HTML exports.
+> **Limitations in Web Store Builds (Chrome):**
+> Due to strict Web Store policies on remotely-hosted code, the pre-built version published to the Chrome Web Store **lacks KaTeX math equations rendering** for HTML exports.
 >
 > If you need math equation rendering, you can simply use the **Firefox** extension (which supports KaTeX out of the box from the store), or manually install the full-featured `.zip` package for **Chromium** (see instructions below).
 
