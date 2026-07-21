@@ -17,7 +17,8 @@
     "*://meta.ai/*",
     "*://chat.mistral.ai/*",
     "*://chat.z.ai/*",
-    "*://console.cloud.google.com/*"
+    "*://console.cloud.google.com/*",
+    "*://aistudio.google.com/*"
   ],
   "action": {
     "default_popup": "popup/popup.html",
@@ -45,6 +46,7 @@
         "*://chat.mistral.ai/*",
         "*://chat.z.ai/*",
         "*://console.cloud.google.com/*",
+        "*://aistudio.google.com/*",
         "*://*.google.com/search*",
         "*://*.google.co.in/search*",
         "*://*.google.co.uk/search*",

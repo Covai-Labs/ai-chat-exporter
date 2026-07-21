@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google AI Studio Prompt</title>
+</head>
+<body>
+  <div class="prompt-title-container">
+    <input aria-label="prompt name" class="prompt-title" value="My AI Studio System Prompt" />
+  </div>
+
+  <div class="chat-turn-container">
+    <ms-chat-turn>
+      <div class="user-prompt">
+        <textarea class="prompt-text">Write a Python function to compute fibonacci numbers.</textarea>
+      </div>
+      <div class="model-output">
+        <div class="model-response-text">
+          Here is a Python function for Fibonacci:
+
+```python
+def fib(n):
+    if n <= 1:
+        return n
+    return fib(n-1) + fib(n-2)
+```
+        </div>
+      </div>
+    </ms-chat-turn>
+  </div>
+</body>
+</html>
