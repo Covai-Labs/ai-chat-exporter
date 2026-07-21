@@ -65,6 +65,13 @@ header {
   gap: 4px;
 }
 
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .status {
   font-size: 11px;
   font-weight: 500;
@@ -73,8 +80,24 @@ header {
   padding: 4px 10px;
   border-radius: 12px;
   display: inline-block;
-  margin-top: 4px;
   border: 1px solid var(--border-color);
+}
+
+.sidepanel-icon-btn {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-color);
+  background-color: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sidepanel-icon-btn:hover {
+  background-color: var(--secondary-hover);
+  border-color: var(--accent-color);
 }
 
 .chat-info {

@@ -4,7 +4,10 @@
   "version": "1.3.0",
   "description": "Export AI chats from ChatGPT, Claude, Gemini & more to Markdown or JSON.",
   "homepage_url": "https://ai-chat-export.covai.org/",
-  "permissions": ["activeTab", "scripting", "storage"],
+  "permissions": ["activeTab", "scripting", "storage", "sidePanel"],
+  "side_panel": {
+    "default_path": "sidepanel/sidepanel.html"
+  },
   "host_permissions": [
     "*://chatgpt.com/*",
     "*://gemini.google.com/*",

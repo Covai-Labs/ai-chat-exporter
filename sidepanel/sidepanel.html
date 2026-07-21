@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Chat Exporter Side Panel</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <div class="sp-container">
+      <header class="sp-header">
+        <div class="sp-brand">
+          <span class="sp-icon">⚡</span>
+          <span class="sp-title">AI Chat Exporter</span>
+        </div>
+        <div id="sp-status" class="sp-status-badge">Detecting...</div>
+      </header>
+
+      <nav class="sp-tabs">
+        <button class="sp-tab-btn active" data-tab="export-tab">Export</button>
+        <button class="sp-tab-btn" data-tab="preview-tab">Live Preview</button>
+        <button class="sp-tab-btn" data-tab="settings-tab">Settings</button>
+      </nav>
+
+      <main class="sp-content">
+        <!-- TAB 1: EXPORT -->
+        <section id="export-tab" class="sp-tab-content active">
+          <div class="sp-card hidden" id="chat-info-card">
+            <h2 id="chat-title" class="chat-title">Chat Title</h2>
+            <div id="message-count" class="chat-meta">0 messages found</div>
+          </div>
+
+          <div class="sp-card hidden" id="actions-card">
+            <div class="field-group">
+              <label for="filename-input" class="field-label">Filename</label>
+              <input
+                type="text"
+                id="filename-input"
+                class="text-input"
+                placeholder="filename_without_extension"
+              />
+            </div>
+
+            <div class="field-group">
+              <label for="format-select" class="field-label">Export Format</label>
+              <select id="format-select" class="select-input">
+                <option value="markdown">Markdown (.md)</option>
+                <option value="json">JSON (.json)</option>
+                <option value="html">HTML (.html)</option>
+                <option value="png">Shareable Image (.png)</option>
+              </select>
+            </div>
+
+            <div class="checkbox-wrapper">
+              <label class="checkbox-label">
+                <input type="checkbox" id="include-images-checkbox" checked />
+                Include Images
+              </label>
+            </div>
+
+            <div class="button-stack">
+              <button id="export-btn" class="primary-btn">Export Chat</button>
+              <div class="button-row">
+                <button id="copy-btn" class="secondary-btn">Copy to Clipboard</button>
+                <button id="tab-preview-btn" class="secondary-btn">Open in Tab</button>
+              </div>
+            </div>
+
+            <div class="transfer-section">
+              <div class="divider"><span>Or Transfer Prompt Context</span></div>
+              <div class="field-group">
+                <label for="continue-target-select" class="field-label">Continue On</label>
+                <div class="transfer-row">
+                  <select id="continue-target-select" class="select-input">
+                    <option value="chatgpt">ChatGPT</option>
+                    <option value="claude">Claude</option>
+                    <option value="gemini">Gemini</option>
+                    <option value="deepseek">DeepSeek</option>
+                    <option value="qwen">Qwen</option>
+                    <option value="perplexity">Perplexity</option>
+                    <option value="mistral">Mistral</option>
+                    <option value="notebooklm">NotebookLM</option>
+                  </select>
+                  <button id="transfer-btn" class="transfer-btn">↗ Continue</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sp-card error hidden" id="error-card">
+            No compatible AI chat found on active tab.
+          </div>
+        </section>
+
+        <!-- TAB 2: LIVE PREVIEW -->
+        <section id="preview-tab" class="sp-tab-content">
+          <div class="preview-toolbar">
+            <button id="refresh-preview-btn" class="secondary-btn sm">🔄 Refresh</button>
+            <span id="preview-status" class="preview-status">Ready</span>
+          </div>
+          <div class="preview-pane-container">
+            <pre id="preview-text-pane" class="preview-code-pane"></pre>
+            <iframe id="preview-html-pane" class="preview-html-pane hidden"></iframe>
+          </div>
+        </section>
+
+        <!-- TAB 3: SETTINGS -->
+        <section id="settings-tab" class="sp-tab-content">
+          <div class="sp-card">
+            <h3>Extension Icon Click Action</h3>
+            <p class="settings-desc">
+              Choose what opens when you click the extension toolbar icon:
+            </p>
+
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="launch-mode" value="popup" checked />
+                <div>
+                  <strong>Extension Popup</strong>
+                  <span class="sub-text">Opens a compact popup window</span>
+                </div>
+              </label>
+
+              <label class="radio-label">
+                <input type="radio" name="launch-mode" value="sidepanel" />
+                <div>
+                  <strong>Persistent Side Panel</strong>
+                  <span class="sub-text">Opens this side panel pinned to the right edge</span>
+                </div>
+              </label>
+            </div>
+            <div id="settings-save-msg" class="save-msg hidden">Preferences saved!</div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="sidepanel.js"></script>
+  </body>
+</html>

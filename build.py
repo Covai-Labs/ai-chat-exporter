@@ -22,7 +22,11 @@ try:
         gecko = manifest['browser_specific_settings']['gecko']
         gecko['id'] = 'ai-chat-exporter@local.dev'
         gecko['strict_min_version'] = '143.0'
-        gecko['data_collection_permissions'] = {'required': ['none'], 'optional': []}
+        # Firefox does not support chrome.sidePanel API
+        if 'permissions' in manifest and 'sidePanel' in manifest['permissions']:
+            manifest['permissions'].remove('sidePanel')
+        if 'side_panel' in manifest:
+            del manifest['side_panel']
 
     else:
         # Chromium defaults (Chrome, Edge, Brave, etc.)

@@ -22,8 +22,35 @@ const PLATFORM_URLS = {
   notebooklm: 'https://notebooklm.google.com/',
 };
 
+async function syncSidePanelBehavior() {
+  if (
+    typeof chrome !== 'undefined' &&
+    chrome.sidePanel &&
+    typeof chrome.sidePanel.setPanelBehavior === 'function'
+  ) {
+    try {
+      const data = await chrome.storage.sync.get('launchMode');
+      const openPanelOnActionClick = data.launchMode === 'sidepanel';
+      await chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick });
+    } catch (err) {
+      console.warn('[AI Exporter Background] Failed to set side panel behavior:', err);
+    }
+  }
+}
+
+if (chrome.runtime.onStartup) {
+  chrome.runtime.onStartup.addListener(syncSidePanelBehavior);
+}
+
+chrome.storage.onChanged.addListener((changes, areaName) => {
+  if (areaName === 'sync' && changes.launchMode) {
+    syncSidePanelBehavior();
+  }
+});
+
 chrome.runtime.onInstalled.addListener(async () => {
   console.log('AI Chat Exporter installed/updated.');
+  await syncSidePanelBehavior();
 
   // Inject content script into existing tabs
   for (const match of TARGET_MATCHES) {
@@ -47,6 +74,28 @@ chrome.runtime.onInstalled.addListener(async () => {
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === 'OPEN_SIDE_PANEL') {
+    (async () => {
+      try {
+        if (chrome.sidePanel && typeof chrome.sidePanel.open === 'function') {
+          let windowId = request.windowId || sender.tab?.windowId;
+          if (!windowId) {
+            const currentWin = await chrome.windows.getCurrent();
+            windowId = currentWin.id;
+          }
+          await chrome.sidePanel.open({ windowId });
+          sendResponse({ success: true });
+        } else {
+          sendResponse({ success: false, error: 'Side panel API unavailable' });
+        }
+      } catch (err) {
+        console.error('[AI Exporter Background] Failed to open side panel:', err);
+        sendResponse({ success: false, error: err.message });
+      }
+    })();
+    return true;
+  }
+
   if (request.action === 'TRANSFER_CHAT') {
     const target = request.targetPlatform;
     const url = PLATFORM_URLS[target] || 'https://chatgpt.com/';
