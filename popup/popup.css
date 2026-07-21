@@ -312,3 +312,63 @@ select:focus {
 .checkbox-label input:focus {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 10px 0 6px 0;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.divider span {
+  padding: 0 8px;
+}
+
+.transfer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.transfer-row {
+  display: flex;
+  gap: 8px;
+}
+
+.transfer-row select {
+  flex: 1;
+}
+
+.transfer-btn {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    transform 0.1s;
+}
+
+.transfer-btn:hover {
+  background-color: #059669;
+}
+
+.transfer-btn:active {
+  transform: scale(0.98);
+}

@@ -11,6 +11,16 @@ const TARGET_MATCHES = [
   '*://chat.z.ai/*',
 ];
 
+const PLATFORM_URLS = {
+  chatgpt: 'https://chatgpt.com/',
+  claude: 'https://claude.ai/new',
+  gemini: 'https://gemini.google.com/app',
+  deepseek: 'https://chat.deepseek.com/',
+  perplexity: 'https://www.perplexity.ai/',
+  qwen: 'https://chat.qwen.ai/',
+  mistral: 'https://chat.mistral.ai/',
+};
+
 chrome.runtime.onInstalled.addListener(async () => {
   console.log('AI Chat Exporter installed/updated.');
 
@@ -32,5 +42,31 @@ chrome.runtime.onInstalled.addListener(async () => {
         }
       }
     }
+  }
+});
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === 'TRANSFER_CHAT') {
+    const target = request.targetPlatform;
+    const url = PLATFORM_URLS[target] || 'https://chatgpt.com/';
+
+    (async () => {
+      try {
+        await chrome.storage.local.set({
+          pendingContinuation: {
+            payload: request.payload,
+            targetPlatform: target,
+            timestamp: Date.now(),
+          },
+        });
+
+        await chrome.tabs.create({ url });
+        sendResponse({ success: true });
+      } catch (e) {
+        console.error('[AI Exporter Background] Transfer failed:', e);
+        sendResponse({ success: false, error: e.message });
+      }
+    })();
+    return true;
   }
 });

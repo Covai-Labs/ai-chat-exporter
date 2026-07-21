@@ -220,4 +220,38 @@ document.addEventListener('DOMContentLoaded', async () => {
       previewBtn.textContent = 'Open in Tab';
     }
   });
+
+  const transferBtn = document.getElementById('transfer-btn');
+  const continueTargetSelect = document.getElementById('continue-target-select');
+
+  if (transferBtn) {
+    transferBtn.addEventListener('click', async () => {
+      const targetPlatform = continueTargetSelect ? continueTargetSelect.value : 'chatgpt';
+      transferBtn.disabled = true;
+      transferBtn.textContent = 'Transferring...';
+
+      try {
+        const response = await chrome.tabs.sendMessage(tab.id, {
+          action: 'GET_CONTINUATION_PAYLOAD',
+          includeImages: includeImagesCheckbox.checked,
+        });
+
+        if (response && response.success && response.payload) {
+          await chrome.runtime.sendMessage({
+            action: 'TRANSFER_CHAT',
+            targetPlatform: targetPlatform,
+            payload: response.payload,
+          });
+          statusEl.textContent = `Opening ${targetPlatform}...`;
+        } else {
+          statusEl.textContent = 'Transfer Failed: ' + (response?.error || 'No content');
+        }
+      } catch (e) {
+        statusEl.textContent = 'Error: ' + e.message;
+      } finally {
+        transferBtn.disabled = false;
+        transferBtn.textContent = '↗ Continue';
+      }
+    });
+  }
 });

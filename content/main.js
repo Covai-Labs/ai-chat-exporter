@@ -15,8 +15,56 @@ import { GoogleAIStudioParser } from './parsers/google_ai_studio.js';
 import { MarkdownFormatter } from './formatters/markdown.js';
 import { JsonFormatter } from './formatters/json.js';
 import { HtmlFormatter } from './formatters/html.js';
+import { ContinuationFormatter } from './formatters/continuation.js';
 
 console.log('AI Chat Exporter script loaded');
+
+const continuationFormatter = new ContinuationFormatter();
+
+async function checkAndInjectContinuation() {
+  try {
+    if (typeof chrome === 'undefined' || !chrome.storage || !chrome.storage.local) return;
+    const res = await chrome.storage.local.get('pendingContinuation');
+    const data = res?.pendingContinuation;
+    if (!data || !data.payload) return;
+
+    // Expire pending continuation after 5 minutes
+    if (Date.now() - (data.timestamp || 0) > 300000) {
+      await chrome.storage.local.remove('pendingContinuation');
+      return;
+    }
+
+    const inputSelectors = [
+      '#prompt-textarea',
+      'div[contenteditable="true"]',
+      'textarea',
+      '.user-prompt textarea',
+      'ms-prompt-editor textarea',
+    ];
+
+    let inputEl = null;
+    for (const sel of inputSelectors) {
+      inputEl = document.querySelector(sel);
+      if (inputEl) break;
+    }
+
+    if (inputEl) {
+      if (inputEl.tagName === 'TEXTAREA' || inputEl.tagName === 'INPUT') {
+        inputEl.value = data.payload;
+        inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+        inputEl.dispatchEvent(new Event('change', { bubbles: true }));
+      } else {
+        inputEl.textContent = data.payload;
+        inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+
+      await chrome.storage.local.remove('pendingContinuation');
+      console.log('[AI Exporter] Auto-injected transferred conversation context.');
+    }
+  } catch (e) {
+    console.warn('[AI Exporter] Continuation injection check failed:', e);
+  }
+}
 
 // Registry of available parsers
 const parsers = [
@@ -211,7 +259,37 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     })();
     return true;
   }
+
+  if (request.action === 'GET_CONTINUATION_PAYLOAD') {
+    if (!activeParser) {
+      sendResponse({ success: false, error: 'No parser available' });
+      return true;
+    }
+
+    (async () => {
+      try {
+        const conversation = await activeParser.parse({ full: true });
+        if (request.includeImages === false) {
+          conversation.messages.forEach((msg) => {
+            if (msg.content) {
+              msg.content = stripImages(msg.content);
+            }
+          });
+        }
+        const platformName = activeParser.constructor.name.replace('Parser', '');
+        conversation.metadata = { ...conversation.metadata, Source: platformName };
+        const payload = continuationFormatter.format(conversation, request.instruction || '');
+
+        sendResponse({ success: true, payload });
+      } catch (e) {
+        console.error(e);
+        sendResponse({ success: false, error: e.message });
+      }
+    })();
+    return true;
+  }
 });
 
-// Initial detection
+// Initial detection & continuation check
 detectParser();
+checkAndInjectContinuation();
