@@ -40,3 +40,9 @@ test('popup includes a custom filename input field', () => {
   assert.match(popupHtml, /Filename/);
   assert.match(popupJs, /customFilename:\s*customFilename/);
 });
+
+test('popup supports dual-MIME Smart Copy using ClipboardItem', () => {
+  assert.match(popupJs, /ClipboardItem/);
+  assert.match(popupJs, /['"]text\/html['"]/);
+  assert.match(popupJs, /['"]text\/plain['"]/);
+});

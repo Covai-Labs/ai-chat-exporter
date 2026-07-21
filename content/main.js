@@ -193,9 +193,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           });
         }
         console.log('Parsed conversation with', conversation.messages.length, 'messages');
+        const primaryContent = formatter.format(conversation);
+        const htmlFormatter = formatters.html;
+        const richHtmlContent = htmlFormatter ? htmlFormatter.format(conversation) : null;
+
         sendResponse({
           success: true,
-          content: formatter.format(conversation),
+          content: primaryContent,
+          htmlContent: richHtmlContent,
         });
       } catch (e) {
         console.error(e);

@@ -150,7 +150,28 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
 
       if (response && response.success) {
-        await navigator.clipboard.writeText(response.content);
+        if (
+          response.htmlContent &&
+          typeof ClipboardItem !== 'undefined' &&
+          navigator.clipboard &&
+          navigator.clipboard.write
+        ) {
+          try {
+            const htmlBlob = new Blob([response.htmlContent], { type: 'text/html' });
+            const textBlob = new Blob([response.content], { type: 'text/plain' });
+            await navigator.clipboard.write([
+              new ClipboardItem({
+                'text/html': htmlBlob,
+                'text/plain': textBlob,
+              }),
+            ]);
+          } catch (writeErr) {
+            console.warn('Dual-MIME clipboard write failed, falling back to text:', writeErr);
+            await navigator.clipboard.writeText(response.content);
+          }
+        } else {
+          await navigator.clipboard.writeText(response.content);
+        }
         statusEl.textContent = 'Copied to Clipboard!';
       } else {
         statusEl.textContent = 'Copy Failed: ' + (response?.error || 'Unknown');
