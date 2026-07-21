@@ -6,7 +6,7 @@ Claude, Gemini, Qwen, Perplexity, DeepSeek, Meta AI, and Z.ai to Markdown or JSO
 ### Quick Install
 
 - 🦊 **Firefox**: [Install from Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/)
-- 🌐 **Chrome / Brave / Opera / Microsoft Edge**: [Install from Chrome Web Store](https://chrome.google.com/webstore/detail/cgakhbhkplndjjknhgegfcipffflcaoj)
+- 🌐 **Chromium-based browsers**: [Install from Chrome Web Store](https://chrome.google.com/webstore/detail/cgakhbhkplndjjknhgegfcipffflcaoj) _(Chrome, Brave, Edge, Opera, Yandex, Whale, etc.)_
 - 🌀 **Microsoft Edge**: [Install from Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/hbgckjgfhnaedlihmkogenclfcnobicg). Note that the Edge extension from the official store might be outdated as Microsoft often takes forever to approve.
 
 > [!NOTE]
@@ -18,7 +18,7 @@ Claude, Gemini, Qwen, Perplexity, DeepSeek, Meta AI, and Z.ai to Markdown or JSO
 <details>
 <summary><b>🛠️ Manual / Offline Installation for Chromium (Full-Featured / KaTeX support)</b></summary>
 
-If you want the full-featured version on Chrome/Edge/Brave:
+If you want the full-featured version on Chromium-based browsers (Chrome, Edge, Brave, Opera, Yandex, Whale, etc.):
 
 1. Download the latest `ai-chat-exporter-chromium.zip` from the [Releases page](https://github.com/Rat-S/ai-chat-exporter/releases).
 2. Extract the zip file to a folder on your computer.
