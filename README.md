@@ -87,6 +87,8 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 ## Acknowledgments
 
 - Uses [Turndown.js](https://github.com/mixmark-io/turndown) for HTML to Markdown conversion.
+- Uses [html2canvas](https://github.com/niklasvh/html2canvas) for generating shareable PNG image exports.
+- Uses [KaTeX](https://github.com/KaTeX/KaTeX) for rendering math and LaTeX equations.
 
 ---
 
