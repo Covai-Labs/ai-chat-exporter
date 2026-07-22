@@ -129,13 +129,34 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   await checkAvailability();
 
+  const pngWarningBanner = document.getElementById('png-warning-banner');
+  const pngQualityContainer = document.getElementById('png-quality-container');
+  const pngQualityCheckbox = document.getElementById('png-quality-checkbox');
+
+  function updatePngWarningVisibility() {
+    if (formatSelect) {
+      const isPng = formatSelect.value === 'png';
+      if (pngWarningBanner) {
+        pngWarningBanner.classList.toggle('hidden', !isPng);
+      }
+      if (pngQualityContainer) {
+        pngQualityContainer.classList.toggle('hidden', !isPng);
+      }
+    }
+  }
+
+  if (formatSelect) {
+    formatSelect.addEventListener('change', updatePngWarningVisibility);
+    updatePngWarningVisibility();
+  }
+
   // Export action
   exportBtn.addEventListener('click', async () => {
     if (!activeTab) return;
     const format = formatSelect.value;
     const customFilename = filenameInput ? filenameInput.value.trim() : '';
     exportBtn.disabled = true;
-    exportBtn.textContent = format === 'png' ? 'Rendering PNG...' : 'Exporting...';
+    exportBtn.textContent = format === 'png' ? 'Rendering PNG (please wait)...' : 'Exporting...';
 
     try {
       if (format === 'pdf') {
@@ -165,6 +186,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           format: format,
           includeImages: includeImagesCheckbox.checked,
           customFilename: customFilename,
+          highQualityPng: pngQualityCheckbox ? pngQualityCheckbox.checked : true,
         });
         if (response && response.success) {
           statusEl.textContent = 'Export Successful!';
@@ -190,7 +212,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       const response = await chrome.tabs.sendMessage(activeTab.id, {
         action: 'COPY_CHAT',
-        format: format,
+        format: format === 'pdf' ? 'html' : format,
         includeImages: includeImagesCheckbox.checked,
       });
 

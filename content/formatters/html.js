@@ -94,7 +94,7 @@ export class HtmlFormatter extends ExportFormatter {
 
     .container {
       width: 100%;
-      max-width: 900px;
+      max-width: 800px;
       box-sizing: border-box;
       padding: 2rem 1.5rem;
     }
@@ -412,10 +412,15 @@ export class HtmlFormatter extends ExportFormatter {
 
     @media print {
       @page {
-        margin: 15mm;
+        size: portrait;
+        margin: 12mm 15mm;
       }
-      body {
-        background-color: transparent !important;
+      html, body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
       .theme-switch-wrapper,
       .copy-code-btn {
@@ -424,15 +429,48 @@ export class HtmlFormatter extends ExportFormatter {
       .container {
         padding: 0 !important;
         max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
       }
       .message-card {
-        page-break-inside: avoid;
-        break-inside: avoid;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        page-break-inside: auto;
+        break-inside: auto;
         box-shadow: none !important;
       }
+      .message-card.role-user,
+      .message-card.role-assistant {
+        align-self: stretch !important;
+        max-width: 100% !important;
+      }
       .code-card {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
         page-break-inside: avoid;
         break-inside: avoid;
+      }
+      pre, code {
+        white-space: pre-wrap !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+      }
+      .table-wrapper {
+        overflow-x: visible !important;
+      }
+      table {
+        width: 100% !important;
+        table-layout: fixed !important;
+        word-break: break-word !important;
+      }
+      th, td {
+        word-break: break-word !important;
+      }
+      img {
+        max-width: 100% !important;
+        height: auto !important;
+        page-break-inside: avoid;
       }
       * {
         -webkit-print-color-adjust: exact !important;

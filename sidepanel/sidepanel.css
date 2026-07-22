@@ -398,3 +398,14 @@ body {
 .hidden {
   display: none !important;
 }
+
+.png-warning-banner {
+  background-color: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #d97706;
+  font-size: 11px;
+  line-height: 1.4;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-top: 6px;
+}

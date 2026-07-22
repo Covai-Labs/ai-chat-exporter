@@ -90,11 +90,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   await checkAvailability();
 
+  const pngWarningBanner = document.getElementById('png-warning-banner');
+  const pngQualityContainer = document.getElementById('png-quality-container');
+  const pngQualityCheckbox = document.getElementById('png-quality-checkbox');
+
   function updateCopyButtonVisibility() {
-    const isCopyable = copyableFormats.has(formatSelect.value);
-    const isPreviewable = previewableFormats.has(formatSelect.value);
+    const format = formatSelect.value;
+    const isCopyable = copyableFormats.has(format);
+    const isPreviewable = previewableFormats.has(format);
     copyBtn.classList.toggle('hidden', !isCopyable);
     previewBtn.classList.toggle('hidden', !isPreviewable);
+    if (pngWarningBanner) {
+      pngWarningBanner.classList.toggle('hidden', format !== 'png');
+    }
+    if (pngQualityContainer) {
+      pngQualityContainer.classList.toggle('hidden', format !== 'png');
+    }
   }
 
   function showError() {
@@ -109,7 +120,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const format = formatSelect.value;
     const customFilename = filenameInput ? filenameInput.value.trim() : '';
     exportBtn.disabled = true;
-    exportBtn.textContent = format === 'png' ? 'Rendering PNG...' : 'Exporting...';
+    exportBtn.textContent = format === 'png' ? 'Rendering PNG (please wait)...' : 'Exporting...';
 
     try {
       if (format === 'pdf') {
@@ -141,6 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           format: format,
           includeImages: includeImagesCheckbox.checked,
           customFilename: customFilename,
+          highQualityPng: pngQualityCheckbox ? pngQualityCheckbox.checked : true,
         });
 
         if (response && response.success) {

@@ -116,8 +116,15 @@ export class ImageFormatter extends ExportFormatter {
             resolve();
             return;
           }
-          img.onload = () => resolve();
-          img.onerror = () => resolve();
+          const timer = setTimeout(resolve, 2500);
+          img.onload = () => {
+            clearTimeout(timer);
+            resolve();
+          };
+          img.onerror = () => {
+            clearTimeout(timer);
+            resolve();
+          };
         }),
     );
 
@@ -127,9 +134,10 @@ export class ImageFormatter extends ExportFormatter {
   /**
    * Formats the conversation into a PNG Blob
    * @param {Object} conversation
+   * @param {Object} [options]
    * @returns {Promise<Blob>}
    */
-  async format(conversation) {
+  async format(conversation, options = {}) {
     const container = this.createScreenshotContainer(conversation);
     document.body.appendChild(container);
 
@@ -147,11 +155,16 @@ export class ImageFormatter extends ExportFormatter {
         throw new Error('html2canvas library is not loaded');
       }
 
+      const isHighQuality = options ? options.highQuality !== false : true;
+      const renderScale = isHighQuality ? 2 : 1;
+
       const canvas = await html2canvasFn(container, {
         backgroundColor: '#ffffff',
-        scale: 2,
+        scale: renderScale,
         useCORS: true,
+        allowTaint: false,
         logging: false,
+        imageTimeout: 3000,
       });
 
       return new Promise((resolve, reject) => {

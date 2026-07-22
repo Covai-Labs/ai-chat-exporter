@@ -211,8 +211,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         if (request.format === 'png') {
           await ensureHtml2CanvasLoaded();
         }
-        console.log('Parsed conversation with', conversation.messages.length, 'messages');
-        const formattedResult = await formatter.format(conversation);
+        const options = { highQuality: request.highQualityPng !== false };
+        const formattedResult = await formatter.format(conversation, options);
         const blob =
           formattedResult instanceof Blob
             ? formattedResult

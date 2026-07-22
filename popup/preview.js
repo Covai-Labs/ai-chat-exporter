@@ -16,9 +16,43 @@ document.addEventListener('DOMContentLoaded', async () => {
   let title = 'Untitled Chat';
   let format = 'markdown';
 
+  let currentBlobUrl = null;
+
+  const setIframeContent = (htmlContent) => {
+    if (currentBlobUrl) {
+      URL.revokeObjectURL(currentBlobUrl);
+      currentBlobUrl = null;
+    }
+    const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+    currentBlobUrl = URL.createObjectURL(blob);
+    previewRendered.src = currentBlobUrl;
+  };
+
   const printIframe = () => {
-    if (previewRendered && previewRendered.contentWindow) {
-      previewRendered.contentWindow.postMessage({ action: 'print' }, '*');
+    if (!previewRendered) return;
+
+    try {
+      if (previewRendered.contentWindow) {
+        previewRendered.contentWindow.focus();
+        previewRendered.contentWindow.print();
+        return;
+      }
+    } catch (err) {
+      console.warn('[Preview] Direct iframe print failed:', err);
+    }
+
+    try {
+      if (previewRendered.contentWindow) {
+        previewRendered.contentWindow.postMessage({ action: 'print' }, '*');
+      }
+    } catch (err) {
+      console.warn('[Preview] postMessage print failed:', err);
+    }
+
+    try {
+      window.print();
+    } catch (err) {
+      console.error('[Preview] Fallback window.print() failed:', err);
     }
   };
 
@@ -33,8 +67,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       viewRenderBtn.classList.add('active');
       codeWrapper.classList.add('hidden');
       renderWrapper.classList.remove('hidden');
-      if (previewRendered.srcdoc !== content) {
-        previewRendered.srcdoc = content;
+      if (
+        !previewRendered.src ||
+        previewRendered.src === 'about:blank' ||
+        previewRendered.getAttribute('data-content') !== content
+      ) {
+        previewRendered.setAttribute('data-content', content);
+        setIframeContent(content);
       }
     }
   };
@@ -130,9 +169,13 @@ document.addEventListener('DOMContentLoaded', async () => {
           Print / Save PDF
         `;
         if (autoPrint) {
-          previewRendered.onload = () => {
-            setTimeout(printIframe, 1000);
-          };
+          previewRendered.addEventListener(
+            'load',
+            () => {
+              setTimeout(printIframe, 500);
+            },
+            { once: true },
+          );
         }
         switchView('render');
       } else {

@@ -254,3 +254,31 @@ code {
 .hidden {
   display: none !important;
 }
+
+@media print {
+  body {
+    background: transparent !important;
+  }
+  .preview-header,
+  .segmented-control,
+  .action-buttons,
+  #code-wrapper {
+    display: none !important;
+  }
+  .preview-container,
+  .preview-main,
+  .render-wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  #preview-rendered {
+    width: 100% !important;
+    height: 100vh !important;
+    border: none !important;
+  }
+}
