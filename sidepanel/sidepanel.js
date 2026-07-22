@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
   const statusEl = document.getElementById('sp-status');
+  const headerRefreshBtn = document.getElementById('sp-refresh-btn');
   const chatInfoCard = document.getElementById('chat-info-card');
   const actionsCard = document.getElementById('actions-card');
   const errorCard = document.getElementById('error-card');
@@ -128,6 +129,40 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   await checkAvailability();
+
+  if (headerRefreshBtn) {
+    headerRefreshBtn.addEventListener('click', async () => {
+      await checkAvailability();
+      const activeTabBtn = document.querySelector('.sp-tab-btn.active');
+      if (activeTabBtn && activeTabBtn.getAttribute('data-tab') === 'preview-tab') {
+        loadLivePreview();
+      }
+    });
+  }
+
+  // Listen for tab switching and updates to auto-refresh side panel state
+  if (typeof chrome !== 'undefined' && chrome.tabs) {
+    if (chrome.tabs.onActivated) {
+      chrome.tabs.onActivated.addListener(async () => {
+        await checkAvailability();
+        const activeTabBtn = document.querySelector('.sp-tab-btn.active');
+        if (activeTabBtn && activeTabBtn.getAttribute('data-tab') === 'preview-tab') {
+          loadLivePreview();
+        }
+      });
+    }
+    if (chrome.tabs.onUpdated) {
+      chrome.tabs.onUpdated.addListener(async (tabId, changeInfo) => {
+        if (activeTab && tabId === activeTab.id && changeInfo.status === 'complete') {
+          await checkAvailability();
+          const activeTabBtn = document.querySelector('.sp-tab-btn.active');
+          if (activeTabBtn && activeTabBtn.getAttribute('data-tab') === 'preview-tab') {
+            loadLivePreview();
+          }
+        }
+      });
+    }
+  }
 
   const pngWarningBanner = document.getElementById('png-warning-banner');
   const pngQualityContainer = document.getElementById('png-quality-container');

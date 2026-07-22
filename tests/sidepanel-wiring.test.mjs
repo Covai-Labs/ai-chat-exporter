@@ -49,3 +49,10 @@ test('popup.html and popup.js provide button to trigger side panel', () => {
   assert.match(popupHtml, /id="open-sidepanel-btn"/);
   assert.match(popupJs, /chrome\.sidePanel\.open/);
 });
+
+test('sidepanel header contains refresh button and sidepanel.js handles tab switch listeners', () => {
+  assert.match(sidepanelHtml, /id="sp-refresh-btn"/);
+  assert.match(sidepanelJs, /getElementById\(['"]sp-refresh-btn['"]\)/);
+  assert.match(sidepanelJs, /chrome\.tabs\.onActivated/);
+  assert.match(sidepanelJs, /chrome\.tabs\.onUpdated/);
+});

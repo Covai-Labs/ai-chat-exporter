@@ -87,6 +87,12 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+.sp-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .sp-status-badge {
   font-size: 11px;
   font-weight: 600;
@@ -95,6 +101,31 @@ body {
   padding: 4px 10px;
   border-radius: 12px;
   border: 1px solid var(--border-color);
+}
+
+.sp-icon-btn {
+  background: var(--secondary-bg);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.sp-icon-btn:hover {
+  background: var(--secondary-hover);
+  color: var(--text-primary);
+  transform: rotate(45deg);
+}
+
+.sp-icon-btn:active {
+  transform: scale(0.92) rotate(180deg);
 }
 
 .sp-tabs {
