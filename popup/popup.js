@@ -88,8 +88,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     showError();
   }
 
-  await checkAvailability();
-
   const pngWarningBanner = document.getElementById('png-warning-banner');
   const pngQualityContainer = document.getElementById('png-quality-container');
   const pngQualityCheckbox = document.getElementById('png-quality-checkbox');
@@ -115,6 +113,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   formatSelect.addEventListener('change', updateCopyButtonVisibility);
   updateCopyButtonVisibility();
+
+  await checkAvailability();
 
   exportBtn.addEventListener('click', async () => {
     const format = formatSelect.value;

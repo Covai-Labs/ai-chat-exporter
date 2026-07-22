@@ -128,6 +128,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     errorCard.classList.remove('hidden');
   }
 
+  const pngWarningBanner = document.getElementById('png-warning-banner');
+  const pngQualityContainer = document.getElementById('png-quality-container');
+  const pngQualityCheckbox = document.getElementById('png-quality-checkbox');
+
+  function updatePngWarningVisibility() {
+    if (formatSelect) {
+      const isPng = formatSelect.value === 'png';
+      if (pngWarningBanner) {
+        pngWarningBanner.classList.toggle('hidden', !isPng);
+      }
+      if (pngQualityContainer) {
+        pngQualityContainer.classList.toggle('hidden', !isPng);
+      }
+    }
+  }
+
+  if (formatSelect) {
+    formatSelect.addEventListener('change', updatePngWarningVisibility);
+    updatePngWarningVisibility();
+  }
+
   await checkAvailability();
 
   if (headerRefreshBtn) {
@@ -162,27 +183,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       });
     }
-  }
-
-  const pngWarningBanner = document.getElementById('png-warning-banner');
-  const pngQualityContainer = document.getElementById('png-quality-container');
-  const pngQualityCheckbox = document.getElementById('png-quality-checkbox');
-
-  function updatePngWarningVisibility() {
-    if (formatSelect) {
-      const isPng = formatSelect.value === 'png';
-      if (pngWarningBanner) {
-        pngWarningBanner.classList.toggle('hidden', !isPng);
-      }
-      if (pngQualityContainer) {
-        pngQualityContainer.classList.toggle('hidden', !isPng);
-      }
-    }
-  }
-
-  if (formatSelect) {
-    formatSelect.addEventListener('change', updatePngWarningVisibility);
-    updatePngWarningVisibility();
   }
 
   // Export action
