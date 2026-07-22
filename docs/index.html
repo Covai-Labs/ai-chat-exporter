@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="A privacy-focused browser extension to export AI conversations from ChatGPT, Claude, Gemini, DeepSeek, and more to Markdown or JSON."
+      content="A privacy-focused browser extension to export AI conversations from ChatGPT, Claude, Gemini, Microsoft Copilot, NotebookLM, Google AI Studio, DeepSeek, and more to Markdown, JSON, HTML, or PNG."
     />
     <title>AI Chat Exporter - Save AI Conversations Instantly</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -432,6 +432,21 @@
         color: #8b5cf6;
         border-color: rgba(139, 92, 246, 0.1);
       }
+      .feature-card:nth-child(5) .feature-icon {
+        background: rgba(236, 72, 153, 0.1);
+        color: #ec4899;
+        border-color: rgba(236, 72, 153, 0.1);
+      }
+      .feature-card:nth-child(6) .feature-icon {
+        background: rgba(6, 182, 212, 0.1);
+        color: #06b6d4;
+        border-color: rgba(6, 182, 212, 0.1);
+      }
+      .feature-card:nth-child(7) .feature-icon {
+        background: rgba(99, 102, 241, 0.1);
+        color: #6366f1;
+        border-color: rgba(99, 102, 241, 0.1);
+      }
 
       .feature-title {
         font-size: 1.2rem;
@@ -553,10 +568,10 @@
           </svg>
           100% Local & Privacy-focused
         </span>
-        <h1>Save Your AI Chats<br />to Markdown & JSON</h1>
+        <h1>Save Your AI Chats<br />to Markdown, JSON & Images</h1>
         <p class="hero-subtitle">
-          A minimalist browser extension to export conversations from ChatGPT, Claude, Gemini,
-          DeepSeek, and more in one click.
+          A minimalist browser extension to export and transfer conversations from ChatGPT, Claude,
+          Gemini, Copilot, NotebookLM, DeepSeek, and more in one click.
         </p>
 
         <div class="primary-download">
@@ -643,6 +658,10 @@
           <span class="platform-badge">ChatGPT</span>
           <span class="platform-badge">Claude</span>
           <span class="platform-badge">Gemini</span>
+          <span class="platform-badge">Google Cloud Assist</span>
+          <span class="platform-badge">Google AI Studio</span>
+          <span class="platform-badge">NotebookLM</span>
+          <span class="platform-badge">Microsoft Copilot</span>
           <span class="platform-badge">DeepSeek</span>
           <span class="platform-badge">Qwen</span>
           <span class="platform-badge">Perplexity</span>
@@ -688,6 +707,33 @@
           <p class="feature-desc">
             Open the browser extension popup and trigger the export instantly without breaking your
             reading or dialogue flow.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔄</div>
+          <h3 class="feature-title">Chat Continuation</h3>
+          <p class="feature-desc">
+            Seamlessly transfer and auto-inject conversation context across different AI platforms
+            (e.g., Claude to ChatGPT) to keep your workflow uninterrupted.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📸</div>
+          <h3 class="feature-title">PNG &amp; Clipboard</h3>
+          <p class="feature-desc">
+            Export conversations as high-fidelity sharing-ready PNG images, or copy directly to your
+            clipboard with rich-text formatting preserved.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📖</div>
+          <h3 class="feature-title">Side Panel (Chromium)</h3>
+          <p class="feature-desc">
+            Access exporter functionality and run chat continuation right inside the browser's
+            native side panel (available on Chromium-based browsers).
           </p>
         </div>
       </div>

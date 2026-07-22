@@ -1,7 +1,6 @@
 # AI Chat Exporter
 
-A simple, privacy-focused browser extension to export AI chats from ChatGPT,
-Claude, Gemini, Qwen, Perplexity, DeepSeek, Meta AI, and Z.ai to Markdown or JSON.
+A simple, privacy-focused browser extension to export AI chats from ChatGPT, Claude, Gemini, Microsoft Copilot, NotebookLM, Google AI Studio, Qwen, Perplexity, DeepSeek, Meta AI, and Z.ai to Markdown, JSON, HTML, or PNG image.
 
 ### Quick Install
 
@@ -34,20 +33,31 @@ _Note: The developer primarily tests this extension on Firefox. If you experienc
 
 ## Features
 
-- **Privacy First**: All processing happens locally in your browser.
-  No data is ever sent to third-party servers.
-- **Multi-Platform Support**: Works with all major AI chat platforms
+- **Privacy First**: All processing happens locally in your browser. No data is ever sent to third-party servers.
+- **Multi-Platform Support**: Works with all major AI chat platforms:
   - ChatGPT (chatgpt.com)
   - Claude (claude.ai)
   - Gemini (gemini.google.com)
+  - Google Cloud Assist (console.cloud.google.com/gemini)
+  - Google AI Studio (aistudio.google.com)
+  - NotebookLM (notebooklm.google.com)
+  - Microsoft Copilot (copilot.microsoft.com)
+  - DeepSeek (chat.deepseek.com)
   - Qwen (qwen.ai, chat.qwen.ai)
   - Perplexity (perplexity.ai)
-  - DeepSeek (chat.deepseek.com)
   - Meta AI (meta.ai)
   - Z.ai (chat.z.ai)
-- **Clean Markdown Export**: Properly formatted with code blocks, tables, and attachments preserved
-- **Schema-Based JSON Export**: Normalized JSON exports for predictable downstream use
-- **One-Click Export**: Simple popup interface for quick exports
+  - Mistral (chat.mistral.ai)
+- **Versatile Export Formats**:
+  - **Clean Markdown**: Properly formatted with code blocks, tables, and images preserved.
+  - **Structured JSON**: Normalized JSON exports matching a strict JSON schema.
+  - **Raw HTML**: Complete chat layout with math equations (supported natively on Firefox / offline build).
+  - **Shareable Image (PNG)**: Convert the chat thread into a clean, sharing-ready PNG image using `html2canvas`.
+- **Chat Continuation / Transfer**: Move your active chat context directly across platforms (e.g., send your current Claude conversation straight to Gemini or ChatGPT to continue there).
+- **Clipboard Rich-Text Copying**: Instantly copy chats to your clipboard with rich-text formatting, perfect for pasting directly into emails, document editors, or notes.
+- **Side Panel Support (Chromium Only)**: View exports and run chat context continuation inside your browser's native side panel for a streamlined workflow.
+- **Custom Filenames**: Input custom filenames before exporting to keep your downloads structured.
+- **One-Click Export**: Quick popup interface for fast exports.
 
 ## Usage
 
@@ -82,4 +92,4 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 
 ---
 
-> Nota bene: This extension was developed for personal use and is not very polished. Additionally, formatting of exported items from certain chats is currently not working well.
+> Nota bene: This extension was developed for personal use and is not very polished. Additionally, formatting of exported items from certain chats may currently not work well due to changes in those chat platforms. You may raise an issue and/or PR.
