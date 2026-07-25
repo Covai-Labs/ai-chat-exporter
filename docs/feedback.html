@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <title>Feedback & Issue Report - AI Chat Exporter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script async src="https://tally.so/widgets/embed.js"></script>
+    <style type="text/css">
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+        overflow: hidden;
+        background-color: #0b111e;
+        font-family:
+          'Outfit',
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          sans-serif;
+        color: #f8fafc;
+        display: flex;
+        flex-direction: column;
+      }
+      .banner {
+        flex: 0 0 auto;
+        background: rgba(19, 30, 49, 0.7);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        font-size: 13.5px;
+      }
+      .banner-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #94a3b8;
+      }
+      .banner-info strong {
+        color: #f8fafc;
+        font-weight: 600;
+      }
+      .github-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: #94a3b8;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 5px 12px;
+        border-radius: 6px;
+        background: rgba(148, 163, 184, 0.08);
+        border: 1px solid rgba(148, 163, 184, 0.15);
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        font-size: 13px;
+      }
+      .github-link:hover {
+        background: rgba(59, 130, 246, 0.15);
+        border-color: rgba(59, 130, 246, 0.3);
+        color: #60a5fa;
+      }
+      .github-icon {
+        width: 14px;
+        height: 14px;
+        fill: currentColor;
+      }
+      .form-container {
+        flex: 1;
+        position: relative;
+        width: 100%;
+      }
+      iframe {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border: 0;
+        width: 100%;
+        height: 100%;
+      }
+      @media (max-width: 640px) {
+        .banner {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+          padding: 10px 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="banner">
+      <div class="banner-info">
+        <span>💡 Have a GitHub account?</span>
+        <span>You can also report issues directly on GitHub.</span>
+      </div>
+      <a
+        href="https://github.com/Rat-S/ai-chat-exporter/issues"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="github-link"
+      >
+        <svg class="github-icon" viewBox="0 0 24 24">
+          <path
+            d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+          />
+        </svg>
+        Report on GitHub
+      </a>
+    </div>
+    <div class="form-container">
+      <iframe
+        data-tally-src="https://tally.so/r/PdWV2b?transparentBackground=1&formEventsForwarding=1"
+        width="100%"
+        height="100%"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+        title="Feedback, Complaint or anything you want to tell us."
+      ></iframe>
+    </div>
+  </body>
+</html>
