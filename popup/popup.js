@@ -1,3 +1,13 @@
+function applyTheme(theme) {
+  if (theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  } else if (theme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   const statusEl = document.getElementById('status');
   const chatInfoEl = document.getElementById('chat-info');
@@ -28,11 +38,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Load saved defaults from chrome.storage.sync
   const storedSettings = await chrome.storage.sync.get([
+    'theme',
     'defaultFormat',
     'includeImages',
     'defaultTransferTarget',
     'parserMode',
   ]);
+  applyTheme(storedSettings.theme || 'system');
+
+  if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
+    chrome.storage.onChanged.addListener((changes, areaName) => {
+      if (areaName === 'sync' && changes.theme) {
+        applyTheme(changes.theme.newValue || 'system');
+      }
+    });
+  }
+
   if (storedSettings.defaultFormat && formatSelect) {
     formatSelect.value = storedSettings.defaultFormat;
   }

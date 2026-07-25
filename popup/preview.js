@@ -5,6 +5,17 @@ import { DocFormatter } from '../content/formatters/doc.js';
 import { ImageFormatter } from '../content/formatters/image.js';
 import { ContinuationFormatter } from '../content/formatters/continuation.js';
 
+function applyTheme(theme, targetDoc = document) {
+  if (!targetDoc || !targetDoc.documentElement) return;
+  if (theme === 'dark') {
+    targetDoc.documentElement.setAttribute('data-theme', 'dark');
+  } else if (theme === 'light') {
+    targetDoc.documentElement.setAttribute('data-theme', 'light');
+  } else {
+    targetDoc.documentElement.removeAttribute('data-theme');
+  }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   const titleEl = document.getElementById('preview-title');
   const codeEl = document.getElementById('preview-code');
@@ -26,6 +37,32 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const transferBtn = document.getElementById('transfer-btn');
   const transferTargetSelect = document.getElementById('transfer-target-select');
+
+  // Load and apply extension theme
+  let currentSyncTheme = 'system';
+  try {
+    const syncData = await chrome.storage.sync.get('theme');
+    currentSyncTheme = syncData.theme || 'system';
+    applyTheme(currentSyncTheme, document);
+  } catch {
+    // Ignore theme loading errors when running standalone
+  }
+
+  if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
+    chrome.storage.onChanged.addListener((changes, areaName) => {
+      if (areaName === 'sync' && changes.theme) {
+        currentSyncTheme = changes.theme.newValue || 'system';
+        applyTheme(currentSyncTheme, document);
+        try {
+          const iframeDoc =
+            previewRendered.contentDocument || previewRendered.contentWindow.document;
+          if (iframeDoc) applyTheme(currentSyncTheme, iframeDoc);
+        } catch {
+          // Ignore iframe access error
+        }
+      }
+    });
+  }
 
   let conversation = null;
   let title = 'Untitled Chat';
@@ -149,13 +186,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const toggle = doc.getElementById('theme-toggle-checkbox');
       if (toggle) {
-        const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (isSystemDark) {
+        if (currentSyncTheme === 'dark') {
           doc.documentElement.setAttribute('data-theme', 'dark');
           toggle.checked = true;
-        } else {
+        } else if (currentSyncTheme === 'light') {
           doc.documentElement.removeAttribute('data-theme');
           toggle.checked = false;
+        } else {
+          const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (isSystemDark) {
+            doc.documentElement.setAttribute('data-theme', 'dark');
+            toggle.checked = true;
+          } else {
+            doc.documentElement.removeAttribute('data-theme');
+            toggle.checked = false;
+          }
         }
 
         toggle.addEventListener('change', (e) => {

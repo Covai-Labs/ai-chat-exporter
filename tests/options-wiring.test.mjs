@@ -8,6 +8,7 @@ test('chrome.storage.sync schema defaults for options system', () => {
     parserMode: 'auto',
     defaultTransferTarget: 'claude',
     launchMode: 'popup',
+    theme: 'system',
   };
 
   assert.equal(defaultOptions.defaultFormat, 'markdown');
@@ -15,6 +16,7 @@ test('chrome.storage.sync schema defaults for options system', () => {
   assert.equal(defaultOptions.parserMode, 'auto');
   assert.equal(defaultOptions.defaultTransferTarget, 'claude');
   assert.equal(defaultOptions.launchMode, 'popup');
+  assert.equal(defaultOptions.theme, 'system');
 });
 
 test('smart transfer target logic defaults away from current platform', () => {
