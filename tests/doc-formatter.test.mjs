@@ -66,4 +66,8 @@ test('DocFormatter generates Word-compliant HTML document with MSO XML headers',
   assert.ok(output.includes('<pre><code class="language-python">'));
   assert.ok(output.includes('<table>'));
   assert.ok(output.includes('<blockquote>'));
+  assert.ok(output.includes('.copy-code-btn'));
+  assert.ok(output.includes('display: none !important'));
+  assert.ok(output.includes('.code-card'));
+  assert.ok(output.includes('.thinking-block'));
 });

@@ -139,6 +139,59 @@ export class DocFormatter extends ExportFormatter {
       color: #475569;
       font-style: italic;
     }
+    .copy-code-btn,
+    .copy-msg-btn {
+      display: none !important;
+    }
+    .code-card {
+      margin: 12px 0;
+      border: 1pt solid #cbd5e1;
+      background-color: #0f172a;
+      color: #f8fafc;
+    }
+    .code-card-header {
+      background-color: #1e293b;
+      color: #94a3b8;
+      padding: 6px 12px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 9pt;
+      font-weight: bold;
+      border-bottom: 1pt solid #334155;
+    }
+    .code-lang {
+      text-transform: lowercase;
+    }
+    .thinking-block {
+      margin: 12px 0;
+      border: 1pt solid #cbd5e1;
+      border-left: 3pt solid #6366f1;
+      background-color: #f8fafc;
+      padding: 10px 14px;
+    }
+    .thinking-summary {
+      font-weight: bold;
+      color: #4f46e5;
+      font-size: 10pt;
+      margin-bottom: 4px;
+    }
+    .thinking-icon {
+      display: none;
+    }
+    .thinking-content {
+      color: #475569;
+      font-size: 10pt;
+    }
+    ul.task-list {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .task-list-item {
+      list-style-type: none;
+      margin: 4px 0;
+    }
+    .task-checkbox {
+      margin-right: 6px;
+    }
   </style>
 </head>
 <body>
