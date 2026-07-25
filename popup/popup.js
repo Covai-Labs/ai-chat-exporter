@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const includeImagesCheckbox = document.getElementById('include-images-checkbox');
   const filenameInput = document.getElementById('filename-input');
   const continueTargetSelect = document.getElementById('continue-target-select');
-  const previewableFormats = new Set(['markdown', 'json', 'html', 'pdf']);
-  const copyableFormats = new Set(['markdown', 'json', 'html']);
+  const previewableFormats = new Set(['markdown', 'json', 'html', 'pdf', 'doc']);
+  const copyableFormats = new Set(['markdown', 'json', 'html', 'doc']);
 
   const openOptionsBtn = document.getElementById('open-options-btn');
   if (openOptionsBtn) {

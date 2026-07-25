@@ -19,6 +19,7 @@ import { JsonFormatter } from './formatters/json.js';
 import { HtmlFormatter } from './formatters/html.js';
 import { ImageFormatter } from './formatters/image.js';
 import { ContinuationFormatter } from './formatters/continuation.js';
+import { DocFormatter } from './formatters/doc.js';
 
 console.log('AI Chat Exporter script loaded');
 
@@ -93,6 +94,7 @@ const formatters = {
   json: new JsonFormatter(),
   html: new HtmlFormatter(),
   png: new ImageFormatter(),
+  doc: new DocFormatter(),
 };
 
 async function ensureHtml2CanvasLoaded() {
