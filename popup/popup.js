@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           chatTitleEl.textContent = displayTitle;
           msgCountEl.textContent = `${response.count || 0} messages found`;
           if (filenameInput) {
-            const safeDefault = displayTitle.replace(/[\\/:*?"<>|]/g, '').replace(/\s+/g, '_');
+            const safeDefault = displayTitle.replace(/[\\/:*?"<>|]/g, '').trim();
             filenameInput.value = safeDefault;
           }
           if (continueTargetSelect) {

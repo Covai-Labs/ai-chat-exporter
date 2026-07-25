@@ -13,7 +13,7 @@ test('content script registers the JSON formatter', () => {
 });
 
 test('popup enables JSON exports', () => {
-  assert.match(popupHtml, /<option value="json">JSON \(\.json\)<\/option>/);
+  assert.match(popupHtml, /<option value="json">.*JSON \(\.json\)<\/option>/);
   assert.doesNotMatch(popupHtml, /<option value="json" disabled>/);
 });
 

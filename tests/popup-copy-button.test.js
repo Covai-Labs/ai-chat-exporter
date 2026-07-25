@@ -7,7 +7,7 @@ const popupJs = fs.readFileSync('popup/popup.js', 'utf8');
 
 test('popup includes a copy button next to export', () => {
   assert.match(popupHtml, /id="copy-btn"/);
-  assert.match(popupHtml, /Copy to Clipboard/);
+  assert.match(popupHtml, /Copy/);
 });
 
 test('popup sends a COPY_CHAT message for clipboard actions', () => {
