@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const codeEl = document.getElementById('preview-code');
   const copyBtn = document.getElementById('copy-btn');
   const downloadBtn = document.getElementById('download-btn');
+  const printBtn = document.getElementById('print-btn');
 
   // Toggle view elements
   const viewToggleContainer = document.getElementById('view-toggle-container');
@@ -80,6 +81,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   viewCodeBtn.addEventListener('click', () => switchView('code'));
   viewRenderBtn.addEventListener('click', () => switchView('render'));
+  if (printBtn) {
+    printBtn.addEventListener('click', () => printIframe());
+  }
 
   previewRendered.addEventListener('load', () => {
     try {
@@ -155,20 +159,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (badgeEl) {
       if (format === 'json') {
         badgeEl.textContent = 'JSON Preview';
-      } else if (format === 'html') {
-        badgeEl.textContent = 'HTML Preview';
+      } else if (format === 'html' || format === 'pdf') {
+        badgeEl.textContent = format === 'pdf' ? 'PDF Export & Preview' : 'HTML Preview';
         viewToggleContainer.classList.remove('hidden');
-        switchView('render');
-      } else if (format === 'pdf') {
-        badgeEl.textContent = 'PDF Export';
-        copyBtn.classList.add('hidden');
-        downloadBtn.innerHTML = `
-          <svg viewBox="0 0 24 24" class="icon">
-            <path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>
-          </svg>
-          Print / Save PDF
-        `;
-        if (autoPrint) {
+        if (printBtn) printBtn.classList.remove('hidden');
+
+        if (autoPrint && format === 'pdf') {
           previewRendered.addEventListener(
             'load',
             () => {
@@ -217,17 +213,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   downloadBtn.addEventListener('click', () => {
     if (!content) return;
 
-    if (format === 'pdf') {
-      printIframe();
-      return;
-    }
-
     let ext = 'md';
     let mimeType = 'text/markdown';
     if (format === 'json') {
       ext = 'json';
       mimeType = 'application/json';
-    } else if (format === 'html') {
+    } else if (format === 'html' || format === 'pdf') {
       ext = 'html';
       mimeType = 'text/html';
     }

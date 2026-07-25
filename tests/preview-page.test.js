@@ -31,6 +31,7 @@ test('preview script implements view toggling and listener attachment', () => {
 });
 
 test('preview script handles PDF format and autoPrint', () => {
+  assert.match(previewHtml, /id="print-btn"/);
   assert.match(previewJs, /format === 'pdf'/);
   assert.match(previewJs, /printIframe/);
   assert.match(previewJs, /autoPrint/);
