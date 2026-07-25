@@ -68,4 +68,8 @@ test('ImageFormatter creates styled screenshot container with conversation conte
   assert.ok(html.includes('Hello AI!'));
   assert.ok(html.includes('Hello Human!'));
   assert.ok(html.includes('Exported with <strong>AI Chat Exporter</strong>'));
+  assert.ok(html.includes('https://ai-chat-exporter.covai.org/'));
+  assert.ok(html.includes('.copy-code-btn'));
+  assert.ok(html.includes('display: none !important'));
+  assert.ok(html.includes('.code-card'));
 });

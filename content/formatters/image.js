@@ -62,7 +62,12 @@ export class ImageFormatter extends ExportFormatter {
 
     container.innerHTML = `
       <style>
-        .ai-exporter-png-container pre { background: #0f172a; color: #f8fafc; padding: 12px 16px; border-radius: 8px; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 13px; }
+        .ai-exporter-png-container .copy-code-btn,
+        .ai-exporter-png-container .copy-msg-btn { display: none !important; }
+        .ai-exporter-png-container .code-card { margin: 12px 0; border-radius: 8px; overflow: hidden; background: #0f172a; color: #f8fafc; border: 1px solid #1e293b; }
+        .ai-exporter-png-container .code-card-header { background: #1e293b; color: #94a3b8; padding: 6px 14px; font-family: 'Fira Code', monospace; font-size: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .ai-exporter-png-container .code-lang { text-transform: lowercase; font-weight: 600; }
+        .ai-exporter-png-container pre { background: #0f172a; color: #f8fafc; padding: 12px 16px; margin: 0; border-radius: 0; overflow-x: auto; font-family: 'Fira Code', monospace; font-size: 13px; }
         .ai-exporter-png-container code { background: #e2e8f0; color: #0f172a; padding: 2px 6px; border-radius: 4px; font-family: 'Fira Code', monospace; font-size: 13px; }
         .ai-exporter-png-container pre code { background: none; color: inherit; padding: 0; }
         .ai-exporter-png-container table { border-collapse: collapse; width: 100%; margin: 12px 0; }
@@ -71,6 +76,12 @@ export class ImageFormatter extends ExportFormatter {
         .ai-exporter-png-container img { max-width: 100%; height: auto; border-radius: 8px; }
         .ai-exporter-png-container blockquote { border-left: 4px solid #4f46e5; margin: 12px 0; padding-left: 16px; color: #475569; }
         .ai-exporter-png-container hr { border: 0; border-top: 1px solid #e2e8f0; margin: 24px 0; }
+        .ai-exporter-png-container .thinking-block { margin: 12px 0; border: 1px solid #e2e8f0; border-left: 4px solid #6366f1; border-radius: 8px; background: rgba(79, 70, 229, 0.04); overflow: hidden; }
+        .ai-exporter-png-container .thinking-summary { padding: 8px 12px; font-weight: 600; font-size: 13px; color: #4f46e5; display: flex; align-items: center; gap: 6px; }
+        .ai-exporter-png-container .thinking-content { padding: 10px 14px; border-top: 1px solid #e2e8f0; font-size: 13px; color: #475569; }
+        .ai-exporter-png-container ul.task-list { list-style: none; padding-left: 0; }
+        .ai-exporter-png-container .task-list-item { list-style: none; display: flex; align-items: baseline; gap: 6px; margin: 4px 0; }
+        .ai-exporter-png-container .task-checkbox { accent-color: #4f46e5; width: 14px; height: 14px; margin: 0; }
       </style>
 
       <!-- Header -->
@@ -95,7 +106,7 @@ export class ImageFormatter extends ExportFormatter {
 
       <!-- Footer Watermark -->
       <div style="margin-top: 40px; border-top: 1px solid #e2e8f0; padding-top: 16px; text-align: center; font-size: 12px; color: #94a3b8;">
-        Exported with <strong>AI Chat Exporter</strong> • <span style="color: #6366f1;">https://ai-chat-export.covai.org/</span>
+        Exported with <strong>AI Chat Exporter</strong> • <span style="color: #6366f1;">https://ai-chat-exporter.covai.org/</span>
       </div>
     `;
 
