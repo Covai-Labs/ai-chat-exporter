@@ -41,7 +41,26 @@ export class HtmlFormatter extends ExportFormatter {
     const katexHeaders = `
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  <script>
+    function renderMath() {
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\\\[', right: '\\\\]', display: true},
+            {left: '\\\\(', right: '\\\\)', display: false}
+          ]
+        });
+      }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', renderMath);
+    } else {
+      renderMath();
+    }
+  </script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
@@ -849,7 +868,16 @@ function inlineParse(text) {
   const placeholders = [];
   let tokenCounter = 0;
 
-  // 1. Extract block math $$...$$
+  // 1. Extract block math $$...$$ and \[...\]
+  text = text.replace(/\\\[([\s\S]+?)\\\](?!\()/g, (match, math) => {
+    const id = `{{MATHBLOCK${tokenCounter++}}}`;
+    placeholders.push({
+      id,
+      html: `<span class="math-block">$$${math}$$</span>`,
+    });
+    return id;
+  });
+
   text = text.replace(/\$\$([\s\S]+?)\$\$/g, (match, math) => {
     const id = `{{MATHBLOCK${tokenCounter++}}}`;
     placeholders.push({
@@ -859,7 +887,16 @@ function inlineParse(text) {
     return id;
   });
 
-  // 2. Extract inline math $...$
+  // 2. Extract inline math $...$ and \(...\)
+  text = text.replace(/\\\(([\s\S]+?)\\\)(?!\()/g, (match, math) => {
+    const id = `{{MATHINLINE${tokenCounter++}}}`;
+    placeholders.push({
+      id,
+      html: `<span class="math-inline">$${math}$</span>`,
+    });
+    return id;
+  });
+
   text = text.replace(/\$([^$]+?)\$/g, (match, math) => {
     const id = `{{MATHINLINE${tokenCounter++}}}`;
     placeholders.push({
