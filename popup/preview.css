@@ -97,6 +97,15 @@ body {
   z-index: 10;
 }
 
+html.in-iframe .preview-header {
+  padding: 8px 12px;
+  gap: 8px;
+}
+
+html.in-iframe .header-top-row h1 {
+  display: none;
+}
+
 .header-top-row {
   display: flex;
   justify-content: space-between;

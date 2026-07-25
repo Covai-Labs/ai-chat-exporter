@@ -88,6 +88,16 @@ body {
     color 0.3s;
 }
 
+html.in-iframe body {
+  width: 100%;
+  max-width: 100%;
+  box-shadow: none;
+}
+
+html.in-iframe header {
+  display: none;
+}
+
 .container {
   padding: 16px;
   display: flex;

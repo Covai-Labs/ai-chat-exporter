@@ -1,35 +1,10 @@
 document.addEventListener('DOMContentLoaded', async () => {
   const statusEl = document.getElementById('sp-status');
   const headerRefreshBtn = document.getElementById('sp-refresh-btn');
-  const chatInfoCard = document.getElementById('chat-info-card');
-  const actionsCard = document.getElementById('actions-card');
-  const errorCard = document.getElementById('error-card');
-  const chatTitleEl = document.getElementById('chat-title');
-  const msgCountEl = document.getElementById('message-count');
-
-  const filenameInput = document.getElementById('filename-input');
-  const formatSelect = document.getElementById('format-select');
-  const includeImagesCheckbox = document.getElementById('include-images-checkbox');
-
-  const exportBtn = document.getElementById('export-btn');
-  const copyBtn = document.getElementById('copy-btn');
-  const tabPreviewBtn = document.getElementById('tab-preview-btn');
-
-  const transferBtn = document.getElementById('transfer-btn');
-  const continueTargetSelect = document.getElementById('continue-target-select');
-
-  const refreshPreviewBtn = document.getElementById('refresh-preview-btn');
-  const previewStatusEl = document.getElementById('preview-status');
-  const previewTextPane = document.getElementById('preview-text-pane');
-  const previewHtmlPane = document.getElementById('preview-html-pane');
-
-  const launchRadios = document.querySelectorAll('input[name="launch-mode"]');
-  const saveMsg = document.getElementById('settings-save-msg');
-
-  // Tab switching
   const tabBtns = document.querySelectorAll('.sp-tab-btn');
   const tabContents = document.querySelectorAll('.sp-tab-content');
 
+  // Tab switching
   tabBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       const targetTab = btn.getAttribute('data-tab');
@@ -40,415 +15,64 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (activeContent) {
         activeContent.classList.add('active');
       }
-      if (targetTab === 'preview-tab') {
-        loadLivePreview();
-      }
     });
   });
 
-  // Settings: Load & handle changes
-  // Settings sync initialization
-  const spDefaultFormatSelect = document.getElementById('sp-default-format-select');
-  const spDefaultIncludeImages = document.getElementById('sp-default-include-images');
-  const spParserModeSelect = document.getElementById('sp-parser-mode-select');
-  const spDefaultTransferSelect = document.getElementById('sp-default-transfer-select');
-
-  function showSaveMsg() {
-    if (saveMsg) {
-      saveMsg.classList.remove('hidden');
-      setTimeout(() => saveMsg.classList.add('hidden'), 2000);
-    }
-  }
-
-  try {
-    const data = await chrome.storage.sync.get([
-      'launchMode',
-      'defaultFormat',
-      'includeImages',
-      'parserMode',
-      'defaultTransferTarget',
-    ]);
-    const currentMode = data.launchMode || 'popup';
-    launchRadios.forEach((r) => {
-      r.checked = r.value === currentMode;
-      r.addEventListener('change', async () => {
-        if (r.checked) {
-          await chrome.storage.sync.set({ launchMode: r.value });
-          showSaveMsg();
-        }
-      });
-    });
-
-    if (spDefaultFormatSelect && data.defaultFormat)
-      spDefaultFormatSelect.value = data.defaultFormat;
-    if (spDefaultIncludeImages && data.includeImages !== undefined)
-      spDefaultIncludeImages.checked = data.includeImages;
-    if (spParserModeSelect && data.parserMode) spParserModeSelect.value = data.parserMode;
-    if (spDefaultTransferSelect && data.defaultTransferTarget)
-      spDefaultTransferSelect.value = data.defaultTransferTarget;
-
-    // Pre-populate main export UI controls from saved defaults
-    if (formatSelect && data.defaultFormat) formatSelect.value = data.defaultFormat;
-    if (includeImagesCheckbox && data.includeImages !== undefined)
-      includeImagesCheckbox.checked = data.includeImages;
-
-    spDefaultFormatSelect?.addEventListener('change', async () => {
-      await chrome.storage.sync.set({ defaultFormat: spDefaultFormatSelect.value });
-      if (formatSelect) formatSelect.value = spDefaultFormatSelect.value;
-      showSaveMsg();
-    });
-
-    spDefaultIncludeImages?.addEventListener('change', async () => {
-      await chrome.storage.sync.set({ includeImages: spDefaultIncludeImages.checked });
-      if (includeImagesCheckbox) includeImagesCheckbox.checked = spDefaultIncludeImages.checked;
-      showSaveMsg();
-    });
-
-    spParserModeSelect?.addEventListener('change', async () => {
-      await chrome.storage.sync.set({ parserMode: spParserModeSelect.value });
-      showSaveMsg();
-    });
-
-    spDefaultTransferSelect?.addEventListener('change', async () => {
-      await chrome.storage.sync.set({ defaultTransferTarget: spDefaultTransferSelect.value });
-      showSaveMsg();
-    });
-  } catch (err) {
-    console.warn('[SidePanel] Failed to load launch settings:', err);
-  }
-
-  // Detect active tab & chat
-  let activeTab = null;
-
-  async function getActiveTab() {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    return tab;
-  }
-
-  const MAX_RETRIES = 3;
-  const RETRY_DELAY_MS = 500;
-
+  // Detect active tab & chat platform
   async function checkAvailability() {
-    activeTab = await getActiveTab();
-    if (!activeTab) {
-      statusEl.textContent = 'No Active Tab';
-      showError();
-      return;
-    }
-
-    for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
-      try {
-        const response = await chrome.tabs.sendMessage(activeTab.id, {
-          action: 'CHECK_AVAILABILITY',
-        });
-        if (response && response.available) {
-          statusEl.textContent = `Detected: ${response.platform}`;
-          const displayTitle = response.title || activeTab.title || 'Untitled Chat';
-          chatTitleEl.textContent = displayTitle;
-          msgCountEl.textContent = `${response.count || 0} messages found`;
-          if (filenameInput) {
-            const safeDefault = displayTitle.replace(/[\\/:*?"<>|]/g, '').replace(/\s+/g, '_');
-            filenameInput.value = safeDefault;
-          }
-          if (continueTargetSelect) {
-            const data = await chrome.storage.sync.get('defaultTransferTarget');
-            const platformKey = (response.platform || '').toLowerCase();
-            let target = data.defaultTransferTarget || 'claude';
-            if (platformKey.includes('chatgpt') && target === 'chatgpt') {
-              target = 'claude';
-            } else if (platformKey.includes('claude') && target === 'claude') {
-              target = 'chatgpt';
-            }
-            continueTargetSelect.value = target;
-          }
-          chatInfoCard.classList.remove('hidden');
-          actionsCard.classList.remove('hidden');
-          errorCard.classList.add('hidden');
-          return;
-        } else {
-          showError();
-          return;
-        }
-      } catch (e) {
-        const isNotReady = e.message && e.message.includes('Receiving end does not exist');
-        if (!isNotReady) {
-          showError();
-          return;
-        }
-        if (attempt < MAX_RETRIES - 1) {
-          await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
-        }
+    if (!statusEl) return;
+    try {
+      const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      if (!activeTab || !activeTab.id) {
+        statusEl.textContent = 'No Active Tab';
+        return;
       }
-    }
-    showError();
-  }
 
-  function showError() {
-    statusEl.textContent = 'Not Supported';
-    chatInfoCard.classList.add('hidden');
-    actionsCard.classList.add('hidden');
-    errorCard.classList.remove('hidden');
-  }
+      const response = await chrome.tabs.sendMessage(activeTab.id, {
+        action: 'CHECK_AVAILABILITY',
+      });
 
-  const pngWarningBanner = document.getElementById('png-warning-banner');
-  const pngQualityContainer = document.getElementById('png-quality-container');
-  const pngQualityCheckbox = document.getElementById('png-quality-checkbox');
-
-  function updatePngWarningVisibility() {
-    if (formatSelect) {
-      const isPng = formatSelect.value === 'png';
-      if (pngWarningBanner) {
-        pngWarningBanner.classList.toggle('hidden', !isPng);
+      if (response && response.available) {
+        statusEl.textContent = `Detected: ${response.platform}`;
+      } else {
+        statusEl.textContent = 'Not Supported';
       }
-      if (pngQualityContainer) {
-        pngQualityContainer.classList.toggle('hidden', !isPng);
-      }
+    } catch {
+      statusEl.textContent = 'Not Supported';
     }
   }
 
-  if (formatSelect) {
-    formatSelect.addEventListener('change', updatePngWarningVisibility);
-    updatePngWarningVisibility();
-  }
-
-  await checkAvailability();
-
+  // Refresh button action
   if (headerRefreshBtn) {
     headerRefreshBtn.addEventListener('click', async () => {
       await checkAvailability();
-      const activeTabBtn = document.querySelector('.sp-tab-btn.active');
-      if (activeTabBtn && activeTabBtn.getAttribute('data-tab') === 'preview-tab') {
-        loadLivePreview();
+      const activeIframe = document.querySelector('.sp-tab-content.active iframe');
+      if (activeIframe && activeIframe.contentWindow) {
+        try {
+          activeIframe.contentWindow.location.reload();
+        } catch {
+          const currentSrc = activeIframe.src;
+          activeIframe.src = currentSrc;
+        }
       }
     });
   }
 
-  // Listen for tab switching and updates to auto-refresh side panel state
+  // Listen for tab switching and updates to auto-refresh side panel status
   if (typeof chrome !== 'undefined' && chrome.tabs) {
     if (chrome.tabs.onActivated) {
       chrome.tabs.onActivated.addListener(async () => {
         await checkAvailability();
-        const activeTabBtn = document.querySelector('.sp-tab-btn.active');
-        if (activeTabBtn && activeTabBtn.getAttribute('data-tab') === 'preview-tab') {
-          loadLivePreview();
-        }
       });
     }
     if (chrome.tabs.onUpdated) {
       chrome.tabs.onUpdated.addListener(async (tabId, changeInfo) => {
-        if (activeTab && tabId === activeTab.id && changeInfo.status === 'complete') {
+        if (changeInfo.status === 'complete') {
           await checkAvailability();
-          const activeTabBtn = document.querySelector('.sp-tab-btn.active');
-          if (activeTabBtn && activeTabBtn.getAttribute('data-tab') === 'preview-tab') {
-            loadLivePreview();
-          }
         }
       });
     }
   }
 
-  // Export action
-  exportBtn.addEventListener('click', async () => {
-    if (!activeTab) return;
-    const format = formatSelect.value;
-    const customFilename = filenameInput ? filenameInput.value.trim() : '';
-    exportBtn.disabled = true;
-    exportBtn.textContent = format === 'png' ? 'Rendering PNG (please wait)...' : 'Exporting...';
-
-    try {
-      if (format === 'pdf') {
-        const response = await chrome.tabs.sendMessage(activeTab.id, {
-          action: 'COPY_CHAT',
-          format: 'html',
-          includeImages: includeImagesCheckbox.checked,
-          parserMode: spParserModeSelect ? spParserModeSelect.value : 'auto',
-        });
-
-        if (response && response.success) {
-          await chrome.storage.local.set({
-            previewContent: response.content,
-            previewTitle: customFilename || activeTab.title || 'Untitled Chat',
-            previewFormat: 'pdf',
-            autoPrint: true,
-          });
-          await chrome.tabs.create({
-            url: chrome.runtime.getURL('popup/preview.html'),
-          });
-          statusEl.textContent = 'Export Successful!';
-        } else {
-          statusEl.textContent = 'Export Failed: ' + (response?.error || 'Unknown');
-        }
-      } else {
-        const response = await chrome.tabs.sendMessage(activeTab.id, {
-          action: 'EXPORT_CHAT',
-          format: format,
-          includeImages: includeImagesCheckbox.checked,
-          customFilename: customFilename,
-          highQualityPng: pngQualityCheckbox ? pngQualityCheckbox.checked : true,
-          parserMode: spParserModeSelect ? spParserModeSelect.value : 'auto',
-        });
-        if (response && response.success) {
-          statusEl.textContent = 'Export Successful!';
-        } else {
-          statusEl.textContent = 'Export Failed: ' + (response?.error || 'Unknown');
-        }
-      }
-    } catch (e) {
-      statusEl.textContent = 'Error: ' + e.message;
-    } finally {
-      exportBtn.disabled = false;
-      exportBtn.textContent = 'Export Chat';
-    }
-  });
-
-  // Copy action
-  copyBtn.addEventListener('click', async () => {
-    if (!activeTab) return;
-    const format = formatSelect.value;
-    copyBtn.disabled = true;
-    copyBtn.textContent = 'Copying...';
-
-    try {
-      const response = await chrome.tabs.sendMessage(activeTab.id, {
-        action: 'COPY_CHAT',
-        format: format === 'pdf' ? 'html' : format,
-        includeImages: includeImagesCheckbox.checked,
-        parserMode: spParserModeSelect ? spParserModeSelect.value : 'auto',
-      });
-
-      if (response && response.success) {
-        if (
-          response.htmlContent &&
-          typeof ClipboardItem !== 'undefined' &&
-          navigator.clipboard &&
-          navigator.clipboard.write
-        ) {
-          try {
-            const htmlBlob = new Blob([response.htmlContent], { type: 'text/html' });
-            const textBlob = new Blob([response.content], { type: 'text/plain' });
-            await navigator.clipboard.write([
-              new ClipboardItem({ 'text/html': htmlBlob, 'text/plain': textBlob }),
-            ]);
-          } catch (writeErr) {
-            console.warn('[SidePanel] Dual-MIME clipboard write failed, falling back:', writeErr);
-            await navigator.clipboard.writeText(response.content);
-          }
-        } else {
-          await navigator.clipboard.writeText(response.content);
-        }
-        statusEl.textContent = 'Copied to Clipboard!';
-      } else {
-        statusEl.textContent = 'Copy Failed: ' + (response?.error || 'Unknown');
-      }
-    } catch (e) {
-      statusEl.textContent = 'Error: ' + e.message;
-    } finally {
-      copyBtn.disabled = false;
-      copyBtn.textContent = 'Copy to Clipboard';
-    }
-  });
-
-  // Open in Tab
-  tabPreviewBtn.addEventListener('click', async () => {
-    if (!activeTab) return;
-    const format = formatSelect.value;
-    tabPreviewBtn.disabled = true;
-    tabPreviewBtn.textContent = 'Opening...';
-
-    try {
-      const response = await chrome.tabs.sendMessage(activeTab.id, {
-        action: 'COPY_CHAT',
-        format: format === 'pdf' ? 'html' : format,
-        includeImages: includeImagesCheckbox.checked,
-        parserMode: spParserModeSelect ? spParserModeSelect.value : 'auto',
-      });
-
-      if (response && response.success) {
-        await chrome.storage.local.set({
-          previewContent: response.content,
-          previewTitle: activeTab.title || 'Untitled Chat',
-          previewFormat: format,
-          autoPrint: false,
-        });
-
-        await chrome.tabs.create({
-          url: chrome.runtime.getURL('popup/preview.html'),
-        });
-        statusEl.textContent = 'Opened in New Tab!';
-      }
-    } catch (e) {
-      statusEl.textContent = 'Error: ' + e.message;
-    } finally {
-      tabPreviewBtn.disabled = false;
-      tabPreviewBtn.textContent = 'Open in Tab';
-    }
-  });
-
-  // Transfer action
-  if (transferBtn) {
-    transferBtn.addEventListener('click', async () => {
-      if (!activeTab) return;
-      const targetPlatform = continueTargetSelect ? continueTargetSelect.value : 'chatgpt';
-      transferBtn.disabled = true;
-      transferBtn.textContent = 'Transferring...';
-
-      try {
-        const response = await chrome.tabs.sendMessage(activeTab.id, {
-          action: 'GET_CONTINUATION_PAYLOAD',
-          includeImages: includeImagesCheckbox.checked,
-          parserMode: spParserModeSelect ? spParserModeSelect.value : 'auto',
-        });
-
-        if (response && response.success && response.payload) {
-          await chrome.runtime.sendMessage({
-            action: 'TRANSFER_CHAT',
-            targetPlatform: targetPlatform,
-            payload: response.payload,
-          });
-          statusEl.textContent = `Opening ${targetPlatform}...`;
-        } else {
-          statusEl.textContent = 'Transfer Failed: ' + (response?.error || 'No content');
-        }
-      } catch (e) {
-        statusEl.textContent = 'Error: ' + e.message;
-      } finally {
-        transferBtn.disabled = false;
-        transferBtn.textContent = '↗ Continue';
-      }
-    });
-  }
-
-  // Live preview pane loader
-  async function loadLivePreview() {
-    if (!activeTab) return;
-    previewStatusEl.textContent = 'Loading live preview...';
-    try {
-      const format = formatSelect.value;
-      const response = await chrome.tabs.sendMessage(activeTab.id, {
-        action: 'COPY_CHAT',
-        format: format,
-        includeImages: includeImagesCheckbox.checked,
-        parserMode: spParserModeSelect ? spParserModeSelect.value : 'auto',
-      });
-
-      if (response && response.success) {
-        if (format === 'html' && response.htmlContent) {
-          previewTextPane.classList.add('hidden');
-          previewHtmlPane.classList.remove('hidden');
-          previewHtmlPane.srcdoc = response.htmlContent;
-        } else {
-          previewHtmlPane.classList.add('hidden');
-          previewTextPane.classList.remove('hidden');
-          previewTextPane.textContent = response.content || 'No content';
-        }
-        previewStatusEl.textContent = `Preview loaded (${format})`;
-      } else {
-        previewStatusEl.textContent = 'Failed to load preview';
-      }
-    } catch (e) {
-      previewStatusEl.textContent = 'Preview error: ' + e.message;
-    }
-  }
-
-  refreshPreviewBtn.addEventListener('click', loadLivePreview);
+  await checkAvailability();
 });

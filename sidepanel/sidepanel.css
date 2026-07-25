@@ -158,17 +158,25 @@ body {
 
 .sp-content {
   flex: 1;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .sp-tab-content {
   display: none;
-  flex-direction: column;
-  gap: 12px;
+  width: 100%;
+  height: 100%;
 }
 
 .sp-tab-content.active {
   display: flex;
+  flex: 1;
+}
+
+.sp-tab-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
 }
 
 .sp-card {

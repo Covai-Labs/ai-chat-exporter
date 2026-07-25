@@ -9,6 +9,10 @@ function applyTheme(theme) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+  if (window.self !== window.top) {
+    document.documentElement.classList.add('in-iframe');
+  }
+
   const themeSelect = document.getElementById('theme-select');
   const defaultFormatSelect = document.getElementById('default-format-select');
   const defaultIncludeImages = document.getElementById('default-include-images');

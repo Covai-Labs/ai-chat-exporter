@@ -35,177 +35,21 @@
       <main class="sp-content">
         <!-- TAB 1: EXPORT -->
         <section id="export-tab" class="sp-tab-content active">
-          <div class="sp-card hidden" id="chat-info-card">
-            <h2 id="chat-title" class="chat-title">Chat Title</h2>
-            <div id="message-count" class="chat-meta">0 messages found</div>
-          </div>
-
-          <div class="sp-card hidden" id="actions-card">
-            <div class="field-group">
-              <label for="filename-input" class="field-label">Filename</label>
-              <input
-                type="text"
-                id="filename-input"
-                class="text-input"
-                placeholder="filename_without_extension"
-              />
-            </div>
-
-            <div class="field-group">
-              <label for="format-select" class="field-label">Export Format</label>
-              <select id="format-select" class="select-input">
-                <option value="markdown">Markdown (.md)</option>
-                <option value="json">JSON (.json)</option>
-                <option value="html">HTML (.html)</option>
-                <option value="png">Shareable Image (.png)</option>
-                <option value="pdf">PDF (.pdf)</option>
-              </select>
-              <div id="png-warning-banner" class="png-warning-banner hidden">
-                ⚠️ PNG export on long chats may take 1–2 minutes. Consider PDF or Markdown for
-                instant export.
-              </div>
-            </div>
-
-            <div class="checkbox-wrapper">
-              <label class="checkbox-label">
-                <input type="checkbox" id="include-images-checkbox" checked />
-                Include Images
-              </label>
-            </div>
-
-            <div class="checkbox-wrapper hidden" id="png-quality-container">
-              <label class="checkbox-label">
-                <input type="checkbox" id="png-quality-checkbox" checked />
-                High Quality PNG (2x)
-              </label>
-            </div>
-
-            <div class="button-stack">
-              <button id="export-btn" class="primary-btn">Export Chat</button>
-              <div class="button-row">
-                <button id="copy-btn" class="secondary-btn">Copy to Clipboard</button>
-                <button id="tab-preview-btn" class="secondary-btn">Open in Tab</button>
-              </div>
-            </div>
-
-            <div class="transfer-section">
-              <div class="divider"><span>Or Transfer Prompt Context</span></div>
-              <div class="field-group">
-                <label for="continue-target-select" class="field-label">Continue On</label>
-                <div class="transfer-row">
-                  <select id="continue-target-select" class="select-input">
-                    <option value="chatgpt">ChatGPT</option>
-                    <option value="claude">Claude</option>
-                    <option value="gemini">Gemini</option>
-                    <option value="deepseek">DeepSeek</option>
-                    <option value="qwen">Qwen</option>
-                    <option value="perplexity">Perplexity</option>
-                    <option value="mistral">Mistral</option>
-                    <option value="notebooklm">NotebookLM</option>
-                  </select>
-                  <button id="transfer-btn" class="transfer-btn">↗ Continue</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="sp-card error hidden" id="error-card">
-            No compatible AI chat found on active tab.
-          </div>
+          <iframe id="sp-export-iframe" class="sp-tab-iframe" src="../popup/popup.html"></iframe>
         </section>
 
         <!-- TAB 2: LIVE PREVIEW -->
         <section id="preview-tab" class="sp-tab-content">
-          <div class="preview-toolbar">
-            <button id="refresh-preview-btn" class="secondary-btn sm">🔄 Refresh</button>
-            <span id="preview-status" class="preview-status">Ready</span>
-          </div>
-          <div class="preview-pane-container">
-            <pre id="preview-text-pane" class="preview-code-pane"></pre>
-            <iframe id="preview-html-pane" class="preview-html-pane hidden"></iframe>
-          </div>
+          <iframe id="sp-preview-iframe" class="sp-tab-iframe" src="../popup/preview.html"></iframe>
         </section>
 
         <!-- TAB 3: SETTINGS -->
         <section id="settings-tab" class="sp-tab-content">
-          <div class="sp-card">
-            <h3>Export Defaults</h3>
-            <div class="field-group">
-              <label for="sp-default-format-select" class="field-label">Default Format</label>
-              <select id="sp-default-format-select" class="select-input">
-                <option value="markdown">Markdown (.md)</option>
-                <option value="json">JSON (.json)</option>
-                <option value="html">HTML (.html)</option>
-                <option value="png">Shareable Image (.png)</option>
-                <option value="pdf">PDF (.pdf)</option>
-              </select>
-            </div>
-            <div class="checkbox-wrapper">
-              <label class="checkbox-label">
-                <input type="checkbox" id="sp-default-include-images" checked />
-                Include Images by default
-              </label>
-            </div>
-          </div>
-
-          <div class="sp-card">
-            <h3>Parser Extraction Mode</h3>
-            <div class="field-group">
-              <label for="sp-parser-mode-select" class="field-label"
-                >Preferred Extraction Mode</label
-              >
-              <select id="sp-parser-mode-select" class="select-input">
-                <option value="auto">Auto (API when available, with DOM fallback)</option>
-                <option value="prefer_dom">Prefer DOM Mode (Direct scraping)</option>
-                <option value="prefer_api">Prefer API Mode (Raw payload fetch)</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="sp-card">
-            <h3>Transfer Chat Defaults</h3>
-            <div class="field-group">
-              <label for="sp-default-transfer-select" class="field-label"
-                >Default Transfer Target</label
-              >
-              <select id="sp-default-transfer-select" class="select-input">
-                <option value="claude">Claude (claude.ai)</option>
-                <option value="chatgpt">ChatGPT (chatgpt.com)</option>
-                <option value="gemini">Gemini (gemini.google.com)</option>
-                <option value="deepseek">DeepSeek (chat.deepseek.com)</option>
-                <option value="qwen">Qwen (chat.qwen.ai)</option>
-                <option value="perplexity">Perplexity (perplexity.ai)</option>
-                <option value="mistral">Mistral (chat.mistral.ai)</option>
-                <option value="notebooklm">NotebookLM (notebooklm.google.com)</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="sp-card">
-            <h3>Extension Icon Click Action</h3>
-            <p class="settings-desc">
-              Choose what opens when you click the extension toolbar icon:
-            </p>
-
-            <div class="radio-group">
-              <label class="radio-label">
-                <input type="radio" name="launch-mode" value="popup" checked />
-                <div>
-                  <strong>Extension Popup</strong>
-                  <span class="sub-text">Opens a compact popup window</span>
-                </div>
-              </label>
-
-              <label class="radio-label">
-                <input type="radio" name="launch-mode" value="sidepanel" />
-                <div>
-                  <strong>Persistent Side Panel</strong>
-                  <span class="sub-text">Opens this side panel pinned to the right edge</span>
-                </div>
-              </label>
-            </div>
-            <div id="settings-save-msg" class="save-msg hidden">Preferences saved!</div>
-          </div>
+          <iframe
+            id="sp-settings-iframe"
+            class="sp-tab-iframe"
+            src="../options/options.html"
+          ></iframe>
         </section>
       </main>
     </div>

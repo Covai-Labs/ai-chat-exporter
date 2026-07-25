@@ -9,6 +9,10 @@ function applyTheme(theme) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+  if (window.self !== window.top) {
+    document.documentElement.classList.add('in-iframe');
+  }
+
   const statusEl = document.getElementById('status');
   const chatInfoEl = document.getElementById('chat-info');
   const actionsEl = document.getElementById('actions');

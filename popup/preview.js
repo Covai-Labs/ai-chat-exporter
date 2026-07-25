@@ -17,6 +17,10 @@ function applyTheme(theme, targetDoc = document) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+  if (window.self !== window.top) {
+    document.documentElement.classList.add('in-iframe');
+  }
+
   const titleEl = document.getElementById('preview-title');
   const codeEl = document.getElementById('preview-code');
   const copyBtn = document.getElementById('copy-btn');

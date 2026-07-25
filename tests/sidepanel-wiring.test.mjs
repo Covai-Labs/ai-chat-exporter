@@ -33,16 +33,19 @@ test('background.js syncs side panel behavior and handles OPEN_SIDE_PANEL', () =
   assert.match(backgroundJs, /action === ['"]OPEN_SIDE_PANEL['"]/);
 });
 
-test('sidepanel.html includes export, preview, and settings tabs', () => {
+test('sidepanel.html includes export, preview, and settings iframe tabs', () => {
   assert.match(sidepanelHtml, /data-tab="export-tab"/);
   assert.match(sidepanelHtml, /data-tab="preview-tab"/);
   assert.match(sidepanelHtml, /data-tab="settings-tab"/);
-  assert.match(sidepanelHtml, /name="launch-mode"/);
+  assert.match(sidepanelHtml, /id="sp-export-iframe"/);
+  assert.match(sidepanelHtml, /id="sp-preview-iframe"/);
+  assert.match(sidepanelHtml, /id="sp-settings-iframe"/);
 });
 
-test('sidepanel.js synchronizes launch mode preferences with chrome.storage.sync', () => {
-  assert.match(sidepanelJs, /chrome\.storage\.sync\.get\([^)]*launchMode[^)]*\)/);
-  assert.match(sidepanelJs, /chrome\.storage\.sync\.set\(\{\s*launchMode:/);
+test('options.js synchronizes launch mode preferences with chrome.storage.sync', () => {
+  const optionsJs = fs.readFileSync('options/options.js', 'utf8');
+  assert.match(optionsJs, /chrome\.storage\.sync\.get\([^)]*launchMode[^)]*\)/);
+  assert.match(optionsJs, /chrome\.storage\.sync\.set\(\{\s*launchMode:/);
 });
 
 test('popup.html and popup.js provide button to trigger side panel', () => {

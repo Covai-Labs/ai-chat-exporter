@@ -55,6 +55,18 @@ body {
   padding: 2rem 1rem;
 }
 
+html.in-iframe body {
+  padding: 1rem 0.5rem;
+}
+
+html.in-iframe .options-header {
+  display: none;
+}
+
+html.in-iframe .options-container {
+  max-width: 100%;
+}
+
 .options-container {
   max-width: 640px;
   margin: 0 auto;
