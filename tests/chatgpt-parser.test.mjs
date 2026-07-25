@@ -122,3 +122,62 @@ test('ChatGPTParser correctly extracts image carousel images from assistant mess
     global.document = oldDocument;
   }
 });
+
+test('ChatGPTParser correctly extracts API image carousels from content_references', async () => {
+  const puaMatch = '\uE200image_group\uE202{"layout":"carousel","query":["bonobo grooming"]}\uE201';
+  const sampleMapping = {
+    root: { id: 'root', children: ['msg1'] },
+    msg1: {
+      id: 'msg1',
+      children: [],
+      message: {
+        author: { role: 'assistant' },
+        content: { parts: [puaMatch + '\n\nBonobos are social primates.'] },
+        metadata: {
+          content_references: [
+            {
+              type: 'image_group',
+              matched_text: puaMatch,
+              images: [
+                {
+                  image_result: {
+                    title: 'Bonobo Grooming Behavior',
+                    content_url:
+                      'https://images.openai.com/static-rsc-4/bonobo.jpg?purpose=fullsize',
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      },
+    },
+  };
+
+  const parser = new ChatGPTParser();
+  // Mock fetchConversation and token checks
+  parser.lastFetch = {
+    convId: 'test-123',
+    includeImages: true,
+    timestamp: Date.now(),
+    result: { data: { mapping: sampleMapping, title: 'API Test' }, images: {} },
+  };
+
+  // We can pass options with fake token context by mocking or testing cleanMarkdownFromApi indirectly via parse
+  // Simple test by invoking parse when lastFetch is set
+  global.document = parseHTML(
+    '<html><head></head><body><div id="client-bootstrap">{"session":{"accessToken":"fake"}}</div></body></html>',
+  ).document;
+  global.window = parseHTML('<div></div>').window;
+  global.window.location = { pathname: '/c/test-123', href: 'https://chatgpt.com/c/test-123' };
+
+  const result = await parser.parse({ parserMode: 'prefer_api' });
+
+  assert.equal(result.messages.length, 1);
+  assert.equal(result.messages[0].role, 'ChatGPT');
+  assert.match(
+    result.messages[0].content,
+    /!\[Bonobo Grooming Behavior\]\(https:\/\/images\.openai\.com\/static-rsc-4\/bonobo\.jpg\?purpose=fullsize\)/,
+  );
+  assert.match(result.messages[0].content, /Bonobos are social primates\./);
+});

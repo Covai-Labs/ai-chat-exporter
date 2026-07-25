@@ -114,10 +114,16 @@ function linearize(mapping, includeImages) {
       const displayRole = role === 'user' ? 'User' : 'ChatGPT';
       if (segments.length) {
         const citeMap = {};
+        const imageGroupMap = {};
         for (const ref of msg.metadata?.content_references ?? []) {
-          if (ref.matched_text && ref.items?.length) citeMap[ref.matched_text] = ref.items;
+          if (ref.matched_text) {
+            if (ref.items?.length) citeMap[ref.matched_text] = ref.items;
+            if (ref.type === 'image_group' || ref.matched_text.includes('image_group')) {
+              imageGroupMap[ref.matched_text] = ref;
+            }
+          }
         }
-        messages.push({ role: displayRole, segments, citeMap });
+        messages.push({ role: displayRole, segments, citeMap, imageGroupMap });
       }
     }
     const validChildren = (node.children ?? []).filter((cid) => cid in mapping);
@@ -131,7 +137,7 @@ function linearize(mapping, includeImages) {
   return messages;
 }
 
-function cleanMarkdownFromApi(text, citeMap) {
+function cleanMarkdownFromApi(text, citeMap, imageGroupMap) {
   if (!text) return '';
 
   // 1. Remove specific character ranges (like some PUA ranges)
@@ -157,8 +163,37 @@ function cleanMarkdownFromApi(text, citeMap) {
     }
   });
 
-  // 3.5. Clean ChatGPT PUA image_group annotations: image_group{json}
-  text = text.replace(/\uE200image_group\uE202[^\uE201]+\uE201/g, '');
+  // 3.5. Clean/replace ChatGPT PUA image_group annotations: image_group{json}
+  text = text.replace(/\uE200image_group\uE202[^\uE201]+\uE201/g, (match) => {
+    const ref = imageGroupMap?.[match];
+    if (ref) {
+      if (Array.isArray(ref.images) && ref.images.length > 0) {
+        const markdownImgs = ref.images
+          .map((imgObj) => {
+            const res = imgObj.image_result || {};
+            const title = res.title || imgObj.image_search_query || 'Image';
+            const src = res.content_url || res.thumbnail_url || res.original_content_url;
+            if (src) {
+              return `![${title}](${src})`;
+            }
+            return '';
+          })
+          .filter(Boolean);
+        if (markdownImgs.length > 0) {
+          return '\n\n' + markdownImgs.join('\n\n') + '\n\n';
+        }
+      }
+      if (ref.safe_urls && Array.isArray(ref.safe_urls) && ref.safe_urls.length > 0) {
+        return (
+          '\n\n' + ref.safe_urls.map((url, i) => `![Image ${i + 1}](${url})`).join('\n\n') + '\n\n'
+        );
+      }
+      if (ref.alt) {
+        return '\n\n' + ref.alt + '\n\n';
+      }
+    }
+    return '';
+  });
 
   // 4. Replace ChatGPT PUA cite annotations
   text = text.replace(/\uE200cite(?:\uE202[^\uE202\uE201]+)+\uE201/g, (match) => {
@@ -468,7 +503,7 @@ export class ChatGPTParser extends ChatParser {
           let content = '';
           for (const seg of msg.segments) {
             if (seg.type === 'text') {
-              content += cleanMarkdownFromApi(seg.content, msg.citeMap) + '\n\n';
+              content += cleanMarkdownFromApi(seg.content, msg.citeMap, msg.imageGroupMap) + '\n\n';
             } else if (seg.type === 'image') {
               const src = result.images[seg.fileId];
               if (src) {
