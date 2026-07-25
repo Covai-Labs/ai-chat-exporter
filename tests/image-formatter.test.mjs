@@ -73,3 +73,26 @@ test('ImageFormatter creates styled screenshot container with conversation conte
   assert.ok(html.includes('display: none !important'));
   assert.ok(html.includes('.code-card'));
 });
+
+test('ImageFormatter.preloadImages sanitizes cross-origin images to prevent canvas taint', async () => {
+  const { ImageFormatter } = await importFormatter();
+  const formatter = new ImageFormatter();
+
+  if (typeof globalThis.document === 'undefined') {
+    const { document, window } = parseHTML('<!DOCTYPE html><html><body></body></html>');
+    globalThis.document = document;
+    globalThis.window = window;
+  }
+
+  const container = document.createElement('div');
+  container.innerHTML = '<img src="https://example.com/blocked-avatar.png" alt="User Avatar" />';
+  document.body.appendChild(container);
+
+  await formatter.preloadImages(container);
+
+  const img = container.querySelector('img');
+  assert.equal(img, null); // Replaced with placeholder span
+  const placeholder = container.querySelector('.ai-exporter-img-placeholder');
+  assert.ok(placeholder);
+  assert.ok(placeholder.textContent.includes('User Avatar'));
+});

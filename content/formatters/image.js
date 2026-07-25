@@ -115,31 +115,80 @@ export class ImageFormatter extends ExportFormatter {
 
   /**
    * Pre-loads image sources inside the container so html2canvas captures them cleanly
+   * and converts cross-origin images to Data URLs to prevent canvas tainting ("The operation is insecure").
    */
   async preloadImages(container) {
     const images = Array.from(container.querySelectorAll('img'));
     if (images.length === 0) return;
 
-    const loadPromises = images.map(
-      (img) =>
-        new Promise((resolve) => {
-          if (img.complete && img.naturalWidth !== 0) {
-            resolve();
+    const processImage = async (img) => {
+      const src = img.getAttribute('src') || '';
+      if (!src || src.startsWith('data:')) return;
+
+      // 1. Try fetching as Blob and converting to Data URL
+      try {
+        if (typeof fetch !== 'undefined') {
+          const response = await fetch(src, { mode: 'cors' });
+          if (response.ok) {
+            const blob = await response.blob();
+            const dataUrl = await new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onloadend = () => resolve(reader.result);
+              reader.onerror = reject;
+              reader.readAsDataURL(blob);
+            });
+            img.setAttribute('src', dataUrl);
             return;
           }
-          const timer = setTimeout(resolve, 2500);
-          img.onload = () => {
-            clearTimeout(timer);
-            resolve();
-          };
-          img.onerror = () => {
-            clearTimeout(timer);
-            resolve();
-          };
-        }),
-    );
+        }
+      } catch {
+        // Fetch failed due to CORS or network error
+      }
 
-    await Promise.all(loadPromises);
+      // 2. Try using Image element with crossOrigin = 'anonymous' and offscreen canvas
+      try {
+        if (typeof Image !== 'undefined' && typeof document !== 'undefined') {
+          const safeDataUrl = await new Promise((resolve, reject) => {
+            const tempImg = new Image();
+            tempImg.crossOrigin = 'anonymous';
+            const timer = setTimeout(() => reject(new Error('Image load timeout')), 2500);
+            tempImg.onload = () => {
+              clearTimeout(timer);
+              try {
+                const c = document.createElement('canvas');
+                c.width = tempImg.naturalWidth || tempImg.width || 100;
+                c.height = tempImg.naturalHeight || tempImg.height || 100;
+                const ctx = c.getContext('2d');
+                ctx.drawImage(tempImg, 0, 0);
+                resolve(c.toDataURL('image/png'));
+              } catch (err) {
+                reject(err);
+              }
+            };
+            tempImg.onerror = () => {
+              clearTimeout(timer);
+              reject(new Error('Image load error'));
+            };
+            tempImg.src = src;
+          });
+          img.setAttribute('src', safeDataUrl);
+          return;
+        }
+      } catch {
+        // Canvas drawing failed or crossOrigin was blocked by browser
+      }
+
+      // 3. Fallback: Replace image with safe placeholder to prevent tainting the canvas
+      const altText = img.getAttribute('alt') || 'External Image';
+      const placeholder = document.createElement('span');
+      placeholder.className = 'ai-exporter-img-placeholder';
+      placeholder.style.cssText =
+        'display: inline-block; padding: 4px 8px; background: #f1f5f9; color: #64748b; border-radius: 4px; font-size: 12px; border: 1px dashed #cbd5e1; margin: 4px 0;';
+      placeholder.textContent = `🖼️ [${altText}]`;
+      img.replaceWith(placeholder);
+    };
+
+    await Promise.all(images.map((img) => processImage(img)));
   }
 
   /**
@@ -179,13 +228,17 @@ export class ImageFormatter extends ExportFormatter {
       });
 
       return new Promise((resolve, reject) => {
-        canvas.toBlob((blob) => {
-          if (blob) {
-            resolve(blob);
-          } else {
-            reject(new Error('Failed to generate PNG blob from canvas'));
-          }
-        }, 'image/png');
+        try {
+          canvas.toBlob((blob) => {
+            if (blob) {
+              resolve(blob);
+            } else {
+              reject(new Error('Failed to generate PNG blob from canvas'));
+            }
+          }, 'image/png');
+        } catch (err) {
+          reject(err);
+        }
       });
     } finally {
       if (container.parentNode) {

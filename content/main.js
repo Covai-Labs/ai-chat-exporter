@@ -219,10 +219,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         }
         const options = { highQuality: request.highQualityPng !== false };
         const formattedResult = await formatter.format(conversation, options);
+        const mimeType = formatter.getMimeType();
         const blob =
           formattedResult instanceof Blob
             ? formattedResult
-            : new Blob([formattedResult], { type: formatter.getMimeType() });
+            : new Blob(
+                formatter.getFileExtension() === 'doc'
+                  ? ['\ufeff', formattedResult]
+                  : [formattedResult],
+                { type: `${mimeType};charset=utf-8` },
+              );
 
         // Trigger download
         const url = URL.createObjectURL(blob);

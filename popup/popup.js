@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         statusEl.textContent = 'Error: ' + e.message;
       } finally {
         transferBtn.disabled = false;
-        transferBtn.textContent = '↗ Continue';
+        transferBtn.textContent = '↗ Transfer To';
       }
     });
   }

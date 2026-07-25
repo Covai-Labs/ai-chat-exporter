@@ -37,3 +37,18 @@ test('preview script handles PDF format and autoPrint', () => {
   assert.match(previewJs, /printIframe/);
   assert.match(previewJs, /autoPrint/);
 });
+
+test('preview page and script handle real PNG rendering and Word .doc MIME type with UTF-8 BOM', () => {
+  assert.match(previewHtml, /html2canvas.min.js/);
+  assert.match(previewJs, /import { ImageFormatter }/);
+  assert.match(previewJs, /application\/msword/);
+  assert.match(previewJs, /\\ufeff/);
+  assert.match(previewJs, /imageFormatter\.format/);
+});
+
+test('preview page and script include Transfer Chat option and ContinuationFormatter', () => {
+  assert.match(previewHtml, /id="transfer-target-select"/);
+  assert.match(previewHtml, /id="transfer-btn"/);
+  assert.match(previewJs, /import { ContinuationFormatter }/);
+  assert.match(previewJs, /TRANSFER_CHAT/);
+});

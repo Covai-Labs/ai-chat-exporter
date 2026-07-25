@@ -60,18 +60,44 @@ body {
   border-radius: 0;
   padding: 12px 24px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
+  flex-direction: column;
+  gap: 12px;
   box-shadow: var(--shadow);
   flex-shrink: 0;
   z-index: 10;
 }
 
+.header-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
 .header-main {
   flex: 1;
-  min-width: 250px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.header-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border-color);
+}
+
+.transfer-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-left: 4px;
 }
 
 .badge {
@@ -98,39 +124,129 @@ h1 {
 
 .action-buttons {
   display: flex;
-  gap: 12px;
+  gap: 10px;
+  align-items: center;
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 16px;
-  font-size: 14px;
+  padding: 9px 16px;
+  font-size: 13.5px;
   font-weight: 600;
   border-radius: 8px;
   cursor: pointer;
   border: 1px solid transparent;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
 }
 
 .primary-btn {
-  background-color: var(--primary-color);
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
   color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.25);
 }
 
 .primary-btn:hover {
-  background-color: var(--primary-hover);
+  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.35);
 }
 
-.secondary-btn {
+/* Highlighted Print / Save PDF Button */
+#print-btn {
+  background-color: rgba(99, 102, 241, 0.08);
+  color: #4f46e5;
+  border: 1px solid rgba(99, 102, 241, 0.35);
+}
+
+#print-btn:hover {
+  background-color: rgba(99, 102, 241, 0.16);
+  color: #4338ca;
+  border-color: #6366f1;
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.2);
+}
+
+/* Highlighted Copy Code Button */
+#copy-btn {
+  background-color: rgba(16, 185, 129, 0.08);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+#copy-btn:hover {
+  background-color: rgba(16, 185, 129, 0.16);
+  color: #047857;
+  border-color: #10b981;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.2);
+}
+
+/* Transfer Chat Control Group */
+.transfer-control-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   background-color: var(--secondary-bg);
-  color: var(--text-color);
-  border-color: var(--border-color);
+  border: 1px solid var(--border-color);
+  padding: 3px;
+  border-radius: 8px;
 }
 
-.secondary-btn:hover {
-  background-color: var(--secondary-hover);
+.transfer-select {
+  background: transparent;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-color);
+  padding: 4px 8px;
+  cursor: pointer;
+  outline: none;
+  border-radius: 6px;
+}
+
+.transfer-btn-highlight {
+  background-color: rgba(14, 165, 233, 0.1);
+  color: #0284c7;
+  border: 1px solid rgba(14, 165, 233, 0.35);
+  padding: 7px 12px;
+}
+
+.transfer-btn-highlight:hover {
+  background-color: rgba(14, 165, 233, 0.2);
+  color: #0369a1;
+  border-color: #0ea5e9;
+  box-shadow: 0 2px 6px rgba(14, 165, 233, 0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+  #print-btn {
+    background-color: rgba(99, 102, 241, 0.18);
+    color: #a5b4fc;
+    border-color: rgba(99, 102, 241, 0.45);
+  }
+
+  #print-btn:hover {
+    background-color: rgba(99, 102, 241, 0.28);
+    color: #c7d2fe;
+    border-color: #818cf8;
+  }
+
+  #copy-btn {
+    background-color: rgba(16, 185, 129, 0.18);
+    color: #6ee7b7;
+    border-color: rgba(16, 185, 129, 0.45);
+  }
+
+  #copy-btn:hover {
+    background-color: rgba(16, 185, 129, 0.28);
+    color: #a7f3d0;
+    border-color: #34d399;
+  }
 }
 
 .icon {

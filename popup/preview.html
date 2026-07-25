@@ -5,47 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chat Export Preview</title>
     <link rel="stylesheet" href="preview.css" />
+    <script src="../content/lib/html2canvas.min.js"></script>
   </head>
   <body>
     <div class="preview-container">
       <header class="preview-header">
-        <div class="header-main">
-          <span class="badge">Chat Export Workspace</span>
-          <h1 id="preview-title">Chat Title</h1>
+        <div class="header-top-row">
+          <div class="header-main">
+            <span class="badge">Chat Export Workspace</span>
+            <h1 id="preview-title">Chat Title</h1>
+          </div>
+          <div class="action-buttons">
+            <button id="print-btn" class="btn secondary-btn hidden">
+              <svg viewBox="0 0 24 24" class="icon">
+                <path
+                  d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"
+                />
+              </svg>
+              Print / Save PDF
+            </button>
+            <button id="copy-btn" class="btn secondary-btn">
+              <svg viewBox="0 0 24 24" class="icon">
+                <path
+                  d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
+                />
+              </svg>
+              Copy Code
+            </button>
+            <button id="download-btn" class="btn primary-btn">
+              <svg viewBox="0 0 24 24" class="icon">
+                <path
+                  d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"
+                />
+              </svg>
+              Download File
+            </button>
+          </div>
         </div>
-        <div id="format-tabs" class="segmented-control">
-          <button data-tab="html-render" class="control-btn active">🎨 HTML Live</button>
-          <button data-tab="html-source" class="control-btn">📄 HTML Code</button>
-          <button data-tab="markdown" class="control-btn">📝 Markdown</button>
-          <button data-tab="json" class="control-btn">⚙️ JSON</button>
-          <button data-tab="doc" class="control-btn">📄 Word (.doc)</button>
-          <button data-tab="png" class="control-btn">🖼️ Image (.png)</button>
-        </div>
-        <div class="action-buttons">
-          <button id="print-btn" class="btn secondary-btn hidden">
-            <svg viewBox="0 0 24 24" class="icon">
-              <path
-                d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"
-              />
-            </svg>
-            Print / Save PDF
-          </button>
-          <button id="copy-btn" class="btn secondary-btn">
-            <svg viewBox="0 0 24 24" class="icon">
-              <path
-                d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
-              />
-            </svg>
-            Copy Code
-          </button>
-          <button id="download-btn" class="btn primary-btn">
-            <svg viewBox="0 0 24 24" class="icon">
-              <path
-                d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"
-              />
-            </svg>
-            Download File
-          </button>
+
+        <div class="header-toolbar">
+          <div id="format-tabs" class="segmented-control">
+            <button data-tab="html-render" class="control-btn active">🎨 HTML Live</button>
+            <button data-tab="html-source" class="control-btn">📄 HTML Code</button>
+            <button data-tab="markdown" class="control-btn">📝 Markdown</button>
+            <button data-tab="json" class="control-btn">⚙️ JSON</button>
+            <button data-tab="doc" class="control-btn">📄 Word (.doc)</button>
+            <button data-tab="png" class="control-btn">🖼️ Image (.png)</button>
+          </div>
+
+          <div class="transfer-control-group">
+            <span class="transfer-label">Continue On:</span>
+            <select
+              id="transfer-target-select"
+              class="transfer-select"
+              title="Transfer Chat Context To"
+            >
+              <option value="claude">Claude</option>
+              <option value="chatgpt">ChatGPT</option>
+              <option value="gemini">Gemini</option>
+              <option value="deepseek">DeepSeek</option>
+              <option value="perplexity">Perplexity</option>
+              <option value="qwen">Qwen</option>
+              <option value="mistral">Mistral</option>
+              <option value="notebooklm">NotebookLM</option>
+            </select>
+            <button
+              id="transfer-btn"
+              class="btn transfer-btn-highlight"
+              title="Transfer conversation context to another AI"
+            >
+              <svg viewBox="0 0 24 24" class="icon">
+                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
+              </svg>
+              Transfer
+            </button>
+          </div>
         </div>
       </header>
 

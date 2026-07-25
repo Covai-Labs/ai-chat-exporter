@@ -2,6 +2,8 @@ import { MarkdownFormatter } from '../content/formatters/markdown.js';
 import { JsonFormatter } from '../content/formatters/json.js';
 import { HtmlFormatter } from '../content/formatters/html.js';
 import { DocFormatter } from '../content/formatters/doc.js';
+import { ImageFormatter } from '../content/formatters/image.js';
+import { ContinuationFormatter } from '../content/formatters/continuation.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const titleEl = document.getElementById('preview-title');
@@ -19,6 +21,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   const jsonFormatter = new JsonFormatter();
   const htmlFormatter = new HtmlFormatter();
   const docFormatter = new DocFormatter();
+  const imageFormatter = new ImageFormatter();
+  const continuationFormatter = new ContinuationFormatter();
+
+  const transferBtn = document.getElementById('transfer-btn');
+  const transferTargetSelect = document.getElementById('transfer-target-select');
 
   let conversation = null;
   let title = 'Untitled Chat';
@@ -29,11 +36,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   let jsonContent = '';
   let docContent = '';
 
-  let activeTab = 'html-render';
   let activeContent = '';
   let activeExtension = 'html';
 
   let currentBlobUrl = null;
+  let cachedPngBlob = null;
 
   const setIframeContent = (content) => {
     if (currentBlobUrl) {
@@ -74,8 +81,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   const switchTab = (tabName) => {
-    activeTab = tabName;
-
     const buttons = formatTabsContainer.querySelectorAll('.control-btn');
     buttons.forEach((btn) => {
       if (btn.getAttribute('data-tab') === tabName) {
@@ -250,12 +255,26 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Copy button logic
   copyBtn.addEventListener('click', async () => {
-    if (!activeContent) return;
+    if (!activeContent && !cachedPngBlob) return;
     copyBtn.disabled = true;
     const originalText = copyBtn.innerHTML;
 
     try {
-      await navigator.clipboard.writeText(activeContent);
+      if (
+        activeExtension === 'png' &&
+        cachedPngBlob &&
+        typeof ClipboardItem !== 'undefined' &&
+        navigator.clipboard &&
+        navigator.clipboard.write
+      ) {
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            'image/png': cachedPngBlob,
+          }),
+        ]);
+      } else {
+        await navigator.clipboard.writeText(activeContent);
+      }
       copyBtn.innerHTML = `
         <svg viewBox="0 0 24 24" class="icon"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
         Copied!
@@ -275,9 +294,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // Download button logic
-  downloadBtn.addEventListener('click', () => {
-    if (!activeContent) return;
-
+  downloadBtn.addEventListener('click', async () => {
     const sanitizedTitle = title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
@@ -285,16 +302,57 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const filename = `${sanitizedTitle || 'chat-export'}.${activeExtension}`;
 
+    if (activeExtension === 'png') {
+      const originalText = downloadBtn.innerHTML;
+      try {
+        downloadBtn.disabled = true;
+        downloadBtn.textContent = 'Rendering PNG...';
+
+        let pngBlob = cachedPngBlob;
+        if (!pngBlob && conversation) {
+          pngBlob = await imageFormatter.format(conversation);
+          cachedPngBlob = pngBlob;
+        }
+
+        if (!pngBlob) {
+          throw new Error('PNG generation failed');
+        }
+
+        const url = URL.createObjectURL(pngBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        console.error('[Preview] PNG download failed:', err);
+        alert('PNG Download Failed: ' + err.message);
+      } finally {
+        downloadBtn.disabled = false;
+        downloadBtn.innerHTML = originalText;
+      }
+      return;
+    }
+
+    if (!activeContent) return;
+
     let mimeType = 'text/plain';
-    if (activeExtension === 'html' || activeExtension === 'doc') {
+    let blobParts = [activeContent];
+
+    if (activeExtension === 'html') {
       mimeType = 'text/html';
+    } else if (activeExtension === 'doc') {
+      mimeType = 'application/msword';
+      blobParts = ['\ufeff', activeContent];
     } else if (activeExtension === 'json') {
       mimeType = 'application/json';
     } else if (activeExtension === 'md') {
       mimeType = 'text/markdown';
     }
 
-    const blob = new Blob([activeContent], { type: `${mimeType};charset=utf-8` });
+    const blob = new Blob(blobParts, { type: `${mimeType};charset=utf-8` });
     const url = URL.createObjectURL(blob);
 
     const a = document.createElement('a');
@@ -306,4 +364,36 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   });
+
+  // Transfer button logic
+  if (transferBtn && transferTargetSelect) {
+    transferBtn.addEventListener('click', async () => {
+      const targetPlatform = transferTargetSelect.value || 'claude';
+      const originalText = transferBtn.innerHTML;
+
+      try {
+        transferBtn.disabled = true;
+        transferBtn.textContent = 'Transferring...';
+
+        let payload = '';
+        if (conversation) {
+          payload = continuationFormatter.format(conversation);
+        } else {
+          payload = markdownContent || activeContent;
+        }
+
+        await chrome.runtime.sendMessage({
+          action: 'TRANSFER_CHAT',
+          targetPlatform: targetPlatform,
+          payload: payload,
+        });
+      } catch (err) {
+        console.error('[Preview] Transfer chat failed:', err);
+        alert('Transfer failed: ' + err.message);
+      } finally {
+        transferBtn.disabled = false;
+        transferBtn.innerHTML = originalText;
+      }
+    });
+  }
 });
