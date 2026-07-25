@@ -265,6 +265,28 @@
         color: #8ab4f8;
       }
 
+      .store-btn.edge {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 120, 212, 0.08) 0%,
+          rgba(0, 120, 212, 0.02) 100%
+        );
+        border-color: rgba(0, 120, 212, 0.2);
+        color: #0078d4;
+      }
+
+      .store-btn.edge:hover {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 120, 212, 0.18) 0%,
+          rgba(0, 120, 212, 0.06) 100%
+        );
+        border-color: rgba(0, 120, 212, 0.5);
+        box-shadow: 0 0 25px rgba(0, 120, 212, 0.25);
+        transform: translateY(-2px);
+        color: #47a2f5;
+      }
+
       .primary-download {
         display: flex;
         flex-direction: column;
@@ -602,19 +624,20 @@
         </div>
 
         <div class="secondary-downloads">
-          <p class="secondary-title">Also available for Chromium-based browsers</p>
-          <p class="secondary-subtitle">
-            Supports Chrome, Edge, Brave, Opera, Yandex, Whale, and other Chromium browsers. Web
-            store builds lack KaTeX math equation rendering. For the full-featured version, download
-            the latest release manually from
-            <a
-              href="https://github.com/Rat-S/ai-chat-exporter/releases"
-              target="_blank"
-              rel="noopener noreferrer"
-              >GitHub Releases</a
-            >.
+          <p class="secondary-title" style="margin-bottom: 16px">
+            Also available for Chromium-based browsers
           </p>
-          <div class="store-buttons">
+
+          <div
+            class="store-buttons"
+            style="
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+              gap: 12px;
+              margin-bottom: 16px;
+            "
+          >
             <a
               href="https://chrome.google.com/webstore/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
               class="store-btn chrome"
@@ -630,33 +653,41 @@
               </svg>
               <div>
                 <span class="btn-label-sub">Get it for</span>
-                <span class="btn-label-main">Chrome </span>
+                <span class="btn-label-main">Chrome</span>
               </div>
             </a>
+
             <a
-              href="https://www.youtube.com/watch?v=d2ji_--vOqo"
-              class="store-btn youtube-btn"
+              href="https://microsoftedge.microsoft.com/addons/detail/hbgckjgfhnaedlihmkogenclfcnobicg"
+              class="store-btn edge"
               target="_blank"
               rel="noopener noreferrer"
-              id="btn-youtube"
-              style="
-                background: rgba(220, 38, 38, 0.15);
-                border-color: rgba(239, 68, 68, 0.3);
-                color: #f8fafc;
-                margin-left: 12px;
-              "
+              id="btn-edge"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="#ef4444">
+              <!-- Edge Icon -->
+              <svg viewBox="0 0 24 24" fill="currentColor">
                 <path
-                  d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                  d="M0 12c0 6.627 5.373 12 12 12 5.485 0 10.075-3.676 11.517-8.685-1.025.567-2.203.885-3.447.885-4.142 0-7.5-3.358-7.5-7.5 0-1.85.67-3.543 1.789-4.856C13.513 3.303 12.784 3 12 3 7.029 3 3 7.029 3 12c0 1.205.237 2.355.666 3.407A8.963 8.963 0 0 1 12 12a8.963 8.963 0 0 1 8.334 3.407C19.905 8.077 15.395 3 9.75 3c-5.385 0-9.75 4.365-9.75 9.75Z"
                 />
               </svg>
               <div>
-                <span class="btn-label-sub">Watch Demo</span>
-                <span class="btn-label-main">YouTube Video</span>
+                <span class="btn-label-sub">Get it for</span>
+                <span class="btn-label-main">Edge</span>
               </div>
             </a>
           </div>
+
+          <p class="secondary-subtitle" style="margin-bottom: 0">
+            Supports Chrome, Edge, Brave, Opera, Yandex, Whale, and other Chromium browsers. Web
+            store builds lack KaTeX math equation rendering. For the full-featured version, download
+            the latest release manually from
+            <a
+              href="https://github.com/Rat-S/ai-chat-exporter/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub Releases</a
+            >.
+          </p>
         </div>
 
         <div class="hero-preview-container" style="margin-top: 40px; text-align: center">
@@ -743,7 +774,7 @@
         </div>
       </div>
 
-      <h2 class="section-title">Designed for Developers & Writers</h2>
+      <h2 class="section-title">Powerful Features &amp; Capabilities</h2>
 
       <div class="features-grid">
         <div class="feature-card">
@@ -807,6 +838,54 @@
             Access exporter functionality and run chat continuation right inside the browser's
             native side panel (available on Chromium-based browsers).
           </p>
+        </div>
+
+        <div
+          class="feature-card"
+          style="background: rgba(220, 38, 38, 0.04); border-color: rgba(239, 68, 68, 0.2)"
+        >
+          <div
+            class="feature-icon"
+            style="
+              background: rgba(239, 68, 68, 0.15);
+              color: #ef4444;
+              border-color: rgba(239, 68, 68, 0.2);
+            "
+          >
+            ▶️
+          </div>
+          <h3 class="feature-title">Watch Video Demo</h3>
+          <p class="feature-desc" style="margin-bottom: 16px">
+            Watch a quick 1-minute video walkthrough showcasing live chat exports, sidepanel
+            features, and format settings in action.
+          </p>
+          <a
+            href="https://www.youtube.com/watch?v=d2ji_--vOqo"
+            target="_blank"
+            rel="noopener noreferrer"
+            style="
+              display: inline-flex;
+              align-items: center;
+              gap: 8px;
+              padding: 8px 14px;
+              font-size: 0.85rem;
+              background: rgba(220, 38, 38, 0.2);
+              border: 1px solid rgba(239, 68, 68, 0.4);
+              color: #f8fafc;
+              border-radius: 8px;
+              text-decoration: none;
+              font-weight: 600;
+              transition: all 0.2s ease;
+            "
+            id="btn-watch-demo-card"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#ef4444">
+              <path
+                d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+              />
+            </svg>
+            Watch Demo on YouTube
+          </a>
         </div>
       </div>
     </main>
