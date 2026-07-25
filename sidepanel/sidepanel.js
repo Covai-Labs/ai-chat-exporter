@@ -261,6 +261,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           action: 'COPY_CHAT',
           format: 'html',
           includeImages: includeImagesCheckbox.checked,
+          parserMode: spParserModeSelect ? spParserModeSelect.value : 'auto',
         });
 
         if (response && response.success) {
@@ -284,6 +285,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           includeImages: includeImagesCheckbox.checked,
           customFilename: customFilename,
           highQualityPng: pngQualityCheckbox ? pngQualityCheckbox.checked : true,
+          parserMode: spParserModeSelect ? spParserModeSelect.value : 'auto',
         });
         if (response && response.success) {
           statusEl.textContent = 'Export Successful!';
@@ -311,6 +313,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         action: 'COPY_CHAT',
         format: format === 'pdf' ? 'html' : format,
         includeImages: includeImagesCheckbox.checked,
+        parserMode: spParserModeSelect ? spParserModeSelect.value : 'auto',
       });
 
       if (response && response.success) {
@@ -357,6 +360,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         action: 'COPY_CHAT',
         format: format === 'pdf' ? 'html' : format,
         includeImages: includeImagesCheckbox.checked,
+        parserMode: spParserModeSelect ? spParserModeSelect.value : 'auto',
       });
 
       if (response && response.success) {
@@ -392,6 +396,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const response = await chrome.tabs.sendMessage(activeTab.id, {
           action: 'GET_CONTINUATION_PAYLOAD',
           includeImages: includeImagesCheckbox.checked,
+          parserMode: spParserModeSelect ? spParserModeSelect.value : 'auto',
         });
 
         if (response && response.success && response.payload) {
@@ -423,6 +428,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         action: 'COPY_CHAT',
         format: format,
         includeImages: includeImagesCheckbox.checked,
+        parserMode: spParserModeSelect ? spParserModeSelect.value : 'auto',
       });
 
       if (response && response.success) {

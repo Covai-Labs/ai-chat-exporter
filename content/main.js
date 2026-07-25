@@ -200,7 +200,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     (async () => {
       try {
-        const conversation = await activeParser.parse({ full: true });
+        const conversation = await activeParser.parse({
+          full: true,
+          parserMode: request.parserMode || 'auto',
+          includeImages: request.includeImages !== false,
+        });
         if (request.includeImages === false) {
           conversation.messages.forEach((msg) => {
             if (msg.content) {
@@ -266,7 +270,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     (async () => {
       try {
-        const conversation = await activeParser.parse();
+        const conversation = await activeParser.parse({
+          full: true,
+          parserMode: request.parserMode || 'auto',
+          includeImages: request.includeImages !== false,
+        });
         if (request.includeImages === false) {
           conversation.messages.forEach((msg) => {
             if (msg.content) {
@@ -300,7 +308,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     (async () => {
       try {
-        const conversation = await activeParser.parse({ full: true });
+        const conversation = await activeParser.parse({
+          full: true,
+          parserMode: request.parserMode || 'auto',
+          includeImages: request.includeImages !== false,
+        });
         if (request.includeImages === false) {
           conversation.messages.forEach((msg) => {
             if (msg.content) {

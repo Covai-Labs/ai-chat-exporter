@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const formatSelect = document.getElementById('format-select');
   const includeImagesCheckbox = document.getElementById('include-images-checkbox');
   const filenameInput = document.getElementById('filename-input');
+  const continueTargetSelect = document.getElementById('continue-target-select');
   const previewableFormats = new Set(['markdown', 'json', 'html', 'pdf']);
   const copyableFormats = new Set(['markdown', 'json', 'html']);
 
@@ -30,9 +31,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     'defaultFormat',
     'includeImages',
     'defaultTransferTarget',
+    'parserMode',
   ]);
   if (storedSettings.defaultFormat && formatSelect) {
     formatSelect.value = storedSettings.defaultFormat;
+  }
+  if (storedSettings.includeImages !== undefined && includeImagesCheckbox) {
+    includeImagesCheckbox.checked = storedSettings.includeImages;
   }
   // Get current tab
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -158,6 +163,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           action: 'COPY_CHAT',
           format: 'html',
           includeImages: includeImagesCheckbox.checked,
+          parserMode: storedSettings.parserMode || 'auto',
         });
 
         if (response && response.success) {
@@ -183,6 +189,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           includeImages: includeImagesCheckbox.checked,
           customFilename: customFilename,
           highQualityPng: pngQualityCheckbox ? pngQualityCheckbox.checked : true,
+          parserMode: storedSettings.parserMode || 'auto',
         });
 
         if (response && response.success) {
@@ -257,6 +264,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         action: 'COPY_CHAT',
         format: formatToRequest,
         includeImages: includeImagesCheckbox.checked,
+        parserMode: storedSettings.parserMode || 'auto',
       });
 
       if (response && response.success) {
@@ -284,7 +292,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   const transferBtn = document.getElementById('transfer-btn');
-  const continueTargetSelect = document.getElementById('continue-target-select');
 
   if (transferBtn) {
     transferBtn.addEventListener('click', async () => {

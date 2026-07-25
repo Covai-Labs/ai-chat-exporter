@@ -155,10 +155,7 @@ export class ClaudeParser extends ChatParser {
     const messages = [];
 
     const conversationId = getConversationId();
-    const stored = await (typeof chrome !== 'undefined' && chrome.storage?.sync
-      ? chrome.storage.sync.get('parserMode')
-      : Promise.resolve({}));
-    const parserMode = options.parserMode || stored.parserMode || 'auto';
+    const parserMode = options.parserMode || 'auto';
 
     if (conversationId && parserMode !== 'prefer_dom') {
       const orgId = await getOrganizationId();
