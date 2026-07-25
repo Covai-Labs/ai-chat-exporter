@@ -5,10 +5,14 @@ import assert from 'node:assert/strict';
 const previewHtml = fs.readFileSync('popup/preview.html', 'utf8');
 const previewJs = fs.readFileSync('popup/preview.js', 'utf8');
 
-test('preview page includes a view toggle container and buttons', () => {
-  assert.match(previewHtml, /id="view-toggle-container"/);
-  assert.match(previewHtml, /id="view-code-btn"/);
-  assert.match(previewHtml, /id="view-render-btn"/);
+test('preview page includes format tabs and action buttons', () => {
+  assert.match(previewHtml, /id="format-tabs"/);
+  assert.match(previewHtml, /data-tab="html-render"/);
+  assert.match(previewHtml, /data-tab="html-source"/);
+  assert.match(previewHtml, /data-tab="markdown"/);
+  assert.match(previewHtml, /data-tab="json"/);
+  assert.match(previewHtml, /data-tab="doc"/);
+  assert.match(previewHtml, /data-tab="png"/);
 });
 
 test('preview page includes code wrapper and sandboxed render wrapper with iframe', () => {
@@ -18,21 +22,18 @@ test('preview page includes code wrapper and sandboxed render wrapper with ifram
   assert.match(previewHtml, /sandbox="allow-scripts( allow-modals)?( allow-same-origin)?"/);
 });
 
-test('preview script implements view toggling and listener attachment', () => {
-  assert.match(previewJs, /viewToggleContainer/);
-  assert.match(previewJs, /viewCodeBtn/);
-  assert.match(previewJs, /viewRenderBtn/);
+test('preview script implements multi-format tab switching and listener attachment', () => {
+  assert.match(previewJs, /formatTabsContainer/);
   assert.match(previewJs, /codeWrapper/);
   assert.match(previewJs, /renderWrapper/);
   assert.match(previewJs, /previewRendered/);
-  assert.match(previewJs, /switchView/);
-  assert.match(previewJs, /viewCodeBtn\.addEventListener\('click'/);
-  assert.match(previewJs, /viewRenderBtn\.addEventListener\('click'/);
+  assert.match(previewJs, /switchTab/);
+  assert.match(previewJs, /formatTabsContainer\.addEventListener\('click'/);
 });
 
 test('preview script handles PDF format and autoPrint', () => {
   assert.match(previewHtml, /id="print-btn"/);
-  assert.match(previewJs, /format === 'pdf'/);
+  assert.match(previewJs, /initialFormat === 'pdf'/);
   assert.match(previewJs, /printIframe/);
   assert.match(previewJs, /autoPrint/);
 });

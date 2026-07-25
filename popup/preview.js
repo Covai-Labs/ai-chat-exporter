@@ -1,30 +1,46 @@
+import { MarkdownFormatter } from '../content/formatters/markdown.js';
+import { JsonFormatter } from '../content/formatters/json.js';
+import { HtmlFormatter } from '../content/formatters/html.js';
+import { DocFormatter } from '../content/formatters/doc.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
   const titleEl = document.getElementById('preview-title');
   const codeEl = document.getElementById('preview-code');
   const copyBtn = document.getElementById('copy-btn');
   const downloadBtn = document.getElementById('download-btn');
   const printBtn = document.getElementById('print-btn');
+  const formatTabsContainer = document.getElementById('format-tabs');
 
-  // Toggle view elements
-  const viewToggleContainer = document.getElementById('view-toggle-container');
-  const viewCodeBtn = document.getElementById('view-code-btn');
-  const viewRenderBtn = document.getElementById('view-render-btn');
   const codeWrapper = document.getElementById('code-wrapper');
   const renderWrapper = document.getElementById('render-wrapper');
   const previewRendered = document.getElementById('preview-rendered');
 
-  let content = '';
+  const markdownFormatter = new MarkdownFormatter();
+  const jsonFormatter = new JsonFormatter();
+  const htmlFormatter = new HtmlFormatter();
+  const docFormatter = new DocFormatter();
+
+  let conversation = null;
   let title = 'Untitled Chat';
-  let format = 'markdown';
+  let initialFormat = 'markdown';
+
+  let htmlContent = '';
+  let markdownContent = '';
+  let jsonContent = '';
+  let docContent = '';
+
+  let activeTab = 'html-render';
+  let activeContent = '';
+  let activeExtension = 'html';
 
   let currentBlobUrl = null;
 
-  const setIframeContent = (htmlContent) => {
+  const setIframeContent = (content) => {
     if (currentBlobUrl) {
       URL.revokeObjectURL(currentBlobUrl);
       currentBlobUrl = null;
     }
-    const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+    const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
     currentBlobUrl = URL.createObjectURL(blob);
     previewRendered.src = currentBlobUrl;
   };
@@ -57,30 +73,66 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   };
 
-  const switchView = (view) => {
-    if (view === 'code') {
-      viewCodeBtn.classList.add('active');
-      viewRenderBtn.classList.remove('active');
-      codeWrapper.classList.remove('hidden');
-      renderWrapper.classList.add('hidden');
-    } else {
-      viewCodeBtn.classList.remove('active');
-      viewRenderBtn.classList.add('active');
+  const switchTab = (tabName) => {
+    activeTab = tabName;
+
+    const buttons = formatTabsContainer.querySelectorAll('.control-btn');
+    buttons.forEach((btn) => {
+      if (btn.getAttribute('data-tab') === tabName) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    if (tabName === 'html-render' || tabName === 'png') {
+      activeContent = htmlContent;
+      activeExtension = tabName === 'png' ? 'png' : 'html';
       codeWrapper.classList.add('hidden');
       renderWrapper.classList.remove('hidden');
+      if (printBtn) {
+        if (tabName === 'png') printBtn.classList.add('hidden');
+        else printBtn.classList.remove('hidden');
+      }
+
       if (
         !previewRendered.src ||
         previewRendered.src === 'about:blank' ||
-        previewRendered.getAttribute('data-content') !== content
+        previewRendered.getAttribute('data-content') !== htmlContent
       ) {
-        previewRendered.setAttribute('data-content', content);
-        setIframeContent(content);
+        previewRendered.setAttribute('data-content', htmlContent);
+        setIframeContent(htmlContent);
       }
+    } else {
+      renderWrapper.classList.add('hidden');
+      codeWrapper.classList.remove('hidden');
+      if (printBtn) printBtn.classList.add('hidden');
+
+      if (tabName === 'html-source') {
+        activeContent = htmlContent;
+        activeExtension = 'html';
+      } else if (tabName === 'markdown') {
+        activeContent = markdownContent;
+        activeExtension = 'md';
+      } else if (tabName === 'json') {
+        activeContent = jsonContent;
+        activeExtension = 'json';
+      } else if (tabName === 'doc') {
+        activeContent = docContent;
+        activeExtension = 'doc';
+      }
+
+      codeEl.textContent = activeContent;
     }
   };
 
-  viewCodeBtn.addEventListener('click', () => switchView('code'));
-  viewRenderBtn.addEventListener('click', () => switchView('render'));
+  formatTabsContainer.addEventListener('click', (e) => {
+    const btn = e.target.closest('.control-btn');
+    if (btn && btn.hasAttribute('data-tab')) {
+      switchTab(btn.getAttribute('data-tab'));
+    }
+  });
+
   if (printBtn) {
     printBtn.addEventListener('click', () => printIframe());
   }
@@ -110,7 +162,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
       }
 
-      // Handle copy code clicks since inline handlers are blocked by CSP inside the extension
       doc.addEventListener('click', async (e) => {
         const btn = e.target.closest('.copy-code-btn');
         if (btn) {
@@ -141,43 +192,57 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   try {
     const data = await chrome.storage.local.get([
+      'previewConversation',
       'previewContent',
       'previewTitle',
       'previewFormat',
       'autoPrint',
     ]);
 
-    content = data.previewContent || '';
+    conversation = data.previewConversation || null;
     title = data.previewTitle || 'Untitled Chat';
-    format = data.previewFormat || 'markdown';
+    initialFormat = data.previewFormat || 'markdown';
     const autoPrint = data.autoPrint || false;
 
     titleEl.textContent = title;
-    codeEl.textContent = content;
 
-    const badgeEl = document.querySelector('.badge');
-    if (badgeEl) {
-      if (format === 'json') {
-        badgeEl.textContent = 'JSON Preview';
-      } else if (format === 'html' || format === 'pdf') {
-        badgeEl.textContent = format === 'pdf' ? 'PDF Export & Preview' : 'HTML Preview';
-        viewToggleContainer.classList.remove('hidden');
-        if (printBtn) printBtn.classList.remove('hidden');
-
-        if (autoPrint && format === 'pdf') {
-          previewRendered.addEventListener(
-            'load',
-            () => {
-              setTimeout(printIframe, 500);
-            },
-            { once: true },
-          );
-        }
-        switchView('render');
-      } else {
-        badgeEl.textContent = 'Markdown Preview';
-      }
+    if (conversation) {
+      htmlContent = htmlFormatter.format(conversation);
+      markdownContent = markdownFormatter.format(conversation);
+      jsonContent = jsonFormatter.format(conversation);
+      docContent = docFormatter.format(conversation);
+    } else {
+      const fallbackContent = data.previewContent || '';
+      htmlContent = fallbackContent;
+      markdownContent = fallbackContent;
+      jsonContent = fallbackContent;
+      docContent = fallbackContent;
     }
+
+    let initialTab = 'html-render';
+    if (initialFormat === 'json') {
+      initialTab = 'json';
+    } else if (initialFormat === 'markdown') {
+      initialTab = 'markdown';
+    } else if (initialFormat === 'doc') {
+      initialTab = 'doc';
+    } else if (initialFormat === 'png') {
+      initialTab = 'png';
+    } else if (initialFormat === 'html' || initialFormat === 'pdf') {
+      initialTab = 'html-render';
+    }
+
+    if (autoPrint && (initialFormat === 'pdf' || initialFormat === 'html')) {
+      previewRendered.addEventListener(
+        'load',
+        () => {
+          setTimeout(printIframe, 400);
+        },
+        { once: true },
+      );
+    }
+
+    switchTab(initialTab);
   } catch (error) {
     console.error('Failed to load preview data:', error);
     codeEl.textContent = 'Error loading content: ' + error.message;
@@ -185,12 +250,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Copy button logic
   copyBtn.addEventListener('click', async () => {
-    if (!content) return;
+    if (!activeContent) return;
     copyBtn.disabled = true;
     const originalText = copyBtn.innerHTML;
 
     try {
-      await navigator.clipboard.writeText(content);
+      await navigator.clipboard.writeText(activeContent);
       copyBtn.innerHTML = `
         <svg viewBox="0 0 24 24" class="icon"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
         Copied!
@@ -211,25 +276,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Download button logic
   downloadBtn.addEventListener('click', () => {
-    if (!content) return;
+    if (!activeContent) return;
 
-    let ext = 'md';
-    let mimeType = 'text/markdown';
-    if (format === 'json') {
-      ext = 'json';
-      mimeType = 'application/json';
-    } else if (format === 'html' || format === 'pdf') {
-      ext = 'html';
-      mimeType = 'text/html';
-    }
     const sanitizedTitle = title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
 
-    const filename = `${sanitizedTitle || 'chat-export'}.${ext}`;
+    const filename = `${sanitizedTitle || 'chat-export'}.${activeExtension}`;
 
-    const blob = new Blob([content], { type: `${mimeType};charset=utf-8` });
+    let mimeType = 'text/plain';
+    if (activeExtension === 'html' || activeExtension === 'doc') {
+      mimeType = 'text/html';
+    } else if (activeExtension === 'json') {
+      mimeType = 'application/json';
+    } else if (activeExtension === 'md') {
+      mimeType = 'text/markdown';
+    }
+
+    const blob = new Blob([activeContent], { type: `${mimeType};charset=utf-8` });
     const url = URL.createObjectURL(blob);
 
     const a = document.createElement('a');

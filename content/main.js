@@ -293,6 +293,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           success: true,
           content: primaryContent,
           htmlContent: richHtmlContent,
+          conversation: conversation,
         });
       } catch (e) {
         console.error(e);

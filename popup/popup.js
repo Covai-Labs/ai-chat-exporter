@@ -269,8 +269,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       if (response && response.success) {
         await chrome.storage.local.set({
+          previewConversation: response.conversation || null,
           previewContent: response.content,
-          previewTitle: tab.title || 'Untitled Chat',
+          previewTitle: response.conversation?.title || tab.title || 'Untitled Chat',
           previewFormat: format,
           autoPrint: false,
         });

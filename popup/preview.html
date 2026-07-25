@@ -10,12 +10,16 @@
     <div class="preview-container">
       <header class="preview-header">
         <div class="header-main">
-          <span class="badge">Markdown Preview</span>
+          <span class="badge">Chat Export Workspace</span>
           <h1 id="preview-title">Chat Title</h1>
         </div>
-        <div id="view-toggle-container" class="segmented-control hidden">
-          <button id="view-code-btn" class="control-btn active">Source Code</button>
-          <button id="view-render-btn" class="control-btn">Live Preview</button>
+        <div id="format-tabs" class="segmented-control">
+          <button data-tab="html-render" class="control-btn active">🎨 HTML Live</button>
+          <button data-tab="html-source" class="control-btn">📄 HTML Code</button>
+          <button data-tab="markdown" class="control-btn">📝 Markdown</button>
+          <button data-tab="json" class="control-btn">⚙️ JSON</button>
+          <button data-tab="doc" class="control-btn">📄 Word (.doc)</button>
+          <button data-tab="png" class="control-btn">🖼️ Image (.png)</button>
         </div>
         <div class="action-buttons">
           <button id="print-btn" class="btn secondary-btn hidden">
@@ -57,6 +61,6 @@
         </div>
       </main>
     </div>
-    <script src="preview.js"></script>
+    <script type="module" src="preview.js"></script>
   </body>
 </html>
