@@ -29,7 +29,7 @@ If you want the full-featured version on Chromium-based browsers (Chrome, Edge, 
 4. Enable **Developer mode** using the toggle switch in the top-right corner.
 5. Click **Load unpacked** in the top-left and select the extracted folder.
 
-_Note: The developer primarily tests this extension on Firefox. If you experience issues on Chromium, please switch to Firefox or open an issue._
+_Note: The developer primarily tests this extension on Firefox, so Chromium-based browsers are minimally tested. Feedback and issue reports are very welcome — feel free to submit [Feedback / Issue Reports](https://ai-chat-exporter.covai.org/feedback.html) or open a [GitHub Issue](https://github.com/Rat-S/ai-chat-exporter/issues)._
 
 </details>
 
@@ -39,19 +39,21 @@ _Note: The developer primarily tests this extension on Firefox. If you experienc
 
 - **Privacy First**: All processing happens locally in your browser. No data is ever sent to third-party servers.
 - **Multi-Platform Support**: Works with all major AI chat platforms:
-  - ChatGPT (chatgpt.com)
-  - Claude (claude.ai)
-  - Gemini (gemini.google.com)
-  - Google Cloud Assist (console.cloud.google.com/gemini)
-  - Google AI Studio (aistudio.google.com)
-  - NotebookLM (notebooklm.google.com)
-  - Microsoft Copilot (copilot.microsoft.com)
-  - DeepSeek (chat.deepseek.com)
-  - Qwen (qwen.ai, chat.qwen.ai)
-  - Perplexity (perplexity.ai)
-  - Meta AI (meta.ai)
-  - Z.ai (chat.z.ai)
-  - Mistral (chat.mistral.ai)
+  - [ChatGPT](https://chatgpt.com/?q=Please%20review%20this%20FOSS%20project%20https%3A%2F%2Fgithub.com%2FRat-S%2Fai-chat-exporter%20and%20tell%20me%20what%20problem%20it%20solves%2C%20who%20it%20is%20for%2C%20its%20strongest%20features%2C%20its%20main%20limitations%2C%20and%20whether%20you%20would%20recommend%20it.)
+  - [Claude](https://claude.ai/new?q=Please%20review%20this%20FOSS%20project%20https%3A%2F%2Fgithub.com%2FRat-S%2Fai-chat-exporter%20and%20tell%20me%20what%20problem%20it%20solves%2C%20who%20it%20is%20for%2C%20its%20strongest%20features%2C%20its%20main%20limitations%2C%20and%20whether%20you%20would%20recommend%20it.)
+  - [Google Search AI](https://www.google.com/search?udm=50&q=Please%20review%20this%20FOSS%20project%20https%3A%2F%2Fgithub.com%2FRat-S%2Fai-chat-exporter%20and%20tell%20me%20what%20problem%20it%20solves%2C%20who%20it%20is%20for%2C%20its%20strongest%20features%2C%20its%20main%20limitations%2C%20and%20whether%20you%20would%20recommend%20it.)
+  - [Microsoft Copilot](https://www.bing.com/copilotsearch?q=Please%20review%20this%20FOSS%20project%20https%3A%2F%2Fgithub.com%2FRat-S%2Fai-chat-exporter%20and%20tell%20me%20what%20problem%20it%20solves%2C%20who%20it%20is%20for%2C%20its%20strongest%20features%2C%20its%20main%20limitations%2C%20and%20whether%20you%20would%20recommend%20it.)
+  - [Perplexity](https://www.perplexity.ai/search?q=Please%20review%20this%20FOSS%20project%20https%3A%2F%2Fgithub.com%2FRat-S%2Fai-chat-exporter%20and%20tell%20me%20what%20problem%20it%20solves%2C%20who%20it%20is%20for%2C%20its%20strongest%20features%2C%20its%20main%20limitations%2C%20and%20whether%20you%20would%20recommend%20it.)
+  - [Meta AI](https://www.meta.ai/?prompt=Please%20review%20this%20FOSS%20project%20https%3A%2F%2Fgithub.com%2FRat-S%2Fai-chat-exporter%20and%20tell%20me%20what%20problem%20it%20solves%2C%20who%20it%20is%20for%2C%20its%20strongest%20features%2C%20its%20main%20limitations%2C%20and%20whether%20you%20would%20recommend%20it.)
+  - Gemini
+  - Google Cloud Assist
+  - Google AI Studio
+  - NotebookLM
+  - DeepSeek
+  - Qwen
+  - Z.ai
+  - Mistral
+
 - **Versatile Export Formats**:
   - **Clean Markdown**: Properly formatted with code blocks, tables, and images preserved.
   - **Structured JSON**: Normalized JSON exports matching a strict JSON schema.
