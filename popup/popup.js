@@ -14,6 +14,26 @@ document.addEventListener('DOMContentLoaded', async () => {
   const previewableFormats = new Set(['markdown', 'json', 'html', 'pdf']);
   const copyableFormats = new Set(['markdown', 'json', 'html']);
 
+  const openOptionsBtn = document.getElementById('open-options-btn');
+  if (openOptionsBtn) {
+    openOptionsBtn.addEventListener('click', () => {
+      if (chrome.runtime.openOptionsPage) {
+        chrome.runtime.openOptionsPage();
+      } else {
+        chrome.tabs.create({ url: chrome.runtime.getURL('options/options.html') });
+      }
+    });
+  }
+
+  // Load saved defaults from chrome.storage.sync
+  const storedSettings = await chrome.storage.sync.get([
+    'defaultFormat',
+    'includeImages',
+    'defaultTransferTarget',
+  ]);
+  if (storedSettings.defaultFormat && formatSelect) {
+    formatSelect.value = storedSettings.defaultFormat;
+  }
   // Get current tab
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
@@ -62,6 +82,16 @@ document.addEventListener('DOMContentLoaded', async () => {
           if (filenameInput) {
             const safeDefault = displayTitle.replace(/[\\/:*?"<>|]/g, '').replace(/\s+/g, '_');
             filenameInput.value = safeDefault;
+          }
+          if (continueTargetSelect) {
+            const platformKey = (response.platform || '').toLowerCase();
+            let target = storedSettings.defaultTransferTarget || 'claude';
+            if (platformKey.includes('chatgpt') && target === 'chatgpt') {
+              target = 'claude';
+            } else if (platformKey.includes('claude') && target === 'claude') {
+              target = 'chatgpt';
+            }
+            continueTargetSelect.value = target;
           }
           chatInfoEl.classList.remove('hidden');
           actionsEl.classList.remove('hidden');

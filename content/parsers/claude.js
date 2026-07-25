@@ -150,12 +150,17 @@ export class ClaudeParser extends ChatParser {
     return url.includes('claude.ai');
   }
 
-  async parse() {
+  async parse(options = {}) {
     const title = document.title || 'Claude Chat';
     const messages = [];
 
     const conversationId = getConversationId();
-    if (conversationId) {
+    const stored = await (typeof chrome !== 'undefined' && chrome.storage?.sync
+      ? chrome.storage.sync.get('parserMode')
+      : Promise.resolve({}));
+    const parserMode = options.parserMode || stored.parserMode || 'auto';
+
+    if (conversationId && parserMode !== 'prefer_dom') {
       const orgId = await getOrganizationId();
       if (orgId) {
         try {

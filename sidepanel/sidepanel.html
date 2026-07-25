@@ -129,6 +129,59 @@
         <!-- TAB 3: SETTINGS -->
         <section id="settings-tab" class="sp-tab-content">
           <div class="sp-card">
+            <h3>Export Defaults</h3>
+            <div class="field-group">
+              <label for="sp-default-format-select" class="field-label">Default Format</label>
+              <select id="sp-default-format-select" class="select-input">
+                <option value="markdown">Markdown (.md)</option>
+                <option value="json">JSON (.json)</option>
+                <option value="html">HTML (.html)</option>
+                <option value="png">Shareable Image (.png)</option>
+                <option value="pdf">PDF (.pdf)</option>
+              </select>
+            </div>
+            <div class="checkbox-wrapper">
+              <label class="checkbox-label">
+                <input type="checkbox" id="sp-default-include-images" checked />
+                Include Images by default
+              </label>
+            </div>
+          </div>
+
+          <div class="sp-card">
+            <h3>Parser Extraction Mode</h3>
+            <div class="field-group">
+              <label for="sp-parser-mode-select" class="field-label"
+                >Preferred Extraction Mode</label
+              >
+              <select id="sp-parser-mode-select" class="select-input">
+                <option value="auto">Auto (API when available, with DOM fallback)</option>
+                <option value="prefer_dom">Prefer DOM Mode (Direct scraping)</option>
+                <option value="prefer_api">Prefer API Mode (Raw payload fetch)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sp-card">
+            <h3>Transfer Chat Defaults</h3>
+            <div class="field-group">
+              <label for="sp-default-transfer-select" class="field-label"
+                >Default Transfer Target</label
+              >
+              <select id="sp-default-transfer-select" class="select-input">
+                <option value="claude">Claude (claude.ai)</option>
+                <option value="chatgpt">ChatGPT (chatgpt.com)</option>
+                <option value="gemini">Gemini (gemini.google.com)</option>
+                <option value="deepseek">DeepSeek (chat.deepseek.com)</option>
+                <option value="qwen">Qwen (chat.qwen.ai)</option>
+                <option value="perplexity">Perplexity (perplexity.ai)</option>
+                <option value="mistral">Mistral (chat.mistral.ai)</option>
+                <option value="notebooklm">NotebookLM (notebooklm.google.com)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sp-card">
             <h3>Extension Icon Click Action</h3>
             <p class="settings-desc">
               Choose what opens when you click the extension toolbar icon:

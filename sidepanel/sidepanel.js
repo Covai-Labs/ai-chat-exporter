@@ -47,20 +47,71 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   // Settings: Load & handle changes
+  // Settings sync initialization
+  const spDefaultFormatSelect = document.getElementById('sp-default-format-select');
+  const spDefaultIncludeImages = document.getElementById('sp-default-include-images');
+  const spParserModeSelect = document.getElementById('sp-parser-mode-select');
+  const spDefaultTransferSelect = document.getElementById('sp-default-transfer-select');
+
+  function showSaveMsg() {
+    if (saveMsg) {
+      saveMsg.classList.remove('hidden');
+      setTimeout(() => saveMsg.classList.add('hidden'), 2000);
+    }
+  }
+
   try {
-    const data = await chrome.storage.sync.get('launchMode');
+    const data = await chrome.storage.sync.get([
+      'launchMode',
+      'defaultFormat',
+      'includeImages',
+      'parserMode',
+      'defaultTransferTarget',
+    ]);
     const currentMode = data.launchMode || 'popup';
     launchRadios.forEach((r) => {
       r.checked = r.value === currentMode;
       r.addEventListener('change', async () => {
         if (r.checked) {
           await chrome.storage.sync.set({ launchMode: r.value });
-          if (saveMsg) {
-            saveMsg.classList.remove('hidden');
-            setTimeout(() => saveMsg.classList.add('hidden'), 2000);
-          }
+          showSaveMsg();
         }
       });
+    });
+
+    if (spDefaultFormatSelect && data.defaultFormat)
+      spDefaultFormatSelect.value = data.defaultFormat;
+    if (spDefaultIncludeImages && data.includeImages !== undefined)
+      spDefaultIncludeImages.checked = data.includeImages;
+    if (spParserModeSelect && data.parserMode) spParserModeSelect.value = data.parserMode;
+    if (spDefaultTransferSelect && data.defaultTransferTarget)
+      spDefaultTransferSelect.value = data.defaultTransferTarget;
+
+    // Pre-populate main export UI controls from saved defaults
+    if (formatSelect && data.defaultFormat) formatSelect.value = data.defaultFormat;
+    if (includeImagesCheckbox && data.includeImages !== undefined)
+      includeImagesCheckbox.checked = data.includeImages;
+
+    spDefaultFormatSelect?.addEventListener('change', async () => {
+      await chrome.storage.sync.set({ defaultFormat: spDefaultFormatSelect.value });
+      if (formatSelect) formatSelect.value = spDefaultFormatSelect.value;
+      showSaveMsg();
+    });
+
+    spDefaultIncludeImages?.addEventListener('change', async () => {
+      await chrome.storage.sync.set({ includeImages: spDefaultIncludeImages.checked });
+      if (includeImagesCheckbox) includeImagesCheckbox.checked = spDefaultIncludeImages.checked;
+      showSaveMsg();
+    });
+
+    spParserModeSelect?.addEventListener('change', async () => {
+      await chrome.storage.sync.set({ parserMode: spParserModeSelect.value });
+      showSaveMsg();
+    });
+
+    spDefaultTransferSelect?.addEventListener('change', async () => {
+      await chrome.storage.sync.set({ defaultTransferTarget: spDefaultTransferSelect.value });
+      showSaveMsg();
     });
   } catch (err) {
     console.warn('[SidePanel] Failed to load launch settings:', err);
@@ -98,6 +149,17 @@ document.addEventListener('DOMContentLoaded', async () => {
           if (filenameInput) {
             const safeDefault = displayTitle.replace(/[\\/:*?"<>|]/g, '').replace(/\s+/g, '_');
             filenameInput.value = safeDefault;
+          }
+          if (continueTargetSelect) {
+            const data = await chrome.storage.sync.get('defaultTransferTarget');
+            const platformKey = (response.platform || '').toLowerCase();
+            let target = data.defaultTransferTarget || 'claude';
+            if (platformKey.includes('chatgpt') && target === 'chatgpt') {
+              target = 'claude';
+            } else if (platformKey.includes('claude') && target === 'claude') {
+              target = 'chatgpt';
+            }
+            continueTargetSelect.value = target;
           }
           chatInfoCard.classList.remove('hidden');
           actionsCard.classList.remove('hidden');

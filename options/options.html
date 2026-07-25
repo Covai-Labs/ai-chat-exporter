@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Chat Exporter Options</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <div class="options-container">
+      <header class="options-header">
+        <div class="brand">
+          <span class="logo-icon">⚡</span>
+          <div class="brand-text">
+            <h1>AI Chat Exporter</h1>
+            <p>Extension Options & Preferences</p>
+          </div>
+        </div>
+      </header>
+
+      <main class="options-main">
+        <!-- Section 1: Export Defaults -->
+        <section class="card">
+          <div class="card-header">
+            <span class="card-icon">📁</span>
+            <h2>Export Defaults</h2>
+          </div>
+          <div class="card-body">
+            <div class="field-group">
+              <label for="default-format-select" class="field-label">Default Export Format</label>
+              <select id="default-format-select" class="select-input">
+                <option value="markdown">Markdown (.md)</option>
+                <option value="json">JSON (.json)</option>
+                <option value="html">HTML (.html)</option>
+                <option value="png">Shareable Image (.png)</option>
+                <option value="pdf">PDF (.pdf)</option>
+              </select>
+              <span class="field-help"
+                >Format pre-selected when opening the export popup or side panel.</span
+              >
+            </div>
+
+            <div class="field-group checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="default-include-images" checked />
+                <span>Include images in exports by default</span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2: Extraction Modes -->
+        <section class="card">
+          <div class="card-header">
+            <span class="card-icon">⚙️</span>
+            <h2>Parser Extraction Mode</h2>
+          </div>
+          <div class="card-body">
+            <div class="field-group">
+              <label for="parser-mode-select" class="field-label">Preferred Extraction Mode</label>
+              <select id="parser-mode-select" class="select-input">
+                <option value="auto">Auto (API when available, with DOM fallback)</option>
+                <option value="prefer_dom">Prefer DOM Mode (Direct element scraping)</option>
+                <option value="prefer_api">Prefer API Mode (Raw payload fetch)</option>
+              </select>
+              <span class="field-help"
+                >Controls how conversation text and media are retrieved on ChatGPT and Claude.</span
+              >
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 3: Transfer Chat Defaults -->
+        <section class="card">
+          <div class="card-header">
+            <span class="card-icon">↗️</span>
+            <h2>Transfer Chat Defaults</h2>
+          </div>
+          <div class="card-body">
+            <div class="field-group">
+              <label for="default-transfer-select" class="field-label"
+                >Default Transfer Target Platform</label
+              >
+              <select id="default-transfer-select" class="select-input">
+                <option value="claude">Claude (claude.ai)</option>
+                <option value="chatgpt">ChatGPT (chatgpt.com)</option>
+                <option value="gemini">Gemini (gemini.google.com)</option>
+                <option value="deepseek">DeepSeek (chat.deepseek.com)</option>
+                <option value="qwen">Qwen (chat.qwen.ai)</option>
+                <option value="perplexity">Perplexity (perplexity.ai)</option>
+                <option value="mistral">Mistral (chat.mistral.ai)</option>
+                <option value="notebooklm">NotebookLM (notebooklm.google.com)</option>
+              </select>
+              <span class="field-help"
+                >Initial target platform in the "Continue On" dropdown. When exporting on the
+                current default platform (e.g. ChatGPT), it smartly auto-switches to an alternate
+                platform.</span
+              >
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 4: Chrome Launch Action (Chrome Only) -->
+        <section class="card chrome-only-section" id="launch-mode-section">
+          <div class="card-header">
+            <span class="card-icon">📌</span>
+            <h2>Extension Toolbar Click Action</h2>
+          </div>
+          <div class="card-body">
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="launch-mode" value="popup" checked />
+                <div>
+                  <strong>Extension Popup</strong>
+                  <span class="sub-text">Opens a compact popup window on click</span>
+                </div>
+              </label>
+
+              <label class="radio-label">
+                <input type="radio" name="launch-mode" value="sidepanel" />
+                <div>
+                  <strong>Persistent Side Panel</strong>
+                  <span class="sub-text">Opens side panel pinned to the browser window</span>
+                </div>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <div id="toast" class="toast hidden">Preferences saved!</div>
+      </main>
+    </div>
+    <script src="options.js"></script>
+  </body>
+</html>

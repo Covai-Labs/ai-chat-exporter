@@ -41,7 +41,7 @@ test('sidepanel.html includes export, preview, and settings tabs', () => {
 });
 
 test('sidepanel.js synchronizes launch mode preferences with chrome.storage.sync', () => {
-  assert.match(sidepanelJs, /chrome\.storage\.sync\.get\(['"]launchMode['"]\)/);
+  assert.match(sidepanelJs, /chrome\.storage\.sync\.get\([^)]*launchMode[^)]*\)/);
   assert.match(sidepanelJs, /chrome\.storage\.sync\.set\(\{\s*launchMode:/);
 });
 

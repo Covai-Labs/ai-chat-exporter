@@ -19,7 +19,7 @@ for TARGET in "${TARGETS[@]}"; do
     mkdir -p dist
 
     # Copy base files
-    cp -r background content docs/icons popup schemas dist/
+    cp -r background content docs/icons options popup schemas dist/
 
     # Copy sidepanel only for non-firefox targets
     if [ "$TARGET" != "firefox" ]; then

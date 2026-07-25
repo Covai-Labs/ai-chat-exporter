@@ -19,5 +19,5 @@ test('popup enables JSON exports', () => {
 
 test('build includes the JSON schema files', () => {
   assert.match(manifestJson, /"schemas\/\*\.json"/);
-  assert.match(buildSh, /cp -r background content docs\/icons popup schemas dist\//);
+  assert.match(buildSh, /cp -r .*schemas dist\//);
 });

@@ -424,8 +424,12 @@ export class ChatGPTParser extends ChatParser {
 
     const token = getAccessToken();
     const convId = getConversationId();
+    const stored = await (typeof chrome !== 'undefined' && chrome.storage?.sync
+      ? chrome.storage.sync.get('parserMode')
+      : Promise.resolve({}));
+    const parserMode = options.parserMode || stored.parserMode || 'auto';
 
-    if (token && convId) {
+    if (token && convId && parserMode !== 'prefer_dom') {
       try {
         const includeImages = options.includeImages !== false;
         const now = Date.now();
