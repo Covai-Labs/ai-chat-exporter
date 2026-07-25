@@ -576,6 +576,14 @@ export class HtmlFormatter extends ExportFormatter {
         align-self: stretch !important;
         max-width: 100% !important;
       }
+      .message-header,
+      h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+        break-after: avoid;
+      }
+      details.thinking-block .thinking-content {
+        display: block !important;
+      }
       .code-card {
         max-width: 100% !important;
         box-sizing: border-box !important;
@@ -595,6 +603,13 @@ export class HtmlFormatter extends ExportFormatter {
         table-layout: fixed !important;
         word-break: break-word !important;
       }
+      thead {
+        display: table-header-group;
+      }
+      tr {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
       th, td {
         word-break: break-word !important;
       }
@@ -602,6 +617,11 @@ export class HtmlFormatter extends ExportFormatter {
         max-width: 100% !important;
         height: auto !important;
         page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      .export-footer {
+        margin-top: 1.5rem !important;
+        border-top: none !important;
       }
       * {
         -webkit-print-color-adjust: exact !important;
