@@ -541,13 +541,29 @@ export class HtmlFormatter extends ExportFormatter {
     }
 
     @media print {
+      :root,
+      [data-theme="dark"] {
+        --bg-app: #ffffff !important;
+        --bg-card: #ffffff !important;
+        --bg-bubble-user: #f1f5f9 !important;
+        --bg-bubble-ai: #ffffff !important;
+        --text-primary: #0f172a !important;
+        --text-secondary: #475569 !important;
+        --accent: #4f46e5 !important;
+        --accent-light: #e0e7ff !important;
+        --border: #e2e8f0 !important;
+        --code-bg: #0f172a !important;
+        --code-text: #f8fafc !important;
+        --code-header-bg: #1e293b !important;
+        --scrollbar-thumb: #cbd5e1 !important;
+      }
       @page {
         size: portrait;
         margin: 12mm 15mm;
       }
       html, body {
         background-color: #ffffff !important;
-        color: #000000 !important;
+        color: #0f172a !important;
         width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
@@ -570,16 +586,40 @@ export class HtmlFormatter extends ExportFormatter {
         page-break-inside: auto;
         break-inside: auto;
         box-shadow: none !important;
+        border: 1px solid #cbd5e1 !important;
       }
-      .message-card.role-user,
+      .message-card.role-user {
+        align-self: stretch !important;
+        max-width: 100% !important;
+        background-color: #f1f5f9 !important;
+        color: #0f172a !important;
+      }
       .message-card.role-assistant {
         align-self: stretch !important;
         max-width: 100% !important;
+        background-color: #ffffff !important;
+        color: #0f172a !important;
       }
       .message-header,
       h1, h2, h3, h4, h5, h6 {
         page-break-after: avoid;
         break-after: avoid;
+        color: #0f172a !important;
+      }
+      .message-header {
+        color: #475569 !important;
+      }
+      .thinking-block {
+        background-color: rgba(79, 70, 229, 0.04) !important;
+        border-color: #e2e8f0 !important;
+      }
+      .thinking-summary {
+        color: #4f46e5 !important;
+      }
+      .thinking-content {
+        color: #475569 !important;
+        border-top-color: #e2e8f0 !important;
+        display: block !important;
       }
       details.thinking-block .thinking-content {
         display: block !important;
@@ -589,6 +629,14 @@ export class HtmlFormatter extends ExportFormatter {
         box-sizing: border-box !important;
         page-break-inside: avoid;
         break-inside: avoid;
+        background-color: #0f172a !important;
+        color: #f8fafc !important;
+        border-color: #1e293b !important;
+      }
+      .code-card-header {
+        background-color: #1e293b !important;
+        color: #94a3b8 !important;
+        border-bottom-color: #334155 !important;
       }
       pre, code {
         white-space: pre-wrap !important;
@@ -612,6 +660,11 @@ export class HtmlFormatter extends ExportFormatter {
       }
       th, td {
         word-break: break-word !important;
+        border-color: #cbd5e1 !important;
+      }
+      th {
+        background-color: #f1f5f9 !important;
+        color: #0f172a !important;
       }
       img {
         max-width: 100% !important;
@@ -622,6 +675,7 @@ export class HtmlFormatter extends ExportFormatter {
       .export-footer {
         margin-top: 1.5rem !important;
         border-top: none !important;
+        color: #64748b !important;
       }
       * {
         -webkit-print-color-adjust: exact !important;
