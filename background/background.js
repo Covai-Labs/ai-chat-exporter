@@ -1,6 +1,9 @@
 // Background service worker
 // Currently used for handling extension installation events or global context menus
 
+const UNINSTALL_URL = 'https://ai-chat-exporter.covai.org/uninstall-feedback.html';
+chrome.runtime.setUninstallURL(UNINSTALL_URL);
+
 const TARGET_MATCHES = [
   '*://chatgpt.com/*',
   '*://gemini.google.com/*',

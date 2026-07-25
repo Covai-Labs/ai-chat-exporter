@@ -157,6 +157,9 @@ function cleanMarkdownFromApi(text, citeMap) {
     }
   });
 
+  // 3.5. Clean ChatGPT PUA image_group annotations: image_group{json}
+  text = text.replace(/\uE200image_group\uE202[^\uE201]+\uE201/g, '');
+
   // 4. Replace ChatGPT PUA cite annotations
   text = text.replace(/\uE200cite(?:\uE202[^\uE202\uE201]+)+\uE201/g, (match) => {
     const items = citeMap?.[match] ?? [];
@@ -344,6 +347,30 @@ export class ChatGPTParser extends ChatParser {
     const contentParts = contentElements
       .map((contentElement) => {
         const clone = contentElement.cloneNode(true);
+        clone.querySelectorAll('button').forEach((button) => {
+          const img = button.querySelector('img');
+          if (!img) return;
+
+          let caption = 'Image';
+          const ariaLabel = button.getAttribute('aria-label') || '';
+          if (ariaLabel.toLowerCase().includes('open image details for')) {
+            caption = ariaLabel.replace(/^Open image details for\s*/i, '').trim();
+          } else if (img.getAttribute('alt') && !img.getAttribute('alt').startsWith('http')) {
+            caption = img.getAttribute('alt').trim();
+          }
+
+          const alt = img.getAttribute('alt') || '';
+          const src = img.getAttribute('src') || '';
+          const imageUrl = alt.startsWith('http://') || alt.startsWith('https://') ? alt : src;
+
+          if (imageUrl) {
+            const newImg = clone.ownerDocument.createElement('img');
+            newImg.setAttribute('src', imageUrl);
+            newImg.setAttribute('alt', caption);
+            button.parentNode.replaceChild(newImg, button);
+          }
+        });
+
         noiseSelectors.forEach((selector) => {
           clone.querySelectorAll(selector).forEach((node) => node.remove());
         });

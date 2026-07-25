@@ -78,3 +78,47 @@ test('ChatGPTParser correctly parses chat content from real HTML fixture', async
     global.document = oldDocument;
   }
 });
+
+test('ChatGPTParser correctly extracts image carousel images from assistant message turn', () => {
+  const parser = new ChatGPTParser();
+
+  const { window: testWin, document: testDoc } = parseHTML(`
+    <article data-testid="conversation-turn-5">
+      <div data-message-author-role="assistant">
+        <div class="markdown prose">
+          <div class="no-scrollbar flex overflow-auto">
+            <div class="group/search-image">
+              <button type="button" aria-label="Open image details for Bonobo social behavior">
+                <div>
+                  <img alt="https://images.openai.com/static-rsc-4/fullsize_bonobo.png?purpose=fullsize" src="https://images.openai.com/static-rsc-4/inline_bonobo.png?purpose=inline" />
+                </div>
+              </button>
+            </div>
+          </div>
+          <p>Bonobos are often described as being peaceful.</p>
+        </div>
+      </div>
+    </article>
+  `);
+
+  const oldWindow = global.window;
+  const oldDocument = global.document;
+
+  global.window = testWin;
+  global.document = testDoc;
+
+  try {
+    const turn = testDoc.querySelector('article');
+    const message = parser.extractMessage(turn);
+
+    assert.equal(message.role, 'ChatGPT');
+    assert.match(
+      message.content,
+      /!\[Bonobo social behavior\]\(https:\/\/images\.openai\.com\/static-rsc-4\/fullsize_bonobo\.png\?purpose=fullsize\)/,
+    );
+    assert.match(message.content, /Bonobos are often described as being peaceful\./);
+  } finally {
+    global.window = oldWindow;
+    global.document = oldDocument;
+  }
+});

@@ -131,7 +131,13 @@ export function convertToMarkdown(htmlContent, options = {}) {
   let html;
   if (typeof htmlContent === 'string') {
     html = htmlContent;
-  } else if (htmlContent instanceof HTMLElement) {
+  } else if (
+    htmlContent &&
+    (htmlContent instanceof HTMLElement ||
+      htmlContent.nodeType === 1 ||
+      htmlContent.nodeType === 9 ||
+      typeof htmlContent.querySelectorAll === 'function')
+  ) {
     // Clone the element to avoid modifying the original
     const clone = htmlContent.cloneNode(true);
 
@@ -276,6 +282,31 @@ export function convertToMarkdown(htmlContent, options = {}) {
     clone.querySelectorAll('*').forEach((el) => {
       if (el.textContent.trim() === 'Use code with caution.') {
         el.remove();
+      }
+    });
+
+    // Pre-process button-wrapped images (e.g., ChatGPT image carousels) before noise button removal
+    clone.querySelectorAll('button').forEach((button) => {
+      const img = button.querySelector('img');
+      if (!img) return;
+
+      let caption = 'Image';
+      const ariaLabel = button.getAttribute('aria-label') || '';
+      if (ariaLabel.toLowerCase().includes('open image details for')) {
+        caption = ariaLabel.replace(/^Open image details for\s*/i, '').trim();
+      } else if (img.getAttribute('alt') && !img.getAttribute('alt').startsWith('http')) {
+        caption = img.getAttribute('alt').trim();
+      }
+
+      const alt = img.getAttribute('alt') || '';
+      const src = img.getAttribute('src') || '';
+      const imageUrl = alt.startsWith('http://') || alt.startsWith('https://') ? alt : src;
+
+      if (imageUrl) {
+        const newImg = clone.ownerDocument.createElement('img');
+        newImg.setAttribute('src', imageUrl);
+        newImg.setAttribute('alt', caption);
+        button.parentNode.replaceChild(newImg, button);
       }
     });
 

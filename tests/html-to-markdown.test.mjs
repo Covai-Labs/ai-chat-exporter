@@ -73,3 +73,36 @@ test('converts wrapped code blocks and preserves line breaks', () => {
     '```elixir\ndefmodule Hello do\n  def world do\n    IO.puts("Hello")\n  end\nend\n```',
   );
 });
+
+test('preserves button-wrapped image carousels and converts to markdown image syntax', () => {
+  const el = document.createElement('div');
+  el.innerHTML = `
+    <div class="no-scrollbar flex overflow-auto">
+      <div class="group/search-image">
+        <button type="button" aria-label="Open image details for Bonobo evidence suggests ancient origin">
+          <div>
+            <img alt="https://images.openai.com/static-rsc-4/fullsize1.png?purpose=fullsize" src="https://images.openai.com/static-rsc-4/thumb1.png?purpose=inline" />
+          </div>
+        </button>
+      </div>
+      <div class="group/search-image">
+        <button type="button" aria-label="Open image details for Chimpanzee warfare tactics">
+          <div>
+            <img alt="https://images.openai.com/static-rsc-4/fullsize2.png?purpose=fullsize" src="https://images.openai.com/static-rsc-4/thumb2.png?purpose=inline" />
+          </div>
+        </button>
+      </div>
+    </div>
+  `;
+  const md = convertToMarkdown(el);
+  assert.ok(
+    md.includes(
+      '![Bonobo evidence suggests ancient origin](https://images.openai.com/static-rsc-4/fullsize1.png?purpose=fullsize)',
+    ),
+  );
+  assert.ok(
+    md.includes(
+      '![Chimpanzee warfare tactics](https://images.openai.com/static-rsc-4/fullsize2.png?purpose=fullsize)',
+    ),
+  );
+});
