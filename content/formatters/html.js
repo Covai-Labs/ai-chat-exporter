@@ -21,8 +21,14 @@ export class HtmlFormatter extends ExportFormatter {
         return `
         <div class="message-card ${roleClass}">
           <div class="message-header">
-            <div class="message-avatar">${avatarText}</div>
-            <span>${roleName}</span>
+            <div class="message-header-info">
+              <div class="message-avatar">${avatarText}</div>
+              <span>${roleName}</span>
+            </div>
+            <button class="copy-msg-btn" onclick="copyMessage(this)" title="Copy message text">
+              <svg class="copy-icon" viewBox="0 0 24 24" width="13" height="13"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+              <span>Copy</span>
+            </button>
           </div>
           <div class="message-content">
             ${htmlContent}
@@ -36,6 +42,9 @@ export class HtmlFormatter extends ExportFormatter {
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false} ] });"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
     `;
 
     return `<!DOCTYPE html>
@@ -232,10 +241,40 @@ export class HtmlFormatter extends ExportFormatter {
     .message-header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 0.5rem;
       font-size: 0.85rem;
       font-weight: 600;
       color: var(--text-secondary);
+    }
+
+    .message-header-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .copy-msg-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 0.2rem 0.45rem;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.2s ease;
+      opacity: 0.8;
+    }
+
+    .copy-msg-btn:hover {
+      opacity: 1;
+      border-color: var(--accent);
+      color: var(--accent);
+      background-color: var(--accent-light);
     }
 
     .message-avatar {
@@ -406,8 +445,99 @@ export class HtmlFormatter extends ExportFormatter {
       border-radius: 4px;
     }
 
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--text-secondary);
+    ul.task-list {
+      list-style: none;
+      padding-left: 0.25rem;
+    }
+
+    .task-list-item {
+      list-style: none;
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin: 0.35rem 0;
+    }
+
+    .task-checkbox {
+      accent-color: var(--accent);
+      width: 1rem;
+      height: 1rem;
+      cursor: default;
+      margin: 0;
+      flex-shrink: 0;
+    }
+
+    .thinking-block {
+      margin: 1rem 0;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      background-color: rgba(79, 70, 229, 0.04);
+      overflow: hidden;
+      transition: background-color 0.2s ease;
+    }
+
+    [data-theme="dark"] .thinking-block {
+      background-color: rgba(99, 102, 241, 0.06);
+    }
+
+    .thinking-summary {
+      padding: 0.6rem 0.9rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      user-select: none;
+    }
+
+    .thinking-summary:hover {
+      color: var(--accent);
+    }
+
+    .thinking-icon {
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    .thinking-content {
+      padding: 0.75rem 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Prism Syntax Highlighting Tokens (Offline-ready) */
+    .token.comment, .token.prolog, .token.doctype, .token.cdata { color: #64748b; font-style: italic; }
+    .token.punctuation { color: #94a3b8; }
+    .token.property, .token.tag, .token.boolean, .token.number, .token.constant, .token.symbol, .token.deleted { color: #f43f5e; }
+    .token.selector, .token.attr-name, .token.string, .token.char, .token.builtin, .token.inserted { color: #10b981; }
+    .token.operator, .token.entity, .token.url { color: #38bdf8; }
+    .token.atrule, .token.attr-value, .token.keyword { color: #818cf8; font-weight: 600; }
+    .token.function, .token.class-name { color: #fbbf24; }
+    .token.regex, .token.important, .token.variable { color: #f59e0b; }
+
+    .export-footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      width: 100%;
+    }
+
+    .export-footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    .export-footer a:hover {
+      text-decoration: underline;
     }
 
     @media print {
@@ -423,7 +553,8 @@ export class HtmlFormatter extends ExportFormatter {
         padding: 0 !important;
       }
       .theme-switch-wrapper,
-      .copy-code-btn {
+      .copy-code-btn,
+      .copy-msg-btn {
         display: none !important;
       }
       .container {
@@ -503,6 +634,10 @@ export class HtmlFormatter extends ExportFormatter {
     <main class="message-list">
       ${formattedMessages}
     </main>
+
+    <footer class="export-footer">
+      <p>Exported with <a href="https://ai-chat-exporter.covai.org/" target="_blank" rel="noopener noreferrer">AI Chat Exporter</a></p>
+    </footer>
   </div>
 
   <script>
@@ -556,6 +691,56 @@ export class HtmlFormatter extends ExportFormatter {
         console.error('Failed to copy text: ', err);
       }
     }
+
+    async function copyMessage(button) {
+      const card = button.closest('.message-card');
+      const content = card ? card.querySelector('.message-content') : null;
+      if (!content) return;
+      const text = content.innerText || content.textContent || '';
+      const span = button.querySelector('span');
+      const originalText = span ? span.textContent : 'Copy';
+      
+      try {
+        await navigator.clipboard.writeText(text.trim());
+        if (span) span.textContent = 'Copied!';
+        button.style.borderColor = '#10b981';
+        button.style.color = '#10b981';
+        
+        setTimeout(() => {
+          if (span) span.textContent = originalText;
+          button.style.borderColor = '';
+          button.style.color = '';
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy message text: ', err);
+      }
+    }
+
+    function highlightFallbackCode() {
+      const kwRegex = new RegExp('\\b(const|let|var|function|return|if|else|for|while|import|export|from|class|extends|async|await|try|catch|def|self|print|public|private|static|void|int|string|boolean|type|interface|struct)\\b', 'g');
+      const strRegex = new RegExp('("([^"\\\\]|\\\\.)*"|\x27([^\x27\\\\]|\\\\.)*\x27)', 'g');
+      const comRegex = new RegExp('//[^\\n]*|/\\*[\\s\\S]*?\\*/|#[^\\n]*', 'g');
+      const numRegex = new RegExp('\\b\\d+(\\.\\d+)?\\b', 'g');
+
+      document.querySelectorAll('pre code').forEach((codeBlock) => {
+        let html = codeBlock.innerHTML;
+        if (html.includes('class="token')) return;
+        html = html
+          .replace(comRegex, '<span class="token comment">$1</span>')
+          .replace(strRegex, (m) => (m.startsWith('<span') ? m : '<span class="token string">' + m + '</span>'))
+          .replace(kwRegex, '<span class="token keyword">$1</span>')
+          .replace(numRegex, '<span class="token number">$1</span>');
+        codeBlock.innerHTML = html;
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.Prism) {
+        Prism.highlightAll();
+      } else {
+        highlightFallbackCode();
+      }
+    });
 
     window.addEventListener('message', (event) => {
       if (event.data && event.data.action === 'print') {
@@ -730,6 +915,12 @@ function renderTable(rows) {
 
 export function markdownToHtml(mdText) {
   if (!mdText) return '';
+
+  // Process <think>...</think> reasoning blocks into collapsible details
+  mdText = mdText.replace(/<think>([\s\S]*?)<\/think>/gi, (match, thinkContent) => {
+    return `\n\n<details class="thinking-block"><summary class="thinking-summary"><svg class="thinking-icon" viewBox="0 0 24 24" width="14" height="14"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.5h-2v-2h2zm0-4h-2V7h2z"/></svg> Thinking Process</summary><div class="thinking-content">\n\n${thinkContent.trim()}\n\n</div></details>\n\n`;
+  });
+
   const lines = mdText.split(/\r?\n/);
   let html = '';
 
@@ -798,6 +989,19 @@ export function markdownToHtml(mdText) {
     const line = lines[i];
     const trimmed = line.trim();
 
+    if (
+      trimmed.startsWith('<details') ||
+      trimmed.startsWith('</details') ||
+      trimmed.startsWith('<summary') ||
+      trimmed.startsWith('</summary') ||
+      trimmed.startsWith('<div class="thinking-content"') ||
+      trimmed.startsWith('</div>')
+    ) {
+      closeAllBlocks();
+      html += line + '\n';
+      continue;
+    }
+
     if (trimmed.startsWith('```')) {
       if (inCodeBlock) {
         closeAllBlocks();
@@ -859,6 +1063,17 @@ export function markdownToHtml(mdText) {
     const olMatch = line.match(/^(\d+)\.\s+(.*)$/);
 
     if (ulMatch) {
+      let itemContent = ulMatch[2];
+      let isTask = false;
+      let isChecked = false;
+
+      const taskMatch = itemContent.match(/^\[([ xX])\]\s+(.*)$/);
+      if (taskMatch) {
+        isTask = true;
+        isChecked = taskMatch[1].toLowerCase() === 'x';
+        itemContent = taskMatch[2];
+      }
+
       if (inList && listType !== 'ul') {
         closeAllBlocks();
       }
@@ -866,9 +1081,13 @@ export function markdownToHtml(mdText) {
         closeAllBlocks();
         inList = true;
         listType = 'ul';
-        html += `<ul>\n`;
+        html += `<ul${isTask ? ' class="task-list"' : ''}>\n`;
       }
-      html += `<li>${inlineParse(ulMatch[2])}</li>\n`;
+      if (isTask) {
+        html += `<li class="task-list-item"><input type="checkbox" class="task-checkbox" disabled${isChecked ? ' checked' : ''}><span>${inlineParse(itemContent)}</span></li>\n`;
+      } else {
+        html += `<li>${inlineParse(itemContent)}</li>\n`;
+      }
       continue;
     }
 

@@ -123,3 +123,47 @@ test('HTML formatter renders markdown images as img tags', async () => {
   assert.ok(output.includes('<img src="https://example.com/shoe.png" alt="Football Shoe"'));
   assert.ok(output.includes('<img src="https://example.com/chart.jpg?param=1&val=2" alt="Chart"'));
 });
+
+test('HTML formatter renders task list checkboxes, collapsible thinking blocks, per-message copy, syntax highlighting, and footer link', async () => {
+  const { HtmlFormatter } = await importFormatter();
+  const formatter = new HtmlFormatter();
+
+  const conversation = {
+    title: 'Advanced Features Test',
+    messages: [
+      {
+        role: 'User',
+        content: '- [ ] Pending task\n- [x] Completed task',
+      },
+      {
+        role: 'Assistant',
+        content: '<think>Analyzing the user query...</think>\n\nHere is your solution.',
+      },
+    ],
+  };
+
+  const output = formatter.format(conversation);
+
+  // Check task checkboxes
+  assert.ok(output.includes('class="task-list"'));
+  assert.ok(output.includes('<input type="checkbox" class="task-checkbox" disabled>'));
+  assert.ok(output.includes('<input type="checkbox" class="task-checkbox" disabled checked>'));
+
+  // Check collapsible thinking block
+  assert.ok(output.includes('<details class="thinking-block">'));
+  assert.ok(output.includes('Thinking Process</summary>'));
+  assert.ok(output.includes('class="thinking-content"'));
+  assert.ok(output.includes('Analyzing the user query...'));
+
+  // Check per-message copy button
+  assert.ok(output.includes('copy-msg-btn'));
+  assert.ok(output.includes('copyMessage(this)'));
+
+  // Check Prism syntax highlighting script & offline tokens
+  assert.ok(output.includes('prism.min.js'));
+  assert.ok(output.includes('.token.keyword'));
+
+  // Check export footer branding link
+  assert.ok(output.includes('<footer class="export-footer">'));
+  assert.ok(output.includes('href="https://ai-chat-exporter.covai.org/"'));
+});
