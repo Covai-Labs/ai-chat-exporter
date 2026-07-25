@@ -2,6 +2,8 @@
 // Currently used for handling extension installation events or global context menus
 
 const UNINSTALL_URL = 'https://ai-chat-exporter.covai.org/uninstall-feedback.html';
+const WELCOME_URL = 'https://ai-chat-exporter.covai.org/welcome.html';
+
 chrome.runtime.setUninstallURL(UNINSTALL_URL);
 
 const TARGET_MATCHES = [
@@ -53,8 +55,17 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
   }
 });
 
-chrome.runtime.onInstalled.addListener(async () => {
-  console.log('AI Chat Exporter installed/updated.');
+chrome.runtime.onInstalled.addListener(async (details) => {
+  console.log('AI Chat Exporter installed/updated:', details?.reason);
+
+  if (details?.reason === 'install') {
+    try {
+      await chrome.tabs.create({ url: WELCOME_URL });
+    } catch (e) {
+      console.warn('[AI Exporter Background] Failed to open welcome page:', e);
+    }
+  }
+
   await syncSidePanelBehavior();
 
   // Inject content script into existing tabs
