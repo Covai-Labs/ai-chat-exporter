@@ -386,13 +386,24 @@ select:focus {
 .error {
   text-align: center;
   color: #ef4444;
-  font-size: 13px;
+  font-size: 12px;
+  line-height: 1.5;
   font-weight: 500;
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.2);
-  padding: 12px;
+  padding: 10px 12px;
   border-radius: 8px;
   margin-top: 10px;
+}
+
+.error a {
+  color: #ef4444;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.error a:hover {
+  color: #dc2626;
 }
 
 .hidden {

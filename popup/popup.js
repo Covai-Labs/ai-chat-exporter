@@ -40,6 +40,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
+  const reportIssueLink = document.getElementById('report-issue-link');
+  if (reportIssueLink) {
+    reportIssueLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      chrome.tabs.create({ url: reportIssueLink.href });
+    });
+  }
+
   // Load saved defaults from chrome.storage.sync
   const storedSettings = await chrome.storage.sync.get([
     'theme',
