@@ -165,7 +165,10 @@ test('HTML formatter renders task list checkboxes, collapsible thinking blocks, 
 
   // Check export footer branding link
   assert.ok(output.includes('<footer class="export-footer">'));
-  assert.ok(output.includes('href="https://ai-chat-exporter.org/"') || output.includes('href="https://ai-chat-exporter.covai.org/"'));
+  assert.ok(
+    output.includes('href="https://ai-chat-exporter.org/"') ||
+      output.includes('href="https://ai-chat-exporter.covai.org/"'),
+  );
 });
 
 test('HTML formatter formats LaTeX math equations with bracket and dollar delimiters', async () => {
@@ -178,7 +181,7 @@ test('HTML formatter formats LaTeX math equations with bracket and dollar delimi
       {
         role: 'Assistant',
         content:
-          'Euler\'s identity is \\[ e^{i\\pi} + 1 = 0 \\] and inline equation is \\( e^{ix} = \\cos x + i\\sin x \\).',
+          "Euler's identity is \\[ e^{i\\pi} + 1 = 0 \\] and inline equation is \\( e^{ix} = \\cos x + i\\sin x \\).",
       },
     ],
   };
@@ -188,4 +191,3 @@ test('HTML formatter formats LaTeX math equations with bracket and dollar delimi
   assert.ok(output.includes('<span class="math-block">$$ e^{i\\pi} + 1 = 0 $$</span>'));
   assert.ok(output.includes('<span class="math-inline">$ e^{ix} = \\cos x + i\\sin x $</span>'));
 });
-

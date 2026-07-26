@@ -1,27 +1,26 @@
 # AI Chat Exporter
 
-A simple, privacy-focused browser extension to export AI chats from ChatGPT, Claude, Gemini, Microsoft Copilot, NotebookLM, Google AI Studio, Qwen, Perplexity, DeepSeek, Meta AI, and Z.ai to Markdown, JSON, HTML, or PNG image.
+A simple, privacy-focused browser extension to export AI chats from ChatGPT, Claude, Gemini, Microsoft Copilot, NotebookLM, Google AI Studio, Qwen, Perplexity, DeepSeek, Meta AI, and Z.ai to Markdown, JSON, HTML, PDF, or PNG image.
 
-[![Watch Demo Video](https://img.shields.io/badge/YouTube-Watch%20Demo%20Video-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=d2ji_--vOqo)
-
-![AI Chat Exporter Preview](docs/images/screenshot1_export.png)
+<!-- [![Watch Demo Video](https://img.shields.io/badge/YouTube-Watch%20Demo%20Video-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=d2ji_--vOqo) -->
 
 ### Quick Install
 
 - 🦊 **Firefox**: [Install from Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/)
-- 🌐 **Chromium-based browsers**: [Install from Chrome Web Store](https://chrome.google.com/webstore/detail/cgakhbhkplndjjknhgegfcipffflcaoj) _(Chrome, Brave, Edge, Opera, Yandex, Whale, etc.)_
-<!-- - 🌀 **Microsoft Edge**: [Install from Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/hbgckjgfhnaedlihmkogenclfcnobicg). Note that the Edge extension from the official store might be outdated as Microsoft often takes forever to approve. -->
+- 🌐 **Chrome**: [Install from Chrome Web Store](https://chrome.google.com/webstore/detail/cgakhbhkplndjjknhgegfcipffflcaoj)
+- 🌀 **Microsoft Edge**: [Install from Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/hbgckjgfhnaedlihmkogenclfcnobicg)
 
 > [!NOTE]
-> **Limitations in Web Store Builds (Chrome):**
-> Due to strict Web Store policies on remotely-hosted code, the pre-built version published to the Chrome Web Store **lacks KaTeX math equations rendering** for HTML exports.
->
-> If you need math equation rendering, you can simply use the **Firefox** extension (which supports KaTeX out of the box from the store), or manually install the full-featured `.zip` package for **Chromium** (see instructions below).
+> Extension updates on Chrome Web Store and Microsoft Edge Add-ons may lag behind the Firefox / GitHub releases due to store review and approval queues.
 
 <details>
-<summary><b>🛠️ Manual / Offline Installation for Chromium (Full-Featured / KaTeX support)</b></summary>
+<summary><b>📦 Release Variants & Manual Installation</b></summary>
 
-If you want the full-featured version on Chromium-based browsers (Chrome, Edge, Brave, Opera, Yandex, Whale, etc.):
+- **Firefox (and Firefox derivatives):** Recommended to install directly from [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/).
+- **Chromium-based browsers (Local / Unpacked install):** Best for instant updates. Download `ai-chat-exporter-chromium.zip` from [Releases](https://github.com/Rat-S/ai-chat-exporter/releases) and load unpacked locally.
+- **Chrome & Edge Web Store:** KaTeX math rendering and Prism.js syntax highlighting are bundled directly inside the extension package to comply with strict Web Store Manifest V3 security rules.
+
+#### Manual / Offline Installation Steps (Chromium)
 
 1. Download the latest `ai-chat-exporter-chromium.zip` from the [Releases page](https://github.com/Rat-S/ai-chat-exporter/releases).
 2. Extract the zip file to a folder on your computer.
@@ -32,6 +31,8 @@ If you want the full-featured version on Chromium-based browsers (Chrome, Edge, 
 _Note: The developer primarily tests this extension on Firefox, so Chromium-based browsers are minimally tested. Feedback and issue reports are very welcome — feel free to submit [Feedback / Issue Reports](https://ai-chat-exporter.covai.org/feedback.html) or open a [GitHub Issue](https://github.com/Rat-S/ai-chat-exporter/issues)._
 
 </details>
+
+![AI Chat Exporter Preview](docs/images/screenshot1_export.png)
 
 ---
 
@@ -57,7 +58,8 @@ _Note: The developer primarily tests this extension on Firefox, so Chromium-base
 - **Versatile Export Formats**:
   - **Clean Markdown**: Properly formatted with code blocks, tables, and images preserved.
   - **Structured JSON**: Normalized JSON exports matching a strict JSON schema.
-  - **Raw HTML**: Complete chat layout with math equations (supported natively on Firefox / offline build).
+  - **Raw HTML**: Complete chat layout with math equations.
+  - **PDF Document**: Print or save chat threads as PDF using browser native print.
   - **Shareable Image (PNG)**: Convert the chat thread into a clean, sharing-ready PNG image using `html2canvas`.
 - **Chat Continuation / Transfer**: Move your active chat context directly across platforms (e.g., send your current Claude conversation straight to Gemini or ChatGPT to continue there).
 - **Clipboard Rich-Text Copying**: Instantly copy chats to your clipboard with rich-text formatting, perfect for pasting directly into emails, document editors, or notes.
@@ -79,7 +81,7 @@ For setup, building from source, and details on project structure, please refer 
 ## Privacy
 
 AI Chat Exporter does not collect, store, or transmit any personal data.
-See [PRIVACY.md](docs/privacy.html) for details.
+See the full [Privacy Policy](https://ai-chat-exporter.covai.org/privacy.html) for details.
 
 ## License
 
@@ -95,9 +97,8 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 - Uses [Turndown.js](https://github.com/mixmark-io/turndown) for HTML to Markdown conversion.
 - Uses [html2canvas](https://github.com/niklasvh/html2canvas) for generating shareable PNG image exports.
 - Uses [KaTeX](https://github.com/KaTeX/KaTeX) for rendering math and LaTeX equations.
+- Uses [Prism.js](https://github.com/PrismJS/prism) for code block syntax highlighting.
 
 ---
 
----
-
-> Nota bene: This extension was developed for personal use and is not very polished. Additionally, formatting of exported items from certain chats may currently not work well due to changes in those chat platforms. You may raise an issue and/or PR.
+> **Nota bene:** This extension was developed for personal use and may not be very polished. I release it with the hope that it can be useful to others. Additionally, formatting of exported items from certain chats may currently not work well due to changes in those chat platforms. You are welcome to submit an issue or PR.

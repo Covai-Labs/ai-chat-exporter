@@ -62,4 +62,4 @@ Here is an overview of the key folders and files inside the extension source:
 └── build.sh             # Build script
 ```
 
-For general information about the extension, installation, and usage, see the [README.md](./README.md).
+For general information about the extension, installation, and usage, see [README.md](./README.md). For contribution guidelines and licensing terms, see [CONTRIBUTING.md](./CONTRIBUTING.md).
