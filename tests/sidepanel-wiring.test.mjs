@@ -48,9 +48,9 @@ test('options.js synchronizes launch mode preferences with chrome.storage.sync',
   assert.match(optionsJs, /chrome\.storage\.sync\.set\(\{\s*launchMode:/);
 });
 
-test('popup.html and popup.js provide button to trigger side panel', () => {
-  assert.match(popupHtml, /id="open-sidepanel-btn"/);
-  assert.match(popupJs, /chrome\.sidePanel\.open/);
+test('popup.html and popup.js do not provide a side panel button in popup UI', () => {
+  assert.doesNotMatch(popupHtml, /id="open-sidepanel-btn"/);
+  assert.doesNotMatch(popupJs, /open-sidepanel-btn/);
 });
 
 test('sidepanel header contains refresh button and sidepanel.js handles tab switch listeners', () => {

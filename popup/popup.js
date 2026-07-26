@@ -67,26 +67,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Get current tab
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
-  const openSidepanelBtn = document.getElementById('open-sidepanel-btn');
-  if (openSidepanelBtn) {
-    if (typeof chrome === 'undefined' || !chrome.sidePanel) {
-      openSidepanelBtn.style.display = 'none';
-    } else {
-      openSidepanelBtn.addEventListener('click', async () => {
-        try {
-          if (tab && tab.windowId) {
-            await chrome.sidePanel.open({ windowId: tab.windowId });
-          } else {
-            await chrome.runtime.sendMessage({ action: 'OPEN_SIDE_PANEL' });
-          }
-          window.close();
-        } catch (err) {
-          console.error('[Popup] Failed to open side panel:', err);
-        }
-      });
-    }
-  }
-
   if (!tab) {
     statusEl.textContent = 'Error: No active tab';
     return;
