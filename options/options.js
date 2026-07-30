@@ -38,6 +38,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     launchModeSection.classList.add('hidden');
   }
 
+  const obsidianVaultInput = document.getElementById('obsidian-vault-input');
+
   // Load existing settings from chrome.storage.sync
   const stored = await chrome.storage.sync.get([
     'theme',
@@ -45,6 +47,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     'includeImages',
     'parserMode',
     'defaultTransferTarget',
+    'obsidianVaultName',
     'launchMode',
   ]);
 
@@ -56,6 +59,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (stored.includeImages !== undefined) defaultIncludeImages.checked = stored.includeImages;
   if (stored.parserMode) parserModeSelect.value = stored.parserMode;
   if (stored.defaultTransferTarget) defaultTransferSelect.value = stored.defaultTransferTarget;
+  if (stored.obsidianVaultName && obsidianVaultInput)
+    obsidianVaultInput.value = stored.obsidianVaultName;
   if (stored.launchMode && !isFirefox) {
     const radio = document.querySelector(`input[name="launch-mode"][value="${stored.launchMode}"]`);
     if (radio) radio.checked = true;
@@ -90,6 +95,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     chrome.storage.sync.set({ defaultTransferTarget: defaultTransferSelect.value });
     showToast();
   });
+
+  if (obsidianVaultInput) {
+    obsidianVaultInput.addEventListener('change', () => {
+      chrome.storage.sync.set({ obsidianVaultName: obsidianVaultInput.value.trim() });
+      showToast();
+    });
+  }
 
   launchModeRadios.forEach((radio) => {
     radio.addEventListener('change', () => {

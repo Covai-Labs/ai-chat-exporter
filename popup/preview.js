@@ -434,6 +434,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         await chrome.runtime.sendMessage({
           action: 'TRANSFER_CHAT',
           targetPlatform: targetPlatform,
+          title: title || 'AI Conversation',
           payload: payload,
         });
       } catch (err) {

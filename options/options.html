@@ -111,11 +111,28 @@
                 <option value="perplexity">Perplexity (perplexity.ai)</option>
                 <option value="mistral">Mistral (chat.mistral.ai)</option>
                 <option value="notebooklm">NotebookLM (notebooklm.google.com)</option>
+                <option value="obsidian">Obsidian (obsidian://)</option>
               </select>
               <span class="field-help"
                 >Initial target platform in the "Continue On" dropdown. When exporting on the
                 current default platform (e.g. ChatGPT), it smartly auto-switches to an alternate
                 platform.</span
+              >
+            </div>
+
+            <div class="field-group" style="margin-top: 16px">
+              <label for="obsidian-vault-input" class="field-label"
+                >Obsidian Vault Name (Optional)</label
+              >
+              <input
+                type="text"
+                id="obsidian-vault-input"
+                class="select-input"
+                placeholder="e.g. My Vault"
+              />
+              <span class="field-help"
+                >If specified, Obsidian URIs will open notes directly inside this vault
+                (&amp;vault=...).</span
               >
             </div>
           </div>

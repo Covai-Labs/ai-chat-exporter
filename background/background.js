@@ -114,6 +114,38 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
   if (request.action === 'TRANSFER_CHAT') {
     const target = request.targetPlatform;
+
+    if (target === 'obsidian') {
+      (async () => {
+        try {
+          const syncData = await chrome.storage.sync.get('obsidianVaultName');
+          const vault = syncData.obsidianVaultName || '';
+          const title = request.title || 'AI Conversation';
+          const content = request.payload || '';
+
+          const cleanTitle = title.replace(/[/\\?%*:|"<>]/g, '').trim() || 'AI Conversation';
+          const params = new URLSearchParams();
+          params.append('name', cleanTitle);
+
+          if (vault && vault.trim().length > 0) {
+            params.append('vault', vault.trim());
+          }
+
+          if (content) {
+            params.append('content', content);
+          }
+
+          const obsidianUri = `obsidian://new?${params.toString()}`;
+          await chrome.tabs.create({ url: obsidianUri });
+          sendResponse({ success: true, uri: obsidianUri });
+        } catch (e) {
+          console.error('[AI Exporter Background] Obsidian transfer failed:', e);
+          sendResponse({ success: false, error: e.message });
+        }
+      })();
+      return true;
+    }
+
     const url = PLATFORM_URLS[target] || 'https://chatgpt.com/';
 
     (async () => {

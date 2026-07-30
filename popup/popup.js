@@ -323,6 +323,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           await chrome.runtime.sendMessage({
             action: 'TRANSFER_CHAT',
             targetPlatform: targetPlatform,
+            title: filenameInput ? filenameInput.value : 'AI Conversation',
             payload: response.payload,
           });
           statusEl.textContent = `Opening ${targetPlatform}...`;
