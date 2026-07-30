@@ -115,7 +115,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'TRANSFER_CHAT') {
     const target = request.targetPlatform;
 
-    if (target === 'obsidian') {
+    const uriAppTargets = ['obsidian', 'logseq', 'bear', 'noteplan', 'drafts'];
+    if (uriAppTargets.includes(target)) {
       (async () => {
         try {
           const syncData = await chrome.storage.sync.get('obsidianVaultName');
@@ -123,23 +124,46 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           const title = request.title || 'AI Conversation';
           const content = request.payload || '';
 
-          const cleanTitle = title.replace(/[/\\?%*:|"<>]/g, '').trim() || 'AI Conversation';
-          const params = new URLSearchParams();
-          params.append('name', cleanTitle);
+          const cleanTitle =
+            title
+              .replace(/[#|^[\]]/g, '')
+              .replace(/[/\\?%*:|"<>]/g, '')
+              .trim()
+              .slice(0, 245) || 'AI Conversation';
 
-          if (vault && vault.trim().length > 0) {
-            params.append('vault', vault.trim());
+          let appUri = '';
+          if (target === 'obsidian') {
+            const params = new URLSearchParams();
+            params.append('name', cleanTitle);
+            if (vault && vault.trim().length > 0) params.append('vault', vault.trim());
+            if (content) params.append('content', content);
+            appUri = `obsidian://new?${params.toString()}`;
+          } else if (target === 'logseq') {
+            const params = new URLSearchParams();
+            params.append('page', cleanTitle);
+            if (content) params.append('content', content);
+            appUri = `logseq://x-callback-url/quickCapture?${params.toString()}`;
+          } else if (target === 'bear') {
+            const params = new URLSearchParams();
+            params.append('title', cleanTitle);
+            if (content) params.append('text', content);
+            appUri = `bear://x-callback-url/create?${params.toString()}`;
+          } else if (target === 'noteplan') {
+            const params = new URLSearchParams();
+            params.append('noteTitle', cleanTitle);
+            if (content) params.append('text', content);
+            appUri = `noteplan://x-callback-url/addText?${params.toString()}`;
+          } else if (target === 'drafts') {
+            const params = new URLSearchParams();
+            const fullText = cleanTitle ? `# ${cleanTitle}\n\n${content}` : content;
+            params.append('text', fullText);
+            appUri = `drafts://x-callback-url/create?${params.toString()}`;
           }
 
-          if (content) {
-            params.append('content', content);
-          }
-
-          const obsidianUri = `obsidian://new?${params.toString()}`;
-          await chrome.tabs.create({ url: obsidianUri });
-          sendResponse({ success: true, uri: obsidianUri });
+          await chrome.tabs.create({ url: appUri });
+          sendResponse({ success: true, uri: appUri });
         } catch (e) {
-          console.error('[AI Exporter Background] Obsidian transfer failed:', e);
+          console.error(`[AI Exporter Background] ${target} transfer failed:`, e);
           sendResponse({ success: false, error: e.message });
         }
       })();

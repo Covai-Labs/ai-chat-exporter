@@ -61,7 +61,7 @@ _Note: The developer primarily tests this extension on Firefox, so Chromium-base
   - **Raw HTML**: Complete chat layout with math equations.
   - **PDF Document**: Print or save chat threads as PDF using browser native print.
   - **Shareable Image (PNG)**: Convert the chat thread into a clean, sharing-ready PNG image using `html2canvas`.
-- **Chat Continuation / Transfer**: Move your active chat context directly across platforms (e.g., send your current Claude conversation straight to Gemini or ChatGPT to continue there).
+- **Chat Continuation & Obsidian Transfer**: Move your active chat context directly across platforms (e.g. send your current Claude conversation straight to Gemini, ChatGPT, or open directly in **Obsidian** via `obsidian://new` URIs).
 - **Clipboard Rich-Text Copying**: Instantly copy chats to your clipboard with rich-text formatting, perfect for pasting directly into emails, document editors, or notes.
 - **Side Panel Support (Chromium Only)**: View exports and run chat context continuation inside your browser's native side panel for a streamlined workflow.
 - **Custom Filenames**: Input custom filenames before exporting to keep your downloads structured.
