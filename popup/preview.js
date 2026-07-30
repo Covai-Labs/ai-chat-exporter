@@ -3,7 +3,7 @@ import { JsonFormatter } from '../content/formatters/json.js';
 import { HtmlFormatter } from '../content/formatters/html.js';
 import { DocFormatter } from '../content/formatters/doc.js';
 import { ImageFormatter } from '../content/formatters/image.js';
-import { ContinuationFormatter } from '../content/formatters/continuation.js';
+import { ContinuationFormatter, stripEncodedImages } from '../content/formatters/continuation.js';
 
 function applyTheme(theme, targetDoc = document) {
   if (!targetDoc || !targetDoc.documentElement) return;
@@ -428,7 +428,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (conversation) {
           payload = continuationFormatter.format(conversation);
         } else {
-          payload = markdownContent || activeContent;
+          payload = stripEncodedImages(markdownContent || activeContent);
         }
 
         await chrome.runtime.sendMessage({

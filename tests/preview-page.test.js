@@ -49,6 +49,6 @@ test('preview page and script handle real PNG rendering and Word .doc MIME type 
 test('preview page and script include Transfer Chat option and ContinuationFormatter', () => {
   assert.match(previewHtml, /id="transfer-target-select"/);
   assert.match(previewHtml, /id="transfer-btn"/);
-  assert.match(previewJs, /import { ContinuationFormatter }/);
+  assert.match(previewJs, /import \{[^}]*ContinuationFormatter[^}]*\}/);
   assert.match(previewJs, /TRANSFER_CHAT/);
 });
