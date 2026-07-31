@@ -73,12 +73,16 @@
   
   <header class="w-full text-center md:text-left flex items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
     <a href="https://www.covai.org" class="flex items-center gap-4 group">
-      <img
-        src="profile-picture.jpg"
-        onerror="this.src='https://covai.org/profile-picture.jpg'"
-        alt="Covai Logo"
-        class="size-12 md:size-14 rounded-lg object-cover border-2 border-slate-900 dark:border-slate-700 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#38bdf8]"
-      />
+      <picture>
+        <source srcset="covai-logo.avif" type="image/avif" />
+        <source srcset="covai-logo.webp" type="image/webp" />
+        <img
+          src="covai-logo.avif"
+          onerror="this.src='https://covai.org/covai-logo.avif'"
+          alt="Covai Logo"
+          class="size-12 md:size-14 rounded-lg object-cover border-2 border-slate-900 dark:border-slate-700 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#38bdf8]"
+        />
+      </picture>
       <div>
         <span class="font-extrabold tracking-tight text-xl md:text-2xl text-slate-900 dark:text-white block">
           Covai Labs
