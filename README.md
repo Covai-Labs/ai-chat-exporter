@@ -1,6 +1,6 @@
 # AI Chat Exporter
 
-A simple, privacy-focused browser extension to export AI chats from ChatGPT, Claude, Gemini, Microsoft Copilot, NotebookLM, Google AI Studio, Qwen, Perplexity, DeepSeek, Meta AI, and Z.ai to Markdown, JSON, HTML, PDF, or PNG image.
+A simple, privacy-focused browser extension to export AI chats from ChatGPT, Claude, Gemini, Microsoft Copilot, NotebookLM, Google AI Studio, Qwen, Perplexity, DeepSeek, Meta AI, Proton Lumo, and Z.ai to Markdown, JSON, HTML, PDF, or PNG image.
 
 <!-- [![Watch Demo Video](https://img.shields.io/badge/YouTube-Watch%20Demo%20Video-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=d2ji_--vOqo) -->
 
@@ -54,6 +54,7 @@ _Note: The developer primarily tests this extension on Firefox, so Chromium-base
   - Qwen
   - Z.ai
   - Mistral
+  - Proton Lumo
 
 - **Versatile Export Formats**:
   - **Clean Markdown**: Properly formatted with code blocks, tables, and images preserved.

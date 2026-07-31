@@ -120,7 +120,8 @@ function normalizeRole(role) {
     normalized.includes('mistral') ||
     normalized.includes('deepseek') ||
     normalized.includes('qwen') ||
-    normalized.includes('perplexity')
+    normalized.includes('perplexity') ||
+    normalized.includes('lumo')
   ) {
     return 'assistant';
   }

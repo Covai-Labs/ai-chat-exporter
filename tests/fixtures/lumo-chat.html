@@ -1,0 +1,1146 @@
+<main
+  class="flex-1 flex flex-column flex-nowrap reset4print md:rounded-xl relative overflow-hidden"
+>
+  <div
+    class="conversation-page-component relative flex-1 min-h-0 flex flex-column *:min-size-auto flex-nowrap reset4print overflow-auto rounded-xl"
+  >
+    <div
+      class="lumo-layout-container relative flex-1 min-h-0 flex flex-column *:min-size-auto flex-nowrap reset4print overflow-auto rounded-xl"
+    >
+      <div class="lumo-layout-header flex flex-row flex-nowrap justify-space-between w-full p-2">
+        <div
+          class="lumo-layout-header-left flex flex-row flex-nowrap justify-start items-center mx-2 shrink-0 gap-1"
+        >
+          <button
+            class="button button-for-icon button-medium button-ghost-weak shrink-0"
+            aria-busy="false"
+            type="button"
+          >
+            <span class="sr-only">Close sidebar</span
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-panel-right"
+              aria-hidden="true"
+            >
+              <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+              <path d="M15 3v18"></path>
+            </svg></button
+          ><button
+            class="button button-for-icon button-medium button-ghost-weak shrink-0"
+            aria-busy="false"
+            type="button"
+            aria-describedby="tooltip-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-square-pen"
+              aria-label="New chat"
+            >
+              <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path
+                d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <div class="lumo-layout-header-center flex flex-1 items-center min-w-0">
+          <div class="conversation-header flex flex-column flex-nowrap w-full">
+            <div
+              class="flex flex-row justify-space-between items-center pt-2 pb-2 px-3 group-hover-opacity-container"
+            >
+              <div class="inline-flex flex-row flex-nowrap items-center justify-start">
+                <div
+                  class="flex flex-row items-center gap-1 min-w-0 conversation-header-title-view"
+                >
+                  <span role="heading" aria-level="2" class="min-w-0 flex-1"
+                    ><span class="sr-only">Current chat:</span
+                    ><button
+                      class="button button-medium button-ghost-weak py-1 px-2 text-ellipsis w-full hide-on-small-screens"
+                      aria-busy="false"
+                      type="button"
+                    >
+                      Elixir Code And Work Data
+                    </button></span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="lumo-layout-header-right flex flex-row flex-nowrap justify-end items-center shrink-0 mx-2 gap-1"
+        >
+          <button
+            class="button button-for-icon button-medium button-ghost-weak shrink-0 drawer-toggle-button"
+            aria-busy="false"
+            type="button"
+          >
+            <span class="sr-only">Show knowledge panel</span
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-folder-open"
+              aria-hidden="true"
+            >
+              <path
+                d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div
+        class="lumo-chat-container flex flex-row flex-nowrap flex-1 relative reset4print overflow-hidden gap-2"
+      >
+        <div
+          class="outer conversation-page-component flex flex-column flex-nowrap flex-1 reset4print overflow-hidden rounded-xl"
+        >
+          <div class="lumo-message-chain h-full overflow-y-auto px-6 md:px-0 flex-1 reset4print">
+            <div>
+              <div
+                class="lumo-chat-item reset4print flex flex-row flex-nowrap w-full md:w-2/3 mx-auto max-w-custom user-msg mb-6 justify-end"
+                style="--max-w-custom: 46.5rem"
+                data-message-role="user"
+                data-message-id="c17a6abc-78fb-46f5-921b-16c47576118a"
+              >
+                <div class="flex flex-column flex-nowrap items-end gap-2 min-w-0 max-w-full">
+                  <div
+                    class="user-msg-container group-hover-opacity-container *:min-size-auto gap-2 rounded-xl p-4 min-h-custom relative markdown-rendering"
+                    style="--min-h-custom: 3.25rem"
+                  >
+                    <div
+                      class="test-container flex *:min-size-auto flex-1 flex-row flex-nowrap gap-2 justify-space-between items-center"
+                    >
+                      <div class="lumo-markdown w-full max-w-full flex-1 text-pre-line">
+                        <span class="whitespace-pre-line"
+                          >Please write a short response that includes: 1, A paragraph containing
+                          bold text, italic text, and a link to deadrat.in. 2, A code block in
+                          Elixir showing a hello world. 3, A simple table of a few countries (maybe
+                          denmark, sweden, USA, India, Pakistan, Nigeria) showing: median wages,
+                          average work hours per week, paid leave days, and union membership rate.
+                          4, A math equation using LaTeX, maybe Euler's Identity.
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      class="user-toolbar flex *:min-size-auto flex-row flex-nowrap gap-1 absolute bottom-custom right-0 p-1 items-center group-hover:opacity-100"
+                      style="--bottom-custom: -1.5rem"
+                    >
+                      <div class="bg-norm border border-weak rounded-lg">
+                        <div
+                          class="flex flex-row flex-nowrap gap-px p-0.5"
+                          style="inline-size: max-content"
+                        >
+                          <button
+                            class="button button-for-icon button-small button-ghost-weak shrink-0"
+                            aria-busy="false"
+                            type="button"
+                            aria-describedby="tooltip-3"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="lucide lucide-pencil"
+                              aria-label="Edit"
+                            >
+                              <path
+                                d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+                              ></path>
+                              <path d="m15 5 4 4"></path>
+                            </svg></button
+                          ><button
+                            class="button button-for-icon button-small button-ghost-weak shrink-0"
+                            aria-busy="false"
+                            type="button"
+                            aria-describedby="tooltip-8"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="lucide lucide-chevron-up"
+                              aria-hidden="true"
+                            >
+                              <path d="m18 15-6-6-6 6"></path>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="lumo-chat-item reset4print flex flex-row flex-nowrap w-full md:w-2/3 mx-auto max-w-custom assistant-msg justify-start mb-6"
+                style="--max-w-custom: 46.5rem"
+                data-message-role="assistant"
+                data-message-id="98920937-7916-4b90-82e9-45aab7c8db9c"
+              >
+                <div class="gap-2 relative w-full">
+                  <div
+                    class="assistant-msg-container w-full flex flex-row flex-nowrap rounded-xl p-bg-norm"
+                    style="--min-h-custom: 62px"
+                  >
+                    <div
+                      class="w-full flex *:min-size-auto flex-nowrap items-start flex-column gap-2"
+                    >
+                      <div class="w-full" style="min-height: 2em">
+                        <div class="progressive-markdown-content markdown-rendering">
+                          <div class="content-visibility-auto">
+                            <p>Here is the short response you requested:</p>
+                          </div>
+                          <div class="content-visibility-auto">
+                            <p>
+                              This is a <strong>bold statement</strong> about the importance of open
+                              source, while <em>italicizing</em> the need for privacy. You can find
+                              more information at <a href="https://deadrat.in">deadrat.in</a>.
+                            </p>
+                          </div>
+                          <div>
+                            <div class="message-container code-container w-full min-w-0">
+                              <div class="group-hover-opacity-container lumo-code-block">
+                                <div class="lumo-code-block-copy-source min-w-0">
+                                  <div
+                                    class="lumo-syntax-highlighter"
+                                    style="
+                                      background: rgb(250, 250, 250);
+                                      color: rgb(56, 58, 66);
+                                      font-family:
+                                        'Fira Code', 'Fira Mono', Menlo, Consolas,
+                                        'DejaVu Sans Mono', monospace;
+                                      direction: ltr;
+                                      text-align: left;
+                                      white-space: pre;
+                                      word-spacing: normal;
+                                      word-break: normal;
+                                      line-height: 1.5;
+                                      tab-size: 2;
+                                      hyphens: none;
+                                      padding: 1em;
+                                      margin: 0.5em 0px;
+                                      overflow: auto;
+                                      border-radius: 0.3em;
+                                    "
+                                  >
+                                    <code
+                                      class="language-elixir"
+                                      style="
+                                        white-space: pre;
+                                        background: rgb(250, 250, 250);
+                                        color: rgb(56, 58, 66);
+                                        font-family:
+                                          'Fira Code', 'Fira Mono', Menlo, Consolas,
+                                          'DejaVu Sans Mono', monospace;
+                                        direction: ltr;
+                                        text-align: left;
+                                        word-spacing: normal;
+                                        word-break: normal;
+                                        line-height: 1.5;
+                                        tab-size: 2;
+                                        hyphens: none;
+                                      "
+                                      ><span class="token module" style="color: rgb(183, 107, 1)"
+                                        >IO</span
+                                      ><span class="token" style="color: rgb(56, 58, 66)">.</span
+                                      ><span class="token" style="color: rgb(64, 120, 242)"
+                                        >puts</span
+                                      ><span class="token" style="color: rgb(56, 58, 66)">(</span
+                                      ><span class="token" style="color: rgb(80, 161, 79)"
+                                        >"Hello, World!"</span
+                                      ><span class="token" style="color: rgb(56, 58, 66)"
+                                        >)</span
+                                      ></code
+                                    >
+                                  </div>
+                                </div>
+                                <div
+                                  class="lumo-code-block-copy lumo-no-copy shadow-lifted group-hover:opacity-100"
+                                >
+                                  <button
+                                    class="button button-for-icon button-small button-ghost-weak"
+                                    aria-busy="false"
+                                    type="button"
+                                    aria-label="Copy"
+                                    aria-describedby="tooltip-40"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="16"
+                                      height="16"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      stroke-width="2"
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      class="lucide lucide-copy"
+                                      aria-hidden="true"
+                                    >
+                                      <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+                                      <path
+                                        d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                                      ></path>
+                                    </svg>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="content-visibility-auto">
+                            <div class="markdown-table-wrapper">
+                              <table node="[object Object]">
+                                <thead>
+                                  <tr>
+                                    <th style="text-align: left">Country</th>
+                                    <th style="text-align: left">Median Wage (USD/yr)</th>
+                                    <th style="text-align: left">Avg Work Hours/Wk</th>
+                                    <th style="text-align: left">Paid Leave Days</th>
+                                    <th style="text-align: left">Union Membership (%)</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td style="text-align: left">Denmark</td>
+                                    <td style="text-align: left">~45,000</td>
+                                    <td style="text-align: left">37</td>
+                                    <td style="text-align: left">25+</td>
+                                    <td style="text-align: left">67%</td>
+                                  </tr>
+                                  <tr>
+                                    <td style="text-align: left">Sweden</td>
+                                    <td style="text-align: left">~42,000</td>
+                                    <td style="text-align: left">37</td>
+                                    <td style="text-align: left">25</td>
+                                    <td style="text-align: left">66%</td>
+                                  </tr>
+                                  <tr>
+                                    <td style="text-align: left">USA</td>
+                                    <td style="text-align: left">~48,000</td>
+                                    <td style="text-align: left">34.4</td>
+                                    <td style="text-align: left">0 (unmandated)</td>
+                                    <td style="text-align: left">10%</td>
+                                  </tr>
+                                  <tr>
+                                    <td style="text-align: left">India</td>
+                                    <td style="text-align: left">~2,500</td>
+                                    <td style="text-align: left">48</td>
+                                    <td style="text-align: left">15-21</td>
+                                    <td style="text-align: left">2-3%</td>
+                                  </tr>
+                                  <tr>
+                                    <td style="text-align: left">Pakistan</td>
+                                    <td style="text-align: left">~1,500</td>
+                                    <td style="text-align: left">45</td>
+                                    <td style="text-align: left">14</td>
+                                    <td style="text-align: left">&lt;1%</td>
+                                  </tr>
+                                  <tr>
+                                    <td style="text-align: left">Nigeria</td>
+                                    <td style="text-align: left">~2,000</td>
+                                    <td style="text-align: left">46</td>
+                                    <td style="text-align: left">6-12</td>
+                                    <td style="text-align: left">5%</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <p>
+                              <span class="katex"
+                                ><math xmlns="http://www.w3.org/1998/Math/MathML"
+                                  ><semantics
+                                    ><mrow
+                                      ><msup
+                                        ><mi>e</mi><mrow><mi>i</mi><mi>π</mi></mrow></msup
+                                      ><mo>+</mo><mn>1</mn><mo>=</mo><mn>0</mn></mrow
+                                    ><annotation encoding="application/x-tex"
+                                      >e^{i\pi} + 1 = 0</annotation
+                                    ></semantics
+                                  ></math
+                                ></span
+                              >
+                            </p>
+                          </div>
+                        </div>
+                        <div class="flex flex-row flex-nowrap">
+                          <div class="self-start shrink-0 relative no-print">
+                            <div alt="" class="lumo-avatar">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                viewBox="0 0 1000 1000"
+                                width="1000"
+                                height="1000"
+                                style="
+                                  width: 100%;
+                                  height: 100%;
+                                  transform: translate3d(0px, 0px, 0px);
+                                  content-visibility: visible;
+                                "
+                                preserveAspectRatio="xMidYMid meet"
+                              >
+                                <defs>
+                                  <clipPath id="__lottie_element_378">
+                                    <rect width="1000" height="1000" x="0" y="0"></rect>
+                                  </clipPath>
+                                  <clipPath id="__lottie_element_383">
+                                    <path
+                                      fill="#ffffff"
+                                      clip-rule="nonzero"
+                                      d=" M139.89100646972656,86.26000213623047 C157.99099731445312,79.72000122070312 171.11599731445312,90.14700317382812 176.47799682617188,95.66000366210938 C178.3260040283203,97.55999755859375 179.27499389648438,100.16999816894531 179.06100463867188,102.81999969482422 C178.4550018310547,110.33999633789062 175.01800537109375,126.23999786376953 157.11700439453125,133.00999450683594 C138.9770050048828,139.57000732421875 125.96800231933594,129.52499389648438 120.68800354003906,124.23999786376953 C118.88999938964844,122.44000244140625 117.95500183105469,119.94000244140625 118.11499786376953,117.38999938964844 C118.59200286865234,109.7699966430664 121.76100158691406,93.11000061035156 139.88099670410156,86.26000213623047 C139.88099670410156,86.26000213623047 139.89100646972656,86.26000213623047 139.89100646972656,86.26000213623047"
+                                      fill-opacity="1"
+                                    ></path>
+                                  </clipPath>
+                                  <clipPath id="__lottie_element_385">
+                                    <path
+                                      fill="#ffffff"
+                                      clip-rule="nonzero"
+                                      d=" M140.031005859375,86.35299682617188 C158.322998046875,79.81300354003906 171.58799743652344,90.23999786376953 177.00599670410156,95.75299835205078 C178.8730010986328,97.65299987792969 179.83200073242188,100.26300048828125 179.61599731445312,102.91300201416016 C179.00399780273438,110.43299865722656 175.52999877929688,126.33300018310547 157.43899536132812,133.10299682617188 C139.10699462890625,139.66299438476562 125.95999908447266,129.6179962158203 120.6240005493164,124.33300018310547 C118.80699920654297,122.53299713134766 117.86299896240234,120.03299713134766 118.02400207519531,117.48300170898438 C118.50599670410156,109.86299896240234 121.70899963378906,93.2030029296875 140.02099609375,86.35299682617188 C140.02099609375,86.35299682617188 140.031005859375,86.35299682617188 140.031005859375,86.35299682617188"
+                                      fill-opacity="1"
+                                    ></path>
+                                  </clipPath>
+                                  <clipPath id="__lottie_element_396">
+                                    <path
+                                      fill="#ffffff"
+                                      clip-rule="nonzero"
+                                      d=" M67.19000244140625,86.91000366210938 C48.970001220703125,80.37000274658203 35.75,90.79000091552734 30.360000610351562,96.30999755859375 C28.5,98.20999908447266 27.549999237060547,100.81999969482422 27.760000228881836,103.47000122070312 C28.3700008392334,110.98999786376953 31.829999923706055,126.88999938964844 49.849998474121094,133.66000366210938 C68.11000061035156,140.22000122070312 81.20999908447266,130.17999267578125 86.5199966430664,124.88999938964844 C88.33000183105469,123.08999633789062 89.2699966430664,120.58999633789062 89.11000061035156,118.04000091552734 C88.62999725341797,110.41999816894531 85.44000244140625,93.76000213623047 67.19999694824219,86.91000366210938 C67.19999694824219,86.91000366210938 67.19000244140625,86.91000366210938 67.19000244140625,86.91000366210938"
+                                      fill-opacity="1"
+                                    ></path>
+                                  </clipPath>
+                                  <clipPath id="__lottie_element_398">
+                                    <path
+                                      fill="#ffffff"
+                                      clip-rule="nonzero"
+                                      d=" M67.19000244140625,86.91000366210938 C48.970001220703125,80.37000274658203 35.75,90.79000091552734 30.360000610351562,96.30999755859375 C28.5,98.20999908447266 27.549999237060547,100.81999969482422 27.760000228881836,103.47000122070312 C28.3700008392334,110.98999786376953 31.829999923706055,126.88999938964844 49.849998474121094,133.66000366210938 C68.11000061035156,140.22000122070312 81.20999908447266,130.17999267578125 86.5199966430664,124.88999938964844 C88.33000183105469,123.08999633789062 89.2699966430664,120.58999633789062 89.11000061035156,118.04000091552734 C88.62999725341797,110.41999816894531 85.44000244140625,93.76000213623047 67.19999694824219,86.91000366210938 C67.19999694824219,86.91000366210938 67.19000244140625,86.91000366210938 67.19000244140625,86.91000366210938"
+                                      fill-opacity="1"
+                                    ></path>
+                                  </clipPath>
+                                </defs>
+                                <g clip-path="url(#__lottie_element_378)">
+                                  <g
+                                    style="display: block"
+                                    transform="matrix(4,0,0,4,211.1719970703125,207.10400390625)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,72.20700073242188,73.2239990234375)"
+                                    >
+                                      <path
+                                        fill="rgb(238,235,253)"
+                                        fill-opacity="1"
+                                        d=" M0,72.74199676513672 C20.395999908447266,72.74199676513672 38.81700134277344,64.2229995727539 51.948001861572266,50.52399826049805 C64.49099731445312,37.43899917602539 72.20700073242188,19.628000259399414 72.20700073242188,0.0010000000474974513 C72.20700073242188,-20.239999771118164 64.0009994506836,-38.55099868774414 50.75699996948242,-51.737998962402344 C37.71500015258789,-64.7239990234375 19.785999298095703,-72.74199676513672 0,-72.74199676513672 C-19.673999786376953,-72.74199676513672 -37.50899887084961,-64.81600189208984 -50.53300094604492,-51.959999084472656 C-63.909000396728516,-38.75699996948242 -72.20800018310547,-20.354000091552734 -72.20800018310547,0.0010000000474974513 C-72.20800018310547,18.492000579833984 -65.35900115966797,35.37200164794922 -54.07600021362305,48.20600128173828 C-40.84700012207031,63.255001068115234 -21.523000717163086,72.74199676513672 0,72.74199676513672z"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,214.24758911132812,210.00039672851562)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,55.2599983215332,46.599998474121094)"
+                                    >
+                                      <path
+                                        fill="rgb(109,74,255)"
+                                        fill-opacity="1"
+                                        d=" M-26.719999313354492,34.45000076293945 C-26.719999313354492,34.45000076293945 26.719999313354492,-8.449999809265137 26.719999313354492,-8.449999809265137 C26.719999313354492,-8.449999809265137 -6.360000133514404,-30.139999389648438 -6.360000133514404,-30.139999389648438 C-13.039999961853027,-34.45000076293945 -21.90999984741211,-30.239999771118164 -22.799999237060547,-22.350000381469727 C-22.799999237060547,-22.350000381469727 -26.719999313354492,34.45000076293945 -26.719999313354492,34.45000076293945z"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,214.24758911132812,210.00115966796875)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,55.2599983215332,49.29499816894531)"
+                                    >
+                                      <path
+                                        fill="rgb(74,45,197)"
+                                        fill-opacity="1"
+                                        d=" M-3.119999885559082,-9.385000228881836 C-3.119999885559082,-9.385000228881836 8.989999771118164,-1.4450000524520874 8.989999771118164,-1.4450000524520874 C8.989999771118164,-1.4450000524520874 -8.989999771118164,10.645000457763672 -8.989999771118164,10.645000457763672 C-8.989999771118164,10.645000457763672 -7.769999980926514,-7.074999809265137 -7.769999980926514,-7.074999809265137 C-7.610000133514404,-9.364999771118164 -5.039999961853027,-10.645000457763672 -3.119999885559082,-9.385000228881836z"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,214.246826171875,210.00039672851562)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,169.1199951171875,46.599998474121094)"
+                                    >
+                                      <path
+                                        fill="rgb(109,74,255)"
+                                        fill-opacity="1"
+                                        d=" M26.719999313354492,34.45000076293945 C26.719999313354492,34.45000076293945 -26.719999313354492,-8.449999809265137 -26.719999313354492,-8.449999809265137 C-26.719999313354492,-8.449999809265137 6.360000133514404,-30.139999389648438 6.360000133514404,-30.139999389648438 C13.039999961853027,-34.45000076293945 21.90999984741211,-30.239999771118164 22.799999237060547,-22.350000381469727 C22.799999237060547,-22.350000381469727 26.719999313354492,34.45000076293945 26.719999313354492,34.45000076293945z"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,214.246826171875,210.00115966796875)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,169.1199951171875,49.29499816894531)"
+                                    >
+                                      <path
+                                        fill="rgb(74,45,197)"
+                                        fill-opacity="1"
+                                        d=" M3.119999885559082,-9.385000228881836 C3.119999885559082,-9.385000228881836 -8.989999771118164,-1.4450000524520874 -8.989999771118164,-1.4450000524520874 C-8.989999771118164,-1.4450000524520874 8.989999771118164,10.645000457763672 8.989999771118164,10.645000457763672 C8.989999771118164,10.645000457763672 7.769999980926514,-7.074999809265137 7.769999980926514,-7.074999809265137 C7.610000133514404,-9.364999771118164 5.039999961853027,-10.645000457763672 3.119999885559082,-9.385000228881836z"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,214.24720764160156,209.99977111816406)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,112.19000244140625,169.2899932861328)"
+                                    >
+                                      <path
+                                        fill="rgb(65,41,163)"
+                                        fill-opacity="1"
+                                        d=" M-58.209999084472656,-19.809999465942383 C-58.209999084472656,-19.809999465942383 -58.209999084472656,9.449999809265137 -58.209999084472656,9.449999809265137 C-34.18000030517578,18.700000762939453 -10.100000381469727,19.809999465942383 0,19.809999465942383 C10.100000381469727,19.809999465942383 34.16999816894531,18.700000762939453 58.209999084472656,9.449999809265137 C58.209999084472656,9.449999809265137 58.209999084472656,-19.809999465942383 58.209999084472656,-19.809999465942383 C58.209999084472656,-19.809999465942383 -58.209999084472656,-19.809999465942383 -58.209999084472656,-19.809999465942383z"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,214.24717712402344,209.99981689453125)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,103.80000305175781,198.52999877929688)"
+                                    >
+                                      <path
+                                        fill="rgb(255,172,46)"
+                                        fill-opacity="1"
+                                        d=" M0,14.5 C8.008000373840332,14.5 14.5,8.008000373840332 14.5,0 C14.5,-8.008000373840332 8.008000373840332,-14.5 0,-14.5 C-8.008000373840332,-14.5 -14.5,-8.008000373840332 -14.5,0 C-14.5,8.008000373840332 -8.008000373840332,14.5 0,14.5z"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,214.24742126464844,209.99964904785156)"
+                                    opacity="1"
+                                  >
+                                    <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="miter"
+                                        fill-opacity="0"
+                                        stroke-miterlimit="10"
+                                        stroke="rgb(55,37,128)"
+                                        stroke-opacity="1"
+                                        stroke-width="4.19"
+                                        d=" M103.80000305175781,204.66000366210938 C103.80000305175781,204.66000366210938 103.80000305175781,197.60000610351562 103.80000305175781,197.60000610351562"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,214.24717712402344,209.99940490722656)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,103.80000305175781,196.41000366210938)"
+                                    >
+                                      <path
+                                        fill="rgb(55,37,128)"
+                                        fill-opacity="1"
+                                        d=" M0,4.510000228881836 C2.490999937057495,4.510000228881836 4.510000228881836,2.490999937057495 4.510000228881836,0 C4.510000228881836,-2.490999937057495 2.490999937057495,-4.510000228881836 0,-4.510000228881836 C-2.490999937057495,-4.510000228881836 -4.510000228881836,-2.490999937057495 -4.510000228881836,0 C-4.510000228881836,2.490999937057495 -2.490999937057495,4.510000228881836 0,4.510000228881836z"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,214.24720764160156,209.9997100830078)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,112.19000244140625,106.05000305175781)"
+                                    >
+                                      <path
+                                        fill="rgb(109,74,255)"
+                                        fill-opacity="1"
+                                        d=" M0,-73.56999969482422 C-52.529998779296875,-73.56999969482422 -95.11000061035156,-29.399999618530273 -95.11000061035156,14.300000190734863 C-95.11000061035156,58 -38.029998779296875,73.56999969482422 0,73.56999969482422 C38.029998779296875,73.56999969482422 95.11000061035156,58 95.11000061035156,14.300000190734863 C95.11000061035156,-29.399999618530273 52.529998779296875,-73.56999969482422 0,-73.56999969482422z"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,214.2471923828125,209.99952697753906)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,97.33499908447266,139.18499755859375)"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="miter"
+                                        fill-opacity="0"
+                                        stroke-miterlimit="10"
+                                        stroke="rgb(255,255,255)"
+                                        stroke-opacity="1"
+                                        stroke-width="2.62"
+                                        d=" M-3.1449999809265137,-3.1449999809265137 C0.32499998807907104,-3.1449999809265137 3.1449999809265137,-0.32499998807907104 3.1449999809265137,3.1449999809265137"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,214.24745178222656,209.99952697753906)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,103.61499786376953,139.18499755859375)"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="miter"
+                                        fill-opacity="0"
+                                        stroke-miterlimit="10"
+                                        stroke="rgb(255,255,255)"
+                                        stroke-opacity="1"
+                                        stroke-width="2.62"
+                                        d=" M3.1449999809265137,-3.1449999809265137 C-0.32499998807907104,-3.1449999809265137 -3.1449999809265137,-0.32499998807907104 -3.1449999809265137,3.1449999809265137"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,214.2460174560547,210.0000762939453)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,57.90999984741211,109.79499816894531)"
+                                    >
+                                      <path
+                                        fill="rgb(255,255,255)"
+                                        fill-opacity="1"
+                                        d=" M8.779999732971191,-23.385000228881836 C-9.4399995803833,-29.924999237060547 -22.65999984741211,-19.5049991607666 -28.049999237060547,-13.984999656677246 C-29.90999984741211,-12.085000038146973 -30.860000610351562,-9.475000381469727 -30.649999618530273,-6.824999809265137 C-30.040000915527344,0.6949999928474426 -26.579999923706055,16.594999313354492 -8.5600004196167,23.364999771118164 C9.699999809265137,29.924999237060547 22.799999237060547,19.885000228881836 28.110000610351562,14.595000267028809 C29.920000076293945,12.795000076293945 30.860000610351562,10.295000076293945 30.700000762939453,7.744999885559082 C30.219999313354492,0.125 27.030000686645508,-16.53499984741211 8.789999961853027,-23.385000228881836 C8.789999961853027,-23.385000228881836 8.779999732971191,-23.385000228881836 8.779999732971191,-23.385000228881836z"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,214.24659729003906,209.99891662597656)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,58.22999954223633,98.58999633789062)"
+                                    >
+                                      <path
+                                        fill="rgb(55,36,128)"
+                                        fill-opacity="1"
+                                        d=" M30.510000228881836,18.790000915527344 C29.31999969482422,11.430000305175781 26.459999084472656,4.550000190734863 21.790000915527344,-0.6700000166893005 C9.380000114440918,-14.0600004196167 -11.210000038146973,-16.110000610351562 -25.479999542236328,-4.340000152587891 C-28.399999618530273,-2.2100000381469727 -30.829999923706055,0.5899999737739563 -31.15999984741211,4.380000114440918 C-31.889999389648438,0.47999998927116394 -29.690000534057617,-3.2799999713897705 -27.020000457763672,-6 C-24.40999984741211,-8.8100004196167 -21.329999923706055,-11.25 -17.860000610351562,-13.0600004196167 C-7.320000171661377,-18.790000915527344 6.090000152587891,-17.3700008392334 16.030000686645508,-11 C26.059999465942383,-4.949999809265137 31.889999389648438,7.46999979019165 30.510000228881836,18.790000915527344z"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    clip-path="url(#__lottie_element_396)"
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,189.88758850097656,210.0001220703125)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,70.11000061035156,111.76000213623047)"
+                                    >
+                                      <path
+                                        fill="rgb(65,41,163)"
+                                        fill-opacity="1"
+                                        d=" M0,16.489999771118164 C4.755000114440918,16.489999771118164 8.609999656677246,9.107000350952148 8.609999656677246,0 C8.609999656677246,-9.107000350952148 4.755000114440918,-16.489999771118164 0,-16.489999771118164 C-4.755000114440918,-16.489999771118164 -8.609999656677246,-9.107000350952148 -8.609999656677246,0 C-8.609999656677246,9.107000350952148 -4.755000114440918,16.489999771118164 0,16.489999771118164z"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    clip-path="url(#__lottie_element_398)"
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,189.88758850097656,210.0001220703125)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,76.44000244140625,100.27999877929688)"
+                                    >
+                                      <path
+                                        fill="rgb(255,255,255)"
+                                        fill-opacity="0.70196"
+                                        d=" M0,3.9200000762939453 C2.1649999618530273,3.9200000762939453 3.9200000762939453,2.1649999618530273 3.9200000762939453,0 C3.9200000762939453,-2.1649999618530273 2.1649999618530273,-3.9200000762939453 0,-3.9200000762939453 C-2.1649999618530273,-3.9200000762939453 -3.9200000762939453,-2.1649999618530273 -3.9200000762939453,0 C-3.9200000762939453,2.1649999618530273 -2.1649999618530273,3.9200000762939453 0,3.9200000762939453z"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,214.24591064453125,210.0000762939453)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,148.63999938964844,109.79499816894531)"
+                                    >
+                                      <path
+                                        fill="rgb(255,255,255)"
+                                        fill-opacity="1"
+                                        d=" M-8.779999732971191,-23.385000228881836 C9.4399995803833,-29.924999237060547 22.65999984741211,-19.5049991607666 28.049999237060547,-13.984999656677246 C29.90999984741211,-12.085000038146973 30.860000610351562,-9.475000381469727 30.649999618530273,-6.824999809265137 C30.040000915527344,0.6949999928474426 26.579999923706055,16.594999313354492 8.5600004196167,23.364999771118164 C-9.699999809265137,29.924999237060547 -22.799999237060547,19.885000228881836 -28.110000610351562,14.595000267028809 C-29.920000076293945,12.795000076293945 -30.860000610351562,10.295000076293945 -30.700000762939453,7.744999885559082 C-30.219999313354492,0.125 -27.030000686645508,-16.53499984741211 -8.789999961853027,-23.385000228881836 C-8.789999961853027,-23.385000228881836 -8.779999732971191,-23.385000228881836 -8.779999732971191,-23.385000228881836z"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,214.24630737304688,209.9988250732422)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,148.3300018310547,98.58999633789062)"
+                                    >
+                                      <path
+                                        fill="rgb(55,36,128)"
+                                        fill-opacity="1"
+                                        d=" M-30.520000457763672,18.790000915527344 C-31.889999389648438,7.46999979019165 -26.06999969482422,-4.949999809265137 -16.030000686645508,-11 C-6.090000152587891,-17.3700008392334 7.320000171661377,-18.799999237060547 17.860000610351562,-13.0600004196167 C21.34000015258789,-11.25 24.420000076293945,-8.8100004196167 27.020000457763672,-6 C29.690000534057617,-3.2799999713897705 31.889999389648438,0.47999998927116394 31.15999984741211,4.380000114440918 C30.829999923706055,0.5799999833106995 28.399999618530273,-2.2100000381469727 25.479999542236328,-4.340000152587891 C22.65999984741211,-6.590000152587891 19.549999237060547,-8.399999618530273 16.309999465942383,-9.739999771118164 C3.359999895095825,-15.100000381469727 -12.470000267028809,-10.920000076293945 -21.799999237060547,-0.6600000262260437 C-26.469999313354492,4.559999942779541 -29.329999923706055,11.4399995803833 -30.520000457763672,18.799999237060547 C-30.520000457763672,18.799999237060547 -30.520000457763672,18.790000915527344 -30.520000457763672,18.790000915527344z"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    clip-path="url(#__lottie_element_383)"
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,189.8872833251953,210.0001220703125)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,158.5500030517578,111.76000213623047)"
+                                    >
+                                      <path
+                                        fill="rgb(65,41,163)"
+                                        fill-opacity="1"
+                                        d=" M0,16.489999771118164 C4.755000114440918,16.489999771118164 8.609999656677246,9.107000350952148 8.609999656677246,0 C8.609999656677246,-9.107000350952148 4.755000114440918,-16.489999771118164 0,-16.489999771118164 C-4.755000114440918,-16.489999771118164 -8.609999656677246,-9.107000350952148 -8.609999656677246,0 C-8.609999656677246,9.107000350952148 -4.755000114440918,16.489999771118164 0,16.489999771118164z"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                  <g
+                                    clip-path="url(#__lottie_element_385)"
+                                    style="display: block"
+                                    transform="matrix(2.547157049179077,0,0,2.547157049179077,189.8872833251953,210.0001220703125)"
+                                    opacity="1"
+                                  >
+                                    <g
+                                      opacity="1"
+                                      transform="matrix(1,0,0,1,164.8800048828125,100.27999877929688)"
+                                    >
+                                      <path
+                                        fill="rgb(255,255,255)"
+                                        fill-opacity="0.70196"
+                                        d=" M0,3.9200000762939453 C2.1649999618530273,3.9200000762939453 3.9200000762939453,2.1649999618530273 3.9200000762939453,0 C3.9200000762939453,-2.1649999618530273 2.1649999618530273,-3.9200000762939453 0,-3.9200000762939453 C-2.1649999618530273,-3.9200000762939453 -3.9200000762939453,-2.1649999618530273 -3.9200000762939453,0 C-3.9200000762939453,2.1649999618530273 -2.1649999618530273,3.9200000762939453 0,3.9200000762939453z"
+                                      ></path>
+                                    </g>
+                                  </g>
+                                </g>
+                              </svg>
+                            </div>
+                          </div>
+                          <div
+                            class="action-toolbar no-print text-sm w-full flex flex-row items-center flex-1 gap-3 justify-end items-center"
+                          >
+                            <div class="flex flex-row flex-nowrap gap-3">
+                              <button
+                                class="button button-for-icon button-small button-ghost-weak lumo-no-copy"
+                                aria-busy="false"
+                                type="button"
+                                aria-label="Copy"
+                                aria-describedby="tooltip-4"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  class="lucide lucide-copy"
+                                  aria-hidden="true"
+                                >
+                                  <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+                                  <path
+                                    d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                                  ></path>
+                                </svg></button
+                              ><button
+                                class="button button-for-icon button-small button-ghost-weak shrink-0 lumo-no-copy"
+                                aria-busy="false"
+                                type="button"
+                                aria-describedby="tooltip-5"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  class="lucide lucide-refresh-cw"
+                                  aria-label="Regenerate"
+                                >
+                                  <path
+                                    d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"
+                                  ></path>
+                                  <path d="M21 3v5h-5"></path>
+                                  <path
+                                    d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"
+                                  ></path>
+                                  <path d="M8 16H3v5"></path>
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-full text-right text-sm color-hint">Conversation encrypted</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="absolute w-full z-50 flex justify-center mb-1"
+            style="
+              bottom: 223.15px;
+              transform: translateY(0px);
+              transition: 200ms ease-in-out;
+              opacity: 1;
+              pointer-events: none;
+            "
+          >
+            <button
+              class="scroll-to-bottom-button shadow-lifted hover:shadow-norm flex items-center justify-center cursor-pointer rounded-50 border border-weak bg-norm color-norm"
+              aria-label="Scroll to bottom"
+              style="pointer-events: auto"
+              aria-describedby="tooltip-6"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-chevron-down"
+                aria-hidden="true"
+              >
+                <path d="m6 9 6 6 6-6"></path>
+              </svg>
+            </button>
+          </div>
+          <div
+            class="lumo-chat-item flex flex-column w-full md:w-2/3 mx-auto max-w-custom no-print mb-4"
+          >
+            <div class="notification-panel border border-weak notif-enter">
+              <button class="notif-close" aria-label="Dismiss">✕</button>
+              <div class="flex flex-row flex-nowrap gap-3 items-start">
+                <div style="flex: 1 1 0%; min-width: 0px">
+                  <div class="flex flex-row flex-nowrap gap-2 items-center mb-1">
+                    <span class="notification-panel-title">Got a minute?</span>
+                  </div>
+                  <p class="notification-panel-text">
+                    Your experience shapes Lumo. Tell us what you think.
+                  </p>
+                  <div class="flex flex-row flex-nowrap gap-2">
+                    <a
+                      class="notif-action"
+                      id="notification-panel-action"
+                      href="https://participant.use2.usertesting.com/se/invite/19d2d6cf-1ba2-47ea-9400-016d33e3c096"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Share your thoughts</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="lumo-chat-item flex flex-column no-print w-full md:w-2/3 mx-auto max-w-custom"
+            style="--max-w-custom: 51.25rem"
+          >
+            <div style="visibility: visible" class="w-full">
+              <section
+                class="flex flex-column flex-nowrap min-h-custom items-center gap-2"
+                style="--min-h-custom: 4.375rem"
+                aria-label="Ask anything to Lumo"
+              >
+                <h2 class="sr-only">Ask anything to Lumo</h2>
+                <div
+                  class="composer-notification-card composer-notification-card--info flex flex-row flex-nowrap items-center gap-2 w-full border border-weak rounded-xl p-4 justify-space-between mb-4 relative group-hover-opacity-container"
+                  role="status"
+                >
+                  <div class="flex flex-row flex-nowrap items-center gap-4 flex-1 min-w-0">
+                    <div class="shrink-0 flex items-center">
+                      <div
+                        class="model-switch-notification-icon inline-flex items-center justify-center shrink-0 rounded-full"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="lucide lucide-gem color-primary"
+                          aria-hidden="true"
+                        >
+                          <path d="M10.5 3 8 9l4 13 4-13-2.5-6"></path>
+                          <path
+                            d="M17 3a2 2 0 0 1 1.6.8l3 4a2 2 0 0 1 .013 2.382l-7.99 10.986a2 2 0 0 1-3.247 0l-7.99-10.986A2 2 0 0 1 2.4 7.8l2.998-3.997A2 2 0 0 1 7 3z"
+                          ></path>
+                          <path d="M2 9h20"></path>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="flex flex-column gap-1 min-w-0">
+                      <span class="text-semibold"
+                        >You're on Lumo Lite. Switch to Max for more capable answers.</span
+                      >
+                    </div>
+                  </div>
+                  <button
+                    class="button button-medium button-outline-norm shrink-0"
+                    aria-busy="false"
+                    type="button"
+                  >
+                    Switch to Max</button
+                  ><button
+                    class="button button-for-icon button-small button-ghost-weak composer-notification-card-dismiss-button rounded-full border-weak shrink-0 self-start absolute top-0 right-0 bg-norm z-up"
+                    aria-busy="false"
+                    type="button"
+                    title="Dismiss"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-x color-weak"
+                      aria-label="Dismiss"
+                    >
+                      <path d="M18 6 6 18"></path>
+                      <path d="m6 6 12 12"></path>
+                    </svg>
+                  </button>
+                </div>
+                <div class="composer-input-glow-wrapper w-full">
+                  <div class="lumo-input-container bg-norm w-full">
+                    <div
+                      class="lumo-input border-none flex-grow w-full z-30 flex flex-row flex-nowrap items-end gap-3 p-2 pl-3 my-auto bg-norm relative"
+                    >
+                      <textarea
+                        placeholder="Ask anything…"
+                        class="tiptap ProseMirror composer flex-grow w-full resize-none p-1 bg-transparent border-0 outline-none shadow-none"
+                        autocorrect="on"
+                        autocomplete="on"
+                        autocapitalize="sentences"
+                        spellcheck="true"
+                        style="height: 32px !important"
+                      ></textarea>
+                    </div>
+                    <div
+                      class="flex flex-row flex-nowrap items-center justify-space-between w-full mt-1"
+                    >
+                      <div class="flex flex-row flex-nowrap items-center gap-1 pl-2">
+                        <input
+                          type="file"
+                          id="emptyFileCardInput"
+                          accept="image/jpeg,image/png,image/gif,image/webp,image/heic,image/heif,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.oasis.opendocument.text,application/rtf,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv,application/csv,text/plain,text/markdown,text/x-markdown,text/html,text/latex,text/rst,text/asciidoc,text/x-asciidoc,text/css,application/javascript,text/javascript,application/typescript,text/x-typescript,application/json,application/xml,text/xml,application/yaml,text/yaml,application/x-yaml,text/x-yaml,application/toml,text/toml,text/x-log,application/x-log,text/x-python,application/x-python,text/x-java-source,text/x-java,text/x-c,text/x-c++,text/x-c++src,text/x-csharp,text/x-php,application/x-php,text/x-ruby,application/x-ruby,text/x-go,text/x-rust,text/x-matlab,text/x-mathematica,text/x-sql,application/x-sql,text/x-dart,text/x-elixir,text/x-erlang,text/x-lua,text/x-perl,application/x-perl,text/x-groovy,text/x-vim,text/x-sh,application/x-sh,text/x-shellscript,text/x-powershell,application/x-bat,.jpg,.jpeg,.png,.gif,.webp,.heic,.heif,.pdf,.doc,.docx,.odt,.rtf,.xls,.xlsx,.csv,.txt,.md,.markdown,.html,.htm,.latex,.tex,.rst,.adoc,.asciidoc,.asc,.css,.js,.mjs,.jsx,.ts,.tsx,.json,.xml,.yaml,.yml,.toml,.ini,.cfg,.conf,.properties,.env,.log,.py,.pyw,.pyi,.java,.cpp,.cxx,.c,.h,.hpp,.hxx,.cc,.cs,.php,.php3,.php4,.php5,.phtml,.rb,.rbw,.go,.rs,.rlib,.swift,.kt,.scala,.clj,.hs,.ml,.m,.r,.sql,.dart,.ex,.exs,.erl,.hrl,.lua,.pl,.pm,.perl,.groovy,.gvy,.vim,.vimrc,.sh,.bash,.zsh,.fish,.ksh,.csh,.tcsh,.ps1,.psm1,.ps1xml,.bat,.cmd,.dockerfile,.makefile,.cmake,.gradle,.maven,.sbt,.cargo,.lock,.gitignore"
+                          class="hidden"
+                          multiple=""
+                        /><button
+                          class="button button-for-icon button-small button-ghost-weak border-0 shrink-0 flex flex-row flex-nowrap gap-1 items-center rounded-full"
+                          aria-busy="false"
+                          type="button"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-plus"
+                            aria-hidden="true"
+                          >
+                            <path d="M5 12h14"></path>
+                            <path d="M12 5v14"></path>
+                          </svg></button
+                        ><button
+                          class="button button-small button-ghost-weak border-0 shrink-0 flex flex-row flex-nowrap gap-2 items-center py-1.5 rounded-full"
+                          aria-busy="false"
+                          type="button"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-sliders-horizontal"
+                            aria-hidden="true"
+                          >
+                            <path d="M10 5H3"></path>
+                            <path d="M12 19H3"></path>
+                            <path d="M14 3v4"></path>
+                            <path d="M16 17v4"></path>
+                            <path d="M21 12h-9"></path>
+                            <path d="M21 19h-5"></path>
+                            <path d="M21 5h-7"></path>
+                            <path d="M8 10v4"></path>
+                            <path d="M8 12H3"></path></svg
+                          ><span class="hidden sm:block text-sm">Tools</span>
+                        </button>
+                      </div>
+                      <div class="flex flex-row flex-nowrap items-center gap-2 mr-2">
+                        <div
+                          class="flex flex-row flex-nowrap gap-2 color-hint hidden"
+                          id="voice-entry-mobile"
+                        >
+                          <button
+                            class="button button-for-icon button-small button-ghost-weak border-0 shrink-0 inline-flex flex-row flex-nowrap gap-1 items-center"
+                            aria-busy="false"
+                            type="button"
+                            id="voice-entry-mobile-button"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="lucide lucide-mic"
+                              aria-hidden="true"
+                            >
+                              <path d="M12 19v3"></path>
+                              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                              <rect x="9" y="2" width="6" height="13" rx="3"></rect>
+                            </svg>
+                          </button>
+                        </div>
+                        <button
+                          class="button button-small button-ghost-weak model-mode-trigger border-0 shrink-0 flex flex-row flex-nowrap gap-1 items-center color-norm py-1 px-2 rounded-full text-sm"
+                          aria-busy="false"
+                          type="button"
+                          aria-expanded="false"
+                        >
+                          <span class="font-medium hidden sm:block">Lumo 2.0 Lite</span
+                          ><svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-chevron-down"
+                            aria-hidden="true"
+                          >
+                            <path d="m6 9 6 6 6-6"></path>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+          <p class="text-center relative color-weak text-xs my-2 hidden md:block">
+            Lumo can make mistakes. Please double-check responses.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

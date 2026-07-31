@@ -13,6 +13,7 @@ import { GeminiCloudAssistParser } from './parsers/gemini_cloud_assist.js';
 import { GoogleAIStudioParser } from './parsers/google_ai_studio.js';
 import { NotebookLMParser } from './parsers/notebooklm.js';
 import { CopilotParser } from './parsers/copilot.js';
+import { LumoParser } from './parsers/lumo.js';
 
 import { MarkdownFormatter } from './formatters/markdown.js';
 import { JsonFormatter } from './formatters/json.js';
@@ -86,6 +87,7 @@ const parsers = [
   new GoogleAIStudioParser(),
   new NotebookLMParser(),
   new CopilotParser(),
+  new LumoParser(),
 ];
 
 // Registry of formatters

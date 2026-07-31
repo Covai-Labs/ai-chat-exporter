@@ -28,7 +28,8 @@
     "*://aistudio.google.com/*",
     "*://notebooklm.google.com/*",
     "*://copilot.microsoft.com/*",
-    "*://www.copilot.microsoft.com/*"
+    "*://www.copilot.microsoft.com/*",
+    "*://lumo.proton.me/*"
   ],
   "action": {
     "default_popup": "popup/popup.html",
@@ -60,6 +61,7 @@
         "*://notebooklm.google.com/*",
         "*://copilot.microsoft.com/*",
         "*://www.copilot.microsoft.com/*",
+        "*://lumo.proton.me/*",
         "*://*.google.com/*",
         "*://*.google.com/search*",
         "*://*.google.co.in/search*",
@@ -102,6 +104,7 @@
         "*://console.cloud.google.com/*",
         "*://copilot.microsoft.com/*",
         "*://www.copilot.microsoft.com/*",
+        "*://lumo.proton.me/*",
         "*://*.google.com/*",
         "*://*.google.co.in/*",
         "*://*.google.co.uk/*",
