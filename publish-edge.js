@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 
 const PRODUCT_ID = process.env.EDGE_PRODUCT_ID;
 const CLIENT_ID = process.env.EDGE_CLIENT_ID;
@@ -9,6 +10,11 @@ if (!PRODUCT_ID || !CLIENT_ID || !API_KEY) {
   console.error(
     'Error: EDGE_PRODUCT_ID, EDGE_CLIENT_ID, and EDGE_API_KEY environment variables must be set.',
   );
+  process.exit(1);
+}
+
+if (ZIP_PATH.includes('..') || !path.resolve(ZIP_PATH).endsWith('.zip')) {
+  console.error('Error: EDGE_ZIP_PATH must be a .zip file without path traversal components.');
   process.exit(1);
 }
 
