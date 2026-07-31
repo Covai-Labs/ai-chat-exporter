@@ -1,206 +1,157 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>404 — Chasing Ghosts? | CovAI</title>
-    <meta
-      name="description"
-      content="This will-o'-the-wisp has wandered off with the page. CovAI 404 Page."
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Chasing Ghosts? | Covai Labs</title>
+  <meta name="description" content="This will-o'-the-wisp has wandered off with the page. Covai Labs 404 Page." />
+  
+  <!-- Favicons -->
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+  <link rel="manifest" href="site.webmanifest" />
 
-    <!-- Favicons -->
-    <link rel="icon" href="favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
-    <link rel="manifest" href="site.webmanifest" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet" />
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
-              mono: ['"JetBrains Mono"', 'monospace'],
-            },
-          },
-        },
-      };
-    </script>
-
-    <style>
-      /* Neo-Brutalist Tactile Cards */
-      .tactile-card {
-        border: 2px solid #1e293b;
-        box-shadow: 4px 4px 0px 0px #0f172a;
-        transition: all 0.15s ease-in-out;
-      }
-
-      .dark .tactile-card {
-        border-color: #334155;
-        box-shadow: 4px 4px 0px 0px #1e293b;
-      }
-
-      .tactile-card:hover {
-        transform: translate(-2px, -2px);
-        box-shadow: 6px 6px 0px 0px #38bdf8;
-        border-color: #38bdf8;
-      }
-
-      .ghost-glow {
-        animation: floatGlow 4s ease-in-out infinite alternate;
-      }
-
-      @keyframes floatGlow {
-        0% {
-          transform: translateY(0px);
-          filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.2));
-        }
-        100% {
-          transform: translateY(-8px);
-          filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.4));
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
         }
       }
-    </style>
-  </head>
-  <body
-    class="mx-auto min-h-screen max-w-4xl px-4 py-10 font-sans antialiased text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-[#0b0f17] flex flex-col justify-between"
-  >
-    <header
-      class="w-full text-center md:text-left flex items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800"
-    >
-      <a href="https://www.covai.org" class="flex items-center gap-3 group">
-        <div
-          class="size-10 rounded-lg bg-sky-500/10 border border-sky-500/30 flex items-center justify-center font-mono font-black text-sky-400 group-hover:border-sky-400 transition-colors"
-        >
-          AI
-        </div>
-        <div>
-          <span class="font-extrabold tracking-tight text-xl text-slate-900 dark:text-white block"
-            >COVAI</span
-          >
-          <span class="text-xs font-mono text-slate-500 dark:text-slate-400"
-            >Systems. Software. Solutions.</span
-          >
-        </div>
+    }
+  </script>
+
+  <style>
+    /* Neo-Brutalist Tactile Cards */
+    .tactile-card {
+      border: 2px solid #1e293b;
+      box-shadow: 4px 4px 0px 0px #0f172a;
+      transition: all 0.15s ease-in-out;
+    }
+
+    .dark .tactile-card {
+      border-color: #334155;
+      box-shadow: 4px 4px 0px 0px #1e293b;
+    }
+
+    .tactile-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px 0px #38bdf8;
+      border-color: #38bdf8;
+    }
+
+    .ghost-glow {
+      animation: floatGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatGlow {
+      0% {
+        transform: translateY(0px);
+        filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.2));
+      }
+      100% {
+        transform: translateY(-8px);
+        filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.4));
+      }
+    }
+  </style>
+</head>
+<body class="mx-auto min-h-screen max-w-4xl px-4 py-10 font-sans antialiased text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-[#0b0f17] flex flex-col justify-between">
+  
+  <header class="w-full text-center md:text-left flex items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+    <a href="https://www.covai.org" class="flex items-center gap-4 group">
+      <img
+        src="profile-picture.jpg"
+        onerror="this.src='https://covai.org/profile-picture.jpg'"
+        alt="Covai Logo"
+        class="size-12 md:size-14 rounded-lg object-cover border-2 border-slate-900 dark:border-slate-700 shadow-[3px_3px_0px_0px_#000] dark:shadow-[3px_3px_0px_0px_#38bdf8]"
+      />
+      <div>
+        <span class="font-extrabold tracking-tight text-xl md:text-2xl text-slate-900 dark:text-white block">
+          Covai Labs
+        </span>
+      </div>
+    </a>
+    <div class="inline-flex items-center gap-2 px-3 py-1 text-xs font-mono font-bold uppercase tracking-wider text-rose-400 bg-rose-950/40 border border-rose-800/80 rounded-md">
+      <span class="size-2 rounded-full bg-rose-500 animate-pulse"></span>
+      HTTP 404 // SIGNAL LOST
+    </div>
+  </header>
+
+  <main class="my-auto py-10 flex flex-col items-center text-center">
+    
+    <!-- Ghost Icon / Graphic -->
+    <div class="ghost-glow mb-6 p-6 rounded-2xl bg-white dark:bg-[#121824] tactile-card border-slate-700">
+      <svg class="size-20 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3c-4.97 0-9 4.03-9 9v7.5c0 .83.67 1.5 1.5 1.5.42 0 .8-.17 1.08-.45L7 19.12l1.42 1.43c.28.28.66.45 1.08.45.42 0 .8-.17 1.08-.45L12 19.12l1.42 1.43c.28.28.66.45 1.08.45.42 0 .8-.17 1.08-.45L17 19.12l1.42 1.43c.28.28.66.45 1.08.45.83 0 1.5-.67 1.5-1.5V12c0-4.97-4.03-9-9-9z"></path>
+        <circle cx="9" cy="10" r="1.25" fill="currentColor"></circle>
+        <circle cx="15" cy="10" r="1.25" fill="currentColor"></circle>
+      </svg>
+    </div>
+
+    <!-- Main 404 Headline -->
+    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
+      404 — Chasing ghosts?
+    </h1>
+    
+    <!-- Subtitle -->
+    <p class="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-xl font-medium leading-relaxed mb-8">
+      This will-o'-the-wisp has wandered off with the page.
+    </p>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap justify-center gap-4 mb-12">
+      <button onclick="window.history.length > 1 ? window.history.back() : window.location.href='/'" class="px-6 py-3 rounded-lg font-mono text-sm font-bold text-slate-900 dark:text-white bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 tactile-card cursor-pointer">
+        ← Go Back
+      </button>
+      <a href="/" class="px-6 py-3 rounded-lg font-mono text-sm font-bold text-white bg-sky-600 hover:bg-sky-500 tactile-card">
+        Return Home (/)
       </a>
-      <div
-        class="inline-flex items-center gap-2 px-3 py-1 text-xs font-mono font-bold uppercase tracking-wider text-rose-400 bg-rose-950/40 border border-rose-800/80 rounded-md"
-      >
-        <span class="size-2 rounded-full bg-rose-500 animate-pulse"></span>
-        HTTP 404 // SIGNAL LOST
+    </div>
+
+    <!-- Quick Links Grid -->
+    <div class="w-full max-w-2xl text-left">
+      <div class="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 px-1">
+        // COVAI PORTALS
       </div>
-    </header>
-
-    <main class="my-auto py-10 flex flex-col items-center text-center">
-      <!-- Ghost Icon / Graphic -->
-      <div
-        class="ghost-glow mb-6 p-6 rounded-2xl bg-white dark:bg-[#121824] tactile-card border-slate-700"
-      >
-        <svg
-          class="size-20 text-sky-400"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
-            d="M12 3c-4.97 0-9 4.03-9 9v7.5c0 .83.67 1.5 1.5 1.5.42 0 .8-.17 1.08-.45L7 19.12l1.42 1.43c.28.28.66.45 1.08.45.42 0 .8-.17 1.08-.45L12 19.12l1.42 1.43c.28.28.66.45 1.08.45.42 0 .8-.17 1.08-.45L17 19.12l1.42 1.43c.28.28.66.45 1.08.45.83 0 1.5-.67 1.5-1.5V12c0-4.97-4.03-9-9-9z"
-          ></path>
-          <circle cx="9" cy="10" r="1.25" fill="currentColor"></circle>
-          <circle cx="15" cy="10" r="1.25" fill="currentColor"></circle>
-        </svg>
-      </div>
-
-      <!-- Main 404 Headline -->
-      <h1
-        class="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4"
-      >
-        404 — Chasing ghosts?
-      </h1>
-
-      <!-- Subtitle -->
-      <p
-        class="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-xl font-medium leading-relaxed mb-8"
-      >
-        This will-o'-the-wisp has wandered off with the page.
-      </p>
-
-      <!-- Action Buttons -->
-      <div class="flex flex-wrap justify-center gap-4 mb-12">
-        <button
-          onclick="window.history.length > 1 ? window.history.back() : (window.location.href = '/')"
-          class="px-6 py-3 rounded-lg font-mono text-sm font-bold text-slate-900 dark:text-white bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 tactile-card cursor-pointer"
-        >
-          ← Go Back
-        </button>
-        <a
-          href="/"
-          class="px-6 py-3 rounded-lg font-mono text-sm font-bold text-white bg-sky-600 hover:bg-sky-500 tactile-card"
-        >
-          Return Home (/)
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <a href="https://www.covai.org" class="p-3.5 rounded-lg bg-white dark:bg-[#121824] tactile-card block">
+          <div class="font-bold text-sm text-slate-900 dark:text-white">covai.org</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400">Covai Labs Main Hub</div>
+        </a>
+        <a href="https://go.covai.org" class="p-3.5 rounded-lg bg-white dark:bg-[#121824] tactile-card block">
+          <div class="font-bold text-sm text-slate-900 dark:text-white">go.covai.org</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400">Services & Applications</div>
+        </a>
+        <a href="https://smb.covai.org" class="p-3.5 rounded-lg bg-white dark:bg-[#121824] tactile-card block">
+          <div class="font-bold text-sm text-slate-900 dark:text-white">smb.covai.org</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400">SMB Solutions</div>
+        </a>
+        <a href="https://jay.covai.org" class="p-3.5 rounded-lg bg-white dark:bg-[#121824] tactile-card block">
+          <div class="font-bold text-sm text-slate-900 dark:text-white">jay.covai.org</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400">Jay's Personal Portal</div>
         </a>
       </div>
+    </div>
 
-      <!-- Quick Links Grid -->
-      <div class="w-full max-w-2xl text-left">
-        <div
-          class="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3 px-1"
-        >
-          // COVAI PORTALS
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <a
-            href="https://www.covai.org"
-            class="p-3.5 rounded-lg bg-white dark:bg-[#121824] tactile-card block"
-          >
-            <div class="font-bold text-sm text-slate-900 dark:text-white">covai.org</div>
-            <div class="text-xs text-slate-500 dark:text-slate-400">Main Innovation Studio</div>
-          </a>
-          <a
-            href="https://go.covai.org"
-            class="p-3.5 rounded-lg bg-white dark:bg-[#121824] tactile-card block"
-          >
-            <div class="font-bold text-sm text-slate-900 dark:text-white">go.covai.org</div>
-            <div class="text-xs text-slate-500 dark:text-slate-400">Services & Applications</div>
-          </a>
-          <a
-            href="https://smb.covai.org"
-            class="p-3.5 rounded-lg bg-white dark:bg-[#121824] tactile-card block"
-          >
-            <div class="font-bold text-sm text-slate-900 dark:text-white">smb.covai.org</div>
-            <div class="text-xs text-slate-500 dark:text-slate-400">SMB Solutions</div>
-          </a>
-          <a
-            href="https://jay.covai.org"
-            class="p-3.5 rounded-lg bg-white dark:bg-[#121824] tactile-card block"
-          >
-            <div class="font-bold text-sm text-slate-900 dark:text-white">jay.covai.org</div>
-            <div class="text-xs text-slate-500 dark:text-slate-400">Jay's Personal Portal</div>
-          </a>
-        </div>
-      </div>
-    </main>
+  </main>
 
-    <footer
-      class="w-full text-center text-xs font-mono text-slate-500 dark:text-slate-400 pt-6 border-t border-slate-200 dark:border-slate-800"
-    >
-      © CovAI Innovation Studio — Systems. Software. Solutions.
-    </footer>
-  </body>
+  <footer class="w-full text-center text-xs font-mono text-slate-500 dark:text-slate-400 pt-6 border-t border-slate-200 dark:border-slate-800">
+    © Covai Labs
+  </footer>
+
+</body>
 </html>
