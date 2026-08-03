@@ -11,10 +11,26 @@ const TARGET_MATCHES = [
   '*://gemini.google.com/*',
   '*://claude.ai/*',
   '*://qwen.ai/*',
+  '*://chat.qwen.ai/*',
   '*://www.perplexity.ai/*',
   '*://chat.deepseek.com/*',
+  '*://www.meta.ai/*',
+  '*://meta.ai/*',
+  '*://chat.mistral.ai/*',
   '*://chat.z.ai/*',
+  '*://console.cloud.google.com/*',
+  '*://aistudio.google.com/*',
+  '*://notebooklm.google.com/*',
   '*://copilot.microsoft.com/*',
+  '*://www.copilot.microsoft.com/*',
+  '*://lumo.proton.me/*',
+  '*://www.google.com/*',
+  '*://www.google.co.in/*',
+  '*://www.google.co.uk/*',
+  '*://www.google.ca/*',
+  '*://www.google.com.au/*',
+  '*://www.google.de/*',
+  '*://www.google.fr/*',
 ];
 
 const PLATFORM_URLS = {
@@ -27,6 +43,10 @@ const PLATFORM_URLS = {
   mistral: 'https://chat.mistral.ai/',
   notebooklm: 'https://notebooklm.google.com/',
   copilot: 'https://copilot.microsoft.com/',
+  meta: 'https://www.meta.ai/',
+  z_ai: 'https://chat.z.ai/',
+  aistudio: 'https://aistudio.google.com/',
+  lumo: 'https://lumo.proton.me/',
 };
 
 async function syncSidePanelBehavior() {
