@@ -578,15 +578,29 @@ export class HtmlFormatter extends ExportFormatter {
       }
       @page {
         size: portrait;
-        margin: 12mm 15mm;
+        margin: 0;
       }
-      html, body {
-        background-color: #ffffff !important;
-        color: #0f172a !important;
-        width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
+      @media print {
+        html, body {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        html:not([data-theme='dark']), body:not([data-theme='dark']) {
+          background-color: #ffffff !important;
+          color: #0f172a !important;
+          width: 100% !important;
+          margin: 0 !important;
+          padding: 12mm 15mm !important;
+          box-sizing: border-box !important;
+        }
+        html[data-theme='dark'], html[data-theme='dark'] body {
+          background-color: #0f172a !important;
+          color: #f8fafc !important;
+          width: 100% !important;
+          margin: 0 !important;
+          padding: 12mm 15mm !important;
+          box-sizing: border-box !important;
+        }
       .theme-switch-wrapper,
       .copy-code-btn,
       .copy-msg-btn {
@@ -607,23 +621,45 @@ export class HtmlFormatter extends ExportFormatter {
         box-shadow: none !important;
         border: 1px solid #cbd5e1 !important;
       }
-      .message-card.role-user {
+      html[data-theme='dark'] .message-card {
+        border-color: #334155 !important;
+      }
+      html:not([data-theme='dark']) .message-card.role-user {
         align-self: stretch !important;
         max-width: 100% !important;
         background-color: #f1f5f9 !important;
         color: #0f172a !important;
       }
-      .message-card.role-assistant {
+      html[data-theme='dark'] .message-card.role-user {
+        align-self: stretch !important;
+        max-width: 100% !important;
+        background-color: #1e293b !important;
+        color: #f8fafc !important;
+      }
+      html:not([data-theme='dark']) .message-card.role-assistant {
         align-self: stretch !important;
         max-width: 100% !important;
         background-color: #ffffff !important;
         color: #0f172a !important;
       }
+      html[data-theme='dark'] .message-card.role-assistant {
+        align-self: stretch !important;
+        max-width: 100% !important;
+        background-color: #0f172a !important;
+        color: #f8fafc !important;
+      }
       .message-header,
       h1, h2, h3, h4, h5, h6 {
         page-break-after: avoid;
         break-after: avoid;
+      }
+      html:not([data-theme='dark']) .message-header,
+      html:not([data-theme='dark']) h1, html:not([data-theme='dark']) h2, html:not([data-theme='dark']) h3, html:not([data-theme='dark']) h4, html:not([data-theme='dark']) h5, html:not([data-theme='dark']) h6 {
         color: #0f172a !important;
+      }
+      html[data-theme='dark'] .message-header,
+      html[data-theme='dark'] h1, html[data-theme='dark'] h2, html[data-theme='dark'] h3, html[data-theme='dark'] h4, html[data-theme='dark'] h5, html[data-theme='dark'] h6 {
+        color: #f8fafc !important;
       }
       .message-header {
         color: #475569 !important;

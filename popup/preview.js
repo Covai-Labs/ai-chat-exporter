@@ -149,6 +149,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const toggle = doc.getElementById('theme-toggle-checkbox');
       if (toggle) {
         toggle.addEventListener('change', (e) => {
+          cachedPngBlob = null;
           if (e.target.checked) {
             doc.documentElement.setAttribute('data-theme', 'dark');
           } else {
@@ -414,6 +415,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const filename = `${sanitizedTitle || 'chat-export'}.${activeExtension}`;
 
+    const getIframeTheme = () => {
+      try {
+        const doc =
+          previewRendered.contentDocument ||
+          (previewRendered.contentWindow && previewRendered.contentWindow.document);
+        if (doc && doc.documentElement) {
+          if (doc.documentElement.getAttribute('data-theme') === 'dark') return 'dark';
+          if (doc.documentElement.getAttribute('data-theme') === 'light') return 'light';
+        }
+      } catch {
+        // Ignore cross-origin error
+      }
+      if (currentSyncTheme === 'dark') return 'dark';
+      if (currentSyncTheme === 'light') return 'light';
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+
     if (activeExtension === 'png') {
       const originalText = downloadBtn.innerHTML;
       try {
@@ -423,7 +441,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         let pngBlob = cachedPngBlob;
         if (!pngBlob && conversation) {
           const isHighQuality = pngQualityCheckbox ? pngQualityCheckbox.checked : true;
-          pngBlob = await imageFormatter.format(conversation, { highQuality: isHighQuality });
+          const isDarkTheme = getIframeTheme() === 'dark';
+          pngBlob = await imageFormatter.format(conversation, {
+            highQuality: isHighQuality,
+            isDark: isDarkTheme,
+          });
           cachedPngBlob = pngBlob;
         }
 
