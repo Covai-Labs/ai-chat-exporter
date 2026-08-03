@@ -4,3 +4,4 @@ releases/
 content/lib/
 *.log
 tests/fixtures/
+Scratch/

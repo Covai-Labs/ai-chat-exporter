@@ -58,3 +58,33 @@ test('collectMountedTurnMessages scrolls turns and dedupes extracted messages', 
     [1, 1, 1],
   );
 });
+
+test('collectMountedTurnMessages overrides scrollBehavior silently and restores original position', async () => {
+  const turns = [
+    new FakeTurn(1, { key: 'user:q1', role: 'User', content: 'q1' }),
+    new FakeTurn(2, { key: 'assistant:a1', role: 'ChatGPT', content: 'a1' }),
+  ];
+  const scrollRoot = { scrollTop: 450, style: { scrollBehavior: 'smooth' } };
+  const mockDoc = {
+    body: {
+      appendChild: () => {},
+    },
+    createElement: () => ({
+      style: {},
+      remove: () => {},
+    }),
+    querySelectorAll: () => [],
+  };
+
+  const messages = await collectMountedTurnMessages({
+    turns,
+    scrollRoot,
+    waitForRender: async () => {},
+    extractMessage: (turn) => turn.message,
+    doc: mockDoc,
+  });
+
+  assert.equal(messages.length, 2);
+  assert.equal(scrollRoot.scrollTop, 450);
+  assert.equal(scrollRoot.style.scrollBehavior, 'smooth');
+});

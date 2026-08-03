@@ -48,6 +48,52 @@ export function findChatGPTScrollRoot(turns, doc = document) {
   return doc.scrollingElement || doc.documentElement || doc.body;
 }
 
+function createProgressOverlay(doc) {
+  if (!doc || typeof doc.createElement !== 'function' || !doc.body) return null;
+  try {
+    const overlay = doc.createElement('div');
+    overlay.id = 'ai-exporter-progress-overlay';
+    Object.assign(overlay.style, {
+      position: 'fixed',
+      top: '16px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      zIndex: '999999',
+      padding: '10px 20px',
+      background: 'rgba(15, 23, 42, 0.92)',
+      color: '#f8fafc',
+      borderRadius: '8px',
+      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      fontSize: '14px',
+      fontWeight: '500',
+      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3)',
+      pointerEvents: 'none',
+      transition: 'opacity 0.2s ease',
+    });
+    overlay.textContent = 'Preparing conversation export...';
+    doc.body.appendChild(overlay);
+    return overlay;
+  } catch {
+    return null;
+  }
+}
+
+function updateProgressOverlay(overlay, current, total) {
+  if (!overlay) return;
+  const percentage = total > 0 ? Math.round((current / total) * 100) : 0;
+  overlay.textContent = `Processing messages (${current}/${total} - ${percentage}%)...`;
+}
+
+function removeProgressOverlay(overlay) {
+  if (!overlay) return;
+  try {
+    overlay.style.opacity = '0';
+    setTimeout(() => overlay.remove(), 200);
+  } catch {
+    // Ignore cleanup errors
+  }
+}
+
 export async function collectMountedTurnMessages({
   turns,
   scrollRoot,
@@ -55,17 +101,45 @@ export async function collectMountedTurnMessages({
   waitForRender = delay,
   renderWaitMs = DEFAULT_RENDER_WAIT_MS,
   renderAttempts = 4,
+  doc = typeof document !== 'undefined' ? document : null,
 }) {
   const originalTop = scrollRoot?.scrollTop;
+  const originalBehavior = scrollRoot?.style?.scrollBehavior;
+  const overlay = createProgressOverlay(doc);
+
+  if (scrollRoot && scrollRoot.style) {
+    scrollRoot.style.scrollBehavior = 'auto';
+  }
+
   const seen = new Set();
   const messages = [];
-  const orderedTurns = [...turns].sort((a, b) => {
-    return getConversationTurnIndex(a) - getConversationTurnIndex(b);
-  });
 
   try {
-    for (const turn of orderedTurns) {
-      turn.scrollIntoView({ block: 'center' });
+    // Scroll to top first to trigger un-virtualization of earlier turns
+    if (scrollRoot && typeof scrollRoot.scrollTop === 'number') {
+      scrollRoot.scrollTop = 0;
+      await waitForRender(renderWaitMs);
+    }
+
+    // Accumulate all turns dynamically across scroll passes
+    const allTurnElements = new Set(turns || []);
+    if (doc) {
+      getConversationTurns(doc).forEach((t) => allTurnElements.add(t));
+    }
+
+    const orderedTurns = Array.from(allTurnElements).sort((a, b) => {
+      return getConversationTurnIndex(a) - getConversationTurnIndex(b);
+    });
+
+    const totalTurns = orderedTurns.length;
+
+    for (let idx = 0; idx < totalTurns; idx += 1) {
+      const turn = orderedTurns[idx];
+      updateProgressOverlay(overlay, idx + 1, totalTurns);
+
+      if (typeof turn.scrollIntoView === 'function') {
+        turn.scrollIntoView({ block: 'center' });
+      }
 
       let message = null;
       for (let attempt = 0; attempt < renderAttempts; attempt += 1) {
@@ -83,6 +157,12 @@ export async function collectMountedTurnMessages({
       messages.push(publicMessage(message));
     }
   } finally {
+    removeProgressOverlay(overlay);
+
+    if (scrollRoot && scrollRoot.style) {
+      scrollRoot.style.scrollBehavior = originalBehavior || '';
+    }
+
     if (scrollRoot && Number.isFinite(originalTop)) {
       scrollRoot.scrollTop = originalTop;
     }

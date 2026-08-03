@@ -1,3 +1,44 @@
+const capturedAuthStore = {
+  authorization: null,
+  extraHeaders: {},
+};
+
+function getCookieDeviceId() {
+  try {
+    const match = typeof document !== 'undefined' && document.cookie.match(/oai-did=([^;]+)/);
+    return match ? match[1] : null;
+  } catch {
+    return null;
+  }
+}
+
+// Hook fetch to store Authorization and custom headers when page performs network calls
+if (typeof window !== 'undefined' && window.fetch) {
+  const originalFetch = window.fetch;
+  window.fetch = function (...args) {
+    try {
+      const url = typeof args[0] === 'string' ? args[0] : args[0]?.url;
+      if (url && (url.includes('/backend-api/') || url.includes('/api/auth/'))) {
+        const options = args[1];
+        if (options?.headers) {
+          let auth = null;
+          if (options.headers instanceof Headers) {
+            auth = options.headers.get('Authorization');
+          } else if (typeof options.headers === 'object') {
+            auth = options.headers.Authorization || options.headers.authorization;
+          }
+          if (auth) {
+            capturedAuthStore.authorization = auth;
+          }
+        }
+      }
+    } catch {
+      // Ignore interception errors
+    }
+    return originalFetch.apply(this, args);
+  };
+}
+
 window.addEventListener('message', async (event) => {
   if (event.origin !== 'https://chatgpt.com') return;
   if (event.data?.source !== 'chatgpt-exporter-ext') return;
@@ -6,8 +47,22 @@ window.addEventListener('message', async (event) => {
   const { convId, token, requestId, includeImages } = event.data;
 
   try {
+    const headers = {
+      Accept: 'application/json',
+    };
+
+    const authToken = token ? `Bearer ${token}` : capturedAuthStore.authorization;
+    if (authToken) {
+      headers.Authorization = authToken;
+    }
+
+    const deviceId = getCookieDeviceId();
+    if (deviceId) {
+      headers['oai-device-id'] = deviceId;
+    }
+
     const res = await fetch(`https://chatgpt.com/backend-api/conversation/${convId}`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers,
     });
     if (!res.ok) throw new Error(`API returned ${res.status}`);
     const data = await res.json();
