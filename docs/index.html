@@ -615,9 +615,36 @@
           A minimalist browser extension to export and transfer conversations from ChatGPT, Claude,
           Gemini, Copilot, NotebookLM, DeepSeek, and more in one click.
         </p>
+        <div
+          class="store-buttons"
+          style="
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 24px;
+            margin-bottom: 16px;
+          "
+        >
+          <a
+            href="https://chrome.google.com/webstore/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
+            class="store-btn chrome primary-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+            id="btn-chrome"
+          >
+            <!-- Chrome Icon -->
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364zM12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728Z"
+              />
+            </svg>
+            <div>
+              <span class="btn-label-sub">Get it for</span>
+              <span class="btn-label-main">Chrome</span>
+            </div>
+          </a>
 
-        <div class="primary-download">
-          <span class="recommendation-badge">Recommended (Full-featured out of the box)</span>
           <a
             href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/"
             class="store-btn firefox primary-btn"
@@ -638,66 +665,9 @@
           </a>
         </div>
 
-        <div class="secondary-downloads">
-          <p class="secondary-title" style="margin-bottom: 16px">
-            Also available for Chromium-based browsers
-          </p>
-
-          <div
-            class="store-buttons"
-            style="
-              display: flex;
-              flex-wrap: wrap;
-              justify-content: center;
-              gap: 12px;
-              margin-bottom: 16px;
-            "
-          >
-            <a
-              href="https://chrome.google.com/webstore/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
-              class="store-btn chrome"
-              target="_blank"
-              rel="noopener noreferrer"
-              id="btn-chrome"
-            >
-              <!-- Chrome Icon -->
-              <svg viewBox="0 0 24 24">
-                <path
-                  d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.991 10.189 11.864l3.953-6.847a5.45 5.45 0 0 1-6.865-2.29zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001h-.002l-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364zM12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728Z"
-                />
-              </svg>
-              <div>
-                <span class="btn-label-sub">Get it for</span>
-                <span class="btn-label-main">Chrome</span>
-              </div>
-            </a>
-
-            <a
-              href="https://microsoftedge.microsoft.com/addons/detail/hbgckjgfhnaedlihmkogenclfcnobicg"
-              class="store-btn edge"
-              target="_blank"
-              rel="noopener noreferrer"
-              id="btn-edge"
-            >
-              <!-- Edge Icon -->
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M0 12c0 6.627 5.373 12 12 12 5.485 0 10.075-3.676 11.517-8.685-1.025.567-2.203.885-3.447.885-4.142 0-7.5-3.358-7.5-7.5 0-1.85.67-3.543 1.789-4.856C13.513 3.303 12.784 3 12 3 7.029 3 3 7.029 3 12c0 1.205.237 2.355.666 3.407A8.963 8.963 0 0 1 12 12a8.963 8.963 0 0 1 8.334 3.407C19.905 8.077 15.395 3 9.75 3c-5.385 0-9.75 4.365-9.75 9.75Z"
-                />
-              </svg>
-              <div>
-                <span class="btn-label-sub">Get it for</span>
-                <span class="btn-label-main">Edge</span>
-              </div>
-            </a>
-          </div>
-
-          <p class="secondary-subtitle" style="margin-bottom: 0">
-            Supports Chrome, Edge, Brave, Opera, Yandex, Whale, and other Chromium browsers. All
-            builds natively bundle KaTeX math equation rendering (v0.18.1) and Prism.js syntax
-            highlighting (v1.30.0) with zero external CDN dependencies.
-          </p>
-        </div>
+        <p class="secondary-subtitle" style="margin-bottom: 0">
+          Supports Chrome, Firefox, Edge, Brave, Opera, and other major browsers.
+        </p>
 
         <div class="hero-preview-container" style="margin-top: 40px; text-align: center">
           <a

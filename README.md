@@ -6,19 +6,17 @@ A simple, privacy-focused browser extension to export AI chats from ChatGPT, Cla
 
 ### Quick Install
 
-- 🦊 **Firefox**: [Install from Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/)
 - 🌐 **Chrome**: [Install from Chrome Web Store](https://chrome.google.com/webstore/detail/cgakhbhkplndjjknhgegfcipffflcaoj)
-- 🌀 **Microsoft Edge**: [Install from Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/hbgckjgfhnaedlihmkogenclfcnobicg)
+- 🦊 **Firefox**: [Install from Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/)
 
 > [!NOTE]
-> Extension updates on Chrome Web Store and Microsoft Edge Add-ons may lag behind the Firefox / GitHub releases due to store review and approval queues.
+> Extension updates on Chrome Web Store may lag behind Firefox / GitHub releases due to store review queues.
 
 <details>
 <summary><b>📦 Release Variants & Manual Installation</b></summary>
 
-- **Firefox (and Firefox derivatives):** Recommended to install directly from [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/).
-- **Chromium-based browsers (Local / Unpacked install):** Best for instant updates. Download `ai-chat-exporter-chromium.zip` from [Releases](https://github.com/Rat-S/ai-chat-exporter/releases) and load unpacked locally.
-- **Firefox, Chrome & Edge:** KaTeX math rendering (v0.18.1) and Prism.js syntax highlighting (v1.30.0) are bundled directly inside the extension package to ensure zero CDN dependencies and comply with Web Store Manifest V3 security rules.
+- **Firefox & Chrome:** Install directly from browser extension stores.
+- **Chromium-based browsers (Local / Unpacked install):** Download `ai-chat-exporter-chromium.zip` from [Releases](https://github.com/Rat-S/ai-chat-exporter/releases) and load unpacked locally.
 
 #### Manual / Offline Installation Steps (Chromium)
 
