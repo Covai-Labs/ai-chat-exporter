@@ -191,3 +191,31 @@ test('HTML formatter formats LaTeX math equations with bracket and dollar delimi
   assert.ok(output.includes('<span class="math-block">$$ e^{i\\pi} + 1 = 0 $$</span>'));
   assert.ok(output.includes('<span class="math-inline">$ e^{ix} = \\cos x + i\\sin x $</span>'));
 });
+
+test('HTML formatter escapes malicious codeLang tags and untrusted details tags', async () => {
+  const { HtmlFormatter } = await importFormatter();
+  const formatter = new HtmlFormatter();
+
+  const conversation = {
+    title: 'Security Sanity Test',
+    messages: [
+      {
+        role: 'User',
+        content:
+          '```html"><script>alert(1)</script>\nconsole.log("XSS");\n```\n\n<details><script>alert(2)</script></details>',
+      },
+    ],
+  };
+
+  const output = formatter.format(conversation);
+
+  // Assert codeLang is HTML-escaped
+  assert.ok(!output.includes('<span class="code-lang">html"><script>alert(1)</script></span>'));
+  assert.ok(output.includes('html&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;'));
+
+  // Assert untrusted details/script tags are HTML-escaped
+  assert.ok(!output.includes('<details><script>alert(2)</script></details>'));
+  assert.ok(
+    output.includes('&lt;details&gt;&lt;script&gt;alert(2)&lt;/script&gt;&lt;/details&gt;'),
+  );
+});

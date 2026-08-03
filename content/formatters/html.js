@@ -1055,7 +1055,7 @@ export function markdownToHtml(mdText) {
     if (inCodeBlock) {
       const codeText = codeLines.join('\n');
       const escapedCode = escapeHtml(codeText);
-      const displayLang = codeLang || 'code';
+      const displayLang = escapeHtml(codeLang || 'code');
       html += `<div class="code-card">
   <div class="code-card-header">
     <span class="code-lang">${displayLang}</span>
@@ -1101,12 +1101,11 @@ export function markdownToHtml(mdText) {
     const trimmed = line.trim();
 
     if (
-      trimmed.startsWith('<details') ||
-      trimmed.startsWith('</details') ||
-      trimmed.startsWith('<summary') ||
-      trimmed.startsWith('</summary') ||
-      trimmed.startsWith('<div class="thinking-content"') ||
-      trimmed.startsWith('</div>')
+      trimmed.startsWith('<details class="thinking-block">') ||
+      trimmed.startsWith('<summary class="thinking-summary">') ||
+      trimmed.startsWith('<div class="thinking-content">') ||
+      trimmed === '</div>' ||
+      trimmed === '</details>'
     ) {
       closeAllBlocks();
       html += line + '\n';
