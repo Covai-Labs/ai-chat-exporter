@@ -76,6 +76,30 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch {
       // Ignore iframe postMessage error
     }
+    try {
+      const doc =
+        previewRendered.contentDocument ||
+        (previewRendered.contentWindow && previewRendered.contentWindow.document);
+      if (!doc || !doc.documentElement) return;
+      const toggle = doc.getElementById('theme-toggle-checkbox');
+      let isDark = false;
+      if (theme === 'dark') {
+        isDark = true;
+      } else if (theme === 'light') {
+        isDark = false;
+      } else {
+        isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      if (isDark) {
+        doc.documentElement.setAttribute('data-theme', 'dark');
+        if (toggle) toggle.checked = true;
+      } else {
+        doc.documentElement.removeAttribute('data-theme');
+        if (toggle) toggle.checked = false;
+      }
+    } catch {
+      // Ignore iframe DOM access error
+    }
   };
 
   if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
@@ -108,10 +132,84 @@ document.addEventListener('DOMContentLoaded', async () => {
       URL.revokeObjectURL(currentBlobUrl);
       currentBlobUrl = null;
     }
-    const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
+
+    const blob = new Blob([content], { type: 'text/html' });
     currentBlobUrl = URL.createObjectURL(blob);
     previewRendered.src = currentBlobUrl;
   };
+
+  previewRendered.addEventListener('load', () => {
+    syncThemeToIframe(currentSyncTheme);
+    try {
+      const doc =
+        previewRendered.contentDocument ||
+        (previewRendered.contentWindow && previewRendered.contentWindow.document);
+      if (!doc) return;
+
+      const toggle = doc.getElementById('theme-toggle-checkbox');
+      if (toggle) {
+        toggle.addEventListener('change', (e) => {
+          if (e.target.checked) {
+            doc.documentElement.setAttribute('data-theme', 'dark');
+          } else {
+            doc.documentElement.removeAttribute('data-theme');
+          }
+        });
+      }
+
+      doc.addEventListener('click', async (e) => {
+        const codeBtn = e.target.closest('.copy-code-btn');
+        if (codeBtn) {
+          const card = codeBtn.closest('.code-card');
+          const codeBlock = card ? card.querySelector('code') : null;
+          if (!codeBlock) return;
+          const span = codeBtn.querySelector('span');
+          const originalBtnText = span ? span.textContent : 'Copy';
+          try {
+            await navigator.clipboard.writeText(codeBlock.textContent);
+            if (span) span.textContent = 'Copied!';
+            codeBtn.style.borderColor = '#10b981';
+            codeBtn.style.color = '#10b981';
+
+            setTimeout(() => {
+              if (span) span.textContent = originalBtnText;
+              codeBtn.style.borderColor = '';
+              codeBtn.style.color = '';
+            }, 2000);
+          } catch (err) {
+            console.error('Failed to copy text: ', err);
+          }
+        }
+
+        const msgBtn = e.target.closest('.copy-msg-btn');
+        if (msgBtn) {
+          const card = msgBtn.closest('.message-card');
+          const content = card ? card.querySelector('.message-content') : null;
+          if (!content) return;
+          const span = msgBtn.querySelector('span');
+          const originalBtnText = span ? span.textContent : 'Copy';
+          try {
+            await navigator.clipboard.writeText(
+              (content.innerText || content.textContent || '').trim(),
+            );
+            if (span) span.textContent = 'Copied!';
+            msgBtn.style.borderColor = '#10b981';
+            msgBtn.style.color = '#10b981';
+
+            setTimeout(() => {
+              if (span) span.textContent = originalBtnText;
+              msgBtn.style.borderColor = '';
+              msgBtn.style.color = '';
+            }, 2000);
+          } catch (err) {
+            console.error('Failed to copy message text: ', err);
+          }
+        }
+      });
+    } catch (err) {
+      console.error('Failed to initialize content inside iframe:', err);
+    }
+  });
 
   const printIframe = () => {
     if (!previewRendered || !previewRendered.contentWindow) return;
