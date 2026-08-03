@@ -13,12 +13,7 @@ A simple, privacy-focused browser extension to export AI chats from ChatGPT, Cla
 > Extension updates on Chrome Web Store may lag behind Firefox / GitHub releases due to store review queues.
 
 <details>
-<summary><b>📦 Release Variants & Manual Installation</b></summary>
-
-- **Firefox & Chrome:** Install directly from browser extension stores.
-- **Chromium-based browsers (Local / Unpacked install):** Download `ai-chat-exporter-chromium.zip` from [Releases](https://github.com/Rat-S/ai-chat-exporter/releases) and load unpacked locally.
-
-#### Manual / Offline Installation Steps (Chromium)
+<summary><b>📦 Manual / Unpacked Installation</b></summary>
 
 1. Download the latest `ai-chat-exporter-chromium.zip` from the [Releases page](https://github.com/Rat-S/ai-chat-exporter/releases).
 2. Extract the zip file to a folder on your computer.
