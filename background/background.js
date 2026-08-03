@@ -30,15 +30,12 @@ const PLATFORM_URLS = {
 };
 
 async function syncSidePanelBehavior() {
-  if (
-    typeof chrome !== 'undefined' &&
-    chrome.sidePanel &&
-    typeof chrome.sidePanel.setPanelBehavior === 'function'
-  ) {
+  const sidePanelApi = typeof chrome !== 'undefined' ? chrome['sidePanel'] : undefined;
+  if (sidePanelApi && typeof sidePanelApi['setPanelBehavior'] === 'function') {
     try {
       const data = await chrome.storage.sync.get('launchMode');
       const openPanelOnActionClick = data.launchMode === 'sidepanel';
-      await chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick });
+      await sidePanelApi['setPanelBehavior']({ openPanelOnActionClick });
     } catch (err) {
       console.warn('[AI Exporter Background] Failed to set side panel behavior:', err);
     }
@@ -93,13 +90,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'OPEN_SIDE_PANEL') {
     (async () => {
       try {
-        if (chrome.sidePanel && typeof chrome.sidePanel.open === 'function') {
+        const sidePanelApi = typeof chrome !== 'undefined' ? chrome['sidePanel'] : undefined;
+        if (sidePanelApi && typeof sidePanelApi['open'] === 'function') {
           let windowId = request.windowId || sender.tab?.windowId;
           if (!windowId) {
             const currentWin = await chrome.windows.getCurrent();
             windowId = currentWin.id;
           }
-          await chrome.sidePanel.open({ windowId });
+          await sidePanelApi['open']({ windowId });
           sendResponse({ success: true });
         } else {
           sendResponse({ success: false, error: 'Side panel API unavailable' });

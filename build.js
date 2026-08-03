@@ -18,10 +18,9 @@ try {
 
     const gecko = manifest.browser_specific_settings.gecko;
     gecko.id = 'ai-chat-exporter@covai.org';
-    gecko.strict_min_version = '140.0';
+    gecko.strict_min_version = '143.0';
     gecko.data_collection_permissions = {
-      required: true,
-      optional: false,
+      required: ['none'],
     };
   } else {
     // Chrome defaults (ensure service_worker)
