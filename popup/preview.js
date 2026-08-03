@@ -218,6 +218,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     previewRendered.contentWindow.print();
   };
 
+  const updateDownloadButtonLabel = (extension) => {
+    if (!downloadBtn) return;
+    const svgIcon = `<svg viewBox="0 0 24 24" class="icon"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"/></svg>`;
+    let label = 'Download File';
+    if (extension === 'png') {
+      label = 'Download PNG';
+    } else if (extension === 'html') {
+      label = 'Download HTML';
+    } else if (extension === 'md') {
+      label = 'Download Markdown';
+    } else if (extension === 'json') {
+      label = 'Download JSON';
+    } else if (extension === 'doc') {
+      label = 'Download Word Doc';
+    }
+    downloadBtn.innerHTML = `${svgIcon} ${label}`;
+  };
+
   const switchTab = (tabName) => {
     const buttons = formatTabsContainer.querySelectorAll('.control-btn');
     buttons.forEach((btn) => {
@@ -274,6 +292,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       codeEl.textContent = activeContent;
     }
+
+    updateDownloadButtonLabel(activeExtension);
   };
 
   formatTabsContainer.addEventListener('click', (e) => {

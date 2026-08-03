@@ -62,3 +62,12 @@ test('preview page and script handle PNG warning banner, options bar, and autoDo
   assert.match(previewJs, /pngOptionsBar/);
   assert.match(previewJs, /autoDownloadPng/);
 });
+
+test('preview script dynamically updates download button label based on format tab', () => {
+  assert.match(previewJs, /updateDownloadButtonLabel/);
+  assert.match(previewJs, /Download PNG/);
+  assert.match(previewJs, /Download HTML/);
+  assert.match(previewJs, /Download Markdown/);
+  assert.match(previewJs, /Download JSON/);
+  assert.match(previewJs, /Download Word Doc/);
+});
