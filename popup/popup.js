@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const includeImagesCheckbox = document.getElementById('include-images-checkbox');
   const filenameInput = document.getElementById('filename-input');
   const continueTargetSelect = document.getElementById('continue-target-select');
-  const previewableFormats = new Set(['markdown', 'json', 'html']);
+  const previewableFormats = new Set(['markdown', 'json', 'html', 'doc', 'png', 'pdf']);
   const copyableFormats = new Set(['markdown', 'json', 'html']);
 
   const openOptionsBtn = document.getElementById('open-options-btn');
@@ -146,6 +146,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const isPreviewable = previewableFormats.has(format);
     copyBtn.classList.toggle('hidden', !isCopyable);
     previewBtn.classList.toggle('hidden', !isPreviewable);
+    if (format === 'png') {
+      exportBtn.textContent = '🖼️ Export in New Tab';
+    } else if (format === 'pdf') {
+      exportBtn.textContent = '📄 Export & Print PDF';
+    } else {
+      exportBtn.textContent = '📥 Export Chat';
+    }
     if (pngWarningBanner) {
       pngWarningBanner.classList.toggle('hidden', format !== 'png');
     }
@@ -168,23 +175,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     const format = formatSelect.value;
     const customFilename = filenameInput ? filenameInput.value.trim() : '';
     exportBtn.disabled = true;
-    exportBtn.textContent = format === 'png' ? 'Rendering PNG (please wait)...' : 'Exporting...';
+    exportBtn.textContent =
+      format === 'png'
+        ? 'Opening Preview...'
+        : format === 'pdf'
+          ? 'Opening PDF Preview...'
+          : 'Exporting...';
 
     try {
-      if (format === 'pdf') {
+      if (format === 'pdf' || format === 'png') {
+        const formatToRequest = format === 'pdf' ? 'html' : 'markdown';
         const response = await chrome.tabs.sendMessage(tab.id, {
           action: 'COPY_CHAT',
-          format: 'html',
+          format: formatToRequest,
           includeImages: includeImagesCheckbox.checked,
           parserMode: storedSettings.parserMode || 'auto',
         });
 
         if (response && response.success) {
           await chrome.storage.local.set({
+            previewConversation: response.conversation || null,
             previewContent: response.content,
             previewTitle: customFilename || tab.title || 'Untitled Chat',
-            previewFormat: 'pdf',
-            autoPrint: true,
+            previewFormat: format,
+            autoPrint: format === 'pdf',
+            autoDownloadPng: format === 'png',
+            highQualityPng: pngQualityCheckbox ? pngQualityCheckbox.checked : true,
+            includeImages: includeImagesCheckbox ? includeImagesCheckbox.checked : true,
           });
 
           await chrome.tabs.create({
@@ -215,7 +232,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       statusEl.textContent = 'Error: ' + e.message;
     } finally {
       exportBtn.disabled = false;
-      exportBtn.textContent = 'Export Chat';
+      updateCopyButtonVisibility();
     }
   });
 
@@ -272,7 +289,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     previewBtn.textContent = 'Opening...';
 
     try {
-      const formatToRequest = format === 'pdf' ? 'html' : format;
+      const formatToRequest = format === 'pdf' ? 'html' : format === 'png' ? 'markdown' : format;
       const response = await chrome.tabs.sendMessage(tab.id, {
         action: 'COPY_CHAT',
         format: formatToRequest,
@@ -287,6 +304,9 @@ document.addEventListener('DOMContentLoaded', async () => {
           previewTitle: response.conversation?.title || tab.title || 'Untitled Chat',
           previewFormat: format,
           autoPrint: false,
+          autoDownloadPng: false,
+          highQualityPng: pngQualityCheckbox ? pngQualityCheckbox.checked : true,
+          includeImages: includeImagesCheckbox ? includeImagesCheckbox.checked : true,
         });
 
         await chrome.tabs.create({

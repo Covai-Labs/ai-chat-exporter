@@ -52,3 +52,13 @@ test('preview page and script include Transfer Chat option and ContinuationForma
   assert.match(previewJs, /import \{[^}]*ContinuationFormatter[^}]*\}/);
   assert.match(previewJs, /TRANSFER_CHAT/);
 });
+
+test('preview page and script handle PNG warning banner, options bar, and autoDownloadPng', () => {
+  assert.match(previewHtml, /id="png-warning-banner"/);
+  assert.match(previewHtml, /id="png-options-bar"/);
+  assert.match(previewHtml, /id="png-quality-checkbox"/);
+  assert.match(previewHtml, /id="include-images-checkbox"/);
+  assert.match(previewJs, /pngWarningBanner/);
+  assert.match(previewJs, /pngOptionsBar/);
+  assert.match(previewJs, /autoDownloadPng/);
+});

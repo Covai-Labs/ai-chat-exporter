@@ -28,6 +28,22 @@ document.addEventListener('DOMContentLoaded', async () => {
   const printBtn = document.getElementById('print-btn');
   const formatTabsContainer = document.getElementById('format-tabs');
 
+  const pngWarningBanner = document.getElementById('png-warning-banner');
+  const pngOptionsBar = document.getElementById('png-options-bar');
+  const pngQualityCheckbox = document.getElementById('png-quality-checkbox');
+  const includeImagesCheckbox = document.getElementById('include-images-checkbox');
+
+  if (pngQualityCheckbox) {
+    pngQualityCheckbox.addEventListener('change', () => {
+      cachedPngBlob = null;
+    });
+  }
+  if (includeImagesCheckbox) {
+    includeImagesCheckbox.addEventListener('change', () => {
+      cachedPngBlob = null;
+    });
+  }
+
   const codeWrapper = document.getElementById('code-wrapper');
   const renderWrapper = document.getElementById('render-wrapper');
   const previewRendered = document.getElementById('preview-rendered');
@@ -130,6 +146,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         btn.classList.remove('active');
       }
     });
+
+    if (pngWarningBanner) {
+      pngWarningBanner.classList.toggle('hidden', tabName !== 'png');
+    }
+    if (pngOptionsBar) {
+      pngOptionsBar.classList.toggle('hidden', tabName !== 'png');
+    }
 
     if (tabName === 'html-render' || tabName === 'png') {
       activeContent = htmlContent;
@@ -251,12 +274,23 @@ document.addEventListener('DOMContentLoaded', async () => {
       'previewTitle',
       'previewFormat',
       'autoPrint',
+      'autoDownloadPng',
+      'highQualityPng',
+      'includeImages',
     ]);
 
     conversation = data.previewConversation || null;
     title = data.previewTitle || 'Untitled Chat';
     initialFormat = data.previewFormat || 'markdown';
     const autoPrint = data.autoPrint || false;
+    const autoDownloadPng = data.autoDownloadPng || false;
+
+    if (pngQualityCheckbox && data.highQualityPng !== undefined) {
+      pngQualityCheckbox.checked = data.highQualityPng;
+    }
+    if (includeImagesCheckbox && data.includeImages !== undefined) {
+      includeImagesCheckbox.checked = data.includeImages;
+    }
 
     titleEl.textContent = title;
 
@@ -297,6 +331,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     switchTab(initialTab);
+
+    if (autoDownloadPng && initialFormat === 'png') {
+      setTimeout(() => {
+        downloadBtn.click();
+      }, 300);
+    }
   } catch (error) {
     console.error('Failed to load preview data:', error);
     codeEl.textContent = 'Error loading content: ' + error.message;
@@ -359,7 +399,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         let pngBlob = cachedPngBlob;
         if (!pngBlob && conversation) {
-          pngBlob = await imageFormatter.format(conversation);
+          const isHighQuality = pngQualityCheckbox ? pngQualityCheckbox.checked : true;
+          pngBlob = await imageFormatter.format(conversation, { highQuality: isHighQuality });
           cachedPngBlob = pngBlob;
         }
 
