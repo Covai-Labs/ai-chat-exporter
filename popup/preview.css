@@ -500,7 +500,7 @@ html[data-theme='dark'] .png-warning-banner {
   }
   #preview-rendered {
     width: 100% !important;
-    height: 100vh !important;
+    height: auto !important;
     border: none !important;
   }
 }

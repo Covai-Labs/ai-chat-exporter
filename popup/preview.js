@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   let initialFormat = 'markdown';
 
   let htmlContent = '';
+  let htmlPreviewContent = ''; // same HTML but with external extension script (CSP-safe for iframe)
   let markdownContent = '';
   let jsonContent = '';
   let docContent = '';
@@ -102,6 +103,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let currentBlobUrl = null;
   let cachedPngBlob = null;
+
+  // URL to the external iframe interactive script (passes Manifest V3 script-src 'self' CSP)
+  let previewScriptUrl = null;
+  try {
+    previewScriptUrl = chrome.runtime.getURL('content/lib/preview-iframe.js');
+  } catch {
+    // Running outside extension context (tests / standalone) — fall back to inline script
+  }
 
   const setIframeContent = (content) => {
     if (currentBlobUrl) {
@@ -114,31 +123,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   const printIframe = () => {
-    if (!previewRendered) return;
-
-    try {
-      if (previewRendered.contentWindow) {
-        previewRendered.contentWindow.focus();
-        previewRendered.contentWindow.print();
-        return;
-      }
-    } catch (err) {
-      console.warn('[Preview] Direct iframe print failed:', err);
-    }
-
-    try {
-      if (previewRendered.contentWindow) {
-        previewRendered.contentWindow.postMessage({ action: 'print' }, '*');
-      }
-    } catch (err) {
-      console.warn('[Preview] postMessage print failed:', err);
-    }
-
-    try {
-      window.print();
-    } catch (err) {
-      console.error('[Preview] Fallback window.print() failed:', err);
-    }
+    if (!previewRendered || !previewRendered.contentWindow) return;
+    previewRendered.contentWindow.focus();
+    previewRendered.contentWindow.print();
   };
 
   const switchTab = (tabName) => {
@@ -171,10 +158,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (
         !previewRendered.src ||
         previewRendered.src === 'about:blank' ||
-        previewRendered.getAttribute('data-content') !== htmlContent
+        previewRendered.getAttribute('data-content') !== htmlPreviewContent
       ) {
-        previewRendered.setAttribute('data-content', htmlContent);
-        setIframeContent(htmlContent);
+        previewRendered.setAttribute('data-content', htmlPreviewContent);
+        setIframeContent(htmlPreviewContent);
       }
     } else {
       renderWrapper.classList.add('hidden');
@@ -243,12 +230,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (conversation) {
       htmlContent = htmlFormatter.format(conversation);
+      // For the preview iframe: use external extension script to pass Manifest V3 CSP
+      htmlPreviewContent = htmlFormatter.format(conversation, { scriptSrc: previewScriptUrl });
       markdownContent = markdownFormatter.format(conversation);
       jsonContent = jsonFormatter.format(conversation);
       docContent = docFormatter.format(conversation);
     } else {
       const fallbackContent = data.previewContent || '';
       htmlContent = fallbackContent;
+      htmlPreviewContent = fallbackContent;
       markdownContent = fallbackContent;
       jsonContent = fallbackContent;
       docContent = fallbackContent;

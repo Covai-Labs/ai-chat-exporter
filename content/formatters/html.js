@@ -1,7 +1,7 @@
 import { ExportFormatter } from './base.js';
 
 export class HtmlFormatter extends ExportFormatter {
-  format(conversation) {
+  format(conversation, { scriptSrc = null } = {}) {
     const { title, messages } = conversation;
     const now = new Date();
     const formattedDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.toLocaleTimeString('en-US', { hour12: false })}`;
@@ -733,7 +733,10 @@ export class HtmlFormatter extends ExportFormatter {
     </footer>
   </div>
 
-  <script>
+  ${
+    scriptSrc
+      ? `<script src="${scriptSrc}"></script>`
+      : `<script>
     const toggle = document.getElementById('theme-toggle-checkbox');
     let storedTheme = null;
     try {
@@ -786,6 +789,19 @@ export class HtmlFormatter extends ExportFormatter {
     window.addEventListener('message', (event) => {
       if (event.data && event.data.action === 'setTheme') {
         applyDocumentTheme(event.data.theme);
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      const codeBtn = e.target.closest('.copy-code-btn');
+      if (codeBtn) {
+        copyCode(codeBtn);
+        return;
+      }
+      const msgBtn = e.target.closest('.copy-msg-btn');
+      if (msgBtn) {
+        copyMessage(msgBtn);
+        return;
       }
     });
 
@@ -864,7 +880,8 @@ export class HtmlFormatter extends ExportFormatter {
         window.print();
       }
     });
-  </script>
+  </script>`
+  }
 </body>
 </html>`;
   }
