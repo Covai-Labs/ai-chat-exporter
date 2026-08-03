@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   function updateCopyButtonVisibility() {
     const format = formatSelect.value;
     const isCopyable = copyableFormats.has(format);
-    const isPreviewable = previewableFormats.has(format);
+    const isPreviewable = previewableFormats.has(format) && format !== 'png';
     copyBtn.classList.toggle('hidden', !isCopyable);
     previewBtn.classList.toggle('hidden', !isPreviewable);
     if (format === 'png') {
