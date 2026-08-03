@@ -22,7 +22,7 @@ try:
             manifest['browser_specific_settings']['gecko'] = {}
 
         gecko = manifest['browser_specific_settings']['gecko']
-        gecko['id'] = 'ai-chat-exporter@local.dev'
+        gecko['id'] = 'ai-chat-exporter@covai.org'
         gecko['strict_min_version'] = '143.0'
         # Firefox does not support chrome.sidePanel API
         if 'permissions' in manifest and 'sidePanel' in manifest['permissions']:
