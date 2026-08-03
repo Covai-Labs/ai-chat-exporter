@@ -12,7 +12,7 @@ This guide contains instructions for setting up, building, and contributing to t
 
 ### Build Instructions
 
-The extension source code and build/packaging scripts live inside the `publish` directory.
+The extension source code and build/packaging scripts live directly in the repository root directory.
 
 To build for all targets:
 
@@ -47,19 +47,25 @@ npm run lint && npm run format:check && npm test
 
 ## Project Structure
 
-Here is an overview of the key folders and files inside the extension source:
+Here is an overview of the key folders and files inside the repository:
 
 ```
-├── background/          # Service worker / background scripts
-├── content/             # Content scripts and parsers
-│   ├── parsers/         # Platform-specific chat parsers
-│   ├── utils/           # Utility functions
-│   └── lib/             # Third-party libraries (Turndown.js)
+├── background/          # Background service worker
+├── content/             # Content scripts & platform parsers
+│   ├── parsers/         # 15+ platform-specific parsers
+│   ├── formatters/      # Markdown, JSON, HTML, Image, Doc formatters
+│   ├── utils/           # Parser & DOM helpers
+│   └── lib/             # Third-party libraries (Turndown, Prism, KaTeX)
 ├── popup/               # Extension popup UI
-├── schemas/             # JSON export schemas
-├── docs/                # Documentation and privacy policy
-├── manifest.json        # Extension manifest (v3)
-└── build.sh             # Build script
+├── sidepanel/           # Browser side panel UI (Chromium)
+├── options/             # Extension preferences page UI
+├── schemas/             # JSON export schemas (v1)
+├── tests/               # Node test suite
+├── docs/                # Web landing page & extension welcome/privacy docs
+├── manifest.json        # Web Extension manifest (v3)
+├── build.sh             # Main build script launcher
+├── build.py             # Target bundler script (Chromium / Firefox)
+└── build.js             # JavaScript build runner
 ```
 
 For general information about the extension, installation, and usage, see [README.md](./README.md). For contribution guidelines and licensing terms, see [CONTRIBUTING.md](./CONTRIBUTING.md).
