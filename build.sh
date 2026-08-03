@@ -2,7 +2,7 @@
 
 # Build for both chrome and firefox if no argument, or specific target
 if [ -z "$1" ]; then
-    TARGETS=("chromium" "firefox" "chrome")
+    TARGETS=("chromium" "firefox")
 else
     TARGETS=("$1")
 fi
