@@ -434,7 +434,12 @@ code {
   line-height: 1.4;
 }
 
-html[data-theme='dark'] .png-warning-banner,
+html[data-theme='dark'] .png-warning-banner {
+  background-color: rgba(217, 119, 6, 0.15);
+  border-color: rgba(245, 158, 11, 0.35);
+  color: #fbbf24;
+}
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .png-warning-banner {
     background-color: rgba(217, 119, 6, 0.15);

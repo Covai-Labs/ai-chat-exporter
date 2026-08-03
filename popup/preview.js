@@ -68,18 +68,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Ignore theme loading errors when running standalone
   }
 
+  const syncThemeToIframe = (theme) => {
+    try {
+      if (previewRendered && previewRendered.contentWindow) {
+        previewRendered.contentWindow.postMessage({ action: 'setTheme', theme }, '*');
+      }
+    } catch {
+      // Ignore iframe postMessage error
+    }
+  };
+
   if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
     chrome.storage.onChanged.addListener((changes, areaName) => {
       if (areaName === 'sync' && changes.theme) {
         currentSyncTheme = changes.theme.newValue || 'system';
         applyTheme(currentSyncTheme, document);
-        try {
-          const iframeDoc =
-            previewRendered.contentDocument || previewRendered.contentWindow.document;
-          if (iframeDoc) applyTheme(currentSyncTheme, iframeDoc);
-        } catch {
-          // Ignore iframe access error
-        }
+        syncThemeToIframe(currentSyncTheme);
       }
     });
   }
@@ -207,64 +211,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   previewRendered.addEventListener('load', () => {
-    try {
-      const doc = previewRendered.contentDocument || previewRendered.contentWindow.document;
-      if (!doc) return;
-
-      const toggle = doc.getElementById('theme-toggle-checkbox');
-      if (toggle) {
-        if (currentSyncTheme === 'dark') {
-          doc.documentElement.setAttribute('data-theme', 'dark');
-          toggle.checked = true;
-        } else if (currentSyncTheme === 'light') {
-          doc.documentElement.removeAttribute('data-theme');
-          toggle.checked = false;
-        } else {
-          const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          if (isSystemDark) {
-            doc.documentElement.setAttribute('data-theme', 'dark');
-            toggle.checked = true;
-          } else {
-            doc.documentElement.removeAttribute('data-theme');
-            toggle.checked = false;
-          }
-        }
-
-        toggle.addEventListener('change', (e) => {
-          if (e.target.checked) {
-            doc.documentElement.setAttribute('data-theme', 'dark');
-          } else {
-            doc.documentElement.removeAttribute('data-theme');
-          }
-        });
-      }
-
-      doc.addEventListener('click', async (e) => {
-        const btn = e.target.closest('.copy-code-btn');
-        if (btn) {
-          const codeBlock = btn.closest('.code-card').querySelector('code');
-          const span = btn.querySelector('span');
-          const originalBtnText = span.textContent;
-
-          try {
-            await navigator.clipboard.writeText(codeBlock.textContent);
-            span.textContent = 'Copied!';
-            btn.style.borderColor = '#10b981';
-            btn.style.color = '#10b981';
-
-            setTimeout(() => {
-              span.textContent = originalBtnText;
-              btn.style.borderColor = '';
-              btn.style.color = '';
-            }, 2000);
-          } catch (err) {
-            console.error('Failed to copy text: ', err);
-          }
-        }
-      });
-    } catch (err) {
-      console.error('Failed to initialize content inside iframe:', err);
-    }
+    syncThemeToIframe(currentSyncTheme);
   });
 
   try {

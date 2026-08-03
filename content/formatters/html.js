@@ -107,7 +107,7 @@ export class HtmlFormatter extends ExportFormatter {
       --scrollbar-thumb: #475569;
     }
 
-    body {
+    html, body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       background-color: var(--bg-app);
       color: var(--text-primary);
@@ -746,22 +746,46 @@ export class HtmlFormatter extends ExportFormatter {
       storedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
     
-    if (storedTheme === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      toggle.checked = true;
-    }
-    
-    toggle.addEventListener('change', (e) => {
-      if (e.target.checked) {
+    function applyDocumentTheme(theme) {
+      if (theme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
-        try {
-          localStorage.setItem('theme', 'dark');
-        } catch (err) {}
-      } else {
+        if (toggle) toggle.checked = true;
+      } else if (theme === 'light') {
         document.documentElement.removeAttribute('data-theme');
-        try {
-          localStorage.setItem('theme', 'light');
-        } catch (err) {}
+        if (toggle) toggle.checked = false;
+      } else {
+        const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (isSystemDark) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          if (toggle) toggle.checked = true;
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+          if (toggle) toggle.checked = false;
+        }
+      }
+    }
+
+    applyDocumentTheme(storedTheme);
+    
+    if (toggle) {
+      toggle.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          try {
+            localStorage.setItem('theme', 'dark');
+          } catch (err) {}
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+          try {
+            localStorage.setItem('theme', 'light');
+          } catch (err) {}
+        }
+      });
+    }
+
+    window.addEventListener('message', (event) => {
+      if (event.data && event.data.action === 'setTheme') {
+        applyDocumentTheme(event.data.theme);
       }
     });
 
