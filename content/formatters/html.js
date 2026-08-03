@@ -1,7 +1,7 @@
 import { ExportFormatter } from './base.js';
 
 export class HtmlFormatter extends ExportFormatter {
-  format(conversation, { scriptSrc = null } = {}) {
+  format(conversation) {
     const { title, messages } = conversation;
     const now = new Date();
     const formattedDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.toLocaleTimeString('en-US', { hour12: false })}`;
@@ -733,10 +733,7 @@ export class HtmlFormatter extends ExportFormatter {
     </footer>
   </div>
 
-  ${
-    scriptSrc
-      ? `<script src="${scriptSrc}"></script>`
-      : `<script>
+  <script>
     const toggle = document.getElementById('theme-toggle-checkbox');
     let storedTheme = null;
     try {
@@ -880,8 +877,7 @@ export class HtmlFormatter extends ExportFormatter {
         window.print();
       }
     });
-  </script>`
-  }
+  </script>
 </body>
 </html>`;
   }
