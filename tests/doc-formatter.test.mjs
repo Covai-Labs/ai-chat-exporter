@@ -70,4 +70,6 @@ test('DocFormatter generates Word-compliant HTML document with MSO XML headers',
   assert.ok(output.includes('display: none !important'));
   assert.ok(output.includes('.code-card'));
   assert.ok(output.includes('.thinking-block'));
+  assert.equal(output.includes('<button'), false);
+  assert.equal(output.includes('<svg'), false);
 });

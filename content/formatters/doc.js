@@ -15,7 +15,11 @@ export class DocFormatter extends ExportFormatter {
         const roleClass = isUser ? 'role-user' : 'role-assistant';
         const roleName = isUser ? 'User' : platform;
         const avatarText = isUser ? 'U' : platform[0];
-        const htmlContent = markdownToHtml(msg.content);
+        const rawHtmlContent = markdownToHtml(msg.content);
+        // Strip copy buttons and inline SVGs which cause LibreOffice HTML import filter errors
+        const htmlContent = rawHtmlContent
+          .replace(/<button[^>]*>[\s\S]*?<\/button>/gi, '')
+          .replace(/<svg[^>]*>[\s\S]*?<\/svg>/gi, '');
 
         return `
         <div class="message-card ${roleClass}">
