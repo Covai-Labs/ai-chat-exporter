@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let conversation = null;
   let title = 'Untitled Chat';
-  let initialFormat = 'markdown';
+  let initialFormat;
 
   let htmlContent = '';
   let markdownContent = '';

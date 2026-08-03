@@ -53,7 +53,7 @@ export class GoogleAIStudioParser extends ChatParser {
 
         if (userEl) {
           const contentEl = userEl.querySelector('.turn-content, .prompt-text, textarea') || userEl;
-          let text = '';
+          let text;
           if (contentEl.tagName === 'TEXTAREA') {
             text = contentEl.value || contentEl.textContent || '';
           } else {

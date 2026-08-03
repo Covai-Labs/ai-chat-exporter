@@ -1,6 +1,6 @@
 {
   "name": "ai-chat-exporter",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.*",
@@ -9,9 +9,10 @@
     "format:check": "prettier --check ."
   },
   "devDependencies": {
-    "eslint": "^9.3.0",
-    "globals": "^15.3.0",
-    "linkedom": "^0.18.12",
-    "prettier": "^3.2.5"
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.8.0",
+    "globals": "^17.9.0",
+    "linkedom": "^0.18.13",
+    "prettier": "^3.9.6"
   }
 }
