@@ -8,6 +8,19 @@ export class DocFormatter extends ExportFormatter {
     const formattedDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.toLocaleTimeString('en-US', { hour12: false })}`;
 
     const platform = conversation.metadata?.Source || 'AI';
+    const link = conversation.url || conversation.metadata?.Link || '';
+    const model = conversation.metadata?.Model || '';
+
+    const metaParts = [`Exported from ${escapeHtml(platform)}`, formattedDate];
+    metaParts.push(
+      '<a href="https://ai-chat-exporter.covai.org/" style="color: #64748b;">AI Chat Exporter</a>',
+    );
+    if (link) {
+      metaParts.push(`<a href="${escapeHtml(link)}" style="color: #64748b;">Original Link</a>`);
+    }
+    if (model) {
+      metaParts.push(`Model: ${escapeHtml(model)}`);
+    }
 
     const formattedMessages = messages
       .map((msg) => {
@@ -201,7 +214,7 @@ export class DocFormatter extends ExportFormatter {
 <body>
   <div class="header-box">
     <div class="chat-title">${escapeHtml(title || 'AI Chat Export')}</div>
-    <div class="meta-info">Exported from ${escapeHtml(platform)} • ${formattedDate}</div>
+    <div class="meta-info">${metaParts.join(' • ')}</div>
   </div>
   ${formattedMessages}
 </body>

@@ -520,17 +520,19 @@ export class ChatGPTParser extends ChatParser {
           }
         }
 
+        const currentUrl =
+          typeof window !== 'undefined' && window.location ? window.location.href || '' : '';
         const metadata = {
           Source: 'ChatGPT',
           Date: new Date().toLocaleString(),
-          Link: window.location.href,
+          Link: currentUrl,
           Model:
             result.data.model_slug ||
             document.querySelector('[data-testid="model-selector-dropdown"]')?.innerText ||
             'ChatGPT',
         };
 
-        return { title: convTitle, messages, metadata };
+        return { title: convTitle, messages, url: currentUrl, metadata };
       } catch (e) {
         console.error('[AI Exporter] API parse failed, falling back to DOM:', e);
       }
@@ -672,14 +674,16 @@ export class ChatGPTParser extends ChatParser {
       ...(extractedMessages.length > 0 ? extractedMessages : this.extractMountedMessages()),
     );
 
+    const currentUrl =
+      typeof window !== 'undefined' && window.location ? window.location.href || '' : '';
     const metadata = {
       Source: 'ChatGPT',
       Date: new Date().toLocaleString(),
-      Link: window.location.href,
+      Link: currentUrl,
       Model:
         document.querySelector('[data-testid="model-selector-dropdown"]')?.innerText || 'ChatGPT',
     };
 
-    return { title, messages, metadata };
+    return { title, messages, url: currentUrl, metadata };
   }
 }

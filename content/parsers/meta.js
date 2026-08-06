@@ -96,12 +96,14 @@ export class MetaParser extends ChatParser {
       }
     });
 
+    const currentUrl =
+      typeof window !== 'undefined' && window.location ? window.location.href || '' : '';
     const metadata = {
       Source: 'Meta AI',
       Date: new Date().toLocaleString(),
-      Link: window.location.href,
+      Link: currentUrl,
     };
 
-    return { title, messages, metadata };
+    return { title, messages, url: currentUrl, metadata };
   }
 }

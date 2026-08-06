@@ -71,6 +71,14 @@ export class PerplexityParser extends ChatParser {
       messages.push({ role, content: text });
     });
 
-    return { title, messages };
+    const currentUrl =
+      typeof window !== 'undefined' && window.location ? window.location.href || '' : '';
+    const metadata = {
+      Source: 'Perplexity',
+      Date: new Date().toLocaleString(),
+      Link: currentUrl,
+    };
+
+    return { title, messages, url: currentUrl, metadata };
   }
 }

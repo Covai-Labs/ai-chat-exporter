@@ -90,6 +90,14 @@ export class DeepSeekParser extends ChatParser {
   async parse() {
     const title = document.title || 'DeepSeek Chat';
 
+    const currentUrl =
+      typeof window !== 'undefined' && window.location ? window.location.href || '' : '';
+    const metadata = {
+      Source: 'DeepSeek',
+      Date: new Date().toLocaleString(),
+      Link: currentUrl,
+    };
+
     // Primary: API Extraction
     try {
       const token = getUserToken();
@@ -97,7 +105,7 @@ export class DeepSeekParser extends ChatParser {
       if (token && sessionId) {
         const apiMessages = await fetchDeepSeekConversation(sessionId, token);
         if (apiMessages && apiMessages.length > 0) {
-          return { title, messages: apiMessages };
+          return { title, messages: apiMessages, url: currentUrl, metadata };
         }
       }
     } catch (e) {
@@ -141,6 +149,6 @@ export class DeepSeekParser extends ChatParser {
       });
     }
 
-    return { title, messages };
+    return { title, messages, url: currentUrl, metadata };
   }
 }

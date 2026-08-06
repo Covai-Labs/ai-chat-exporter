@@ -102,6 +102,14 @@ export class GoogleAIStudioParser extends ChatParser {
       }
     }
 
-    return { title, messages };
+    const currentUrl =
+      typeof window !== 'undefined' && window.location ? window.location.href || '' : '';
+    const metadata = {
+      Source: 'Google AI Studio',
+      Date: new Date().toLocaleString(),
+      Link: currentUrl,
+    };
+
+    return { title, messages, url: currentUrl, metadata };
   }
 }

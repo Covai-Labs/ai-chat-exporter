@@ -77,6 +77,14 @@ export class GeminiCloudAssistParser extends ChatParser {
       }
     });
 
-    return { title, messages };
+    const currentUrl =
+      typeof window !== 'undefined' && window.location ? window.location.href || '' : '';
+    const metadata = {
+      Source: 'Gemini Cloud Assist',
+      Date: new Date().toLocaleString(),
+      Link: currentUrl,
+    };
+
+    return { title, messages, url: currentUrl, metadata };
   }
 }

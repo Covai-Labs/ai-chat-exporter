@@ -126,6 +126,14 @@ export class NotebookLMParser extends ChatParser {
       }
     }
 
-    return { title, messages };
+    const currentUrl =
+      typeof window !== 'undefined' && window.location ? window.location.href || '' : '';
+    const metadata = {
+      Source: 'NotebookLM',
+      Date: new Date().toLocaleString(),
+      Link: currentUrl,
+    };
+
+    return { title, messages, url: currentUrl, metadata };
   }
 }

@@ -22,6 +22,7 @@ export class ImageFormatter extends ExportFormatter {
     const now = new Date();
     const formattedDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.toLocaleTimeString('en-US', { hour12: false })}`;
     const platform = conversation.metadata?.Source || 'AI';
+    const model = conversation.metadata?.Model || '';
 
     const bgColor = isDark ? '#0f172a' : '#ffffff';
     const textColor = isDark ? '#f8fafc' : '#0f172a';
@@ -104,15 +105,19 @@ export class ImageFormatter extends ExportFormatter {
       <!-- Header -->
       <div style="border-bottom: 2px solid ${borderColor}; padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-start;">
         <div>
-          <span style="display: inline-block; background-color: ${isDark ? 'rgba(99, 102, 241, 0.2)' : '#e0e7ff'}; color: ${isDark ? '#818cf8' : '#4f46e5'}; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 9999px; margin-bottom: 8px;">
-            ${escapeHtml(platform)}
-          </span>
+          <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 8px;">
+            <span style="display: inline-block; background-color: ${isDark ? 'rgba(99, 102, 241, 0.2)' : '#e0e7ff'}; color: ${isDark ? '#818cf8' : '#4f46e5'}; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 9999px;">
+              ${escapeHtml(platform)}
+            </span>
+            ${model ? `<span style="display: inline-block; background-color: ${isDark ? '#1e293b' : '#f1f5f9'}; color: ${subtitleColor}; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 9999px;">Model: ${escapeHtml(model)}</span>` : ''}
+          </div>
           <h1 style="margin: 0; font-size: 22px; font-weight: 700; color: ${textColor}; line-height: 1.3;">
             ${escapeHtml(title || 'AI Conversation')}
           </h1>
         </div>
         <div style="font-size: 12px; color: #94a3b8; text-align: right; white-space: nowrap; margin-left: 16px;">
-          ${escapeHtml(formattedDate)}
+          <div>${escapeHtml(formattedDate)}</div>
+          <div style="margin-top: 2px;"><a href="https://ai-chat-exporter.covai.org" target="_blank" style="color: #94a3b8; text-decoration: none;">AI Chat Exporter</a></div>
         </div>
       </div>
 

@@ -266,14 +266,16 @@ export class ClaudeParser extends ChatParser {
             }
           }
 
+          const currentUrl =
+            typeof window !== 'undefined' && window.location ? window.location.href || '' : '';
           const metadata = {
             Source: 'Claude',
             Date: new Date().toLocaleString(),
-            Link: window.location.href,
+            Link: currentUrl,
             Model: data.model || 'Claude',
           };
 
-          return { title: convTitle, messages, metadata };
+          return { title: convTitle, messages, url: currentUrl, metadata };
         } catch (e) {
           console.error('[AI Exporter] Claude API parse failed, falling back to DOM:', e);
         }
@@ -393,13 +395,15 @@ export class ClaudeParser extends ChatParser {
       }
     }
 
+    const currentUrl =
+      typeof window !== 'undefined' && window.location ? window.location.href || '' : '';
     const metadata = {
       Source: 'Claude',
       Date: new Date().toLocaleString(),
-      Link: window.location.href,
+      Link: currentUrl,
       Model: 'Claude',
     };
 
-    return { title, messages, metadata };
+    return { title, messages, url: currentUrl, metadata };
   }
 }

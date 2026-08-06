@@ -8,17 +8,36 @@ export class MarkdownFormatter extends ExportFormatter {
 
     let output = `# ${title || 'AI Chat Export'}\n\n`;
 
-    // Add metadata (timestamp and URL)
-    if (conversation.metadata) {
-      Object.entries(conversation.metadata).forEach(([key, value]) => {
-        output += `**${key}:** ${value}  \n`;
-      });
-    } else {
-      output += `**Exported:** ${formattedDate}  \n`;
-      if (conversation.url) {
-        output += `**Link:** [${conversation.url}](${conversation.url})\n`;
-      }
+    output += `**Exported with:** [AI Chat Exporter](https://ai-chat-exporter.covai.org)  \n`;
+
+    const metadata = conversation.metadata || {};
+    const platform = metadata.Source || 'AI';
+    const date = metadata.Date || formattedDate;
+    const link = conversation.url || metadata.Link || '';
+    const model = metadata.Model;
+
+    output += `**Source:** ${platform}  \n`;
+    output += `**Date:** ${date}  \n`;
+
+    if (link) {
+      output += `**Link:** [${link}](${link})  \n`;
     }
+
+    if (model) {
+      output += `**Model:** ${model}  \n`;
+    }
+
+    const standardKeys = new Set(['Source', 'Date', 'Link', 'Model']);
+    Object.entries(metadata).forEach(([key, value]) => {
+      if (!standardKeys.has(key) && value) {
+        if (typeof value === 'string' && value.startsWith('http')) {
+          output += `**${key}:** [${value}](${value})  \n`;
+        } else {
+          output += `**${key}:** ${value}  \n`;
+        }
+      }
+    });
+
     output += `\n`;
 
     messages.forEach((msg, index) => {

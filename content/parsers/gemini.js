@@ -589,17 +589,33 @@ export class GeminiParser extends ChatParser {
       console.log('[Gemini Parser] Total messages extracted:', messages.length);
       console.log('[Gemini Parser] ========== FINISHING PARSE() ==========');
 
+      const currentUrl =
+        typeof window !== 'undefined' && window.location ? window.location.href || '' : '';
+      const metadata = {
+        Source: 'Gemini',
+        Date: new Date().toLocaleString(),
+        Link: currentUrl,
+      };
+
       return {
         title: title,
         messages: messages,
-        url: window.location.href, // Add URL for metadata
+        url: currentUrl,
+        metadata: metadata,
       };
     } catch (error) {
       console.error('[Gemini Parser] Error during parsing:', error);
+      const currentUrl =
+        typeof window !== 'undefined' && window.location ? window.location.href || '' : '';
       return {
         title: 'Gemini Conversation',
         messages: [],
-        url: window.location.href,
+        url: currentUrl,
+        metadata: {
+          Source: 'Gemini',
+          Date: new Date().toLocaleString(),
+          Link: currentUrl,
+        },
       };
     }
   }

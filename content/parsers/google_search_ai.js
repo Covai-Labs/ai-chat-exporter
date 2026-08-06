@@ -100,6 +100,14 @@ export class GoogleSearchAIParser extends ChatParser {
       messages.push({ role: 'User', content: queries[queries.length - 1].trim() });
     }
 
-    return { title, messages };
+    const currentUrl =
+      typeof window !== 'undefined' && window.location ? window.location.href || '' : '';
+    const metadata = {
+      Source: 'Google Search AI',
+      Date: new Date().toLocaleString(),
+      Link: currentUrl,
+    };
+
+    return { title, messages, url: currentUrl, metadata };
   }
 }
