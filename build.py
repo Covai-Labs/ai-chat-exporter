@@ -22,7 +22,7 @@ try:
             manifest['browser_specific_settings']['gecko'] = {}
 
         gecko = manifest['browser_specific_settings']['gecko']
-        gecko['id'] = 'ai-chat-exporter@covai.org'
+        gecko['id'] = 'ai-chat-exporter@local.dev'
         gecko['strict_min_version'] = '143.0'
         gecko['data_collection_permissions'] = {
             'required': ['none']
