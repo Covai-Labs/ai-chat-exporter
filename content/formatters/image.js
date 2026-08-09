@@ -1,3 +1,5 @@
+import html2canvas from 'html2canvas';
+import renderMathInElement from 'katex/dist/contrib/auto-render.mjs';
 import { ExportFormatter } from './base.js';
 import { markdownToHtml, escapeHtml } from './html.js';
 
@@ -227,12 +229,30 @@ export class ImageFormatter extends ExportFormatter {
     try {
       await this.preloadImages(container);
 
+      try {
+        if (typeof renderMathInElement === 'function') {
+          renderMathInElement(container, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false },
+              { left: '\\[', right: '\\]', display: true },
+              { left: '\\(', right: '\\)', display: false },
+            ],
+            throwOnError: false,
+          });
+        }
+      } catch (e) {
+        console.warn('[ImageFormatter] KaTeX math rendering failed:', e);
+      }
+
       const html2canvasFn =
-        typeof window !== 'undefined' && window.html2canvas
-          ? window.html2canvas
-          : typeof globalThis !== 'undefined' && globalThis.html2canvas
-            ? globalThis.html2canvas
-            : null;
+        typeof html2canvas === 'function'
+          ? html2canvas
+          : typeof window !== 'undefined' && window.html2canvas
+            ? window.html2canvas
+            : typeof globalThis !== 'undefined' && globalThis.html2canvas
+              ? globalThis.html2canvas
+              : null;
 
       if (!html2canvasFn) {
         throw new Error('html2canvas library is not loaded');

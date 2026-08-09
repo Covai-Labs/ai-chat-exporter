@@ -2,8 +2,8 @@ import fs from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-const previewHtml = fs.readFileSync('popup/preview.html', 'utf8');
-const previewJs = fs.readFileSync('popup/preview.js', 'utf8');
+const previewHtml = fs.readFileSync('entrypoints/preview/index.html', 'utf8');
+const previewJs = fs.readFileSync('entrypoints/preview/preview.js', 'utf8');
 
 test('preview page includes format tabs and action buttons', () => {
   assert.match(previewHtml, /id="format-tabs"/);
@@ -39,7 +39,6 @@ test('preview script handles PDF format and autoPrint', () => {
 });
 
 test('preview page and script handle real PNG rendering and Word .doc MIME type with UTF-8 BOM', () => {
-  assert.match(previewHtml, /html2canvas.min.js/);
   assert.match(previewJs, /import { ImageFormatter }/);
   assert.match(previewJs, /application\/msword/);
   assert.match(previewJs, /\\ufeff/);

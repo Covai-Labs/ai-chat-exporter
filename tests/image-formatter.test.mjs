@@ -10,6 +10,7 @@ async function importFormatter() {
   await fs.mkdir(path.join(tempDir, 'content', 'formatters'), { recursive: true });
   await fs.mkdir(path.join(tempDir, 'content', 'utils'), { recursive: true });
   await fs.mkdir(path.join(tempDir, 'content', 'lib'), { recursive: true });
+  await fs.symlink(path.resolve('node_modules'), path.join(tempDir, 'node_modules'), 'dir');
   await fs.writeFile(path.join(tempDir, 'package.json'), '{"type":"module"}');
   await fs.copyFile(
     path.resolve('content/formatters/base.js'),

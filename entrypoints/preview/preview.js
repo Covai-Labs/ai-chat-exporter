@@ -8,6 +8,8 @@ import {
   stripEncodedImages,
 } from '../../content/formatters/continuation.js';
 import { sanitizeHtml } from '../../content/utils/sanitizer.js';
+import renderMathInElement from 'katex/dist/contrib/auto-render.mjs';
+import Prism from 'prismjs';
 
 function applyTheme(theme, targetDoc = document) {
   if (!targetDoc || !targetDoc.documentElement) return;
@@ -148,6 +150,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         previewRendered.contentDocument ||
         (previewRendered.contentWindow && previewRendered.contentWindow.document);
       if (!doc) return;
+
+      try {
+        if (doc.body && typeof renderMathInElement === 'function') {
+          renderMathInElement(doc.body, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false },
+              { left: '\\[', right: '\\]', display: true },
+              { left: '\\(', right: '\\)', display: false },
+            ],
+            throwOnError: false,
+          });
+        }
+        if (doc.body && typeof Prism !== 'undefined' && Prism.highlightAllUnder) {
+          Prism.highlightAllUnder(doc.body);
+        }
+      } catch (e) {
+        console.warn('[Preview] Math/Prism rendering failed:', e);
+      }
 
       const toggle = doc.getElementById('theme-toggle-checkbox');
       if (toggle) {
