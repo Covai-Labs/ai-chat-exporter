@@ -72,8 +72,24 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (storedSettings.includeImages !== undefined && includeImagesCheckbox) {
     includeImagesCheckbox.checked = storedSettings.includeImages;
   }
+  async function getActiveTab() {
+    if (typeof chrome === 'undefined' || !chrome.tabs) return null;
+    try {
+      const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+      if (tab) return tab;
+    } catch {
+      // Ignore
+    }
+    try {
+      const [fallbackTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      return fallbackTab || null;
+    } catch {
+      return null;
+    }
+  }
+
   // Get current tab
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  let tab = await getActiveTab();
 
   if (!tab) {
     statusEl.textContent = 'Error: No active tab';
@@ -87,6 +103,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   const RETRY_DELAY_MS = 500;
 
   async function checkAvailability() {
+    tab = await getActiveTab();
+    if (!tab || !tab.id) {
+      statusEl.textContent = 'Error: No active tab';
+      showError();
+      return;
+    }
     for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
       try {
         const response = await chrome.tabs.sendMessage(tab.id, {
@@ -113,6 +135,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           }
           chatInfoEl.classList.remove('hidden');
           actionsEl.classList.remove('hidden');
+          errorEl.classList.add('hidden');
           return; // success — stop retrying
         } else {
           // Parser responded but no compatible chat found; no point retrying.
@@ -135,6 +158,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     // All retries exhausted
     showError();
   }
+
+  window.addEventListener('message', async (event) => {
+    if (event.data?.action === 'REFRESH_PANEL') {
+      await checkAvailability();
+    }
+  });
 
   const pngWarningBanner = document.getElementById('png-warning-banner');
   const pngQualityContainer = document.getElementById('png-quality-container');

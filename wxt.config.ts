@@ -1,6 +1,22 @@
 import { defineConfig } from 'wxt';
 
 export default defineConfig({
+  vite: () => ({
+    plugins: [
+      {
+        name: 'escape-non-printable-utf8',
+        generateBundle(_options, bundle) {
+          for (const file of Object.values(bundle)) {
+            if (file.type === 'chunk' && file.code) {
+              file.code = file.code.replace(/[\uFDD0-\uFDEF\uFFFE\uFFFF]/g, (match) => {
+                return '\\u' + match.charCodeAt(0).toString(16).padStart(4, '0');
+              });
+            }
+          }
+        },
+      },
+    ],
+  }),
   manifestVersion: 3,
   manifest: ({ browser }) => {
     const isFirefox = browser === 'firefox';

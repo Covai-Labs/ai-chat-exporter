@@ -17,10 +17,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   });
 
+  async function getActiveTab() {
+    if (typeof chrome === 'undefined' || !chrome.tabs) return null;
+    try {
+      const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+      if (tab) return tab;
+    } catch {
+      // Ignore
+    }
+    try {
+      const [fallbackTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      return fallbackTab || null;
+    } catch {
+      return null;
+    }
+  }
+
   async function checkAvailability() {
     if (!statusEl) return;
     try {
-      const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      const activeTab = await getActiveTab();
       if (!activeTab || !activeTab.id) {
         statusEl.textContent = 'No Active Tab';
         return;
@@ -40,31 +56,41 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  if (headerRefreshBtn) {
-    headerRefreshBtn.addEventListener('click', async () => {
-      await checkAvailability();
-      const activeIframe = document.querySelector('.sp-tab-content.active iframe');
-      if (activeIframe && activeIframe.contentWindow) {
+  async function refreshAllPanels() {
+    await checkAvailability();
+    const iframes = document.querySelectorAll('.sp-tab-iframe');
+    iframes.forEach((iframe) => {
+      if (iframe && iframe.contentWindow) {
         try {
-          activeIframe.contentWindow.location.reload();
+          iframe.contentWindow.postMessage({ action: 'REFRESH_PANEL' }, '*');
+          iframe.contentWindow.location.reload();
         } catch {
-          const currentSrc = activeIframe.src;
-          activeIframe.src = currentSrc;
+          const currentSrc = iframe.src;
+          iframe.src = currentSrc;
         }
       }
+    });
+  }
+
+  if (headerRefreshBtn) {
+    headerRefreshBtn.addEventListener('click', async () => {
+      await refreshAllPanels();
     });
   }
 
   if (typeof chrome !== 'undefined' && chrome.tabs) {
     if (chrome.tabs.onActivated) {
       chrome.tabs.onActivated.addListener(async () => {
-        await checkAvailability();
+        await refreshAllPanels();
       });
     }
     if (chrome.tabs.onUpdated) {
       chrome.tabs.onUpdated.addListener(async (tabId, changeInfo) => {
-        if (changeInfo.status === 'complete') {
-          await checkAvailability();
+        if (changeInfo.status === 'complete' || changeInfo.url || changeInfo.title) {
+          const activeTab = await getActiveTab();
+          if (activeTab && activeTab.id === tabId) {
+            await refreshAllPanels();
+          }
         }
       });
     }
