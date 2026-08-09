@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (chrome.runtime.openOptionsPage) {
         chrome.runtime.openOptionsPage();
       } else {
-        chrome.tabs.create({ url: chrome.runtime.getURL('entrypoints/options/index.html') });
+        chrome.tabs.create({ url: chrome.runtime.getURL('options.html') });
       }
     });
   }
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           });
 
           await chrome.tabs.create({
-            url: chrome.runtime.getURL('entrypoints/preview/index.html'),
+            url: chrome.runtime.getURL('preview.html'),
           });
 
           statusEl.textContent = 'Export Successful!';
@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         await chrome.tabs.create({
-          url: chrome.runtime.getURL('entrypoints/preview/index.html'),
+          url: chrome.runtime.getURL('preview.html'),
         });
 
         statusEl.textContent = 'Opened in New Tab!';
