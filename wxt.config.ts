@@ -56,7 +56,12 @@ export default defineConfig({
       },
       web_accessible_resources: [
         {
-          resources: ['content/lib/*', 'schemas/*'],
+          resources: [
+            'content/chatgpt_helper.js',
+            'content/claude_react_reader.js',
+            'content/lib/*',
+            'schemas/*',
+          ],
           matches: hostPermissions,
         },
       ],
