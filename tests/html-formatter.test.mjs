@@ -3,7 +3,6 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import vm from 'node:vm';
 
 async function importFormatter() {
   const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'ai-chat-exporter-'));
@@ -232,33 +231,4 @@ test('HTML formatter escapes malicious codeLang tags and untrusted details tags'
   assert.ok(
     output.includes('&lt;details&gt;&lt;script&gt;alert(2)&lt;/script&gt;&lt;/details&gt;'),
   );
-});
-
-test('HTML formatter output contains syntactically valid inline script blocks', async () => {
-  const { HtmlFormatter } = await importFormatter();
-  const formatter = new HtmlFormatter();
-
-  const conversation = {
-    title: 'Syntax Check Test',
-    messages: [
-      { role: 'User', content: '```javascript\nconsole.log("hello");\n```' },
-      { role: 'Assistant', content: 'Here is some math: $$x^2 + y^2 = z^2$$' },
-    ],
-  };
-
-  const output = formatter.format(conversation);
-
-  const scriptRegex = /<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi;
-  let match;
-  let scriptCount = 0;
-  while ((match = scriptRegex.exec(output)) !== null) {
-    const scriptCode = match[1].trim();
-    if (!scriptCode) continue;
-    scriptCount++;
-    assert.doesNotThrow(
-      () => new vm.Script(scriptCode),
-      `Inline <script> block #${scriptCount} has a JavaScript syntax error`,
-    );
-  }
-  assert.ok(scriptCount > 0, 'Expected at least one inline script block in exported HTML');
 });

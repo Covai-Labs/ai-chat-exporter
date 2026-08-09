@@ -896,10 +896,10 @@ ${prismJs}
     }
 
     function highlightFallbackCode() {
-      const kwRegex = /\\b(const|let|var|function|return|if|else|for|while|import|export|from|class|extends|async|await|try|catch|def|self|print|public|private|static|void|int|string|boolean|type|interface|struct)\\b/g;
-      const strRegex = /("(?:[^"\\\\]|\\\\.)*"|'(?:[^'\\\\]|\\\\.)*')/g;
-      const comRegex = /(\\/\\/[^\\n]*|\\/\\*[\\s\\S]*?\\*\\/|#[^\\n]*)/g;
-      const numRegex = /(\\b\\d+(?:\\.\\d+)?\\b)/g;
+      const kwRegex = new RegExp('\\b(const|let|var|function|return|if|else|for|while|import|export|from|class|extends|async|await|try|catch|def|self|print|public|private|static|void|int|string|boolean|type|interface|struct)\\b', 'g');
+      const strRegex = new RegExp('("([^"\\\\]|\\\\.)*"|\x27([^\x27\\\\]|\\\\.)*\x27)', 'g');
+      const comRegex = new RegExp('//[^\\n]*|/\\*[\\s\\S]*?\\*/|#[^\\n]*', 'g');
+      const numRegex = new RegExp('\\b\\d+(\\.\\d+)?\\b', 'g');
 
       document.querySelectorAll('pre code').forEach((codeBlock) => {
         let html = codeBlock.innerHTML;
@@ -913,19 +913,13 @@ ${prismJs}
       });
     }
 
-    function initHighlighting() {
+    window.addEventListener('DOMContentLoaded', () => {
       if (window.Prism) {
         Prism.highlightAll();
       } else {
         highlightFallbackCode();
       }
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initHighlighting);
-    } else {
-      initHighlighting();
-    }
+    });
 
     window.addEventListener('message', (event) => {
       if (event.data && event.data.action === 'print') {

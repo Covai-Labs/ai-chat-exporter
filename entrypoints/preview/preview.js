@@ -186,16 +186,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             throwOnError: false,
           });
         }
-      } catch (e) {
-        console.warn('[Preview] Math rendering failed:', e);
-      }
-
-      try {
         if (doc.body && typeof Prism !== 'undefined' && Prism.highlightAllUnder) {
           Prism.highlightAllUnder(doc.body);
         }
       } catch (e) {
-        console.warn('[Preview] Prism rendering failed:', e);
+        console.warn('[Preview] Math/Prism rendering failed:', e);
       }
 
       const toggle = doc.getElementById('theme-toggle-checkbox');
