@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const cleanForPreview = content
-      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+      .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
       .replace(/\s*onclick="[^"]*"/gi, '');
     const blob = new Blob([cleanForPreview], { type: 'text/html' });
     currentBlobUrl = URL.createObjectURL(blob);

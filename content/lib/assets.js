@@ -1,23 +1,40 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-let katexCss = '';
-let katexJs = '';
-let autoRenderJs = '';
-let prismCss = '';
-let prismJs = '';
-
-try {
-  if (typeof process !== 'undefined' && process.cwd) {
-    const base = process.cwd();
-    katexCss = fs.readFileSync(path.join(base, 'content/lib/katex/katex.min.css'), 'utf8');
-    katexJs = fs.readFileSync(path.join(base, 'content/lib/katex/katex.min.js'), 'utf8');
-    autoRenderJs = fs.readFileSync(path.join(base, 'content/lib/katex/auto-render.min.js'), 'utf8');
-    prismCss = fs.readFileSync(path.join(base, 'content/lib/prismjs/prism-tomorrow.min.css'), 'utf8');
-    prismJs = fs.readFileSync(path.join(base, 'content/lib/prismjs/prism-bundle.js'), 'utf8');
+function getAsset(definedVal, relativePath) {
+  if (typeof definedVal !== 'undefined' && typeof definedVal === 'string' && definedVal.length > 0) {
+    return definedVal;
   }
-} catch {
-  // Ignore
+  try {
+    if (typeof process !== 'undefined' && process.cwd) {
+      const fullPath = path.resolve(process.cwd(), relativePath);
+      if (fs.existsSync(fullPath)) {
+        return fs.readFileSync(fullPath, 'utf8');
+      }
+    }
+  } catch {
+    // Ignore error in browser context
+  }
+  return '';
 }
 
-export { katexCss, katexJs, autoRenderJs, prismCss, prismJs };
+export const katexCss = getAsset(
+  typeof __KATEX_CSS__ !== 'undefined' ? __KATEX_CSS__ : undefined,
+  'content/lib/katex/katex.min.css',
+);
+export const katexJs = getAsset(
+  typeof __KATEX_JS__ !== 'undefined' ? __KATEX_JS__ : undefined,
+  'content/lib/katex/katex.min.js',
+);
+export const autoRenderJs = getAsset(
+  typeof __AUTO_RENDER_JS__ !== 'undefined' ? __AUTO_RENDER_JS__ : undefined,
+  'content/lib/katex/auto-render.min.js',
+);
+export const prismCss = getAsset(
+  typeof __PRISM_CSS__ !== 'undefined' ? __PRISM_CSS__ : undefined,
+  'content/lib/prismjs/prism-tomorrow.min.css',
+);
+export const prismJs = getAsset(
+  typeof __PRISM_JS__ !== 'undefined' ? __PRISM_JS__ : undefined,
+  'content/lib/prismjs/prism-bundle.js',
+);

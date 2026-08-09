@@ -1,7 +1,26 @@
 import { defineConfig } from 'wxt';
+import fs from 'node:fs';
+import path from 'node:path';
 
 export default defineConfig({
   vite: () => ({
+    define: {
+      __KATEX_CSS__: JSON.stringify(
+        fs.readFileSync(path.resolve('content/lib/katex/katex.min.css'), 'utf8'),
+      ),
+      __KATEX_JS__: JSON.stringify(
+        fs.readFileSync(path.resolve('content/lib/katex/katex.min.js'), 'utf8'),
+      ),
+      __AUTO_RENDER_JS__: JSON.stringify(
+        fs.readFileSync(path.resolve('content/lib/katex/auto-render.min.js'), 'utf8'),
+      ),
+      __PRISM_CSS__: JSON.stringify(
+        fs.readFileSync(path.resolve('content/lib/prismjs/prism-tomorrow.min.css'), 'utf8'),
+      ),
+      __PRISM_JS__: JSON.stringify(
+        fs.readFileSync(path.resolve('content/lib/prismjs/prism-bundle.js'), 'utf8'),
+      ),
+    },
     plugins: [
       {
         name: 'escape-non-printable-utf8',

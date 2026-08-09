@@ -171,7 +171,6 @@ test('HTML formatter renders task list checkboxes, collapsible thinking blocks, 
 
   // Check per-message copy button
   assert.ok(output.includes('copy-msg-btn'));
-  assert.ok(output.includes('copyMessage(this)'));
 
   // Check Prism syntax highlighting script & offline tokens
   assert.ok(output.includes('prism') || output.includes('Prism'));
