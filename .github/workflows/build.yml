@@ -47,26 +47,26 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      - name: Install dependencies
+      - name: Build and package extensions with WXT
         run: |
-          sudo apt-get update
-          sudo apt-get install -y zip
+          npm run build
+          npm run zip
+          npm run build:firefox
+          npm run zip:firefox
 
-      - name: Build extensions
+      - name: Generate SHA256 Checksums
         run: |
-          chmod +x build.sh
-          ./build.sh
+          cd .output
+          sha256sum *.zip > SHA256SUMS.txt
+          cat SHA256SUMS.txt
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: extensions
-          path: releases/*.zip
+          path: |
+            .output/*.zip
+            .output/SHA256SUMS.txt
 
   release:
     needs: build
@@ -79,12 +79,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: extensions
-          path: releases/
+          path: .output/
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          files: releases/*.zip
+          files: |
+            .output/*.zip
+            .output/SHA256SUMS.txt
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -102,20 +104,11 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
       - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y zip
+        run: npm ci
 
-      - name: Build Firefox extension
-        run: |
-          chmod +x build.sh
-          ./build.sh firefox
+      - name: Build Firefox extension with WXT
+        run: npm run build:firefox
 
       - name: Publish to Firefox Add-ons (AMO)
         run: |
@@ -123,7 +116,7 @@ jobs:
             --api-key="${{ secrets.AMO_JWT_ISSUER }}" \
             --api-secret="${{ secrets.AMO_JWT_SECRET }}" \
             --channel="listed" \
-            --source-dir="dist"
+            --source-dir=".output/firefox-mv3"
 
   publish-edge:
     needs: build
@@ -142,7 +135,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: extensions
-          path: releases/
+          path: .output/
 
       - name: Publish to Microsoft Edge Add-ons
         run: node publish-edge.js
@@ -150,7 +143,7 @@ jobs:
           EDGE_PRODUCT_ID: ${{ secrets.EDGE_PRODUCT_ID }}
           EDGE_CLIENT_ID: ${{ secrets.EDGE_CLIENT_ID }}
           EDGE_API_KEY: ${{ secrets.EDGE_API_KEY }}
-          EDGE_ZIP_PATH: releases/ai-chat-exporter-chromium.zip
+          EDGE_ZIP_PATH: .output/*-chrome.zip
 
   publish-chrome:
     needs: build
@@ -169,7 +162,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: extensions
-          path: releases/
+          path: .output/
 
       - name: Publish to Chrome Web Store
         run: node publish-chrome.js
@@ -178,4 +171,4 @@ jobs:
           CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
           CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
           CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
-          CHROME_ZIP_PATH: releases/ai-chat-exporter-chromium.zip
+          CHROME_ZIP_PATH: .output/*-chrome.zip

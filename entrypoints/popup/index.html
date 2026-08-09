@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="header-row">
+          <div id="status" class="status">Detecting...</div>
+          <div class="header-actions">
+            <button id="open-options-btn" class="sidepanel-icon-btn" title="Open Options">
+              ⚙️
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <div class="chat-info hidden" id="chat-info">
+          <div class="card-header-row">
+            <span class="field-label-small">EXPORT FILENAME</span>
+            <span id="message-count" class="msg-badge">0 messages found</span>
+          </div>
+          <div class="filename-input-wrapper">
+            <textarea
+              id="filename-input"
+              class="chat-filename-textarea"
+              rows="2"
+              placeholder="Filename"
+              title="Click to edit filename"
+            ></textarea>
+          </div>
+          <span id="chat-title" class="hidden"></span>
+        </div>
+
+        <div class="actions hidden" id="actions">
+          <select id="format-select">
+            <option value="markdown">📝 Markdown (.md)</option>
+            <option value="json">⚙️ JSON (.json)</option>
+            <option value="html">🌐 HTML (.html)</option>
+            <option value="doc">📄 Word Document (.doc)</option>
+            <option value="png">🖼️ Shareable Image (.png)</option>
+            <option value="pdf">📄 PDF (.pdf)</option>
+          </select>
+          <div id="png-warning-banner" class="png-warning-banner hidden">
+            ⚠️ PNG export on long chats may take 1–2 minutes. Consider PDF or Markdown for instant
+            export.
+          </div>
+          <div class="checkbox-wrapper" id="image-toggle-container">
+            <label class="checkbox-label">
+              <input type="checkbox" id="include-images-checkbox" checked />
+              Include Images
+            </label>
+          </div>
+          <div class="checkbox-wrapper hidden" id="png-quality-container">
+            <label class="checkbox-label">
+              <input type="checkbox" id="png-quality-checkbox" checked />
+              High Quality PNG (2x)
+            </label>
+          </div>
+          <div class="button-group">
+            <div class="primary-row">
+              <button id="export-btn" class="primary-btn">📥 Export Chat</button>
+            </div>
+            <div class="secondary-row">
+              <button id="copy-btn" class="secondary-btn hidden">📋 Copy Chat</button>
+              <button id="preview-btn" class="secondary-btn hidden">👁️ Open in Tab</button>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="transfer-section" id="transfer-section">
+            <div class="transfer-header">
+              <span class="transfer-badge">🔀 CROSS-AI TRANSFER</span>
+            </div>
+            <div class="transfer-row">
+              <select id="continue-target-select">
+                <option value="chatgpt">ChatGPT</option>
+                <option value="claude">Claude</option>
+                <option value="gemini">Gemini</option>
+                <option value="deepseek">DeepSeek</option>
+                <option value="qwen">Qwen</option>
+                <option value="perplexity">Perplexity</option>
+                <option value="mistral">Mistral</option>
+                <option value="lumo">Lumo</option>
+                <option value="notebooklm">NotebookLM</option>
+                <option value="obsidian">Obsidian</option>
+                <option value="logseq">Logseq</option>
+                <option value="bear">Bear</option>
+                <option value="noteplan">NotePlan</option>
+                <option value="drafts">Drafts</option>
+              </select>
+              <button id="transfer-btn" class="transfer-btn-primary">↗ Transfer</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="error hidden" id="error-msg">
+          No compatible chat found on this tab. You can navigate to a supported AI chat tab and
+          trigger this extension again or
+          <a
+            href="https://ai-chat-exporter.covai.org/feedback.html"
+            id="report-issue-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            >report the issue</a
+          >.
+        </div>
+      </main>
+    </div>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

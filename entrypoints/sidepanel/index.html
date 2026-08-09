@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Chat Exporter Side Panel</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <div class="sp-container">
+      <header class="sp-header">
+        <div class="sp-brand">
+          <span class="sp-icon">⚡</span>
+          <span class="sp-title">AI Chat Exporter</span>
+        </div>
+        <div class="sp-header-actions">
+          <div id="sp-status" class="sp-status-badge">Detecting...</div>
+          <button
+            id="sp-refresh-btn"
+            class="sp-icon-btn"
+            title="Refresh panel"
+            aria-label="Refresh panel"
+          >
+            ↻
+          </button>
+        </div>
+      </header>
+
+      <nav class="sp-tabs">
+        <button class="sp-tab-btn active" data-tab="export-tab">Export</button>
+        <button class="sp-tab-btn" data-tab="preview-tab">Live Preview</button>
+        <button class="sp-tab-btn" data-tab="settings-tab">Settings</button>
+      </nav>
+
+      <main class="sp-content">
+        <!-- TAB 1: EXPORT -->
+        <section id="export-tab" class="sp-tab-content active">
+          <iframe id="sp-export-iframe" class="sp-tab-iframe" src="../popup/index.html"></iframe>
+        </section>
+
+        <!-- TAB 2: LIVE PREVIEW -->
+        <section id="preview-tab" class="sp-tab-content">
+          <iframe id="sp-preview-iframe" class="sp-tab-iframe" src="../preview/index.html"></iframe>
+        </section>
+
+        <!-- TAB 3: SETTINGS -->
+        <section id="settings-tab" class="sp-tab-content">
+          <iframe
+            id="sp-settings-iframe"
+            class="sp-tab-iframe"
+            src="../options/index.html"
+          ></iframe>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="sidepanel.js"></script>
+  </body>
+</html>

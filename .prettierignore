@@ -2,6 +2,9 @@ node_modules/
 dist/
 releases/
 content/lib/
+public/
+.output/
+.wxt/
 *.log
 tests/fixtures/
 Scratch/

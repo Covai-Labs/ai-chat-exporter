@@ -1,5 +1,7 @@
 releases/
 dist/
+.output/
+.wxt/
 *.log
 node_modules/
 internal/

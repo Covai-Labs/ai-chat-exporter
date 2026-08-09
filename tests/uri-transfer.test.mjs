@@ -4,10 +4,6 @@ import assert from 'node:assert/strict';
 import {
   buildObsidianUri,
   cleanObsidianTitle,
-  buildLogseqUri,
-  buildBearUri,
-  buildNotePlanUri,
-  buildDraftsUri,
   buildAppUri,
 } from '../content/utils/uri-transfer.js';
 

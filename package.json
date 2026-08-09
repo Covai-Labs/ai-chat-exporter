@@ -3,6 +3,12 @@
   "version": "1.9.3",
   "type": "module",
   "scripts": {
+    "dev": "wxt",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
+    "postinstall": "wxt prepare",
     "test": "node --test tests/*.test.*",
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -13,7 +19,8 @@
     "eslint": "^10.8.0",
     "globals": "^17.9.0",
     "linkedom": "^0.18.13",
-    "prettier": "^3.9.6"
+    "prettier": "^3.9.6",
+    "wxt": "^0.21.3"
   },
   "dependencies": {
     "dompurify": "^3.4.13"

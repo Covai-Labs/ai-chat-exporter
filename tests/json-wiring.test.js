@@ -4,8 +4,7 @@ import test from 'node:test';
 
 const mainJs = fs.readFileSync('content/main.js', 'utf8');
 const popupHtml = fs.readFileSync('popup/popup.html', 'utf8');
-const manifestJson = fs.readFileSync('manifest.json', 'utf8');
-const buildSh = fs.readFileSync('build.sh', 'utf8');
+const wxtConfig = fs.readFileSync('wxt.config.ts', 'utf8');
 
 test('content script registers the JSON formatter', () => {
   assert.match(mainJs, /import \{ JsonFormatter \} from '\.\/formatters\/json\.js';/);
@@ -18,6 +17,6 @@ test('popup enables JSON exports', () => {
 });
 
 test('build includes the JSON schema files', () => {
-  assert.match(manifestJson, /"schemas\/\*\.json"/);
-  assert.match(buildSh, /cp -r .*schemas dist\//);
+  assert.match(wxtConfig, /'schemas\/\*'/);
+  assert.ok(fs.existsSync('public/schemas/export-v1.schema.json'));
 });

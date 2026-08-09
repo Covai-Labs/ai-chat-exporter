@@ -3,7 +3,16 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['node_modules/**', 'dist/**', 'releases/**', 'content/lib/**', 'Scratch/**'],
+    ignores: [
+      'node_modules/**',
+      'dist/**',
+      'releases/**',
+      'content/lib/**',
+      'public/**',
+      '.output/**',
+      '.wxt/**',
+      'Scratch/**',
+    ],
   },
   js.configs.recommended,
   {
@@ -16,6 +25,8 @@ export default [
         ...globals.node,
         chrome: 'readonly',
         browser: 'readonly',
+        defineBackground: 'readonly',
+        defineContentScript: 'readonly',
       },
     },
     rules: {
