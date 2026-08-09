@@ -14,5 +14,8 @@
     "globals": "^17.9.0",
     "linkedom": "^0.18.13",
     "prettier": "^3.9.6"
+  },
+  "dependencies": {
+    "dompurify": "^3.4.13"
   }
 }

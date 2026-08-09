@@ -1,4 +1,5 @@
 import { ExportFormatter } from './base.js';
+import { sanitizeHtml } from '../utils/sanitizer.js';
 
 export class HtmlFormatter extends ExportFormatter {
   format(conversation) {
@@ -17,7 +18,7 @@ export class HtmlFormatter extends ExportFormatter {
         const roleClass = isUser ? 'role-user' : 'role-assistant';
         const roleName = isUser ? 'User' : platform;
         const avatarText = isUser ? 'U' : platform[0];
-        const htmlContent = markdownToHtml(msg.content);
+        const htmlContent = sanitizeHtml(markdownToHtml(msg.content));
 
         return `
         <div class="message-card ${roleClass}">

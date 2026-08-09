@@ -4,6 +4,7 @@ import { HtmlFormatter } from '../content/formatters/html.js';
 import { DocFormatter } from '../content/formatters/doc.js';
 import { ImageFormatter } from '../content/formatters/image.js';
 import { ContinuationFormatter, stripEncodedImages } from '../content/formatters/continuation.js';
+import { sanitizeHtml } from '../content/utils/sanitizer.js';
 
 function applyTheme(theme, targetDoc = document) {
   if (!targetDoc || !targetDoc.documentElement) return;
@@ -345,7 +346,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       docContent = docFormatter.format(conversation);
     } else {
       const fallbackContent = data.previewContent || '';
-      htmlContent = fallbackContent;
+      htmlContent = sanitizeHtml(fallbackContent);
       markdownContent = fallbackContent;
       jsonContent = fallbackContent;
       docContent = fallbackContent;

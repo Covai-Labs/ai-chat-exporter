@@ -7,13 +7,21 @@ import { parseHTML } from 'linkedom';
 
 async function importFormatter() {
   const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'ai-chat-exporter-'));
-  await fs.mkdir(path.join(tempDir, 'content', 'formatters'), {
-    recursive: true,
-  });
+  await fs.mkdir(path.join(tempDir, 'content', 'formatters'), { recursive: true });
+  await fs.mkdir(path.join(tempDir, 'content', 'utils'), { recursive: true });
+  await fs.mkdir(path.join(tempDir, 'content', 'lib'), { recursive: true });
   await fs.writeFile(path.join(tempDir, 'package.json'), '{"type":"module"}');
   await fs.copyFile(
     path.resolve('content/formatters/base.js'),
     path.join(tempDir, 'content', 'formatters', 'base.js'),
+  );
+  await fs.copyFile(
+    path.resolve('content/utils/sanitizer.js'),
+    path.join(tempDir, 'content', 'utils', 'sanitizer.js'),
+  );
+  await fs.copyFile(
+    path.resolve('content/lib/purify.es.js'),
+    path.join(tempDir, 'content', 'lib', 'purify.es.js'),
   );
   await fs.copyFile(
     path.resolve('content/formatters/html.js'),
