@@ -23,6 +23,10 @@ async function importFormatter() {
     path.join(tempDir, 'content', 'lib', 'purify.es.js'),
   );
   await fs.copyFile(
+    path.resolve('content/lib/assets.js'),
+    path.join(tempDir, 'content', 'lib', 'assets.js'),
+  );
+  await fs.copyFile(
     path.resolve('content/formatters/html.js'),
     path.join(tempDir, 'content', 'formatters', 'html.js'),
   );
@@ -170,7 +174,7 @@ test('HTML formatter renders task list checkboxes, collapsible thinking blocks, 
   assert.ok(output.includes('copyMessage(this)'));
 
   // Check Prism syntax highlighting script & offline tokens
-  assert.ok(output.includes('prism.min.js'));
+  assert.ok(output.includes('prism') || output.includes('Prism'));
   assert.ok(output.includes('.token.keyword'));
 
   // Check export footer branding link

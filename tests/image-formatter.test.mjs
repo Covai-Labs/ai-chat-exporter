@@ -25,6 +25,10 @@ async function importFormatter() {
     path.join(tempDir, 'content', 'lib', 'purify.es.js'),
   );
   await fs.copyFile(
+    path.resolve('content/lib/assets.js'),
+    path.join(tempDir, 'content', 'lib', 'assets.js'),
+  );
+  await fs.copyFile(
     path.resolve('content/formatters/html.js'),
     path.join(tempDir, 'content', 'formatters', 'html.js'),
   );

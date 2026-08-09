@@ -9,7 +9,25 @@ import {
 } from '../../content/formatters/continuation.js';
 import { sanitizeHtml } from '../../content/utils/sanitizer.js';
 import renderMathInElement from 'katex/dist/contrib/auto-render.mjs';
-import Prism from 'prismjs';
+import Prism from '../../content/lib/prismjs/prism-bundle.js';
+
+function injectPreviewStyles(doc) {
+  if (!doc || !doc.head) return;
+  if (!doc.getElementById('katex-preview-style')) {
+    const linkKaTeX = doc.createElement('link');
+    linkKaTeX.id = 'katex-preview-style';
+    linkKaTeX.rel = 'stylesheet';
+    linkKaTeX.href = chrome.runtime.getURL('content/lib/katex/katex.min.css');
+    doc.head.appendChild(linkKaTeX);
+  }
+  if (!doc.getElementById('prism-preview-style')) {
+    const linkPrism = doc.createElement('link');
+    linkPrism.id = 'prism-preview-style';
+    linkPrism.rel = 'stylesheet';
+    linkPrism.href = chrome.runtime.getURL('content/lib/prismjs/prism-tomorrow.min.css');
+    doc.head.appendChild(linkPrism);
+  }
+}
 
 function applyTheme(theme, targetDoc = document) {
   if (!targetDoc || !targetDoc.documentElement) return;
@@ -138,7 +156,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       currentBlobUrl = null;
     }
 
-    const blob = new Blob([content], { type: 'text/html' });
+    const cleanForPreview = content
+      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+      .replace(/\s*onclick="[^"]*"/gi, '');
+    const blob = new Blob([cleanForPreview], { type: 'text/html' });
     currentBlobUrl = URL.createObjectURL(blob);
     previewRendered.src = currentBlobUrl;
   };
@@ -150,6 +171,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         previewRendered.contentDocument ||
         (previewRendered.contentWindow && previewRendered.contentWindow.document);
       if (!doc) return;
+
+      injectPreviewStyles(doc);
 
       try {
         if (doc.body && typeof renderMathInElement === 'function') {

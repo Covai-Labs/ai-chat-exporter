@@ -1,5 +1,6 @@
 import { ExportFormatter } from './base.js';
 import { sanitizeHtml } from '../utils/sanitizer.js';
+import { katexCss, katexJs, autoRenderJs, prismCss, prismJs } from '../lib/assets.js';
 
 export class HtmlFormatter extends ExportFormatter {
   format(conversation) {
@@ -41,9 +42,19 @@ export class HtmlFormatter extends ExportFormatter {
       .join('\n');
 
     const katexHeaders = `
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.1/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.1/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.1/dist/contrib/auto-render.min.js"></script>
+  <style>
+${katexCss}
+${prismCss}
+  </style>
+  <script>
+${katexJs}
+  </script>
+  <script>
+${autoRenderJs}
+  </script>
+  <script>
+${prismJs}
+  </script>
   <script>
     function renderMath() {
       if (window.renderMathInElement) {
@@ -53,7 +64,8 @@ export class HtmlFormatter extends ExportFormatter {
             {left: '$', right: '$', display: false},
             {left: '\\\\[', right: '\\\\]', display: true},
             {left: '\\\\(', right: '\\\\)', display: false}
-          ]
+          ],
+          throwOnError: false
         });
       }
     }
@@ -63,9 +75,6 @@ export class HtmlFormatter extends ExportFormatter {
       renderMath();
     }
   </script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/themes/prism-tomorrow.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/prism.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.30.0/plugins/autoloader/prism-autoloader.min.js"></script>
     `;
 
     return `<!DOCTYPE html>
