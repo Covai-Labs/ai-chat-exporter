@@ -50,7 +50,7 @@ export default defineConfig({
   manifest: ({ browser }) => {
     const isFirefox = browser === 'firefox';
 
-    const permissions = ['activeTab', 'scripting', 'storage'];
+    const permissions = ['activeTab', 'storage'];
     if (!isFirefox) {
       permissions.push('sidePanel');
     }
