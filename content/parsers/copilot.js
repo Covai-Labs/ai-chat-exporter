@@ -3,7 +3,11 @@ import { convertToMarkdown } from '../utils/html-to-markdown.js';
 
 export class CopilotParser extends ChatParser {
   isAvailable(url) {
-    return url.includes('copilot.microsoft.com') || url.includes('bing.com/chat');
+    return (
+      url.includes('copilot.microsoft.com') ||
+      url.includes('copilot.com') ||
+      url.includes('bing.com/chat')
+    );
   }
 
   async parse() {

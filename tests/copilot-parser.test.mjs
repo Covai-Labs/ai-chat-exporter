@@ -16,12 +16,19 @@ global.HTMLElement = HTMLElement;
 global.Node = Node;
 global.DOMParser = DOMParser;
 
-test('CopilotParser detects copilot.microsoft.com and bing.com/chat URLs', async () => {
+test('CopilotParser detects copilot.microsoft.com, copilot.com, and bing.com/chat URLs', async () => {
   const { CopilotParser } = await import('../content/parsers/copilot.js');
   const parser = new CopilotParser();
 
   assert.equal(parser.isAvailable('https://copilot.microsoft.com/'), true);
   assert.equal(parser.isAvailable('https://copilot.microsoft.com/chats/12345'), true);
+  assert.equal(
+    parser.isAvailable(
+      'https://copilot.com/chat?fromcode=cmmj8t0ivkm&sessionId=d0e6eaba-da1e-c759-44d9-b9da8d3c41f7',
+    ),
+    true,
+  );
+  assert.equal(parser.isAvailable('https://www.copilot.com/chat'), true);
   assert.equal(parser.isAvailable('https://www.bing.com/chat'), true);
   assert.equal(parser.isAvailable('https://chatgpt.com/'), false);
 });

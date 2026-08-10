@@ -28,6 +28,8 @@
     "*://notebooklm.google.com/*",
     "*://copilot.microsoft.com/*",
     "*://www.copilot.microsoft.com/*",
+    "*://copilot.com/*",
+    "*://www.copilot.com/*",
     "*://lumo.proton.me/*"
   ],
   "action": {
@@ -60,6 +62,8 @@
         "*://notebooklm.google.com/*",
         "*://copilot.microsoft.com/*",
         "*://www.copilot.microsoft.com/*",
+        "*://copilot.com/*",
+        "*://www.copilot.com/*",
         "*://lumo.proton.me/*",
         "*://www.google.com/*",
         "*://www.google.co.in/*",
@@ -104,6 +108,8 @@
         "*://notebooklm.google.com/*",
         "*://copilot.microsoft.com/*",
         "*://www.copilot.microsoft.com/*",
+        "*://copilot.com/*",
+        "*://www.copilot.com/*",
         "*://lumo.proton.me/*",
         "*://www.google.com/*",
         "*://www.google.co.in/*",

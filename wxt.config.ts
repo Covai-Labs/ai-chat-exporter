@@ -65,6 +65,8 @@ export default defineConfig({
       '*://notebooklm.google.com/*',
       '*://copilot.microsoft.com/*',
       '*://www.copilot.microsoft.com/*',
+      '*://copilot.com/*',
+      '*://www.copilot.com/*',
       '*://lumo.proton.me/*',
     ];
 
