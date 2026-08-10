@@ -67,7 +67,6 @@ export default defineConfig({
 
     const baseManifest: any = {
       name: 'AI Chat Exporter - Free, Private, OpenSource',
-      version: '1.9.3',
       description: 'Export AI chats from ChatGPT, Claude, Gemini & more to Markdown or JSON.',
       homepage_url: 'https://ai-chat-exporter.covai.org/',
       permissions,
