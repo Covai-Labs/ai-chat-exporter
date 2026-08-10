@@ -4,22 +4,31 @@ A simple, privacy-focused browser extension to export AI chats from ChatGPT, Cla
 
 ### Quick Install
 
-- 🌐 **Chrome**: [Install from Chrome Web Store](https://chrome.google.com/webstore/detail/cgakhbhkplndjjknhgegfcipffflcaoj)
 - 🦊 **Firefox**: [Install from Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/)
+- 🌐 **Chrome**: [Install from Chrome Web Store](https://chrome.google.com/webstore/detail/cgakhbhkplndjjknhgegfcipffflcaoj)
+- 🌊 **Edge**: [Install from Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/ai-chat-exporter-free-/hbgckjgfhnaedlihmkogenclfcnobicg)
 
 > [!NOTE]
-> Extension updates on Chrome Web Store may lag behind Firefox / GitHub releases due to store review queues.
+> Extension updates on Chrome/Edge Web Store may lag behind Firefox / GitHub releases due to long store review queues.
 
 <details>
 <summary><b>📦 Manual / Unpacked Installation</b></summary>
 
-1. Download the latest `ai-chat-exporter-chromium.zip` from the [Releases page](https://github.com/Rat-S/ai-chat-exporter/releases).
-2. Extract the zip file to a folder on your computer.
-3. Open your browser and navigate to `chrome://extensions/`.
-4. Enable **Developer mode** using the toggle switch in the top-right corner.
-5. Click **Load unpacked** in the top-left and select the extracted folder.
+#### Chrome / Edge / Chromium
 
-_Note: The developer primarily tests this extension on Firefox, so Chromium-based browsers are minimally tested. Feedback and issue reports are very welcome — feel free to submit [Feedback / Issue Reports](https://ai-chat-exporter.covai.org/feedback.html) or open a [GitHub Issue](https://github.com/Rat-S/ai-chat-exporter/issues)._
+1. Download the latest `ai-chat-exporter-chrome.zip` from the [Releases page](https://github.com/Rat-S/ai-chat-exporter/releases).
+2. Extract the zip file to a folder on your computer.
+3. Open your browser and navigate to `chrome://extensions/` (or `edge://extensions/`).
+4. Enable **Developer mode** using the toggle switch.
+5. Click **Load unpacked** and select the extracted folder.
+
+#### Firefox
+
+1. Download the latest `ai-chat-exporter-firefox.zip` from the [Releases page](https://github.com/Rat-S/ai-chat-exporter/releases).
+2. Extract the zip file to a folder on your computer.
+3. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`.
+4. Click **Load Temporary Add-on...**
+5. Select `manifest.json` inside the extracted folder.
 
 </details>
 
@@ -30,7 +39,7 @@ _Note: The developer primarily tests this extension on Firefox, so Chromium-base
 ## Features
 
 - **Privacy First**: All processing happens locally in your browser. No data is ever sent to third-party servers.
-- **Multi-Platform Support**: Works with all major AI chat platforms:
+- **Multi-Platform Support**: Works with many major AI chat platforms:
   - [ChatGPT](https://chatgpt.com/?q=Please%20review%20this%20FOSS%20project%20https%3A%2F%2Fgithub.com%2FRat-S%2Fai-chat-exporter%20and%20tell%20me%20what%20problem%20it%20solves%2C%20who%20it%20is%20for%2C%20its%20strongest%20features%2C%20its%20main%20limitations%2C%20and%20whether%20you%20would%20recommend%20it.)
   - [Claude](https://claude.ai/new?q=Please%20review%20this%20FOSS%20project%20https%3A%2F%2Fgithub.com%2FRat-S%2Fai-chat-exporter%20and%20tell%20me%20what%20problem%20it%20solves%2C%20who%20it%20is%20for%2C%20its%20strongest%20features%2C%20its%20main%20limitations%2C%20and%20whether%20you%20would%20recommend%20it.)
   - [Google Search AI](https://www.google.com/search?udm=50&q=Please%20review%20this%20FOSS%20project%20https%3A%2F%2Fgithub.com%2FRat-S%2Fai-chat-exporter%20and%20tell%20me%20what%20problem%20it%20solves%2C%20who%20it%20is%20for%2C%20its%20strongest%20features%2C%20its%20main%20limitations%2C%20and%20whether%20you%20would%20recommend%20it.)
@@ -97,3 +106,5 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 ---
 
 > **Nota bene:** This extension was developed for personal use and may not be very polished. I release it with the hope that it can be useful to others. Additionally, formatting of exported items from certain chats may currently not work well due to changes in those chat platforms. You are welcome to submit an issue or PR.
+
+_Note: Feedback and issue reports are very welcome — feel free to submit [Feedback / Issue Reports](https://ai-chat-exporter.covai.org/feedback.html) or open a [GitHub Issue](https://github.com/Rat-S/ai-chat-exporter/issues)._

@@ -81,7 +81,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            .output/*.zip
+            .output/ai-chat-exporter-chrome.zip
+            .output/ai-chat-exporter-firefox.zip
             .output/SHA256SUMS.txt
           generate_release_notes: true
         env:

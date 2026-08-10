@@ -1,9 +1,25 @@
 import fs from 'fs';
+import path from 'path';
 
 const PRODUCT_ID = process.env.EDGE_PRODUCT_ID;
 const CLIENT_ID = process.env.EDGE_CLIENT_ID;
 const API_KEY = process.env.EDGE_API_KEY;
 const ZIP_PATH = process.env.EDGE_ZIP_PATH || 'releases/ai-chat-exporter-chromium.zip';
+
+function resolveZipPath(pattern) {
+  if (fs.existsSync(pattern)) return pattern;
+  const dir = path.dirname(pattern);
+  const filenamePattern = path.basename(pattern);
+  if (filenamePattern.includes('*') && fs.existsSync(dir)) {
+    const regex = new RegExp('^' + filenamePattern.replace(/\*/g, '.*') + '$');
+    const files = fs.readdirSync(dir);
+    const match = files.find((file) => regex.test(file));
+    if (match) {
+      return path.join(dir, match);
+    }
+  }
+  return pattern;
+}
 
 if (!PRODUCT_ID || !CLIENT_ID || !API_KEY) {
   console.error(
@@ -15,12 +31,13 @@ if (!PRODUCT_ID || !CLIENT_ID || !API_KEY) {
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function publish() {
-  console.log(`Checking extension package at: ${ZIP_PATH}`);
-  if (!fs.existsSync(ZIP_PATH)) {
-    throw new Error(`Zip package not found at path: ${ZIP_PATH}`);
+  const actualZipPath = resolveZipPath(ZIP_PATH);
+  console.log(`Checking extension package at: ${actualZipPath}`);
+  if (!fs.existsSync(actualZipPath)) {
+    throw new Error(`Zip package not found at path: ${actualZipPath}`);
   }
 
-  const zipBuffer = fs.readFileSync(ZIP_PATH);
+  const zipBuffer = fs.readFileSync(actualZipPath);
   console.log(
     `Package read successfully. Size: ${(zipBuffer.length / (1024 * 1024)).toFixed(2)} MB`,
   );

@@ -1,10 +1,26 @@
 import fs from 'fs';
+import path from 'path';
 
 const EXTENSION_ID = process.env.CHROME_EXTENSION_ID;
 const CLIENT_ID = process.env.CHROME_CLIENT_ID;
 const CLIENT_SECRET = process.env.CHROME_CLIENT_SECRET;
 const REFRESH_TOKEN = process.env.CHROME_REFRESH_TOKEN;
 const ZIP_PATH = process.env.CHROME_ZIP_PATH || 'releases/ai-chat-exporter-chromium.zip';
+
+function resolveZipPath(pattern) {
+  if (fs.existsSync(pattern)) return pattern;
+  const dir = path.dirname(pattern);
+  const filenamePattern = path.basename(pattern);
+  if (filenamePattern.includes('*') && fs.existsSync(dir)) {
+    const regex = new RegExp('^' + filenamePattern.replace(/\*/g, '.*') + '$');
+    const files = fs.readdirSync(dir);
+    const match = files.find((file) => regex.test(file));
+    if (match) {
+      return path.join(dir, match);
+    }
+  }
+  return pattern;
+}
 
 if (!EXTENSION_ID || !CLIENT_ID || !CLIENT_SECRET || !REFRESH_TOKEN) {
   console.error(
@@ -38,12 +54,13 @@ async function getAccessToken() {
 }
 
 async function uploadPackage(accessToken) {
-  console.log(`Checking extension package at: ${ZIP_PATH}`);
-  if (!fs.existsSync(ZIP_PATH)) {
-    throw new Error(`Zip package not found at path: ${ZIP_PATH}`);
+  const actualZipPath = resolveZipPath(ZIP_PATH);
+  console.log(`Checking extension package at: ${actualZipPath}`);
+  if (!fs.existsSync(actualZipPath)) {
+    throw new Error(`Zip package not found at path: ${actualZipPath}`);
   }
 
-  const zipBuffer = fs.readFileSync(ZIP_PATH);
+  const zipBuffer = fs.readFileSync(actualZipPath);
   console.log(
     `Package read successfully. Size: ${(zipBuffer.length / (1024 * 1024)).toFixed(2)} MB`,
   );

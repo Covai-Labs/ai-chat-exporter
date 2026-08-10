@@ -3,6 +3,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 export default defineConfig({
+  zip: {
+    artifactTemplate: '{{name}}-{{browser}}.zip',
+  },
   vite: () => ({
     define: {
       __KATEX_CSS__: JSON.stringify(
