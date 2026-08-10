@@ -6,6 +6,13 @@ export default defineConfig({
   zip: {
     artifactTemplate: '{{name}}-{{browser}}.zip',
   },
+  hooks: {
+    'zip:start': (wxt) => {
+      if (wxt.config.browser === 'chrome') {
+        wxt.config.zip.artifactTemplate = '{{name}}-chromium.zip';
+      }
+    },
+  },
   vite: () => ({
     define: {
       __KATEX_CSS__: JSON.stringify(
