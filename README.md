@@ -88,9 +88,11 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 ## Acknowledgments
 
 - Uses [Turndown.js](https://github.com/mixmark-io/turndown) for HTML to Markdown conversion.
+- Uses [DOMPurify](https://github.com/cure53/DOMPurify) for HTML content sanitization and security.
 - Uses [html2canvas](https://github.com/niklasvh/html2canvas) for generating shareable PNG image exports.
 - Uses [KaTeX](https://github.com/KaTeX/KaTeX) for rendering math and LaTeX equations.
 - Uses [Prism.js](https://github.com/PrismJS/prism) for code block syntax highlighting.
+- Built with [WXT](https://wxt.dev/) extension development framework.
 
 ---
 
