@@ -423,9 +423,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   const printIframe = () => {
-    if (!previewRendered || !previewRendered.contentWindow) return;
+    if (!previewRendered) return;
     try {
-      const doc = previewRendered.contentDocument || previewRendered.contentWindow.document;
+      const doc =
+        previewRendered.contentDocument ||
+        (previewRendered.contentWindow && previewRendered.contentWindow.document);
       if (doc && doc.head) {
         let printStyle = doc.getElementById('print-custom-style');
         if (!printStyle) {
@@ -444,8 +446,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       // Ignore iframe style injection errors
     }
 
-    previewRendered.contentWindow.focus();
-    previewRendered.contentWindow.print();
+    try {
+      if (previewRendered.contentWindow) {
+        previewRendered.contentWindow.focus();
+        previewRendered.contentWindow.print();
+        return;
+      }
+    } catch (err) {
+      console.warn('[Preview] Iframe print access blocked, falling back to window.print():', err);
+    }
+    window.print();
   };
 
   const updateDownloadButtonLabel = (extension) => {
