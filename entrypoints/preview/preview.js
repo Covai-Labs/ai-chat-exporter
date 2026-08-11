@@ -259,8 +259,191 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
+  const turnSelectBtn = document.getElementById('turn-select-btn');
+  const turnCountBadge = document.getElementById('turn-count-badge');
+  const turnDrawer = document.getElementById('turn-selector-drawer');
+  const turnSelectAllBtn = document.getElementById('turn-select-all-btn');
+  const turnDeselectAllBtn = document.getElementById('turn-deselect-all-btn');
+  const turnCloseBtn = document.getElementById('turn-drawer-close-btn');
+  const turnListContainer = document.getElementById('turn-list-container');
+
+  const printOptionsBar = document.getElementById('print-options-bar');
+  const pageBreakCheckbox = document.getElementById('page-break-prompt-checkbox');
+  const includeTocCheckbox = document.getElementById('include-toc-checkbox');
+
+  let selectedIndices = new Set();
+  let lastCheckedIndex = null;
+  let currentActiveTab = 'html-render';
+
+  const updateTurnBadge = () => {
+    if (turnCountBadge) {
+      const total = conversation?.messages?.length || 0;
+      turnCountBadge.textContent = `${selectedIndices.size}/${total}`;
+    }
+  };
+
+  const renderTurnList = () => {
+    if (!turnListContainer || !conversation || !Array.isArray(conversation.messages)) return;
+    turnListContainer.innerHTML = '';
+
+    conversation.messages.forEach((msg, idx) => {
+      const isSelected = selectedIndices.has(idx);
+      const itemEl = document.createElement('div');
+      itemEl.className = `turn-item ${isSelected ? 'selected' : ''}`;
+      itemEl.dataset.index = idx;
+
+      const roleLabel = msg.role === 'User' ? 'User' : conversation.metadata?.Source || 'Assistant';
+      const snippetText =
+        (msg.content || '')
+          .replace(/<[^>]*>/g, '')
+          .trim()
+          .substring(0, 70) || '(Empty message)';
+
+      itemEl.innerHTML = `
+        <input type="checkbox" ${isSelected ? 'checked' : ''} data-index="${idx}" />
+        <div class="turn-item-info">
+          <div class="turn-item-role">${roleLabel} #${idx + 1}</div>
+          <div class="turn-item-snippet">${snippetText}</div>
+        </div>
+      `;
+
+      itemEl.addEventListener('click', (e) => {
+        const checkbox = itemEl.querySelector('input[type="checkbox"]');
+        let shouldCheck = !selectedIndices.has(idx);
+        if (e.target === checkbox) {
+          shouldCheck = checkbox.checked;
+        }
+
+        if (e.shiftKey && lastCheckedIndex !== null && lastCheckedIndex !== idx) {
+          const start = Math.min(lastCheckedIndex, idx);
+          const end = Math.max(lastCheckedIndex, idx);
+          for (let i = start; i <= end; i++) {
+            if (shouldCheck) selectedIndices.add(i);
+            else selectedIndices.delete(i);
+          }
+        } else {
+          if (shouldCheck) selectedIndices.add(idx);
+          else selectedIndices.delete(idx);
+        }
+
+        lastCheckedIndex = idx;
+        renderTurnList();
+        recalculateContent();
+      });
+
+      turnListContainer.appendChild(itemEl);
+    });
+
+    updateTurnBadge();
+  };
+
+  const recalculateContent = () => {
+    if (!conversation || !Array.isArray(conversation.messages)) return;
+
+    const filteredMessages = conversation.messages.filter((_, idx) => selectedIndices.has(idx));
+    const activeConv = { ...conversation, messages: filteredMessages };
+
+    let activeHtml = htmlFormatter.format(activeConv);
+
+    if (includeTocCheckbox && includeTocCheckbox.checked && filteredMessages.length > 0) {
+      const tocItems = filteredMessages
+        .map((m, i) => {
+          const label = m.role === 'User' ? 'User' : conversation.metadata?.Source || 'Assistant';
+          const snippet = (m.content || '')
+            .replace(/<[^>]*>/g, '')
+            .trim()
+            .substring(0, 50);
+          return `<li><a href="#msg-card-${i}"><strong>${label}:</strong> ${snippet}</a></li>`;
+        })
+        .join('');
+      const tocHtml = `<div class="toc-container" style="padding:12px;margin-bottom:16px;background:rgba(52,152,219,0.08);border:1px solid rgba(52,152,219,0.2);border-radius:8px;"><strong>Table of Contents</strong><ul style="margin:8px 0 0 20px;padding:0;">${tocItems}</ul></div>`;
+      activeHtml = activeHtml.replace(
+        '<div class="message-card',
+        `${tocHtml}<div class="message-card`,
+      );
+    }
+
+    htmlContent = activeHtml;
+    markdownContent = markdownFormatter.format(activeConv);
+    jsonContent = jsonFormatter.format(activeConv);
+    docContent = docFormatter.format(activeConv);
+
+    cachedPngBlob = null;
+    switchTab(currentActiveTab);
+  };
+
+  const turnDoneBtn = document.getElementById('turn-done-btn');
+  const turnDoneBottomBtn = document.getElementById('turn-done-bottom-btn');
+
+  if (turnSelectBtn && turnDrawer) {
+    turnSelectBtn.addEventListener('click', () => {
+      turnDrawer.classList.toggle('hidden');
+    });
+  }
+  if (turnCloseBtn && turnDrawer) {
+    turnCloseBtn.addEventListener('click', () => {
+      turnDrawer.classList.add('hidden');
+    });
+  }
+  if (turnDoneBtn && turnDrawer) {
+    turnDoneBtn.addEventListener('click', () => {
+      turnDrawer.classList.add('hidden');
+    });
+  }
+  if (turnDoneBottomBtn && turnDrawer) {
+    turnDoneBottomBtn.addEventListener('click', () => {
+      turnDrawer.classList.add('hidden');
+    });
+  }
+  if (turnSelectAllBtn) {
+    turnSelectAllBtn.addEventListener('click', () => {
+      if (conversation?.messages) {
+        selectedIndices = new Set(conversation.messages.map((_, i) => i));
+        renderTurnList();
+        recalculateContent();
+      }
+    });
+  }
+  if (turnDeselectAllBtn) {
+    turnDeselectAllBtn.addEventListener('click', () => {
+      selectedIndices.clear();
+      renderTurnList();
+      recalculateContent();
+    });
+  }
+  if (pageBreakCheckbox) {
+    pageBreakCheckbox.addEventListener('change', () => {
+      setIframeContent(htmlContent);
+    });
+  }
+  if (includeTocCheckbox) {
+    includeTocCheckbox.addEventListener('change', () => {
+      recalculateContent();
+    });
+  }
+
   const printIframe = () => {
     if (!previewRendered || !previewRendered.contentWindow) return;
+    try {
+      const doc = previewRendered.contentDocument || previewRendered.contentWindow.document;
+      if (doc && doc.head) {
+        let printStyle = doc.getElementById('print-custom-style');
+        if (!printStyle) {
+          printStyle = doc.createElement('style');
+          printStyle.id = 'print-custom-style';
+          doc.head.appendChild(printStyle);
+        }
+        let cssRules = '';
+        if (pageBreakCheckbox && pageBreakCheckbox.checked) {
+          cssRules +=
+            '.message-card.role-user { page-break-before: always !important; break-before: page !important; }';
+        }
+        printStyle.textContent = cssRules;
+      }
+    } catch {
+      // Ignore iframe style injection errors
+    }
+
     previewRendered.contentWindow.focus();
     previewRendered.contentWindow.print();
   };
@@ -284,6 +467,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   const switchTab = (tabName) => {
+    currentActiveTab = tabName;
     const buttons = formatTabsContainer.querySelectorAll('.control-btn');
     buttons.forEach((btn) => {
       if (btn.getAttribute('data-tab') === tabName) {
@@ -298,6 +482,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     if (pngOptionsBar) {
       pngOptionsBar.classList.toggle('hidden', tabName !== 'png');
+    }
+    if (printOptionsBar) {
+      printOptionsBar.classList.toggle('hidden', tabName !== 'html-render');
     }
 
     if (tabName === 'html-render' || tabName === 'png') {
@@ -376,6 +563,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const autoPrint = data.autoPrint || false;
     const autoDownloadPng = data.autoDownloadPng || false;
 
+    if (conversation && Array.isArray(conversation.messages)) {
+      selectedIndices = new Set(conversation.messages.map((_, i) => i));
+    }
+
     if (pngQualityCheckbox && data.highQualityPng !== undefined) {
       pngQualityCheckbox.checked = data.highQualityPng;
     }
@@ -397,6 +588,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       jsonContent = fallbackContent;
       docContent = fallbackContent;
     }
+
+    renderTurnList();
 
     let initialTab = 'html-render';
     if (initialFormat === 'json') {

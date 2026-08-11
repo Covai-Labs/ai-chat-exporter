@@ -15,6 +15,18 @@
             <h1 id="preview-title">Chat Title</h1>
           </div>
           <div class="action-buttons">
+            <button
+              id="turn-select-btn"
+              class="btn secondary-btn"
+              title="Select specific messages to export"
+            >
+              <svg viewBox="0 0 24 24" class="icon">
+                <path
+                  d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                />
+              </svg>
+              Select Messages (<span id="turn-count-badge">0</span>)
+            </button>
             <button id="print-btn" class="btn secondary-btn hidden">
               <svg viewBox="0 0 24 24" class="icon">
                 <path
@@ -91,6 +103,17 @@
           export.
         </div>
 
+        <div id="print-options-bar" class="print-options-bar hidden">
+          <label class="checkbox-label">
+            <input type="checkbox" id="page-break-prompt-checkbox" />
+            Page Break Per Prompt
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="include-toc-checkbox" />
+            Include Table of Contents
+          </label>
+        </div>
+
         <div id="png-options-bar" class="png-options-bar hidden">
           <label class="checkbox-label">
             <input type="checkbox" id="png-quality-checkbox" checked />
@@ -104,6 +127,26 @@
       </header>
 
       <main class="preview-main">
+        <aside id="turn-selector-drawer" class="turn-selector-drawer hidden">
+          <div class="drawer-header">
+            <h3>Select Messages</h3>
+            <div class="drawer-actions">
+              <button id="turn-select-all-btn" class="drawer-btn">Select All</button>
+              <button id="turn-deselect-all-btn" class="drawer-btn">Deselect All</button>
+              <button id="turn-done-btn" class="drawer-btn drawer-btn-primary">Done</button>
+              <button id="turn-drawer-close-btn" class="drawer-close-btn" title="Close Selector">
+                &times;
+              </button>
+            </div>
+          </div>
+          <div class="drawer-hint">Shift+Click to select a range of turns</div>
+          <div id="turn-list-container" class="turn-list-container"></div>
+          <div class="drawer-footer">
+            <button id="turn-done-bottom-btn" class="btn primary-btn drawer-done-full">
+              Done Selecting
+            </button>
+          </div>
+        </aside>
         <div class="code-wrapper" id="code-wrapper">
           <pre><code id="preview-code">Loading content...</code></pre>
         </div>

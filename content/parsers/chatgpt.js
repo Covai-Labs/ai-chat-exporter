@@ -84,16 +84,27 @@ function linearize(mapping, includeImages) {
   while (node) {
     const msg = node.message;
     const role = msg?.author?.role;
-    if (role === 'user' || role === 'assistant' || role === 'tool') {
+    const authorName = msg?.author?.name;
+    const isThoughtMsg =
+      authorName === 'thought' ||
+      msg?.recipient === 'thought' ||
+      msg?.content?.content_type === 'thought';
+
+    if (role === 'user' || role === 'assistant' || role === 'tool' || isThoughtMsg) {
       const segments = [];
-      const parts = msg.content?.parts ?? [];
+      const parts = msg?.content?.parts ?? [];
       for (const part of parts) {
         let partText = '';
+        let isThoughtPart = isThoughtMsg;
+
         if (typeof part === 'string') {
           partText = part;
         } else if (part && typeof part === 'object') {
           if (part.content_type === 'text' && typeof part.text === 'string') {
             partText = part.text;
+          } else if (part.content_type === 'thought' && typeof part.text === 'string') {
+            partText = part.text;
+            isThoughtPart = true;
           }
         }
 
@@ -102,7 +113,13 @@ function linearize(mapping, includeImages) {
             .replace(/\u{E0000}[\u{E0000}-\u{E007F}]*/gu, '')
             .replace(/citeturn\d+\w*/g, '')
             .trim();
-          if (text) segments.push({ type: 'text', content: text });
+          if (text) {
+            if (isThoughtPart) {
+              segments.push({ type: 'thought', content: text });
+            } else {
+              segments.push({ type: 'text', content: text });
+            }
+          }
         } else if (
           includeImages &&
           part?.content_type === 'image_asset_pointer' &&
@@ -111,11 +128,14 @@ function linearize(mapping, includeImages) {
           segments.push({ type: 'image', fileId: part.asset_pointer.split('://')[1] });
         }
       }
+
       const displayRole = role === 'user' ? 'User' : 'ChatGPT';
+      const timestamp = msg?.create_time ? new Date(msg.create_time * 1000).toLocaleString() : null;
+
       if (segments.length) {
         const citeMap = {};
         const imageGroupMap = {};
-        for (const ref of msg.metadata?.content_references ?? []) {
+        for (const ref of msg?.metadata?.content_references ?? []) {
           if (ref.matched_text) {
             if (ref.items?.length) citeMap[ref.matched_text] = ref.items;
             if (ref.type === 'image_group' || ref.matched_text.includes('image_group')) {
@@ -123,7 +143,17 @@ function linearize(mapping, includeImages) {
             }
           }
         }
-        messages.push({ role: displayRole, segments, citeMap, imageGroupMap });
+
+        // If this is a standalone thought message preceding an assistant response, attach it to the previous/next assistant turn if appropriate
+        if (
+          isThoughtMsg &&
+          messages.length > 0 &&
+          messages[messages.length - 1].role === 'ChatGPT'
+        ) {
+          messages[messages.length - 1].segments.unshift(...segments);
+        } else {
+          messages.push({ role: displayRole, segments, citeMap, imageGroupMap, timestamp });
+        }
       }
     }
     const validChildren = (node.children ?? []).filter((cid) => cid in mapping);
@@ -504,6 +534,11 @@ export class ChatGPTParser extends ChatParser {
           for (const seg of msg.segments) {
             if (seg.type === 'text') {
               content += cleanMarkdownFromApi(seg.content, msg.citeMap, msg.imageGroupMap) + '\n\n';
+            } else if (seg.type === 'thought') {
+              const thoughtText = cleanMarkdownFromApi(seg.content, msg.citeMap, msg.imageGroupMap);
+              if (thoughtText) {
+                content += `<details><summary>Thought Process</summary>\n\n${thoughtText}\n\n</details>\n\n`;
+              }
             } else if (seg.type === 'image') {
               const src = result.images[seg.fileId];
               if (src) {
@@ -513,10 +548,14 @@ export class ChatGPTParser extends ChatParser {
           }
           content = content.trim();
           if (content) {
-            messages.push({
+            const msgObj = {
               role: msg.role,
               content: content,
-            });
+            };
+            if (msg.timestamp) {
+              msgObj.timestamp = msg.timestamp;
+            }
+            messages.push(msgObj);
           }
         }
 
