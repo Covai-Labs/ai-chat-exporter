@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Chat Exporter Options</title>
+    <title data-i18n="optionsTitle">AI Chat Exporter Options</title>
     <link rel="stylesheet" href="options.css" />
   </head>
   <body>
@@ -12,8 +12,8 @@
         <div class="brand">
           <span class="logo-icon">⚡</span>
           <div class="brand-text">
-            <h1>AI Chat Exporter</h1>
-            <p>Extension Options & Preferences</p>
+            <h1 data-i18n="optionsHeaderTitle">AI Chat Exporter</h1>
+            <p data-i18n="optionsHeaderSubtitle">Extension Options & Preferences</p>
           </div>
         </div>
       </header>
@@ -23,19 +23,82 @@
         <section class="card">
           <div class="card-header">
             <span class="card-icon">🎨</span>
-            <h2>Appearance Theme</h2>
+            <h2 data-i18n="themeSectionTitle">Appearance Theme</h2>
           </div>
           <div class="card-body">
             <div class="field-group">
-              <label for="theme-select" class="field-label">Extension Theme</label>
+              <label for="theme-select" class="field-label" data-i18n="themeLabel"
+                >Extension Theme</label
+              >
               <select id="theme-select" class="select-input">
                 <option value="system">System Default (Auto-detect)</option>
                 <option value="light">Light Mode</option>
                 <option value="dark">Dark Mode</option>
               </select>
-              <span class="field-help"
+              <span class="field-help" data-i18n="themeHelp"
                 >Controls color theme for extension popup, options, and preview window.</span
               >
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 0.5: Language / Localization -->
+        <section class="card">
+          <div class="card-header">
+            <span class="card-icon">🌐</span>
+            <h2 data-i18n="languageSectionTitle">Language</h2>
+          </div>
+          <div class="card-body">
+            <div class="field-group">
+              <label for="language-select" class="field-label" data-i18n="languageLabel"
+                >UI Language</label
+              >
+              <select id="language-select" class="select-input">
+                <option value="auto">Browser Default (Auto-detect)</option>
+                <option value="en">English</option>
+                <option value="ru">Русский (Russian)</option>
+                <option value="ta">தமிழ் (Tamil)</option>
+                <option value="es">Español (Spanish)</option>
+                <option value="zh_CN">简体中文 (Simplified Chinese)</option>
+                <option value="zh_TW">繁體中文 (Traditional Chinese)</option>
+                <option value="ja">日本語 (Japanese)</option>
+                <option value="de">Deutsch (German)</option>
+                <option value="fr">Français (French)</option>
+                <option value="hi">हिन्दी (Hindi)</option>
+                <option value="pt_BR">Português (Portuguese)</option>
+                <option value="it">Italiano (Italian)</option>
+                <option value="ko">한국어 (Korean)</option>
+              </select>
+              <span class="field-help" data-i18n="languageHelp"
+                >Choose the display language for the extension interface.</span
+              >
+              <div
+                class="field-help"
+                style="
+                  margin-top: 10px;
+                  display: flex;
+                  align-items: center;
+                  gap: 6px;
+                  flex-wrap: wrap;
+                "
+              >
+                <span data-i18n="languageContributeHelp"
+                  >Want to see your language or improve translations?</span
+                >
+                <a
+                  href="https://github.com/Rat-S/ai-chat-exporter/tree/main/public/_locales"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style="
+                    color: var(--primary-color, #3b82f6);
+                    text-decoration: none;
+                    font-weight: 500;
+                  "
+                  data-i18n="languageContributeLink"
+                >
+                  Help translate on GitHub ↗
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -44,11 +107,13 @@
         <section class="card">
           <div class="card-header">
             <span class="card-icon">📁</span>
-            <h2>Export Defaults</h2>
+            <h2 data-i18n="exportDefaultsTitle">Export Defaults</h2>
           </div>
           <div class="card-body">
             <div class="field-group">
-              <label for="default-format-select" class="field-label">Default Export Format</label>
+              <label for="default-format-select" class="field-label" data-i18n="defaultFormatLabel"
+                >Default Export Format</label
+              >
               <select id="default-format-select" class="select-input">
                 <option value="markdown">Markdown (.md)</option>
                 <option value="json">JSON (.json)</option>
@@ -56,7 +121,7 @@
                 <option value="png">Shareable Image (.png)</option>
                 <option value="pdf">PDF (.pdf)</option>
               </select>
-              <span class="field-help"
+              <span class="field-help" data-i18n="defaultFormatHelp"
                 >Format pre-selected when opening the export popup or side panel.</span
               >
             </div>
@@ -64,7 +129,7 @@
             <div class="field-group checkbox-group">
               <label class="checkbox-label">
                 <input type="checkbox" id="default-include-images" checked />
-                <span>Include images in exports by default</span>
+                <span data-i18n="includeImagesDefault">Include images in exports by default</span>
               </label>
             </div>
           </div>
@@ -74,17 +139,19 @@
         <section class="card">
           <div class="card-header">
             <span class="card-icon">⚙️</span>
-            <h2>Parser Extraction Mode</h2>
+            <h2 data-i18n="parserModeTitle">Parser Extraction Mode</h2>
           </div>
           <div class="card-body">
             <div class="field-group">
-              <label for="parser-mode-select" class="field-label">Preferred Extraction Mode</label>
+              <label for="parser-mode-select" class="field-label" data-i18n="parserModeLabel"
+                >Preferred Extraction Mode</label
+              >
               <select id="parser-mode-select" class="select-input">
                 <option value="auto">Auto (API when available, with DOM fallback)</option>
                 <option value="prefer_dom">Prefer DOM Mode (Direct element scraping)</option>
                 <option value="prefer_api">Prefer API Mode (Raw payload fetch)</option>
               </select>
-              <span class="field-help"
+              <span class="field-help" data-i18n="parserModeHelp"
                 >Controls how conversation text and media are retrieved on ChatGPT and Claude.</span
               >
             </div>
@@ -95,11 +162,14 @@
         <section class="card">
           <div class="card-header">
             <span class="card-icon">↗️</span>
-            <h2>Transfer Chat Defaults</h2>
+            <h2 data-i18n="transferDefaultsTitle">Transfer Chat Defaults</h2>
           </div>
           <div class="card-body">
             <div class="field-group">
-              <label for="default-transfer-select" class="field-label"
+              <label
+                for="default-transfer-select"
+                class="field-label"
+                data-i18n="defaultTransferTargetLabel"
                 >Default Transfer Target Platform</label
               >
               <select id="default-transfer-select" class="select-input">
@@ -118,7 +188,7 @@
                 <option value="noteplan">NotePlan (noteplan://)</option>
                 <option value="drafts">Drafts (drafts://)</option>
               </select>
-              <span class="field-help"
+              <span class="field-help" data-i18n="defaultTransferHelp"
                 >Initial target platform in the "Continue On" dropdown. When exporting on the
                 current default platform (e.g. ChatGPT), it smartly auto-switches to an alternate
                 platform.</span
@@ -126,7 +196,7 @@
             </div>
 
             <div class="field-group" style="margin-top: 16px">
-              <label for="obsidian-vault-input" class="field-label"
+              <label for="obsidian-vault-input" class="field-label" data-i18n="obsidianVaultLabel"
                 >Obsidian Vault Name (Optional)</label
               >
               <input
@@ -134,8 +204,9 @@
                 id="obsidian-vault-input"
                 class="select-input"
                 placeholder="e.g. My Vault"
+                data-i18n-placeholder="obsidianVaultPlaceholder"
               />
-              <span class="field-help"
+              <span class="field-help" data-i18n="obsidianVaultHelp"
                 >If specified, Obsidian URIs will open notes directly inside this vault
                 (&amp;vault=...).</span
               >
@@ -147,23 +218,27 @@
         <section class="card chrome-only-section" id="launch-mode-section">
           <div class="card-header">
             <span class="card-icon">📌</span>
-            <h2>Extension Toolbar Click Action</h2>
+            <h2 data-i18n="launchModeTitle">Extension Toolbar Click Action</h2>
           </div>
           <div class="card-body">
             <div class="radio-group">
               <label class="radio-label">
                 <input type="radio" name="launch-mode" value="popup" checked />
                 <div>
-                  <strong>Extension Popup</strong>
-                  <span class="sub-text">Opens a compact popup window on click</span>
+                  <strong data-i18n="launchModePopup">Extension Popup</strong>
+                  <span class="sub-text" data-i18n="launchModePopupDesc"
+                    >Opens a compact popup window on click</span
+                  >
                 </div>
               </label>
 
               <label class="radio-label">
                 <input type="radio" name="launch-mode" value="sidepanel" />
                 <div>
-                  <strong>Persistent Side Panel</strong>
-                  <span class="sub-text">Opens side panel pinned to the browser window</span>
+                  <strong data-i18n="launchModeSidepanel">Persistent Side Panel</strong>
+                  <span class="sub-text" data-i18n="launchModeSidepanelDesc"
+                    >Opens side panel pinned to the browser window</span
+                  >
                 </div>
               </label>
             </div>
@@ -174,11 +249,15 @@
         <section class="card">
           <div class="card-header">
             <span class="card-icon">💬</span>
-            <h2>Feedback &amp; Bug Reports</h2>
+            <h2 data-i18n="feedbackTitle">Feedback &amp; Bug Reports</h2>
           </div>
           <div class="card-body">
             <div class="field-group">
-              <span class="field-help" style="margin-bottom: 12px; display: block">
+              <span
+                class="field-help"
+                data-i18n="feedbackHelp"
+                style="margin-bottom: 12px; display: block"
+              >
                 Found a bug, want to request a platform parser feature, or have feedback? We'd love
                 to hear from you.
               </span>
@@ -201,15 +280,15 @@
                   font-size: 13px;
                 "
               >
-                <span>💬 Submit Feedback or Issue Report</span>
+                <span data-i18n="submitFeedback">💬 Submit Feedback or Issue Report</span>
               </a>
             </div>
           </div>
         </section>
 
-        <div id="toast" class="toast hidden">Preferences saved!</div>
+        <div id="toast" class="toast hidden" data-i18n="toastSaved">Preferences saved!</div>
       </main>
     </div>
-    <script src="options.js"></script>
+    <script type="module" src="options.js"></script>
   </body>
 </html>

@@ -1,3 +1,5 @@
+import { initI18n, applyI18n, t } from '../content/utils/i18n.js';
+
 function applyTheme(theme) {
   if (theme === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
@@ -12,6 +14,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (window.self !== window.top) {
     document.documentElement.classList.add('in-iframe');
   }
+
+  // Initialize localization
+  await initI18n();
+  applyI18n();
 
   const statusEl = document.getElementById('status');
   const chatInfoEl = document.getElementById('chat-info');
@@ -51,6 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Load saved defaults from chrome.storage.sync
   const storedSettings = await chrome.storage.sync.get([
     'theme',
+    'uiLanguage',
     'defaultFormat',
     'includeImages',
     'defaultTransferTarget',
@@ -59,9 +66,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   applyTheme(storedSettings.theme || 'system');
 
   if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
-    chrome.storage.onChanged.addListener((changes, areaName) => {
-      if (areaName === 'sync' && changes.theme) {
-        applyTheme(changes.theme.newValue || 'system');
+    chrome.storage.onChanged.addListener(async (changes, areaName) => {
+      if (areaName === 'sync') {
+        if (changes.theme) {
+          applyTheme(changes.theme.newValue || 'system');
+        }
+        if (changes.uiLanguage) {
+          await initI18n(changes.uiLanguage.newValue || 'auto');
+          applyI18n();
+          updateCopyButtonVisibility();
+        }
       }
     });
   }
@@ -72,6 +86,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (storedSettings.includeImages !== undefined && includeImagesCheckbox) {
     includeImagesCheckbox.checked = storedSettings.includeImages;
   }
+
   async function getActiveTab() {
     if (typeof chrome === 'undefined' || !chrome.tabs) return null;
     try {
@@ -97,8 +112,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // Ping the content script to see if a parser is available.
-  // The content script uses ES modules, so its imports may still be loading
-  // when the popup opens. We retry a few times to handle that race condition.
   const MAX_RETRIES = 3;
   const RETRY_DELAY_MS = 500;
 
@@ -115,10 +128,11 @@ document.addEventListener('DOMContentLoaded', async () => {
           action: 'CHECK_AVAILABILITY',
         });
         if (response && response.available) {
-          statusEl.textContent = `Detected: ${response.platform}`;
+          statusEl.textContent = `${t('statusReady') || 'Ready'}: ${response.platform}`;
           const displayTitle = response.title || tab.title || 'Untitled Chat';
           chatTitleEl.textContent = displayTitle;
-          msgCountEl.textContent = `${response.count || 0} messages found`;
+          const count = response.count || 0;
+          msgCountEl.textContent = t('messagesFound', count) || `${count} messages found`;
           if (filenameInput) {
             const safeDefault = displayTitle.replace(/[\\/:*?"<>|]/g, '').trim();
             filenameInput.value = safeDefault;
@@ -136,9 +150,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           chatInfoEl.classList.remove('hidden');
           actionsEl.classList.remove('hidden');
           errorEl.classList.add('hidden');
-          return; // success — stop retrying
+          return;
         } else {
-          // Parser responded but no compatible chat found; no point retrying.
           showError();
           return;
         }
@@ -149,13 +162,11 @@ document.addEventListener('DOMContentLoaded', async () => {
           showError();
           return;
         }
-        // Content script not ready yet — wait and retry (unless it's the last attempt)
         if (attempt < MAX_RETRIES - 1) {
           await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
         }
       }
     }
-    // All retries exhausted
     showError();
   }
 
@@ -176,11 +187,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     copyBtn.classList.toggle('hidden', !isCopyable);
     previewBtn.classList.toggle('hidden', !isPreviewable);
     if (format === 'png') {
-      exportBtn.textContent = '🖼️ Export in New Tab';
+      exportBtn.textContent = '🖼️ ' + (t('openInTab') || 'Export in New Tab');
     } else if (format === 'pdf') {
-      exportBtn.textContent = '📄 Export & Print PDF';
+      exportBtn.textContent = '📄 ' + (t('printSavePdf') || 'Export & Print PDF');
     } else {
-      exportBtn.textContent = '📥 Export Chat';
+      exportBtn.textContent = t('exportChat') || '📥 Export Chat';
     }
     if (pngWarningBanner) {
       pngWarningBanner.classList.toggle('hidden', format !== 'png');
@@ -191,7 +202,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function showError() {
-    statusEl.textContent = 'Not Supported';
+    statusEl.textContent = t('statusError') || 'Not Supported';
     errorEl.classList.remove('hidden');
   }
 
@@ -206,10 +217,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     exportBtn.disabled = true;
     exportBtn.textContent =
       format === 'png'
-        ? 'Opening Preview...'
+        ? t('loadingContent') || 'Opening Preview...'
         : format === 'pdf'
-          ? 'Opening PDF Preview...'
-          : 'Exporting...';
+          ? t('loadingContent') || 'Opening PDF Preview...'
+          : t('statusExporting') || 'Exporting...';
 
     try {
       if (format === 'pdf' || format === 'png') {
@@ -237,9 +248,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             url: chrome.runtime.getURL('popup/preview.html'),
           });
 
-          statusEl.textContent = 'Export Successful!';
+          statusEl.textContent = t('statusExportSuccess') || 'Export Successful!';
         } else {
-          statusEl.textContent = 'Export Failed: ' + (response?.error || 'Unknown');
+          statusEl.textContent =
+            (t('statusError') || 'Export Failed') + ': ' + (response?.error || 'Unknown');
         }
       } else {
         const response = await chrome.tabs.sendMessage(tab.id, {
@@ -252,9 +264,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         if (response && response.success) {
-          statusEl.textContent = 'Export Successful!';
+          statusEl.textContent = t('statusExportSuccess') || 'Export Successful!';
         } else {
-          statusEl.textContent = 'Export Failed: ' + (response?.error || 'Unknown');
+          statusEl.textContent =
+            (t('statusError') || 'Export Failed') + ': ' + (response?.error || 'Unknown');
         }
       }
     } catch (e) {
@@ -268,7 +281,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   copyBtn.addEventListener('click', async () => {
     const format = formatSelect.value;
     copyBtn.disabled = true;
-    copyBtn.textContent = 'Copying...';
+    copyBtn.textContent = t('statusExporting') || 'Copying...';
 
     try {
       const response = await chrome.tabs.sendMessage(tab.id, {
@@ -300,7 +313,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
           await navigator.clipboard.writeText(response.content);
         }
-        statusEl.textContent = 'Copied to Clipboard!';
+        statusEl.textContent = t('statusCopied') || 'Copied to Clipboard!';
       } else {
         statusEl.textContent = 'Copy Failed: ' + (response?.error || 'Unknown');
       }
@@ -308,14 +321,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       statusEl.textContent = 'Error: ' + e.message;
     } finally {
       copyBtn.disabled = false;
-      copyBtn.textContent = 'Copy to Clipboard';
+      copyBtn.textContent = t('copyChat') || '📋 Copy Chat';
     }
   });
 
   previewBtn.addEventListener('click', async () => {
     const format = formatSelect.value;
     previewBtn.disabled = true;
-    previewBtn.textContent = 'Opening...';
+    previewBtn.textContent = t('loadingContent') || 'Opening...';
 
     try {
       const formatToRequest = format === 'pdf' ? 'html' : format === 'png' ? 'markdown' : format;
@@ -342,7 +355,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           url: chrome.runtime.getURL('popup/preview.html'),
         });
 
-        statusEl.textContent = 'Opened in New Tab!';
+        statusEl.textContent = t('statusOpenedInTab') || 'Opened in New Tab!';
       } else {
         statusEl.textContent = 'Preview Failed: ' + (response?.error || 'Unknown');
       }
@@ -350,7 +363,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       statusEl.textContent = 'Error: ' + e.message;
     } finally {
       previewBtn.disabled = false;
-      previewBtn.textContent = 'Open in Tab';
+      previewBtn.textContent = t('openInTab') || '👁️ Open in Tab';
     }
   });
 
@@ -360,7 +373,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     transferBtn.addEventListener('click', async () => {
       const targetPlatform = continueTargetSelect ? continueTargetSelect.value : 'chatgpt';
       transferBtn.disabled = true;
-      transferBtn.textContent = 'Transferring...';
+      transferBtn.textContent = t('statusExporting') || 'Transferring...';
 
       try {
         const response = await chrome.tabs.sendMessage(tab.id, {
@@ -383,7 +396,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         statusEl.textContent = 'Error: ' + e.message;
       } finally {
         transferBtn.disabled = false;
-        transferBtn.textContent = '↗ Transfer To';
+        transferBtn.textContent = t('transferBtn') || '↗ Transfer';
       }
     });
   }

@@ -1,10 +1,14 @@
+import { initI18n, applyI18n, t } from '../content/utils/i18n.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
+  await initI18n();
+  applyI18n();
+
   const statusEl = document.getElementById('sp-status');
   const headerRefreshBtn = document.getElementById('sp-refresh-btn');
   const tabBtns = document.querySelectorAll('.sp-tab-btn');
   const tabContents = document.querySelectorAll('.sp-tab-content');
 
-  // Tab switching
   tabBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       const targetTab = btn.getAttribute('data-tab');
@@ -34,7 +38,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // Detect active tab & chat platform
   async function checkAvailability() {
     if (!statusEl) return;
     try {
@@ -49,12 +52,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
 
       if (response && response.available) {
-        statusEl.textContent = `Detected: ${response.platform}`;
+        statusEl.textContent = `${t('statusReady') || 'Ready'}: ${response.platform}`;
       } else {
-        statusEl.textContent = 'Not Supported';
+        statusEl.textContent = t('statusError') || 'Not Supported';
       }
     } catch {
-      statusEl.textContent = 'Not Supported';
+      statusEl.textContent = t('statusError') || 'Not Supported';
     }
   }
 
@@ -74,14 +77,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Refresh button action
   if (headerRefreshBtn) {
     headerRefreshBtn.addEventListener('click', async () => {
       await refreshAllPanels();
     });
   }
 
-  // Listen for tab switching and updates to auto-refresh side panel status
   if (typeof chrome !== 'undefined' && chrome.tabs) {
     if (chrome.tabs.onActivated) {
       chrome.tabs.onActivated.addListener(async () => {
@@ -98,6 +99,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       });
     }
+  }
+
+  if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
+    chrome.storage.onChanged.addListener(async (changes, areaName) => {
+      if (areaName === 'sync' && changes.uiLanguage) {
+        await initI18n(changes.uiLanguage.newValue || 'auto');
+        applyI18n();
+      }
+    });
   }
 
   await checkAvailability();

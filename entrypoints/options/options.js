@@ -1,3 +1,5 @@
+import { initI18n, applyI18n, t } from '../../content/utils/i18n.js';
+
 function applyTheme(theme) {
   if (theme === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
@@ -13,7 +15,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.documentElement.classList.add('in-iframe');
   }
 
+  // Initialize localization
+  await initI18n();
+  applyI18n();
+
   const themeSelect = document.getElementById('theme-select');
+  const languageSelect = document.getElementById('language-select');
   const defaultFormatSelect = document.getElementById('default-format-select');
   const defaultIncludeImages = document.getElementById('default-include-images');
   const parserModeSelect = document.getElementById('parser-mode-select');
@@ -23,8 +30,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   const toast = document.getElementById('toast');
 
   let toastTimer = null;
-  function showToast(message = 'Preferences saved!') {
-    toast.textContent = message;
+  function showToast(message) {
+    const toastMsg = message || t('toastSaved') || 'Preferences saved!';
+    toast.textContent = toastMsg;
     toast.classList.remove('hidden');
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => {
@@ -41,6 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const stored = await chrome.storage.sync.get([
     'theme',
+    'uiLanguage',
     'defaultFormat',
     'includeImages',
     'parserMode',
@@ -52,6 +61,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   const activeTheme = stored.theme || 'system';
   if (themeSelect) themeSelect.value = activeTheme;
   applyTheme(activeTheme);
+
+  const activeLanguage = stored.uiLanguage || 'auto';
+  if (languageSelect) languageSelect.value = activeLanguage;
 
   if (stored.defaultFormat) defaultFormatSelect.value = stored.defaultFormat;
   if (stored.includeImages !== undefined) defaultIncludeImages.checked = stored.includeImages;
@@ -69,6 +81,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       const selectedTheme = themeSelect.value;
       chrome.storage.sync.set({ theme: selectedTheme });
       applyTheme(selectedTheme);
+      showToast();
+    });
+  }
+
+  if (languageSelect) {
+    languageSelect.addEventListener('change', async () => {
+      const selectedLang = languageSelect.value;
+      await chrome.storage.sync.set({ uiLanguage: selectedLang });
+      await initI18n(selectedLang);
+      applyI18n();
       showToast();
     });
   }
@@ -110,11 +132,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
-    chrome.storage.onChanged.addListener((changes, areaName) => {
-      if (areaName === 'sync' && changes.theme) {
-        const newTheme = changes.theme.newValue || 'system';
-        if (themeSelect) themeSelect.value = newTheme;
-        applyTheme(newTheme);
+    chrome.storage.onChanged.addListener(async (changes, areaName) => {
+      if (areaName === 'sync') {
+        if (changes.theme) {
+          const newTheme = changes.theme.newValue || 'system';
+          if (themeSelect) themeSelect.value = newTheme;
+          applyTheme(newTheme);
+        }
+        if (changes.uiLanguage) {
+          const newLang = changes.uiLanguage.newValue || 'auto';
+          if (languageSelect) languageSelect.value = newLang;
+          await initI18n(newLang);
+          applyI18n();
+        }
       }
     });
   }

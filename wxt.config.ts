@@ -78,8 +78,9 @@ export default defineConfig({
     ];
 
     const baseManifest: any = {
-      name: 'AI Chat Exporter - Free, Private, OpenSource',
-      description: 'Export AI chats from ChatGPT, Claude, Gemini & more to Markdown or JSON.',
+      default_locale: 'en',
+      name: '__MSG_extensionName__',
+      description: '__MSG_extensionDescription__',
       homepage_url: 'https://ai-chat-exporter.covai.org/',
       permissions,
       host_permissions: hostPermissions,
@@ -107,6 +108,7 @@ export default defineConfig({
             'content/claude_react_reader.js',
             'content/lib/*',
             'schemas/*',
+            '_locales/*',
           ],
           matches: hostPermissions,
         },

@@ -1,7 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "AI Chat Exporter - Free, Private, OpenSource",
-  "description": "Export AI chats from ChatGPT, Claude, Gemini & more to Markdown or JSON.",
+  "default_locale": "en",
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
   "homepage_url": "https://ai-chat-exporter.covai.org/",
   "permissions": ["activeTab", "storage", "sidePanel"],
   "side_panel": {
@@ -89,7 +90,8 @@
         "content/utils/*.js",
         "content/parsers/*.js",
         "content/formatters/*.js",
-        "schemas/*.json"
+        "schemas/*.json",
+        "_locales/*"
       ],
       "matches": [
         "*://chatgpt.com/*",

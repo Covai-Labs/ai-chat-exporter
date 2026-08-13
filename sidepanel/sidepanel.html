@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Chat Exporter Side Panel</title>
+    <title data-i18n="sidepanelTitle">AI Chat Exporter Side Panel</title>
     <link rel="stylesheet" href="sidepanel.css" />
   </head>
   <body>
@@ -11,15 +11,17 @@
       <header class="sp-header">
         <div class="sp-brand">
           <span class="sp-icon">⚡</span>
-          <span class="sp-title">AI Chat Exporter</span>
+          <span class="sp-title" data-i18n="optionsHeaderTitle">AI Chat Exporter</span>
         </div>
         <div class="sp-header-actions">
-          <div id="sp-status" class="sp-status-badge">Detecting...</div>
+          <div id="sp-status" class="sp-status-badge" data-i18n="statusDetecting">Detecting...</div>
           <button
             id="sp-refresh-btn"
             class="sp-icon-btn"
             title="Refresh panel"
             aria-label="Refresh panel"
+            data-i18n-title="sidepanelRefresh"
+            data-i18n-aria-label="sidepanelRefresh"
           >
             ↻
           </button>
@@ -27,9 +29,13 @@
       </header>
 
       <nav class="sp-tabs">
-        <button class="sp-tab-btn active" data-tab="export-tab">Export</button>
-        <button class="sp-tab-btn" data-tab="preview-tab">Live Preview</button>
-        <button class="sp-tab-btn" data-tab="settings-tab">Settings</button>
+        <button class="sp-tab-btn active" data-tab="export-tab" data-i18n="tabExport">
+          Export
+        </button>
+        <button class="sp-tab-btn" data-tab="preview-tab" data-i18n="tabLivePreview">
+          Live Preview
+        </button>
+        <button class="sp-tab-btn" data-tab="settings-tab" data-i18n="tabSettings">Settings</button>
       </nav>
 
       <main class="sp-content">
@@ -53,6 +59,6 @@
         </section>
       </main>
     </div>
-    <script src="sidepanel.js"></script>
+    <script type="module" src="sidepanel.js"></script>
   </body>
 </html>

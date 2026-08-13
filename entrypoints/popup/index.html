@@ -8,9 +8,14 @@
     <div class="container">
       <header>
         <div class="header-row">
-          <div id="status" class="status">Detecting...</div>
+          <div id="status" class="status" data-i18n="statusDetecting">Detecting...</div>
           <div class="header-actions">
-            <button id="open-options-btn" class="sidepanel-icon-btn" title="Open Options">
+            <button
+              id="open-options-btn"
+              class="sidepanel-icon-btn"
+              title="Open Options"
+              data-i18n-title="openOptions"
+            >
               ⚙️
             </button>
           </div>
@@ -20,7 +25,7 @@
       <main>
         <div class="chat-info hidden" id="chat-info">
           <div class="card-header-row">
-            <span class="field-label-small">EXPORT FILENAME</span>
+            <span class="field-label-small" data-i18n="exportFilename">EXPORT FILENAME</span>
             <span id="message-count" class="msg-badge">0 messages found</span>
           </div>
           <div class="filename-input-wrapper">
@@ -30,6 +35,8 @@
               rows="2"
               placeholder="Filename"
               title="Click to edit filename"
+              data-i18n-placeholder="filenamePlaceholder"
+              data-i18n-title="filenameTooltip"
             ></textarea>
           </div>
           <span id="chat-title" class="hidden"></span>
@@ -44,29 +51,35 @@
             <option value="png">🖼️ Shareable Image (.png)</option>
             <option value="pdf">📄 PDF (.pdf)</option>
           </select>
-          <div id="png-warning-banner" class="png-warning-banner hidden">
+          <div id="png-warning-banner" class="png-warning-banner hidden" data-i18n="pngWarning">
             ⚠️ PNG export on long chats may take 1–2 minutes. Consider PDF or Markdown for instant
             export.
           </div>
           <div class="checkbox-wrapper" id="image-toggle-container">
             <label class="checkbox-label">
               <input type="checkbox" id="include-images-checkbox" checked />
-              Include Images
+              <span data-i18n="includeImages">Include Images</span>
             </label>
           </div>
           <div class="checkbox-wrapper hidden" id="png-quality-container">
             <label class="checkbox-label">
               <input type="checkbox" id="png-quality-checkbox" checked />
-              High Quality PNG (2x)
+              <span data-i18n="highQualityPng">High Quality PNG (2x)</span>
             </label>
           </div>
           <div class="button-group">
             <div class="primary-row">
-              <button id="export-btn" class="primary-btn">📥 Export Chat</button>
+              <button id="export-btn" class="primary-btn" data-i18n="exportChat">
+                📥 Export Chat
+              </button>
             </div>
             <div class="secondary-row">
-              <button id="copy-btn" class="secondary-btn hidden">📋 Copy Chat</button>
-              <button id="preview-btn" class="secondary-btn hidden">👁️ Open in Tab</button>
+              <button id="copy-btn" class="secondary-btn hidden" data-i18n="copyChat">
+                📋 Copy Chat
+              </button>
+              <button id="preview-btn" class="secondary-btn hidden" data-i18n="openInTab">
+                👁️ Open in Tab
+              </button>
             </div>
           </div>
 
@@ -74,7 +87,7 @@
 
           <div class="transfer-section" id="transfer-section">
             <div class="transfer-header">
-              <span class="transfer-badge">🔀 CROSS-AI TRANSFER</span>
+              <span class="transfer-badge" data-i18n="crossAiTransfer">🔀 CROSS-AI TRANSFER</span>
             </div>
             <div class="transfer-row">
               <select id="continue-target-select">
@@ -93,19 +106,24 @@
                 <option value="noteplan">NotePlan</option>
                 <option value="drafts">Drafts</option>
               </select>
-              <button id="transfer-btn" class="transfer-btn-primary">↗ Transfer</button>
+              <button id="transfer-btn" class="transfer-btn-primary" data-i18n="transferBtn">
+                ↗ Transfer
+              </button>
             </div>
           </div>
         </div>
 
         <div class="error hidden" id="error-msg">
-          No compatible chat found on this tab. You can navigate to a supported AI chat tab and
-          trigger this extension again or
+          <span data-i18n="noChatFound"
+            >No compatible chat found on this tab. You can navigate to a supported AI chat tab and
+            trigger this extension again or</span
+          >
           <a
             href="https://ai-chat-exporter.covai.org/feedback.html"
             id="report-issue-link"
             target="_blank"
             rel="noopener noreferrer"
+            data-i18n="reportIssue"
             >report the issue</a
           >.
         </div>

@@ -1,4 +1,9 @@
+import { initI18n, applyI18n, t } from '../../content/utils/i18n.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
+  await initI18n();
+  applyI18n();
+
   const statusEl = document.getElementById('sp-status');
   const headerRefreshBtn = document.getElementById('sp-refresh-btn');
   const tabBtns = document.querySelectorAll('.sp-tab-btn');
@@ -47,12 +52,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
 
       if (response && response.available) {
-        statusEl.textContent = `Detected: ${response.platform}`;
+        statusEl.textContent = `${t('statusReady') || 'Ready'}: ${response.platform}`;
       } else {
-        statusEl.textContent = 'Not Supported';
+        statusEl.textContent = t('statusError') || 'Not Supported';
       }
     } catch {
-      statusEl.textContent = 'Not Supported';
+      statusEl.textContent = t('statusError') || 'Not Supported';
     }
   }
 
@@ -94,6 +99,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       });
     }
+  }
+
+  if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
+    chrome.storage.onChanged.addListener(async (changes, areaName) => {
+      if (areaName === 'sync' && changes.uiLanguage) {
+        await initI18n(changes.uiLanguage.newValue || 'auto');
+        applyI18n();
+      }
+    });
   }
 
   await checkAvailability();
