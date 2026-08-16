@@ -54,6 +54,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
+  const decantLink = document.getElementById('decant-link');
+  if (decantLink) {
+    decantLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      chrome.tabs.create({ url: decantLink.href });
+    });
+  }
+
   const storedSettings = await chrome.storage.sync.get([
     'theme',
     'uiLanguage',

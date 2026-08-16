@@ -430,5 +430,13 @@
   "loadingContent": {
     "message": "正在加载内容...",
     "description": "Placeholder text while preview loads"
+  },
+  "decantPromoText": {
+    "message": "想要导出非 AI 对话网页？试试",
+    "description": "Promo text for non-AI website export"
+  },
+  "decantPromoLink": {
+    "message": "Decant ↗",
+    "description": "Link text to try Decant website exporter"
   }
 }
