@@ -113,6 +113,7 @@ jobs:
             --api-key="${{ secrets.AMO_JWT_ISSUER }}" \
             --api-secret="${{ secrets.AMO_JWT_SECRET }}" \
             --channel="listed" \
+            --approval-timeout=0 \
             --source-dir=".output/firefox-mv3"
 
   publish-edge:
