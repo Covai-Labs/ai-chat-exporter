@@ -2,6 +2,7 @@ import { ChatParser } from './base.js';
 import { convertToMarkdown } from '../utils/html-to-markdown.js';
 
 export class GoogleSearchAIParser extends ChatParser {
+  name = 'Google Search AI';
   isAvailable(url) {
     return /google\.[a-z.]+\/search/.test(url);
   }

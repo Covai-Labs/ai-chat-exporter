@@ -2,6 +2,7 @@ import { ChatParser } from './base.js';
 import { convertToMarkdown } from '../utils/html-to-markdown.js';
 
 export class PerplexityParser extends ChatParser {
+  name = 'Perplexity';
   isAvailable(url) {
     return url.includes('perplexity.ai');
   }

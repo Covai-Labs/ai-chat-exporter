@@ -2,6 +2,7 @@ import { ChatParser } from './base.js';
 import { convertToMarkdown } from '../utils/html-to-markdown.js';
 
 export class QwenParser extends ChatParser {
+  name = 'Qwen';
   isAvailable(url) {
     return url.includes('qwen.ai');
   }

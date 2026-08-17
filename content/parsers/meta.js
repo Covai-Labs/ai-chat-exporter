@@ -2,6 +2,7 @@ import { ChatParser } from './base.js';
 import { convertToMarkdown } from '../utils/html-to-markdown.js';
 
 export class MetaParser extends ChatParser {
+  name = 'Meta AI';
   isAvailable(url) {
     return url.includes('meta.ai');
   }

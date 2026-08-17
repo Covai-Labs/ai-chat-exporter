@@ -141,6 +141,7 @@ function extractArtifacts(message) {
 }
 
 export class ClaudeParser extends ChatParser {
+  name = 'Claude';
   constructor() {
     super();
     this.lastFetch = null;

@@ -83,6 +83,7 @@ async function fetchDeepSeekConversation(sessionId, token) {
 }
 
 export class DeepSeekParser extends ChatParser {
+  name = 'DeepSeek';
   isAvailable(url) {
     return url.includes('chat.deepseek.com');
   }

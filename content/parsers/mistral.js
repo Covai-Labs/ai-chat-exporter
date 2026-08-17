@@ -2,6 +2,7 @@ import { ChatParser } from './base.js';
 import { convertToMarkdown } from '../utils/html-to-markdown.js';
 
 export class MistralParser extends ChatParser {
+  name = 'Mistral';
   isAvailable(url) {
     return url.includes('chat.mistral.ai');
   }

@@ -43,6 +43,8 @@ export default defineContentScript({
     '*://copilot.com/*',
     '*://www.copilot.com/*',
     '*://copilot.cloud.microsoft/*',
+    '*://m365.cloud.microsoft/*',
+    '*://www.m365.cloud.microsoft/*',
     '*://www.bing.com/*',
     '*://bing.com/*',
     '*://edgeservices.bing.com/*',
@@ -55,6 +57,7 @@ export default defineContentScript({
     '*://www.google.de/*',
     '*://www.google.fr/*',
   ],
+  allFrames: true,
   runAt: 'document_idle',
   main() {
     console.log('AI Chat Exporter content script loaded via WXT');
@@ -177,7 +180,11 @@ export default defineContentScript({
       console.log('Detecting parser for URL:', currentUrl);
       activeParser = parsers.find((p) => p.isAvailable(currentUrl));
       if (activeParser) {
-        console.log('[AI Exporter] Active parser:', activeParser.constructor.name);
+        const platformName =
+          typeof activeParser.getPlatformName === 'function'
+            ? activeParser.getPlatformName()
+            : activeParser.name || activeParser.constructor.name.replace('Parser', '');
+        console.log('[AI Exporter] Active parser:', platformName);
       }
     }
 
@@ -185,29 +192,43 @@ export default defineContentScript({
       chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         if (request.action === 'CHECK_AVAILABILITY') {
           detectParser();
+          const isTopFrame = typeof window === 'undefined' || window.self === window.top;
           if (activeParser) {
             (async () => {
               try {
                 const conversation = await activeParser.parse({ full: false });
                 console.log('Parsed conversation with', conversation.messages.length, 'messages');
+                if (!isTopFrame && conversation.messages.length === 0) {
+                  return;
+                }
+                const platformName =
+                  typeof activeParser.getPlatformName === 'function'
+                    ? activeParser.getPlatformName()
+                    : activeParser.name || activeParser.constructor.name.replace('Parser', '');
                 sendResponse({
                   available: true,
-                  platform: activeParser.constructor.name.replace('Parser', ''),
+                  platform: platformName,
                   count: conversation.messages.length,
                   title: conversation.title || '',
                 });
               } catch (e) {
                 console.error('Check availability parse failed:', e);
-                sendResponse({
-                  available: true,
-                  platform: activeParser.constructor.name.replace('Parser', ''),
-                  count: 0,
-                  title: '',
-                });
+                if (isTopFrame) {
+                  const platformName =
+                    typeof activeParser.getPlatformName === 'function'
+                      ? activeParser.getPlatformName()
+                      : activeParser.name || activeParser.constructor.name.replace('Parser', '');
+                  sendResponse({
+                    available: true,
+                    platform: platformName,
+                    count: 0,
+                    title: '',
+                  });
+                }
               }
             })();
             return true;
-          } else {
+          } else if (isTopFrame) {
             sendResponse({ available: false });
           }
         }
@@ -268,7 +289,10 @@ export default defineContentScript({
                   ? userCustom
                   : `${userCustom}.${formatter.getFileExtension()}`;
               } else {
-                const platformName = activeParser.constructor.name.replace('Parser', '');
+                const platformName =
+                  typeof activeParser.getPlatformName === 'function'
+                    ? activeParser.getPlatformName()
+                    : activeParser.name || activeParser.constructor.name.replace('Parser', '');
                 const safeTitle = (conversation.title || 'Untitled_Chat')
                   .replace(/[\\/:*?"<>|]/g, '')
                   .replace(/\s+/g, '_');
@@ -358,7 +382,10 @@ export default defineContentScript({
                   }
                 });
               }
-              const platformName = activeParser.constructor.name.replace('Parser', '');
+              const platformName =
+                typeof activeParser.getPlatformName === 'function'
+                  ? activeParser.getPlatformName()
+                  : activeParser.name || activeParser.constructor.name.replace('Parser', '');
               conversation.metadata = { ...conversation.metadata, Source: platformName };
               const payload = continuationFormatter.format(conversation, request.instruction || '');
 

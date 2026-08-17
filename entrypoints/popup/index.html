@@ -114,6 +114,24 @@
         </div>
 
         <div class="error-container hidden" id="error-msg">
+          <div class="copilot-redirect-box hidden" id="copilot-redirect-box">
+            <span class="copilot-redirect-icon">💡</span>
+            <div class="copilot-redirect-content">
+              <div class="copilot-redirect-title" data-i18n="copilotRedirectTitle">
+                Microsoft Copilot Notice
+              </div>
+              <div class="copilot-redirect-desc" data-i18n="copilotRedirectDesc">
+                Exporting is supported on copilot.com. Switch to copilot.com to export this chat.
+              </div>
+              <button
+                id="copilot-redirect-btn"
+                class="copilot-redirect-btn"
+                data-i18n="copilotRedirectBtn"
+              >
+                ↗ Open in copilot.com
+              </button>
+            </div>
+          </div>
           <div class="error-box">
             <span data-i18n="noChatFound"
               >No compatible chat found on this tab. You can navigate to a supported AI chat tab and

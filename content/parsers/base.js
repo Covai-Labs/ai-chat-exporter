@@ -1,4 +1,10 @@
 export class ChatParser {
+  name = 'Generic';
+
+  getPlatformName() {
+    return this.name || this.constructor.name.replace(/Parser$/, '');
+  }
+
   constructor() {}
 
   /**

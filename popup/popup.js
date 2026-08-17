@@ -62,6 +62,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
+  const copilotRedirectBox = document.getElementById('copilot-redirect-box');
+  const copilotRedirectBtn = document.getElementById('copilot-redirect-btn');
+  if (copilotRedirectBtn) {
+    copilotRedirectBtn.addEventListener('click', async () => {
+      if (tab && tab.url) {
+        const targetUrl = tab.url.replace('copilot.microsoft.com', 'copilot.com');
+        chrome.tabs.create({ url: targetUrl });
+      } else {
+        chrome.tabs.create({ url: 'https://copilot.com/' });
+      }
+    });
+  }
+
   // Load saved defaults from chrome.storage.sync
   const storedSettings = await chrome.storage.sync.get([
     'theme',
@@ -158,6 +171,9 @@ document.addEventListener('DOMContentLoaded', async () => {
           chatInfoEl.classList.remove('hidden');
           actionsEl.classList.remove('hidden');
           errorEl.classList.add('hidden');
+          if (copilotRedirectBox) {
+            copilotRedirectBox.classList.add('hidden');
+          }
           return;
         } else {
           showError();
@@ -212,6 +228,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   function showError() {
     statusEl.textContent = t('statusError') || 'Not Supported';
     errorEl.classList.remove('hidden');
+    if (copilotRedirectBox) {
+      const isCopilotMs = Boolean(tab?.url && tab.url.includes('copilot.microsoft.com'));
+      copilotRedirectBox.classList.toggle('hidden', !isCopilotMs);
+    }
   }
 
   formatSelect.addEventListener('change', updateCopyButtonVisibility);

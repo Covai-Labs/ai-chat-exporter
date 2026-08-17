@@ -2,6 +2,7 @@ import { ChatParser } from './base.js';
 import { convertToMarkdown } from '../utils/html-to-markdown.js';
 
 export class ZAiParser extends ChatParser {
+  name = 'Z.ai';
   isAvailable(url) {
     return url.includes('chat.z.ai');
   }

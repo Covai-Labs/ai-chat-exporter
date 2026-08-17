@@ -2,6 +2,7 @@ import { ChatParser } from './base.js';
 import { convertToMarkdown } from '../utils/html-to-markdown.js';
 
 export class GeminiCloudAssistParser extends ChatParser {
+  name = 'Gemini Cloud Assist';
   isAvailable(url) {
     return url.includes('console.cloud.google.com/gemini');
   }

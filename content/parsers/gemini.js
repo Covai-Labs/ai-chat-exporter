@@ -2,6 +2,7 @@ import { ChatParser } from './base.js';
 import { convertToMarkdown } from '../utils/html-to-markdown.js';
 
 export class GeminiParser extends ChatParser {
+  name = 'Gemini';
   isAvailable(url) {
     return url.includes('gemini.google.com');
   }

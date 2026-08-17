@@ -240,6 +240,7 @@ function cleanMarkdownFromApi(text, citeMap, imageGroupMap) {
 }
 
 export class ChatGPTParser extends ChatParser {
+  name = 'ChatGPT';
   constructor() {
     super();
     this.lastFetch = null;

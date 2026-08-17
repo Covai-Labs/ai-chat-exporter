@@ -2,11 +2,14 @@ import { ChatParser } from './base.js';
 import { convertToMarkdown } from '../utils/html-to-markdown.js';
 
 export class CopilotParser extends ChatParser {
+  name = 'Copilot';
   isAvailable(url) {
     return (
       url.includes('copilot.microsoft.com') ||
       url.includes('copilot.com') ||
       url.includes('copilot.cloud.microsoft') ||
+      url.includes('m365.cloud.microsoft') ||
+      url.includes('m365.microsoft.com') ||
       url.includes('bing.com/chat') ||
       url.includes('bing.com/copilot') ||
       url.includes('bing.com/copilotsearch') ||
@@ -111,7 +114,7 @@ export class CopilotParser extends ChatParser {
     // Tier 1: Modern M365 Copilot / Bebop layout & data-content markers
     let turnElements = Array.from(
       document.querySelectorAll(
-        '[data-testid="chatQuestion"], [data-testid="copilot-message-div"], [data-content="user-message"], [data-content="ai-message"], .fai-UserMessage, .fai-CopilotMessage',
+        '[data-testid="chatQuestion"], [data-testid="copilot-message-div"], [data-content="user-message"], [data-content="ai-message"], [data-content="assistant-message"], [data-message-author-role="user"], [data-message-author-role="assistant"], [data-testid="chat-turn-user"], [data-testid="chat-turn-bot"], [data-testid="chat-turn-assistant"], [data-testid="user-turn"], [data-testid="copilot-turn"], .fai-UserMessage, .fai-CopilotMessage',
       ),
     );
 
@@ -125,25 +128,33 @@ export class CopilotParser extends ChatParser {
     // Tier 2: Tailwind group classes if direct markers are absent
     if (!turnElements.length) {
       turnElements = Array.from(
-        document.querySelectorAll('[class*="group/user-message"], [class*="group/ai-message"]'),
+        document.querySelectorAll(
+          '[class*="group/user-message"], [class*="group/ai-message"], [class*="group/assistant-message"]',
+        ),
       );
     }
 
     // Tier 3: testid attributes
     if (!turnElements.length) {
       turnElements = Array.from(
-        document.querySelectorAll('[data-testid="user-message"], [data-testid="ai-message"]'),
+        document.querySelectorAll(
+          '[data-testid="user-message"], [data-testid="ai-message"], [data-testid="assistant-message"]',
+        ),
       );
     }
 
     if (turnElements.length) {
       turnElements.forEach((node) => {
         const dataContent = node.getAttribute('data-content') || '';
+        const dataAuthor = (node.getAttribute('data-message-author-role') || '').toLowerCase();
         const className = typeof node.className === 'string' ? node.className : '';
         const testId = node.getAttribute('data-testid') || '';
 
         const isUser =
+          dataAuthor === 'user' ||
           testId === 'chatQuestion' ||
+          testId === 'chat-turn-user' ||
+          testId === 'user-turn' ||
           className.includes('UserMessage') ||
           dataContent === 'user-message' ||
           className.includes('user-message') ||
@@ -152,7 +163,7 @@ export class CopilotParser extends ChatParser {
         if (isUser) {
           const targetNode =
             node.querySelector(
-              '[data-testid="chatOutput"], .fai-UserMessage__message, [data-content="user-message"]',
+              '[data-testid="chatOutput"], [data-testid="user-message-content"], .fai-UserMessage__message, [data-content="user-message"]',
             ) || node;
           const clone = targetNode.cloneNode(true);
           clone
@@ -166,6 +177,7 @@ export class CopilotParser extends ChatParser {
           const targetNode =
             node.querySelector('[data-testid="markdown-reply"]') ||
             node.querySelector('[data-testid="ai-message-body"]') ||
+            node.querySelector('[data-testid="copilot-message-content"]') ||
             node.querySelector('.fai-CopilotMessage__content') ||
             node.querySelector('[class*="group/ai-message-item"]') ||
             node;

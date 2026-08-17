@@ -16,7 +16,7 @@ global.HTMLElement = HTMLElement;
 global.Node = Node;
 global.DOMParser = DOMParser;
 
-test('CopilotParser detects copilot.microsoft.com, copilot.com, copilot.cloud.microsoft, bing.com, and edgeservices.bing.com URLs', async () => {
+test('CopilotParser detects copilot.microsoft.com, copilot.com, copilot.cloud.microsoft, m365.cloud.microsoft, bing.com, and edgeservices.bing.com URLs', async () => {
   const { CopilotParser } = await import('../content/parsers/copilot.js');
   const parser = new CopilotParser();
 
@@ -30,6 +30,8 @@ test('CopilotParser detects copilot.microsoft.com, copilot.com, copilot.cloud.mi
   );
   assert.equal(parser.isAvailable('https://www.copilot.com/chat'), true);
   assert.equal(parser.isAvailable('https://copilot.cloud.microsoft/chats'), true);
+  assert.equal(parser.isAvailable('https://m365.cloud.microsoft/chat'), true);
+  assert.equal(parser.isAvailable('https://m365.microsoft.com/chat'), true);
   assert.equal(parser.isAvailable('https://www.bing.com/chat'), true);
   assert.equal(parser.isAvailable('https://www.bing.com/copilot'), true);
   assert.equal(parser.isAvailable('https://www.bing.com/copilotsearch?q=test'), true);
@@ -102,4 +104,48 @@ test('CopilotParser correctly parses M365 / Bebop Copilot layout from fixture', 
   assert.equal(result.messages[1].content.includes('Copy'), false);
   assert.equal(result.messages[1].content.includes('Like'), false);
   assert.equal(result.messages[1].content.includes('Suggest another'), false);
+});
+
+test('CopilotParser correctly parses modern Copilot layout using data-message-author-role and chat-turn testids', async () => {
+  const modernHtml = `
+    <!DOCTYPE html>
+    <html>
+      <head><title>Explain Quantum Computing - Copilot</title></head>
+      <body>
+        <main>
+          <div data-testid="chat-history">
+            <div data-testid="chat-turn-user" data-message-author-role="user">
+              <div data-testid="user-message-content">Explain quantum computing in simple terms.</div>
+            </div>
+            <div data-testid="chat-turn-assistant" data-message-author-role="assistant">
+              <div data-testid="copilot-message-content">
+                <p>Quantum computing uses <strong>qubits</strong> instead of classical bits.</p>
+                <div data-testid="message-item-reactions"><button>Like</button></div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </body>
+    </html>
+  `;
+  const dom = parseHTML(modernHtml);
+  global.window = dom.window;
+  global.document = dom.document;
+  global.HTMLElement = dom.HTMLElement;
+  global.Node = dom.Node;
+  global.DOMParser = dom.DOMParser;
+  dom.window.location = { href: 'https://copilot.microsoft.com/chats/u1yRSJwM2me3A96y5VL2y' };
+
+  const { CopilotParser } = await import('../content/parsers/copilot.js');
+  const parser = new CopilotParser();
+
+  const result = await parser.parse();
+
+  assert.equal(result.title, 'Explain Quantum Computing');
+  assert.equal(result.messages.length, 2);
+  assert.equal(result.messages[0].role, 'User');
+  assert.equal(result.messages[0].content, 'Explain quantum computing in simple terms.');
+  assert.equal(result.messages[1].role, 'Copilot');
+  assert.ok(result.messages[1].content.includes('**qubits**'));
+  assert.equal(result.messages[1].content.includes('Like'), false);
 });

@@ -438,5 +438,14 @@
   "decantPromoLink": {
     "message": "Decant ↗",
     "description": "Link text to try Decant website exporter"
+  },
+  "copilotRedirectTitle": {
+    "message": "Aviso do Microsoft Copilot"
+  },
+  "copilotRedirectDesc": {
+    "message": "A exportação é suportada em copilot.com. Acesse copilot.com para exportar este bate-papo."
+  },
+  "copilotRedirectBtn": {
+    "message": "↗ Abrir no copilot.com"
   }
 }

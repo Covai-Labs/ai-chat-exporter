@@ -2,6 +2,7 @@ import { ChatParser } from './base.js';
 import { convertToMarkdown } from '../utils/html-to-markdown.js';
 
 export class GoogleAIStudioParser extends ChatParser {
+  name = 'Google AI Studio';
   isAvailable(url) {
     return url.includes('aistudio.google.com');
   }

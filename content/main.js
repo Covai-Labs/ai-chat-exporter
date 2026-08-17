@@ -152,7 +152,11 @@ function detectParser() {
   console.log('Detecting parser for URL:', currentUrl);
   activeParser = parsers.find((p) => p.isAvailable(currentUrl));
   if (activeParser) {
-    console.log('[AI Exporter] Active parser:', activeParser.constructor.name);
+    const platformName =
+      typeof activeParser.getPlatformName === 'function'
+        ? activeParser.getPlatformName()
+        : activeParser.name || activeParser.constructor.name.replace('Parser', '');
+    console.log('[AI Exporter] Active parser:', platformName);
   }
 }
 
@@ -161,31 +165,43 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'CHECK_AVAILABILITY') {
     detectParser(); // Re-check in case URL changed
 
+    const isTopFrame = typeof window === 'undefined' || window.self === window.top;
     if (activeParser) {
-      // Perform a parse to get the message count
-      // return true to indicate async response
       (async () => {
         try {
           const conversation = await activeParser.parse({ full: false });
           console.log('Parsed conversation with', conversation.messages.length, 'messages');
+          if (!isTopFrame && conversation.messages.length === 0) {
+            return;
+          }
+          const platformName =
+            typeof activeParser.getPlatformName === 'function'
+              ? activeParser.getPlatformName()
+              : activeParser.name || activeParser.constructor.name.replace('Parser', '');
           sendResponse({
             available: true,
-            platform: activeParser.constructor.name.replace('Parser', ''),
+            platform: platformName,
             count: conversation.messages.length,
             title: conversation.title || '',
           });
         } catch (e) {
           console.error('Check availability parse failed:', e);
-          sendResponse({
-            available: true,
-            platform: activeParser.constructor.name.replace('Parser', ''),
-            count: 0, // Fallback
-            title: '',
-          });
+          if (isTopFrame) {
+            const platformName =
+              typeof activeParser.getPlatformName === 'function'
+                ? activeParser.getPlatformName()
+                : activeParser.name || activeParser.constructor.name.replace('Parser', '');
+            sendResponse({
+              available: true,
+              platform: platformName,
+              count: 0, // Fallback
+              title: '',
+            });
+          }
         }
       })();
       return true;
-    } else {
+    } else if (isTopFrame) {
       sendResponse({ available: false });
     }
   }
@@ -247,7 +263,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             ? userCustom
             : `${userCustom}.${formatter.getFileExtension()}`;
         } else {
-          const platformName = activeParser.constructor.name.replace('Parser', '');
+          const platformName =
+            typeof activeParser.getPlatformName === 'function'
+              ? activeParser.getPlatformName()
+              : activeParser.name || activeParser.constructor.name.replace('Parser', '');
           const safeTitle = (conversation.title || 'Untitled_Chat')
             .replace(/[\\/:*?"<>|]/g, '')
             .replace(/\s+/g, '_');
@@ -337,7 +356,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             }
           });
         }
-        const platformName = activeParser.constructor.name.replace('Parser', '');
+        const platformName =
+          typeof activeParser.getPlatformName === 'function'
+            ? activeParser.getPlatformName()
+            : activeParser.name || activeParser.constructor.name.replace('Parser', '');
         conversation.metadata = { ...conversation.metadata, Source: platformName };
         const payload = continuationFormatter.format(conversation, request.instruction || '');
 

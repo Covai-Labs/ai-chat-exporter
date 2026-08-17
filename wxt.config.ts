@@ -79,6 +79,8 @@ export default defineConfig({
       '*://copilot.com/*',
       '*://www.copilot.com/*',
       '*://copilot.cloud.microsoft/*',
+      '*://m365.cloud.microsoft/*',
+      '*://www.m365.cloud.microsoft/*',
       '*://www.bing.com/*',
       '*://bing.com/*',
       '*://edgeservices.bing.com/*',

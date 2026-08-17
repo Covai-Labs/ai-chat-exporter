@@ -438,5 +438,14 @@
   "decantPromoLink": {
     "message": "Decant ↗",
     "description": "Link text to try Decant website exporter"
+  },
+  "copilotRedirectTitle": {
+    "message": "माइक्रोसॉफ्ट कोपायलट सूचना"
+  },
+  "copilotRedirectDesc": {
+    "message": "निर्यात copilot.com पर समर्थित है। इस चैट को निर्यात करने के लिए copilot.com पर स्विच करें।"
+  },
+  "copilotRedirectBtn": {
+    "message": "↗ copilot.com में खोलें"
   }
 }

@@ -430,5 +430,14 @@
   "decantPromoLink": {
     "message": "Decant ↗",
     "description": "Link text to try Decant website exporter"
+  },
+  "copilotRedirectTitle": {
+    "message": "மைக்ரோசாப்ட் கோபைலட் அறிவிப்பு"
+  },
+  "copilotRedirectDesc": {
+    "message": "ஏற்றுமதி copilot.com இல் ஆதரிக்கப்படுகிறது. இந்த உரையாடலை ஏற்றுமதி செய்ய copilot.com க்கு மாறவும்."
+  },
+  "copilotRedirectBtn": {
+    "message": "↗ copilot.com இல் திறக்கவும்"
   }
 }
