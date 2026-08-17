@@ -232,3 +232,23 @@ test('HTML formatter escapes malicious codeLang tags and untrusted details tags'
     output.includes('&lt;details&gt;&lt;script&gt;alert(2)&lt;/script&gt;&lt;/details&gt;'),
   );
 });
+
+test('HTML formatter preserves multi-line user inputs and paragraph line breaks with br tags', async () => {
+  const { HtmlFormatter } = await importFormatter();
+  const formatter = new HtmlFormatter();
+
+  const conversation = {
+    title: 'Multi-line Prompt Test',
+    messages: [
+      {
+        role: 'User',
+        content: 'this\nis\na\nsentence\n\nSecond paragraph line 1\nSecond paragraph line 2',
+      },
+    ],
+  };
+
+  const output = formatter.format(conversation);
+
+  assert.ok(output.includes('<p>this<br>\nis<br>\na<br>\nsentence</p>'));
+  assert.ok(output.includes('<p>Second paragraph line 1<br>\nSecond paragraph line 2</p>'));
+});

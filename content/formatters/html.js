@@ -1170,13 +1170,13 @@ export function markdownToHtml(mdText) {
     }
 
     if (inBlockquote) {
-      html += `<blockquote>${inlineParse(blockquoteContent.join(' '))}</blockquote>\n`;
+      html += `<blockquote>${blockquoteContent.map((l) => inlineParse(l)).join('<br>\n')}</blockquote>\n`;
       inBlockquote = false;
       blockquoteContent = [];
     }
 
     if (inParagraph) {
-      html += `<p>${inlineParse(paragraphContent.join(' '))}</p>\n`;
+      html += `<p>${paragraphContent.map((l) => inlineParse(l)).join('<br>\n')}</p>\n`;
       inParagraph = false;
       paragraphContent = [];
     }
