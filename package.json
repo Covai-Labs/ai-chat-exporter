@@ -23,6 +23,7 @@
     "wxt": "^0.21.3"
   },
   "dependencies": {
+    "@covai/parser-core": "file:../parser-core",
     "dompurify": "^3.4.13",
     "html2canvas": "^1.4.1",
     "katex": "^0.18.2",

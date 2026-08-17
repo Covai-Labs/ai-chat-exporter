@@ -6,7 +6,7 @@ import {
   collectMountedTurnMessages,
   getConversationTurnIndex,
   getConversationTurns,
-} from '../content/parsers/chatgpt_scroll_collector.js';
+} from '@covai/parser-core/ai/chatgpt_scroll_collector';
 
 class FakeTurn {
   constructor(index, message) {

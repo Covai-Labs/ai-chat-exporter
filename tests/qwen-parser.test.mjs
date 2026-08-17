@@ -19,7 +19,7 @@ test('QwenParser correctly parses chat content from fixture', async () => {
 
   window.location = { href: 'https://chat.qwen.ai/' };
 
-  const { QwenParser } = await import('../content/parsers/qwen.js');
+  const { QwenParser } = await import('@covai/parser-core');
   const parser = new QwenParser();
 
   const result = await parser.parse();

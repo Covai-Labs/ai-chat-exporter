@@ -1,18 +1,20 @@
-import { ChatGPTParser } from '../content/parsers/chatgpt.js';
-import { GeminiParser } from '../content/parsers/gemini.js';
-import { ClaudeParser } from '../content/parsers/claude.js';
-import { QwenParser } from '../content/parsers/qwen.js';
-import { PerplexityParser } from '../content/parsers/perplexity.js';
-import { DeepSeekParser } from '../content/parsers/deepseek.js';
-import { MetaParser } from '../content/parsers/meta.js';
-import { MistralParser } from '../content/parsers/mistral.js';
-import { GoogleSearchAIParser } from '../content/parsers/google_search_ai.js';
-import { ZAiParser } from '../content/parsers/z_ai.js';
-import { GeminiCloudAssistParser } from '../content/parsers/gemini_cloud_assist.js';
-import { GoogleAIStudioParser } from '../content/parsers/google_ai_studio.js';
-import { NotebookLMParser } from '../content/parsers/notebooklm.js';
-import { CopilotParser } from '../content/parsers/copilot.js';
-import { LumoParser } from '../content/parsers/lumo.js';
+import {
+  ChatGPTParser,
+  GeminiParser,
+  ClaudeParser,
+  QwenParser,
+  PerplexityParser,
+  DeepSeekParser,
+  MetaParser,
+  MistralParser,
+  GoogleSearchAIParser,
+  ZAiParser,
+  GeminiCloudAssistParser,
+  GoogleAIStudioParser,
+  NotebookLMParser,
+  CopilotParser,
+  LumoParser,
+} from '@covai/parser-core';
 
 import { MarkdownFormatter } from '../content/formatters/markdown.js';
 import { JsonFormatter } from '../content/formatters/json.js';

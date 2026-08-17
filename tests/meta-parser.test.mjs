@@ -19,7 +19,7 @@ test('MetaParser correctly parses chat content from fixture', async () => {
 
   window.location = { href: 'https://meta.ai/' };
 
-  const { MetaParser } = await import('../content/parsers/meta.js');
+  const { MetaParser } = await import('@covai/parser-core');
   const parser = new MetaParser();
 
   const result = await parser.parse();

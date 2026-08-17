@@ -1,19 +1,21 @@
 // Static imports for parsers
-import { ChatGPTParser } from './parsers/chatgpt.js';
-import { GeminiParser } from './parsers/gemini.js';
-import { ClaudeParser } from './parsers/claude.js';
-import { QwenParser } from './parsers/qwen.js';
-import { PerplexityParser } from './parsers/perplexity.js';
-import { DeepSeekParser } from './parsers/deepseek.js';
-import { MetaParser } from './parsers/meta.js';
-import { MistralParser } from './parsers/mistral.js';
-import { GoogleSearchAIParser } from './parsers/google_search_ai.js';
-import { ZAiParser } from './parsers/z_ai.js';
-import { GeminiCloudAssistParser } from './parsers/gemini_cloud_assist.js';
-import { GoogleAIStudioParser } from './parsers/google_ai_studio.js';
-import { NotebookLMParser } from './parsers/notebooklm.js';
-import { CopilotParser } from './parsers/copilot.js';
-import { LumoParser } from './parsers/lumo.js';
+import {
+  ChatGPTParser,
+  GeminiParser,
+  ClaudeParser,
+  QwenParser,
+  PerplexityParser,
+  DeepSeekParser,
+  MetaParser,
+  MistralParser,
+  GoogleSearchAIParser,
+  ZAiParser,
+  GeminiCloudAssistParser,
+  GoogleAIStudioParser,
+  NotebookLMParser,
+  CopilotParser,
+  LumoParser,
+} from '@covai/parser-core';
 
 import { MarkdownFormatter } from './formatters/markdown.js';
 import { JsonFormatter } from './formatters/json.js';
