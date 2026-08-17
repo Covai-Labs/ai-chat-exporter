@@ -6,7 +6,11 @@ export class CopilotParser extends ChatParser {
     return (
       url.includes('copilot.microsoft.com') ||
       url.includes('copilot.com') ||
-      url.includes('bing.com/chat')
+      url.includes('copilot.cloud.microsoft') ||
+      url.includes('bing.com/chat') ||
+      url.includes('bing.com/copilot') ||
+      url.includes('bing.com/copilotsearch') ||
+      url.includes('edgeservices.bing.com')
     );
   }
 
@@ -16,9 +20,15 @@ export class CopilotParser extends ChatParser {
       const cleanTitle = document.title
         .replace(/^Microsoft Copilot:\s*/i, '')
         .replace(/\s*-\s*Microsoft Copilot$/i, '')
+        .replace(/^Copilot:\s*/i, '')
+        .replace(/\s*-\s*Copilot$/i, '')
         .replace(/Your AI companion/i, '')
         .trim();
-      if (cleanTitle && cleanTitle.toLowerCase() !== 'microsoft copilot') {
+      if (
+        cleanTitle &&
+        cleanTitle.toLowerCase() !== 'microsoft copilot' &&
+        cleanTitle.toLowerCase() !== 'copilot'
+      ) {
         title = cleanTitle;
       }
     }
@@ -35,11 +45,22 @@ export class CopilotParser extends ChatParser {
         '[data-testid="user-message-reactions"]',
         '[data-testid="copy-ai-message-button"]',
         '[data-testid="copy-user-message-button"]',
+        '[data-testid="CopyButtonContainerTestId"]',
+        '[data-testid="CopyButtonTestId"]',
+        '[data-testid="FeedbackContainerTestId"]',
+        '[data-testid="feedback-button-testid"]',
+        '[data-testid="overflow-menu-button"]',
         '[data-testid="share-message-button"]',
         '[data-testid="message-thumbs-up-button"]',
         '[data-testid="message-thumbs-down-button"]',
         '[data-testid="message-read-aloud-button"]',
         '[data-testid="regenerate-message-button-popover"]',
+        '[data-testid="chat-suggestion"]',
+        '[data-testid="loading-message"]',
+        '.fai-CopilotMessage__actions',
+        '.fai-SuggestionList',
+        '.fai-UserMessage__accessibleHeading',
+        '.fai-CopilotMessage__accessibleHeading',
         '[class*="suggestedReplies"]',
         '[class*="workingCard"]',
         '[class*="WorkingCard"]',
@@ -87,12 +108,21 @@ export class CopilotParser extends ChatParser {
 
     // Multi-tier DOM extraction strategy
 
-    // Tier 1: Modern Copilot layout using data-content markers
+    // Tier 1: Modern M365 Copilot / Bebop layout & data-content markers
     let turnElements = Array.from(
-      document.querySelectorAll('[data-content="user-message"], [data-content="ai-message"]'),
+      document.querySelectorAll(
+        '[data-testid="chatQuestion"], [data-testid="copilot-message-div"], [data-content="user-message"], [data-content="ai-message"], .fai-UserMessage, .fai-CopilotMessage',
+      ),
     );
 
-    // Tier 2: Tailwind group classes if data-content direct markers are absent
+    // Filter out nested matches
+    if (turnElements.length) {
+      turnElements = turnElements.filter(
+        (el) => !turnElements.some((other) => other !== el && other.contains(el)),
+      );
+    }
+
+    // Tier 2: Tailwind group classes if direct markers are absent
     if (!turnElements.length) {
       turnElements = Array.from(
         document.querySelectorAll('[class*="group/user-message"], [class*="group/ai-message"]'),
@@ -109,22 +139,34 @@ export class CopilotParser extends ChatParser {
     if (turnElements.length) {
       turnElements.forEach((node) => {
         const dataContent = node.getAttribute('data-content') || '';
-        const className = node.className || '';
+        const className = typeof node.className === 'string' ? node.className : '';
         const testId = node.getAttribute('data-testid') || '';
 
         const isUser =
+          testId === 'chatQuestion' ||
+          className.includes('UserMessage') ||
           dataContent === 'user-message' ||
           className.includes('user-message') ||
           testId === 'user-message';
 
         if (isUser) {
-          const text = node.innerText || node.textContent;
+          const targetNode =
+            node.querySelector(
+              '[data-testid="chatOutput"], .fai-UserMessage__message, [data-content="user-message"]',
+            ) || node;
+          const clone = targetNode.cloneNode(true);
+          clone
+            .querySelectorAll('.fai-UserMessage__accessibleHeading, .sr-only, button')
+            .forEach((el) => el.remove());
+          const text = clone.innerText || clone.textContent;
           if (text && text.trim()) {
             messages.push({ role: 'User', content: text.trim() });
           }
         } else {
           const targetNode =
+            node.querySelector('[data-testid="markdown-reply"]') ||
             node.querySelector('[data-testid="ai-message-body"]') ||
+            node.querySelector('.fai-CopilotMessage__content') ||
             node.querySelector('[class*="group/ai-message-item"]') ||
             node;
           const html = processAiElement(targetNode);

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recommend a book for me about [topic or mood], mat</title>
+</head>
+<body>
+  <div id="root">
+    <div id="m365-copilot-app-layout-root">
+      <main id="m365-copilot-app-layout-main">
+        <div id="m365-copilot-app-layout-content">
+          <div id="llm-web-ui-messageList-scrollable-container">
+            <div data-testid="MessageListContainer">
+              <div role="feed" class="fai-CopilotChat">
+                <div role="feed" aria-label="Chat conversation" class="fui-Virtualizer-Scroll-View-Dynamic__container">
+                  <div data-virtualizer-index="0">
+                    <div data-testid="m365-chat-llm-web-ui-chat-message" class="m365-chat-llm-web-ui-chat-message">
+                      <!-- User turn -->
+                      <div data-testid="chatQuestion">
+                        <div class="fai-UserMessage" role="article">
+                          <h5 class="fai-UserMessage__accessibleHeading">You said: </h5>
+                          <div class="fai-UserMessage__message">
+                            <div dir="auto" data-testid="chatOutput">Recommend a book for me about [topic or mood], matching my preference for [pace or genre], and include why I might enjoy it.</div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Copilot turn -->
+                      <div data-testid="copilot-message-div">
+                        <div class="fai-CopilotMessage" role="article">
+                          <h6 class="fai-CopilotMessage__accessibleHeading">Copilot said: </h6>
+                          <div class="fai-CopilotMessage__content">
+                            <div data-testid="markdown-reply">
+                              <p>I'd love to! Since your placeholders are still generic, here are a few matched recommendations:</p>
+                              <ul>
+                                <li>
+                                  <p><strong>A Gentleman in Moscow</strong> by Amor Towles</p>
+                                </li>
+                                <li>
+                                  <p><strong>The Thursday Murder Club</strong> by Richard Osman</p>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                          <!-- Actions and suggestions to be stripped -->
+                          <div class="fai-CopilotMessage__actions" data-testid="CopyButtonContainerTestId">
+                            <button data-testid="CopyButtonTestId">Copy</button>
+                            <div data-testid="FeedbackContainerTestId">
+                              <button data-testid="feedback-button-testid">Like</button>
+                            </div>
+                          </div>
+                          <div class="fai-SuggestionList">
+                            <button data-testid="chat-suggestion">Suggest another</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -75,6 +75,14 @@ export default defineConfig({
       '*://www.copilot.microsoft.com/*',
       '*://copilot.com/*',
       '*://www.copilot.com/*',
+      '*://copilot.cloud.microsoft/*',
+      '*://www.bing.com/chat*',
+      '*://www.bing.com/copilot*',
+      '*://www.bing.com/copilotsearch*',
+      '*://bing.com/chat*',
+      '*://bing.com/copilot*',
+      '*://bing.com/copilotsearch*',
+      '*://edgeservices.bing.com/*',
       '*://lumo.proton.me/*',
     ];
 

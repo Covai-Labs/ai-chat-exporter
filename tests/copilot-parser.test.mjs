@@ -16,7 +16,7 @@ global.HTMLElement = HTMLElement;
 global.Node = Node;
 global.DOMParser = DOMParser;
 
-test('CopilotParser detects copilot.microsoft.com, copilot.com, and bing.com/chat URLs', async () => {
+test('CopilotParser detects copilot.microsoft.com, copilot.com, copilot.cloud.microsoft, bing.com, and edgeservices.bing.com URLs', async () => {
   const { CopilotParser } = await import('../content/parsers/copilot.js');
   const parser = new CopilotParser();
 
@@ -29,7 +29,11 @@ test('CopilotParser detects copilot.microsoft.com, copilot.com, and bing.com/cha
     true,
   );
   assert.equal(parser.isAvailable('https://www.copilot.com/chat'), true);
+  assert.equal(parser.isAvailable('https://copilot.cloud.microsoft/chats'), true);
   assert.equal(parser.isAvailable('https://www.bing.com/chat'), true);
+  assert.equal(parser.isAvailable('https://www.bing.com/copilot'), true);
+  assert.equal(parser.isAvailable('https://www.bing.com/copilotsearch?q=test'), true);
+  assert.equal(parser.isAvailable('https://edgeservices.bing.com/edgediscover/query'), true);
   assert.equal(parser.isAvailable('https://chatgpt.com/'), false);
 });
 
@@ -40,7 +44,6 @@ test('CopilotParser correctly parses chat content from fixture', async () => {
   const parser = new CopilotParser();
 
   const result = await parser.parse();
-  console.error('DEBUG MESSAGES:', JSON.stringify(result.messages));
 
   assert.equal(result.title, 'Global Work and Wage Comparison');
   assert.equal(result.messages.length, 2);
@@ -66,4 +69,37 @@ test('CopilotParser correctly parses chat content from fixture', async () => {
   // Noise check: ensure button text like "Copy" or "Like" is stripped
   assert.equal(result.messages[1].content.includes('Copy'), false);
   assert.equal(result.messages[1].content.includes('Like'), false);
+});
+
+test('CopilotParser correctly parses M365 / Bebop Copilot layout from fixture', async () => {
+  const m365Html = fs.readFileSync(path.join(__dirname, 'fixtures/copilot-m365.html'), 'utf8');
+  const dom = parseHTML(m365Html);
+  global.window = dom.window;
+  global.document = dom.document;
+  global.HTMLElement = dom.HTMLElement;
+  global.Node = dom.Node;
+  global.DOMParser = dom.DOMParser;
+  dom.window.location = { href: 'https://copilot.com/chat/conversation/12345' };
+
+  const { CopilotParser } = await import('../content/parsers/copilot.js');
+  const parser = new CopilotParser();
+
+  const result = await parser.parse();
+
+  assert.ok(result.title.includes('Recommend a book'));
+  assert.equal(result.messages.length, 2);
+
+  // User message check
+  assert.equal(result.messages[0].role, 'User');
+  assert.ok(result.messages[0].content.includes('Recommend a book for me about [topic or mood]'));
+
+  // Copilot message check
+  assert.equal(result.messages[1].role, 'Copilot');
+  assert.ok(result.messages[1].content.includes('A Gentleman in Moscow'));
+  assert.ok(result.messages[1].content.includes('The Thursday Murder Club'));
+
+  // Noise stripping check
+  assert.equal(result.messages[1].content.includes('Copy'), false);
+  assert.equal(result.messages[1].content.includes('Like'), false);
+  assert.equal(result.messages[1].content.includes('Suggest another'), false);
 });
