@@ -204,3 +204,61 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
   }
 });
+
+async function getActiveTab() {
+  if (typeof chrome === 'undefined' || !chrome.tabs) return null;
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    if (tab) return tab;
+  } catch {
+    // Ignore
+  }
+  try {
+    const [fallbackTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    return fallbackTab || null;
+  } catch {
+    return null;
+  }
+}
+
+async function handleCommand(command, previewPath = 'popup/preview.html') {
+  const tab = await getActiveTab();
+  if (!tab || !tab.id) return;
+
+  if (command === 'copy_markdown' || command === 'download_markdown') {
+    try {
+      await chrome.tabs.sendMessage(tab.id, {
+        action: 'EXECUTE_SHORTCUT',
+        shortcutAction: command,
+      });
+    } catch (err) {
+      console.warn(`[AI Exporter Background] Shortcut ${command} failed:`, err);
+    }
+  } else if (command === 'open_preview') {
+    try {
+      const response = await chrome.tabs.sendMessage(tab.id, {
+        action: 'COPY_CHAT',
+        format: 'markdown',
+      });
+      if (response && response.success) {
+        await chrome.storage.local.set({
+          previewConversation: response.conversation || null,
+          previewContent: response.content,
+          previewTitle: tab.title || 'AI Conversation',
+          previewFormat: 'markdown',
+        });
+        await chrome.tabs.create({
+          url: chrome.runtime.getURL(previewPath),
+        });
+      }
+    } catch (err) {
+      console.warn('[AI Exporter Background] Shortcut open_preview failed:', err);
+    }
+  }
+}
+
+if (typeof chrome !== 'undefined' && chrome.commands?.onCommand) {
+  chrome.commands.onCommand.addListener((command) => {
+    handleCommand(command, 'popup/preview.html');
+  });
+}

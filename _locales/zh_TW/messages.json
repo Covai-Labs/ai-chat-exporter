@@ -439,5 +439,64 @@
   },
   "copilotRedirectBtn": {
     "message": "↗ 在 copilot.com 中開啟"
+  },
+  "commandCopyMarkdown": {
+    "message": "複製對話為 Markdown 至剪貼簿",
+    "description": "Shortcut command to copy markdown"
+  },
+  "commandDownloadMarkdown": {
+    "message": "下載對話為 Markdown 檔案",
+    "description": "Shortcut command to download markdown"
+  },
+  "commandOpenPreview": {
+    "message": "在 Markdown 預覽分頁中開啟對話",
+    "description": "Shortcut command to open preview tab"
+  },
+  "shortcutsSectionTitle": {
+    "message": "快速鍵設定",
+    "description": "Title for keyboard shortcuts section"
+  },
+  "shortcutCopyMarkdownLabel": {
+    "message": "複製 Markdown",
+    "description": "Label for copy markdown shortcut"
+  },
+  "shortcutCopyMarkdownDesc": {
+    "message": "即時將目前對話複製為 Markdown 格式",
+    "description": "Description for copy markdown shortcut"
+  },
+  "shortcutDownloadMarkdownLabel": {
+    "message": "下載 Markdown",
+    "description": "Label for download markdown shortcut"
+  },
+  "shortcutDownloadMarkdownDesc": {
+    "message": "直接將目前對話下載為 .md 檔案",
+    "description": "Description for download markdown shortcut"
+  },
+  "shortcutOpenPreviewLabel": {
+    "message": "在預覽分頁開啟",
+    "description": "Label for open preview shortcut"
+  },
+  "shortcutOpenPreviewDesc": {
+    "message": "在全螢幕 Markdown 預覽頁面中開啟對話",
+    "description": "Description for open preview shortcut"
+  },
+  "shortcutsConfigureBtn": {
+    "message": "設定快速鍵 ↗",
+    "description": "Button to configure shortcuts in browser settings"
+  },
+  "firefoxShortcutsTitle": {
+    "message": "Firefox 快速鍵設定",
+    "description": "Title for Firefox shortcuts instruction"
+  },
+  "firefoxShortcutsHelp": {
+    "message": "在 Firefox 中自訂快速鍵：開啟 about:addons → 點擊右上角齒輪圖示 ⚙️ → 選擇「管理擴充套件快速鍵」。",
+    "description": "Firefox shortcuts instruction text"
+  },
+  "copyAboutAddons": {
+    "message": "複製 about:addons",
+    "description": "Button label to copy about:addons URL"
+  },
+  "copiedAboutAddons": {
+    "message": "已複製！"
   }
 }

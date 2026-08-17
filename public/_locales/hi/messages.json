@@ -447,5 +447,64 @@
   },
   "copilotRedirectBtn": {
     "message": "↗ copilot.com में खोलें"
+  },
+  "commandCopyMarkdown": {
+    "message": "बातचीत को Markdown के रूप में क्लिपबोर्ड पर कॉपी करें",
+    "description": "Shortcut command to copy markdown"
+  },
+  "commandDownloadMarkdown": {
+    "message": "बातचीत को Markdown फ़ाइल के रूप में डाउनलोड करें",
+    "description": "Shortcut command to download markdown"
+  },
+  "commandOpenPreview": {
+    "message": "बातचीत को Markdown पूर्वावलोकन टैब में खोलें",
+    "description": "Shortcut command to open preview tab"
+  },
+  "shortcutsSectionTitle": {
+    "message": "कीबोर्ड शॉर्टकट",
+    "description": "Title for keyboard shortcuts section"
+  },
+  "shortcutCopyMarkdownLabel": {
+    "message": "Markdown कॉपी करें",
+    "description": "Label for copy markdown shortcut"
+  },
+  "shortcutCopyMarkdownDesc": {
+    "message": "वर्तमान चैट को तुरंत Markdown प्रारूप में कॉपी करें",
+    "description": "Description for copy markdown shortcut"
+  },
+  "shortcutDownloadMarkdownLabel": {
+    "message": "Markdown डाउनलोड करें",
+    "description": "Label for download markdown shortcut"
+  },
+  "shortcutDownloadMarkdownDesc": {
+    "message": "वर्तमान चैट को सीधे .md फ़ाइल के रूप में डाउनलोड करें",
+    "description": "Description for download markdown shortcut"
+  },
+  "shortcutOpenPreviewLabel": {
+    "message": "पूर्वावलोकन टैब में खोलें",
+    "description": "Label for open preview shortcut"
+  },
+  "shortcutOpenPreviewDesc": {
+    "message": "चैट को पूर्ण Markdown पूर्वावलोकन में खोलें",
+    "description": "Description for open preview shortcut"
+  },
+  "shortcutsConfigureBtn": {
+    "message": "शॉर्टकट कॉन्फ़िगर करें ↗",
+    "description": "Button to configure shortcuts in browser settings"
+  },
+  "firefoxShortcutsTitle": {
+    "message": "Firefox शॉर्टकट अनुकूलन",
+    "description": "Title for Firefox shortcuts instruction"
+  },
+  "firefoxShortcutsHelp": {
+    "message": "Firefox में अनुकूलित करने के लिए: about:addons खोलें → गियर आइकन ⚙️ पर क्लिक करें → \"Manage Extension Shortcuts\" चुनें।",
+    "description": "Firefox shortcuts instruction text"
+  },
+  "copyAboutAddons": {
+    "message": "about:addons कॉपी करें",
+    "description": "Button label to copy about:addons URL"
+  },
+  "copiedAboutAddons": {
+    "message": "कॉपी किया गया!"
   }
 }

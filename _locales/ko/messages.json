@@ -439,5 +439,64 @@
   },
   "copilotRedirectBtn": {
     "message": "↗ copilot.com에서 열기"
+  },
+  "commandCopyMarkdown": {
+    "message": "대화를 Markdown으로 클립보드에 복사",
+    "description": "Shortcut command to copy markdown"
+  },
+  "commandDownloadMarkdown": {
+    "message": "대화를 Markdown 파일로 다운로드",
+    "description": "Shortcut command to download markdown"
+  },
+  "commandOpenPreview": {
+    "message": "대화를 Markdown 미리보기 탭에서 열기",
+    "description": "Shortcut command to open preview tab"
+  },
+  "shortcutsSectionTitle": {
+    "message": "키보드 단축키",
+    "description": "Title for keyboard shortcuts section"
+  },
+  "shortcutCopyMarkdownLabel": {
+    "message": "Markdown 복사",
+    "description": "Label for copy markdown shortcut"
+  },
+  "shortcutCopyMarkdownDesc": {
+    "message": "현재 대화를 즉시 Markdown 형식으로 복사합니다",
+    "description": "Description for copy markdown shortcut"
+  },
+  "shortcutDownloadMarkdownLabel": {
+    "message": "Markdown 다운로드",
+    "description": "Label for download markdown shortcut"
+  },
+  "shortcutDownloadMarkdownDesc": {
+    "message": "현재 대화를 .md 파일로 직접 다운로드합니다",
+    "description": "Description for download markdown shortcut"
+  },
+  "shortcutOpenPreviewLabel": {
+    "message": "미리보기 탭에서 열기",
+    "description": "Label for open preview shortcut"
+  },
+  "shortcutOpenPreviewDesc": {
+    "message": "전체 화면 Markdown 미리보기에서 대화를 엽니다",
+    "description": "Description for open preview shortcut"
+  },
+  "shortcutsConfigureBtn": {
+    "message": "단축키 설정 ↗",
+    "description": "Button to configure shortcuts in browser settings"
+  },
+  "firefoxShortcutsTitle": {
+    "message": "Firefox 단축키 설정",
+    "description": "Title for Firefox shortcuts instruction"
+  },
+  "firefoxShortcutsHelp": {
+    "message": "Firefox에서 단축키 변경: about:addons 열기 → 톱니바퀴 아이콘 ⚙️ 클릭 → \"확장 기능 단축키 관리\" 선택.",
+    "description": "Firefox shortcuts instruction text"
+  },
+  "copyAboutAddons": {
+    "message": "about:addons 복사",
+    "description": "Button label to copy about:addons URL"
+  },
+  "copiedAboutAddons": {
+    "message": "복사되었습니다!"
   }
 }

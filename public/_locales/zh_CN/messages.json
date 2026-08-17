@@ -447,5 +447,64 @@
   },
   "copilotRedirectBtn": {
     "message": "↗ 在 copilot.com 中打开"
+  },
+  "commandCopyMarkdown": {
+    "message": "复制对话为 Markdown 到剪贴板",
+    "description": "Shortcut command to copy markdown"
+  },
+  "commandDownloadMarkdown": {
+    "message": "下载对话为 Markdown 文件",
+    "description": "Shortcut command to download markdown"
+  },
+  "commandOpenPreview": {
+    "message": "在 Markdown 预览标签页中打开对话",
+    "description": "Shortcut command to open preview tab"
+  },
+  "shortcutsSectionTitle": {
+    "message": "快捷键设置",
+    "description": "Title for keyboard shortcuts section"
+  },
+  "shortcutCopyMarkdownLabel": {
+    "message": "复制 Markdown",
+    "description": "Label for copy markdown shortcut"
+  },
+  "shortcutCopyMarkdownDesc": {
+    "message": "即时将当前对话复制为 Markdown 格式",
+    "description": "Description for copy markdown shortcut"
+  },
+  "shortcutDownloadMarkdownLabel": {
+    "message": "下载 Markdown",
+    "description": "Label for download markdown shortcut"
+  },
+  "shortcutDownloadMarkdownDesc": {
+    "message": "直接将当前对话下载为 .md 文件",
+    "description": "Description for download markdown shortcut"
+  },
+  "shortcutOpenPreviewLabel": {
+    "message": "在预览标签页打开",
+    "description": "Label for open preview shortcut"
+  },
+  "shortcutOpenPreviewDesc": {
+    "message": "在全屏 Markdown 预览页面中打开对话",
+    "description": "Description for open preview shortcut"
+  },
+  "shortcutsConfigureBtn": {
+    "message": "配置快捷键 ↗",
+    "description": "Button to configure shortcuts in browser settings"
+  },
+  "firefoxShortcutsTitle": {
+    "message": "Firefox 快捷键设置",
+    "description": "Title for Firefox shortcuts instruction"
+  },
+  "firefoxShortcutsHelp": {
+    "message": "在 Firefox 中自定义快捷键：打开 about:addons → 点击右上角齿轮图标 ⚙️ → 选择“管理扩展快捷键”。",
+    "description": "Firefox shortcuts instruction text"
+  },
+  "copyAboutAddons": {
+    "message": "复制 about:addons",
+    "description": "Button label to copy about:addons URL"
+  },
+  "copiedAboutAddons": {
+    "message": "已复制！"
   }
 }

@@ -131,6 +131,40 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   });
 
+  const chromeShortcutsAction = document.getElementById('chrome-shortcuts-action');
+  const firefoxShortcutsAction = document.getElementById('firefox-shortcuts-action');
+  const configureShortcutsBtn = document.getElementById('configure-shortcuts-btn');
+  const copyAboutAddonsBtn = document.getElementById('copy-about-addons-btn');
+
+  if (isFirefox) {
+    if (chromeShortcutsAction) chromeShortcutsAction.classList.add('hidden');
+    if (firefoxShortcutsAction) firefoxShortcutsAction.classList.remove('hidden');
+  } else {
+    if (chromeShortcutsAction) chromeShortcutsAction.classList.remove('hidden');
+    if (firefoxShortcutsAction) firefoxShortcutsAction.classList.add('hidden');
+  }
+
+  if (configureShortcutsBtn) {
+    configureShortcutsBtn.addEventListener('click', () => {
+      if (typeof chrome !== 'undefined' && chrome.tabs && chrome.tabs.create) {
+        chrome.tabs.create({ url: 'chrome://extensions/shortcuts' });
+      }
+    });
+  }
+
+  if (copyAboutAddonsBtn) {
+    copyAboutAddonsBtn.addEventListener('click', async () => {
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText('about:addons');
+        }
+        showToast(t('copiedAboutAddons') || 'Copied!');
+      } catch {
+        showToast('about:addons');
+      }
+    });
+  }
+
   if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
     chrome.storage.onChanged.addListener(async (changes, areaName) => {
       if (areaName === 'sync') {

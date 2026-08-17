@@ -111,6 +111,29 @@ export default defineConfig({
         page: 'entrypoints/options/index.html',
         open_in_tab: true,
       },
+      commands: {
+        copy_markdown: {
+          suggested_key: {
+            default: 'Alt+Shift+C',
+            mac: 'Alt+Shift+C',
+          },
+          description: '__MSG_commandCopyMarkdown__',
+        },
+        download_markdown: {
+          suggested_key: {
+            default: 'Alt+Shift+D',
+            mac: 'Alt+Shift+D',
+          },
+          description: '__MSG_commandDownloadMarkdown__',
+        },
+        open_preview: {
+          suggested_key: {
+            default: 'Alt+Shift+P',
+            mac: 'Alt+Shift+P',
+          },
+          description: '__MSG_commandOpenPreview__',
+        },
+      },
       web_accessible_resources: [
         {
           resources: [

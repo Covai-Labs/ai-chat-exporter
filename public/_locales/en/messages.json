@@ -447,5 +447,65 @@
   },
   "copilotRedirectBtn": {
     "message": "↗ Open in copilot.com"
+  },
+  "commandCopyMarkdown": {
+    "message": "Copy conversation as Markdown to clipboard",
+    "description": "Shortcut command to copy markdown"
+  },
+  "commandDownloadMarkdown": {
+    "message": "Download conversation as Markdown file",
+    "description": "Shortcut command to download markdown"
+  },
+  "commandOpenPreview": {
+    "message": "Open conversation in Markdown preview tab",
+    "description": "Shortcut command to open preview tab"
+  },
+  "shortcutsSectionTitle": {
+    "message": "Keyboard Shortcuts",
+    "description": "Title for keyboard shortcuts section"
+  },
+  "shortcutCopyMarkdownLabel": {
+    "message": "Copy Markdown",
+    "description": "Label for copy markdown shortcut"
+  },
+  "shortcutCopyMarkdownDesc": {
+    "message": "Instantly copy current chat in Markdown format",
+    "description": "Description for copy markdown shortcut"
+  },
+  "shortcutDownloadMarkdownLabel": {
+    "message": "Download Markdown",
+    "description": "Label for download markdown shortcut"
+  },
+  "shortcutDownloadMarkdownDesc": {
+    "message": "Directly download current chat as a .md file",
+    "description": "Description for download markdown shortcut"
+  },
+  "shortcutOpenPreviewLabel": {
+    "message": "Open in Preview Tab",
+    "description": "Label for open preview shortcut"
+  },
+  "shortcutOpenPreviewDesc": {
+    "message": "Open chat in full-page Markdown preview",
+    "description": "Description for open preview shortcut"
+  },
+  "shortcutsConfigureBtn": {
+    "message": "Configure Shortcuts ↗",
+    "description": "Button to configure shortcuts in browser settings"
+  },
+  "firefoxShortcutsTitle": {
+    "message": "Firefox Shortcut Customization",
+    "description": "Title for Firefox shortcuts instruction"
+  },
+  "firefoxShortcutsHelp": {
+    "message": "To customize shortcuts in Firefox: Open about:addons → Click the gear icon ⚙️ at top-right → Select \"Manage Extension Shortcuts\".",
+    "description": "Firefox shortcuts instruction text"
+  },
+  "copyAboutAddons": {
+    "message": "Copy about:addons",
+    "description": "Button label to copy about:addons URL"
+  },
+  "copiedAboutAddons": {
+    "message": "Copied!",
+    "description": "Toast/feedback when about:addons copied"
   }
 }

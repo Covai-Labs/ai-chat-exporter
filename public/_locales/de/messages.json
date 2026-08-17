@@ -447,5 +447,64 @@
   },
   "copilotRedirectBtn": {
     "message": "↗ In copilot.com öffnen"
+  },
+  "commandCopyMarkdown": {
+    "message": "Konversation als Markdown in die Zwischenablage kopieren",
+    "description": "Shortcut command to copy markdown"
+  },
+  "commandDownloadMarkdown": {
+    "message": "Konversation als Markdown-Datei herunterladen",
+    "description": "Shortcut command to download markdown"
+  },
+  "commandOpenPreview": {
+    "message": "Konversation im Markdown-Vorschau-Tab öffnen",
+    "description": "Shortcut command to open preview tab"
+  },
+  "shortcutsSectionTitle": {
+    "message": "Tastaturkürzel",
+    "description": "Title for keyboard shortcuts section"
+  },
+  "shortcutCopyMarkdownLabel": {
+    "message": "Markdown kopieren",
+    "description": "Label for copy markdown shortcut"
+  },
+  "shortcutCopyMarkdownDesc": {
+    "message": "Aktuellen Chat sofort im Markdown-Format kopieren",
+    "description": "Description for copy markdown shortcut"
+  },
+  "shortcutDownloadMarkdownLabel": {
+    "message": "Markdown herunterladen",
+    "description": "Label for download markdown shortcut"
+  },
+  "shortcutDownloadMarkdownDesc": {
+    "message": "Aktuellen Chat direkt als .md-Datei herunterladen",
+    "description": "Description for download markdown shortcut"
+  },
+  "shortcutOpenPreviewLabel": {
+    "message": "Im Vorschau-Tab öffnen",
+    "description": "Label for open preview shortcut"
+  },
+  "shortcutOpenPreviewDesc": {
+    "message": "Chat in der Markdown-Vollansicht öffnen",
+    "description": "Description for open preview shortcut"
+  },
+  "shortcutsConfigureBtn": {
+    "message": "Tastaturkürzel anpassen ↗",
+    "description": "Button to configure shortcuts in browser settings"
+  },
+  "firefoxShortcutsTitle": {
+    "message": "Tastaturkürzel in Firefox",
+    "description": "Title for Firefox shortcuts instruction"
+  },
+  "firefoxShortcutsHelp": {
+    "message": "In Firefox anpassen: about:addons öffnen → Zahnrad-Symbol ⚙️ anklicken → \"Erweiterungsverknüpfungen verwalten\" auswählen.",
+    "description": "Firefox shortcuts instruction text"
+  },
+  "copyAboutAddons": {
+    "message": "about:addons kopieren",
+    "description": "Button label to copy about:addons URL"
+  },
+  "copiedAboutAddons": {
+    "message": "Kopiert!"
   }
 }

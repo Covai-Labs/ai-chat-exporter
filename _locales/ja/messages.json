@@ -439,5 +439,64 @@
   },
   "copilotRedirectBtn": {
     "message": "↗ copilot.com で開く"
+  },
+  "commandCopyMarkdown": {
+    "message": "会話をMarkdown形式でクリップボードにコピー",
+    "description": "Shortcut command to copy markdown"
+  },
+  "commandDownloadMarkdown": {
+    "message": "会話をMarkdownファイルとしてダウンロード",
+    "description": "Shortcut command to download markdown"
+  },
+  "commandOpenPreview": {
+    "message": "会話をMarkdownプレビュータブで開く",
+    "description": "Shortcut command to open preview tab"
+  },
+  "shortcutsSectionTitle": {
+    "message": "キーボードショートカット",
+    "description": "Title for keyboard shortcuts section"
+  },
+  "shortcutCopyMarkdownLabel": {
+    "message": "Markdownをコピー",
+    "description": "Label for copy markdown shortcut"
+  },
+  "shortcutCopyMarkdownDesc": {
+    "message": "現在のチャットを即座にMarkdown形式でコピー",
+    "description": "Description for copy markdown shortcut"
+  },
+  "shortcutDownloadMarkdownLabel": {
+    "message": "Markdownをダウンロード",
+    "description": "Label for download markdown shortcut"
+  },
+  "shortcutDownloadMarkdownDesc": {
+    "message": "現在のチャットを.mdファイルとして直接ダウンロード",
+    "description": "Description for download markdown shortcut"
+  },
+  "shortcutOpenPreviewLabel": {
+    "message": "プレビュータブで開く",
+    "description": "Label for open preview shortcut"
+  },
+  "shortcutOpenPreviewDesc": {
+    "message": "フルページのMarkdownプレビューでチャットを開く",
+    "description": "Description for open preview shortcut"
+  },
+  "shortcutsConfigureBtn": {
+    "message": "ショートカットを設定 ↗",
+    "description": "Button to configure shortcuts in browser settings"
+  },
+  "firefoxShortcutsTitle": {
+    "message": "Firefoxでのショートカット設定",
+    "description": "Title for Firefox shortcuts instruction"
+  },
+  "firefoxShortcutsHelp": {
+    "message": "Firefoxで変更するには：about:addons を開き → 右上の歯車アイコン ⚙️ をクリック →「拡張機能のショートカットを管理」を選択します。",
+    "description": "Firefox shortcuts instruction text"
+  },
+  "copyAboutAddons": {
+    "message": "about:addons をコピー",
+    "description": "Button label to copy about:addons URL"
+  },
+  "copiedAboutAddons": {
+    "message": "コピーしました！"
   }
 }

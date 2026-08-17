@@ -447,5 +447,64 @@
   },
   "copilotRedirectBtn": {
     "message": "↗ Apri su copilot.com"
+  },
+  "commandCopyMarkdown": {
+    "message": "Copia la conversazione come Markdown negli appunti",
+    "description": "Shortcut command to copy markdown"
+  },
+  "commandDownloadMarkdown": {
+    "message": "Scarica la conversazione come file Markdown",
+    "description": "Shortcut command to download markdown"
+  },
+  "commandOpenPreview": {
+    "message": "Apri la conversazione nella scheda di anteprima Markdown",
+    "description": "Shortcut command to open preview tab"
+  },
+  "shortcutsSectionTitle": {
+    "message": "Scorciatoie da tastiera",
+    "description": "Title for keyboard shortcuts section"
+  },
+  "shortcutCopyMarkdownLabel": {
+    "message": "Copia Markdown",
+    "description": "Label for copy markdown shortcut"
+  },
+  "shortcutCopyMarkdownDesc": {
+    "message": "Copia istantaneamente la chat corrente in formato Markdown",
+    "description": "Description for copy markdown shortcut"
+  },
+  "shortcutDownloadMarkdownLabel": {
+    "message": "Scarica Markdown",
+    "description": "Label for download markdown shortcut"
+  },
+  "shortcutDownloadMarkdownDesc": {
+    "message": "Scarica direttamente la chat come file .md",
+    "description": "Description for download markdown shortcut"
+  },
+  "shortcutOpenPreviewLabel": {
+    "message": "Apri nella scheda di anteprima",
+    "description": "Label for open preview shortcut"
+  },
+  "shortcutOpenPreviewDesc": {
+    "message": "Apri la chat nella pagina di anteprima Markdown a schermo intero",
+    "description": "Description for open preview shortcut"
+  },
+  "shortcutsConfigureBtn": {
+    "message": "Configura scorciatoie ↗",
+    "description": "Button to configure shortcuts in browser settings"
+  },
+  "firefoxShortcutsTitle": {
+    "message": "Personalizzazione scorciatoie in Firefox",
+    "description": "Title for Firefox shortcuts instruction"
+  },
+  "firefoxShortcutsHelp": {
+    "message": "Per personalizzare in Firefox: apri about:addons → fai clic sull'icona a ingranaggio ⚙️ → seleziona \"Gestisci scorciatoie estensione\".",
+    "description": "Firefox shortcuts instruction text"
+  },
+  "copyAboutAddons": {
+    "message": "Copia about:addons",
+    "description": "Button label to copy about:addons URL"
+  },
+  "copiedAboutAddons": {
+    "message": "Copiato!"
   }
 }

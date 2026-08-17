@@ -439,5 +439,64 @@
   },
   "copilotRedirectBtn": {
     "message": "↗ Ouvrir dans copilot.com"
+  },
+  "commandCopyMarkdown": {
+    "message": "Copier la conversation au format Markdown dans le presse-papier",
+    "description": "Shortcut command to copy markdown"
+  },
+  "commandDownloadMarkdown": {
+    "message": "Télécharger la conversation en fichier Markdown",
+    "description": "Shortcut command to download markdown"
+  },
+  "commandOpenPreview": {
+    "message": "Ouvrir la conversation dans l'onglet d'aperçu Markdown",
+    "description": "Shortcut command to open preview tab"
+  },
+  "shortcutsSectionTitle": {
+    "message": "Raccourcis clavier",
+    "description": "Title for keyboard shortcuts section"
+  },
+  "shortcutCopyMarkdownLabel": {
+    "message": "Copier en Markdown",
+    "description": "Label for copy markdown shortcut"
+  },
+  "shortcutCopyMarkdownDesc": {
+    "message": "Copier instantanément la discussion actuelle en Markdown",
+    "description": "Description for copy markdown shortcut"
+  },
+  "shortcutDownloadMarkdownLabel": {
+    "message": "Télécharger en Markdown",
+    "description": "Label for download markdown shortcut"
+  },
+  "shortcutDownloadMarkdownDesc": {
+    "message": "Télécharger directement la discussion en fichier .md",
+    "description": "Description for download markdown shortcut"
+  },
+  "shortcutOpenPreviewLabel": {
+    "message": "Ouvrir dans l'aperçu",
+    "description": "Label for open preview shortcut"
+  },
+  "shortcutOpenPreviewDesc": {
+    "message": "Ouvrir la discussion dans l'onglet d'aperçu plein écran",
+    "description": "Description for open preview shortcut"
+  },
+  "shortcutsConfigureBtn": {
+    "message": "Configurer les raccourcis ↗",
+    "description": "Button to configure shortcuts in browser settings"
+  },
+  "firefoxShortcutsTitle": {
+    "message": "Personnalisation des raccourcis Firefox",
+    "description": "Title for Firefox shortcuts instruction"
+  },
+  "firefoxShortcutsHelp": {
+    "message": "Pour personnaliser dans Firefox : ouvrez about:addons → cliquez sur l'engrenage ⚙️ → sélectionnez « Gérer les raccourcis de l'extension ».",
+    "description": "Firefox shortcuts instruction text"
+  },
+  "copyAboutAddons": {
+    "message": "Copier about:addons",
+    "description": "Button label to copy about:addons URL"
+  },
+  "copiedAboutAddons": {
+    "message": "Copié !"
   }
 }

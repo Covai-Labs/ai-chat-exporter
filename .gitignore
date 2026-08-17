@@ -11,3 +11,5 @@ publish/
 *.env 
 Scratch/ 
 .env*
+
+.opencode/

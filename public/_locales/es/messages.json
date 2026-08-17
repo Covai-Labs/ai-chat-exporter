@@ -447,5 +447,65 @@
   },
   "copilotRedirectBtn": {
     "message": "↗ Abrir en copilot.com"
+  },
+  "commandCopyMarkdown": {
+    "message": "Copiar conversación al portapapeles en Markdown",
+    "description": "Shortcut command to copy markdown"
+  },
+  "commandDownloadMarkdown": {
+    "message": "Descargar conversación como archivo Markdown",
+    "description": "Shortcut command to download markdown"
+  },
+  "commandOpenPreview": {
+    "message": "Abrir conversación en pestaña de vista previa Markdown",
+    "description": "Shortcut command to open preview tab"
+  },
+  "shortcutsSectionTitle": {
+    "message": "Atajos de teclado",
+    "description": "Title for keyboard shortcuts section"
+  },
+  "shortcutCopyMarkdownLabel": {
+    "message": "Copiar Markdown",
+    "description": "Label for copy markdown shortcut"
+  },
+  "shortcutCopyMarkdownDesc": {
+    "message": "Copia instantáneamente el chat actual en formato Markdown",
+    "description": "Description for copy markdown shortcut"
+  },
+  "shortcutDownloadMarkdownLabel": {
+    "message": "Descargar Markdown",
+    "description": "Label for download markdown shortcut"
+  },
+  "shortcutDownloadMarkdownDesc": {
+    "message": "Descarga directamente el chat actual como archivo .md",
+    "description": "Description for download markdown shortcut"
+  },
+  "shortcutOpenPreviewLabel": {
+    "message": "Abrir en vista previa",
+    "description": "Label for open preview shortcut"
+  },
+  "shortcutOpenPreviewDesc": {
+    "message": "Abre el chat en una pestaña completa de vista previa",
+    "description": "Description for open preview shortcut"
+  },
+  "shortcutsConfigureBtn": {
+    "message": "Configurar atajos ↗",
+    "description": "Button to configure shortcuts in browser settings"
+  },
+  "firefoxShortcutsTitle": {
+    "message": "Personalización de atajos en Firefox",
+    "description": "Title for Firefox shortcuts instruction"
+  },
+  "firefoxShortcutsHelp": {
+    "message": "Para personalizar en Firefox: abre about:addons → haz clic en el engranaje ⚙️ → selecciona \"Administrar atajos de extensiones\".",
+    "description": "Firefox shortcuts instruction text"
+  },
+  "copyAboutAddons": {
+    "message": "Copiar about:addons",
+    "description": "Button label to copy about:addons URL"
+  },
+  "copiedAboutAddons": {
+    "message": "¡Copiado!",
+    "description": "Toast/feedback when about:addons copied"
   }
 }

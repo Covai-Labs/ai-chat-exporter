@@ -245,6 +245,131 @@
           </div>
         </section>
 
+        <!-- Section 4.5: Keyboard Shortcuts -->
+        <section class="card" id="shortcuts-section">
+          <div class="card-header">
+            <span class="card-icon">⌨️</span>
+            <h2 data-i18n="shortcutsSectionTitle">Keyboard Shortcuts</h2>
+          </div>
+          <div class="card-body">
+            <div class="shortcuts-list">
+              <div class="shortcut-item">
+                <div class="shortcut-info">
+                  <strong data-i18n="shortcutCopyMarkdownLabel">Copy Markdown</strong>
+                  <span class="sub-text" data-i18n="shortcutCopyMarkdownDesc"
+                    >Instantly copy current chat in Markdown format</span
+                  >
+                </div>
+                <div class="shortcut-badge">
+                  <kbd class="key">Alt</kbd> + <kbd class="key">Shift</kbd> +
+                  <kbd class="key">C</kbd>
+                </div>
+              </div>
+
+              <div class="shortcut-item">
+                <div class="shortcut-info">
+                  <strong data-i18n="shortcutDownloadMarkdownLabel">Download Markdown</strong>
+                  <span class="sub-text" data-i18n="shortcutDownloadMarkdownDesc"
+                    >Directly download current chat as a .md file</span
+                  >
+                </div>
+                <div class="shortcut-badge">
+                  <kbd class="key">Alt</kbd> + <kbd class="key">Shift</kbd> +
+                  <kbd class="key">D</kbd>
+                </div>
+              </div>
+
+              <div class="shortcut-item">
+                <div class="shortcut-info">
+                  <strong data-i18n="shortcutOpenPreviewLabel">Open in Preview Tab</strong>
+                  <span class="sub-text" data-i18n="shortcutOpenPreviewDesc"
+                    >Open chat in full-page Markdown preview</span
+                  >
+                </div>
+                <div class="shortcut-badge">
+                  <kbd class="key">Alt</kbd> + <kbd class="key">Shift</kbd> +
+                  <kbd class="key">P</kbd>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chromium Configure Button -->
+            <div
+              class="field-group chrome-shortcuts-action"
+              id="chrome-shortcuts-action"
+              style="margin-top: 16px"
+            >
+              <button
+                type="button"
+                id="configure-shortcuts-btn"
+                class="secondary-btn"
+                style="
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                  padding: 8px 16px;
+                  border-radius: 6px;
+                  background: rgba(59, 130, 246, 0.15);
+                  color: #60a5fa;
+                  border: 1px solid rgba(59, 130, 246, 0.3);
+                  font-weight: 500;
+                  font-size: 13px;
+                  cursor: pointer;
+                "
+              >
+                <span data-i18n="shortcutsConfigureBtn">Configure Shortcuts ↗</span>
+              </button>
+            </div>
+
+            <!-- Firefox Shortcuts Info Banner -->
+            <div
+              class="field-group firefox-shortcuts-action hidden"
+              id="firefox-shortcuts-action"
+              style="margin-top: 16px"
+            >
+              <div
+                style="
+                  background: rgba(255, 255, 255, 0.05);
+                  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+                  border-radius: 8px;
+                  padding: 12px 16px;
+                  font-size: 13px;
+                  line-height: 1.5;
+                "
+              >
+                <strong
+                  data-i18n="firefoxShortcutsTitle"
+                  style="display: block; margin-bottom: 6px"
+                >
+                  Firefox Shortcut Customization
+                </strong>
+                <span data-i18n="firefoxShortcutsHelp" class="sub-text">
+                  To customize shortcuts in Firefox: Open about:addons → Click the gear icon ⚙️ at
+                  top-right → Select "Manage Extension Shortcuts".
+                </span>
+                <div style="margin-top: 10px">
+                  <button
+                    type="button"
+                    id="copy-about-addons-btn"
+                    class="secondary-btn"
+                    style="
+                      padding: 4px 12px;
+                      border-radius: 4px;
+                      font-size: 12px;
+                      cursor: pointer;
+                      background: rgba(255, 255, 255, 0.08);
+                      border: 1px solid rgba(255, 255, 255, 0.2);
+                      color: var(--text-color, #ffffff);
+                    "
+                  >
+                    <span data-i18n="copyAboutAddons">Copy about:addons</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- Section 5: Feedback & Bug Reports -->
         <section class="card">
           <div class="card-header">

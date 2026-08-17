@@ -397,7 +397,176 @@ export default defineContentScript({
           })();
           return true;
         }
+
+        if (request.action === 'EXECUTE_SHORTCUT') {
+          const isTopFrame = typeof window === 'undefined' || window.self === window.top;
+          if (!activeParser) {
+            detectParser();
+          }
+          if (!activeParser) {
+            if (isTopFrame) {
+              showExporterToast('⚠️ No supported AI chat found on this tab', 'error');
+            }
+            sendResponse({ success: false, error: 'No parser available' });
+            return true;
+          }
+
+          const shortcut = request.shortcutAction;
+
+          (async () => {
+            try {
+              const conversation = await activeParser.parse({
+                full: true,
+                parserMode: 'auto',
+                includeImages: true,
+              });
+
+              if (!conversation || !conversation.messages || conversation.messages.length === 0) {
+                if (isTopFrame) {
+                  showExporterToast('⚠️ No messages found in conversation', 'error');
+                }
+                sendResponse({ success: false, error: 'No messages found' });
+                return;
+              }
+
+              const formatter = formatters.markdown;
+              const markdownContent = formatter.format(conversation);
+
+              if (shortcut === 'copy_markdown') {
+                const copied = await copyToClipboard(markdownContent);
+                if (copied && isTopFrame) {
+                  showExporterToast('📋 Markdown copied to clipboard!');
+                }
+                sendResponse({ success: copied });
+              } else if (shortcut === 'download_markdown') {
+                const mimeType = formatter.getMimeType();
+                const blob = new Blob([markdownContent], { type: `${mimeType};charset=utf-8` });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+
+                const platformName =
+                  typeof activeParser.getPlatformName === 'function'
+                    ? activeParser.getPlatformName()
+                    : activeParser.name || activeParser.constructor.name.replace('Parser', '');
+                const safeTitle = (conversation.title || 'Untitled_Chat')
+                  .replace(/[\\/:*?"<>|]/g, '')
+                  .replace(/\s+/g, '_');
+                a.download = `${platformName}-${safeTitle}.${formatter.getFileExtension()}`;
+
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                if (isTopFrame) {
+                  showExporterToast('📥 Markdown file downloaded!');
+                }
+                sendResponse({ success: true });
+              } else {
+                sendResponse({ success: false, error: 'Unknown shortcut action' });
+              }
+            } catch (e) {
+              console.error('[AI Exporter] Shortcut action failed:', e);
+              if (isTopFrame) {
+                showExporterToast('⚠️ Failed to export conversation', 'error');
+              }
+              sendResponse({ success: false, error: e.message });
+            }
+          })();
+          return true;
+        }
       });
+    }
+
+    async function copyToClipboard(text) {
+      try {
+        if (
+          typeof navigator !== 'undefined' &&
+          navigator.clipboard &&
+          navigator.clipboard.writeText
+        ) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+      } catch (err) {
+        console.warn('[AI Exporter] navigator.clipboard failed, attempting fallback:', err);
+      }
+      try {
+        if (typeof document !== 'undefined') {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.style.position = 'fixed';
+          textarea.style.left = '-9999px';
+          textarea.style.top = '-9999px';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.focus();
+          textarea.select();
+          const successful = document.execCommand('copy');
+          document.body.removeChild(textarea);
+          if (successful) return true;
+        }
+      } catch (err) {
+        console.error('[AI Exporter] execCommand fallback failed:', err);
+      }
+      return false;
+    }
+
+    function showExporterToast(message, type = 'success') {
+      if (typeof document === 'undefined' || !document.body) return;
+      const isTopFrame = typeof window === 'undefined' || window.self === window.top;
+      if (!isTopFrame) return;
+
+      const existingToast = document.getElementById('ai-chat-exporter-toast');
+      if (existingToast) {
+        existingToast.remove();
+      }
+
+      const toast = document.createElement('div');
+      toast.id = 'ai-chat-exporter-toast';
+      toast.textContent = message;
+      Object.assign(toast.style, {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        zIndex: '2147483647',
+        padding: '10px 16px',
+        backgroundColor: type === 'error' ? '#ef4444' : '#0f172a',
+        color: '#ffffff',
+        fontSize: '13px',
+        fontWeight: '500',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+        borderRadius: '8px',
+        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1)',
+        backdropFilter: 'blur(8px)',
+        opacity: '0',
+        transform: 'translateY(-8px)',
+        transition: 'opacity 0.2s ease, transform 0.2s ease',
+        pointerEvents: 'none',
+      });
+
+      (document.body || document.documentElement).appendChild(toast);
+
+      if (typeof requestAnimationFrame !== 'undefined') {
+        requestAnimationFrame(() => {
+          toast.style.opacity = '1';
+          toast.style.transform = 'translateY(0)';
+        });
+      } else {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateY(0)';
+      }
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-8px)';
+        setTimeout(() => {
+          if (toast.parentNode) {
+            toast.remove();
+          }
+        }, 250);
+      }, 2500);
     }
 
     detectParser();
