@@ -181,3 +181,176 @@ test('ChatGPTParser correctly extracts API image carousels from content_referenc
   );
   assert.match(result.messages[0].content, /Bonobos are social primates\./);
 });
+
+test('linearize selects active branch based on currentNodeId over longer branches', async () => {
+  const { linearize } = await import('../content/parsers/chatgpt.js');
+
+  const mapping = {
+    root: { id: 'root', parent: null, children: ['user1'] },
+    user1: {
+      id: 'user1',
+      parent: 'root',
+      children: ['assistant_v1', 'assistant_v2'],
+      message: {
+        author: { role: 'user' },
+        content: { parts: ['Hello'] },
+      },
+    },
+    // Branch 1 (longer branch with 2 assistant turns)
+    assistant_v1: {
+      id: 'assistant_v1',
+      parent: 'user1',
+      children: ['user2_v1'],
+      message: {
+        author: { role: 'assistant' },
+        content: { parts: ['Response Version 1'] },
+      },
+    },
+    user2_v1: {
+      id: 'user2_v1',
+      parent: 'assistant_v1',
+      children: [],
+      message: {
+        author: { role: 'user' },
+        content: { parts: ['Follow-up on V1'] },
+      },
+    },
+    // Branch 2 (active branch chosen by user, shorter)
+    assistant_v2: {
+      id: 'assistant_v2',
+      parent: 'user1',
+      children: [],
+      message: {
+        author: { role: 'assistant' },
+        content: { parts: ['Response Version 2 (Active)'] },
+      },
+    },
+  };
+
+  // When currentNodeId points to assistant_v2, linearize must return user1 -> assistant_v2
+  const activeMessages = linearize(mapping, false, 'assistant_v2');
+  assert.equal(activeMessages.length, 2);
+  assert.equal(activeMessages[0].segments[0].content, 'Hello');
+  assert.equal(activeMessages[1].segments[0].content, 'Response Version 2 (Active)');
+});
+
+test('linearize extracts o1/o3 reasoning thoughts and Deep Research reports', async () => {
+  const { linearize } = await import('../content/parsers/chatgpt.js');
+
+  const mapping = {
+    root: { id: 'root', parent: null, children: ['user1'] },
+    user1: {
+      id: 'user1',
+      parent: 'root',
+      children: ['assistant_reasoning'],
+      message: {
+        author: { role: 'user' },
+        content: {
+          content_type: 'multimodal_text',
+          parts: [{ content_type: 'audio_transcription', text: 'Voice prompt question' }],
+        },
+        metadata: {
+          attachments: [{ name: 'financial_report.pdf' }],
+        },
+      },
+    },
+    assistant_reasoning: {
+      id: 'assistant_reasoning',
+      parent: 'user1',
+      children: ['assistant_deep_research'],
+      message: {
+        author: { role: 'assistant' },
+        content: {
+          content_type: 'thoughts',
+          thoughts: [
+            { summary: 'Step 1 Analysis', content: 'Inspecting user audio transcription' },
+            { summary: 'Step 2 Verification', content: 'Checking attachment records' },
+          ],
+        },
+      },
+    },
+    assistant_deep_research: {
+      id: 'assistant_deep_research',
+      parent: 'assistant_reasoning',
+      children: [],
+      message: {
+        author: { role: 'assistant' },
+        content: { parts: ['Final summarized answer.'] },
+        metadata: {
+          chatgpt_sdk: {
+            widget_state: JSON.stringify({
+              status: 'completed',
+              report_message: {
+                content: {
+                  parts: ['# Comprehensive Deep Research Report\n\nAll findings detailed here.'],
+                },
+              },
+            }),
+          },
+        },
+      },
+    },
+  };
+
+  const msgs = linearize(mapping, false, 'assistant_deep_research');
+  assert.equal(msgs.length, 2); // User turn and assistant turn (thoughts merged into assistant)
+
+  // User turn has audio transcription and attachment
+  const userTurn = msgs[0];
+  assert.equal(userTurn.role, 'User');
+  assert.equal(userTurn.segments[0].content, 'Voice prompt question');
+  assert.equal(userTurn.segments[1].content, '[Attached: financial_report.pdf]');
+
+  // Assistant turn has thought steps, deep research report, and final message parts
+  const assistantTurn = msgs[1];
+  assert.equal(assistantTurn.role, 'ChatGPT');
+  const thoughtSeg = assistantTurn.segments.find((s) => s.type === 'thought');
+  assert.ok(thoughtSeg);
+  assert.match(thoughtSeg.content, /Step 1 Analysis/);
+  assert.match(thoughtSeg.content, /Step 2 Verification/);
+
+  const textSegs = assistantTurn.segments.filter((s) => s.type === 'text');
+  const allAssistantText = textSegs.map((s) => s.content).join('\n');
+  assert.match(allAssistantText, /Comprehensive Deep Research Report/);
+  assert.match(allAssistantText, /Final summarized answer\./);
+});
+
+test('extractSharedConversationFromDom extracts mapping from embedded SSR script tags', async () => {
+  const { extractSharedConversationFromDom } = await import('../content/parsers/chatgpt.js');
+
+  const fakeHtml = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <script type="application/json" id="__NEXT_DATA__">
+          {
+            "props": {
+              "pageProps": {
+                "serverResponse": {
+                  "data": {
+                    "title": "Shared Chat Title",
+                    "current_node": "node2",
+                    "mapping": {
+                      "root": { "id": "root", "children": ["node1"] },
+                      "node1": { "id": "node1", "parent": "root", "children": ["node2"], "message": { "author": { "role": "user" }, "content": { "parts": ["Shared user question"] } } },
+                      "node2": { "id": "node2", "parent": "node1", "children": [], "message": { "author": { "role": "assistant" }, "content": { "parts": ["Shared assistant reply"] } } }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        </script>
+      </head>
+      <body></body>
+    </html>
+  `;
+
+  const { document: sharedDoc } = parseHTML(fakeHtml);
+  const convo = extractSharedConversationFromDom(sharedDoc);
+
+  assert.ok(convo);
+  assert.equal(convo.title, 'Shared Chat Title');
+  assert.equal(convo.current_node, 'node2');
+  assert.ok(convo.mapping.node1);
+});

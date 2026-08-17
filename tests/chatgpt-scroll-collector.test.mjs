@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
+import { parseHTML } from 'linkedom';
 
 import {
   collectMountedTurnMessages,
   getConversationTurnIndex,
+  getConversationTurns,
 } from '../content/parsers/chatgpt_scroll_collector.js';
 
 class FakeTurn {
@@ -26,6 +28,28 @@ test('getConversationTurnIndex parses ChatGPT turn ids', () => {
   const turn = new FakeTurn(23, null);
 
   assert.equal(getConversationTurnIndex(turn), 23);
+});
+
+test('getConversationTurns finds articles, testids, and ignores nested duplicates', () => {
+  const { document: testDoc } = parseHTML(`
+    <div>
+      <article data-testid="conversation-turn-1">
+        <div data-message-author-role="user">User prompt 1</div>
+      </article>
+      <article data-testid="conversation-turn-2">
+        <div data-message-author-role="assistant">Assistant reply 1</div>
+      </article>
+      <section data-turn-id="3">
+        <div data-message-author-role="user">User prompt 2</div>
+      </section>
+    </div>
+  `);
+
+  const turns = getConversationTurns(testDoc);
+  assert.equal(turns.length, 3);
+  assert.equal(getConversationTurnIndex(turns[0]), 1);
+  assert.equal(getConversationTurnIndex(turns[1]), 2);
+  assert.equal(getConversationTurnIndex(turns[2]), 3);
 });
 
 test('collectMountedTurnMessages scrolls turns and dedupes extracted messages', async () => {

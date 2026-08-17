@@ -1,4 +1,5 @@
-const TURN_SELECTOR = 'section[data-testid^="conversation-turn-"]';
+const TURN_SELECTOR =
+  'article, [data-testid^="conversation-turn-"], section[data-turn-id], [data-message-author-role]';
 const DEFAULT_RENDER_WAIT_MS = 160;
 
 function delay(ms) {
@@ -22,14 +23,34 @@ function publicMessage(message) {
 }
 
 export function getConversationTurnIndex(turn) {
+  if (!turn || typeof turn.getAttribute !== 'function') return Number.POSITIVE_INFINITY;
   const testId = turn.getAttribute('data-testid') || '';
   const match = testId.match(/^conversation-turn-(\d+)$/);
-  return match ? Number(match[1]) : Number.POSITIVE_INFINITY;
+  if (match) return Number(match[1]);
+  const turnId = turn.getAttribute('data-turn-id');
+  if (turnId && /^\d+$/.test(turnId)) return Number(turnId);
+  return Number.POSITIVE_INFINITY;
 }
 
 export function getConversationTurns(doc = document) {
-  return Array.from(doc.querySelectorAll(TURN_SELECTOR)).sort((a, b) => {
-    return getConversationTurnIndex(a) - getConversationTurnIndex(b);
+  if (!doc || typeof doc.querySelectorAll !== 'function') return [];
+  const turns = Array.from(doc.querySelectorAll(TURN_SELECTOR));
+  // Filter out nested duplicates (e.g. [data-message-author-role] inside an article)
+  const filtered = turns.filter((el) => {
+    return !turns.some((parent) => parent !== el && parent.contains(el));
+  });
+
+  return filtered.sort((a, b) => {
+    const idxA = getConversationTurnIndex(a);
+    const idxB = getConversationTurnIndex(b);
+    if (idxA !== idxB) return idxA - idxB;
+    if (typeof a.compareDocumentPosition === 'function') {
+      return a.compareDocumentPosition(b) &
+        (doc.defaultView?.Node?.DOCUMENT_POSITION_FOLLOWING || 4)
+        ? -1
+        : 1;
+    }
+    return 0;
   });
 }
 
