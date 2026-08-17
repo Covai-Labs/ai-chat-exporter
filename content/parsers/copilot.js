@@ -178,7 +178,55 @@ export class CopilotParser extends ChatParser {
       });
     }
 
-    // Tier 4: Web components (Angular Copilot layout: cib-chat-turn / cib-message-group)
+    // Helper to extract messages from Shadow DOM cib-serp components (Classic Bing Chat / Copilot)
+    const extractFromCibSerp = (rootDoc = document) => {
+      try {
+        const cibSerp = rootDoc.querySelector('cib-serp');
+        if (!cibSerp || !cibSerp.shadowRoot) return [];
+        const cibConversation = cibSerp.shadowRoot.querySelector('cib-conversation');
+        if (!cibConversation || !cibConversation.shadowRoot) return [];
+        const cibTurns = cibConversation.shadowRoot.querySelectorAll('cib-chat-turn');
+        const results = [];
+
+        cibTurns.forEach((turn) => {
+          const turnRoot = turn.shadowRoot || turn;
+          const msgGroups = turnRoot.querySelectorAll('cib-message-group');
+          msgGroups.forEach((group) => {
+            const source = (group.getAttribute('source') || '').toLowerCase();
+            const role = source === 'user' ? 'User' : 'Copilot';
+            const groupRoot = group.shadowRoot || group;
+            const cibMessages = groupRoot.querySelectorAll('cib-message');
+
+            cibMessages.forEach((msg) => {
+              const msgRoot = msg.shadowRoot || msg;
+              if (role === 'User') {
+                const text = msgRoot.textContent?.trim();
+                if (text) results.push({ role: 'User', content: text });
+              } else {
+                const shared = msgRoot.querySelector('cib-shared') || msgRoot;
+                const html = processAiElement(shared);
+                const md = convertToMarkdown(html);
+                if (md && md.trim()) results.push({ role: 'Copilot', content: md.trim() });
+              }
+            });
+          });
+        });
+        return results;
+      } catch (err) {
+        console.warn('[AI Exporter] Shadow DOM cib-serp extraction error:', err);
+        return [];
+      }
+    };
+
+    // Tier 4: Shadow DOM cib-serp components
+    if (!messages.length) {
+      const cibMessages = extractFromCibSerp(document);
+      if (cibMessages.length) {
+        messages.push(...cibMessages);
+      }
+    }
+
+    // Tier 5: Web components in light DOM (cib-chat-turn / cib-message-group)
     if (!messages.length) {
       const cibTurns = document.querySelectorAll('cib-chat-turn');
       if (cibTurns.length) {
@@ -201,7 +249,7 @@ export class CopilotParser extends ChatParser {
       }
     }
 
-    // Tier 5: React [data-turn-id] layout
+    // Tier 6: React [data-turn-id] layout
     if (!messages.length) {
       const turnNodes = document.querySelectorAll('[data-turn-id]');
       turnNodes.forEach((node) => {
@@ -225,6 +273,59 @@ export class CopilotParser extends ChatParser {
           }
         }
       });
+    }
+
+    // Tier 7: Check embedded iframe documents (e.g. Edge Sidebar panel iframe)
+    if (!messages.length) {
+      const iframes = Array.from(document.querySelectorAll('iframe'));
+      for (const iframe of iframes) {
+        try {
+          const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+          if (iframeDoc) {
+            const iframeCib = extractFromCibSerp(iframeDoc);
+            if (iframeCib.length) {
+              messages.push(...iframeCib);
+              break;
+            }
+            const iframeTurns = Array.from(
+              iframeDoc.querySelectorAll(
+                '[data-testid="chatQuestion"], [data-testid="copilot-message-div"], [data-content="user-message"], [data-content="ai-message"]',
+              ),
+            );
+            if (iframeTurns.length) {
+              iframeTurns.forEach((node) => {
+                const dataContent = node.getAttribute('data-content') || '';
+                const testId = node.getAttribute('data-testid') || '';
+                const isUser =
+                  testId === 'chatQuestion' ||
+                  dataContent === 'user-message' ||
+                  testId === 'user-message';
+                if (isUser) {
+                  const targetNode =
+                    node.querySelector(
+                      '[data-testid="chatOutput"], .fai-UserMessage__message, [data-content="user-message"]',
+                    ) || node;
+                  const text = targetNode.innerText || targetNode.textContent;
+                  if (text && text.trim()) messages.push({ role: 'User', content: text.trim() });
+                } else {
+                  const targetNode =
+                    node.querySelector('[data-testid="markdown-reply"]') ||
+                    node.querySelector('[data-testid="ai-message-body"]') ||
+                    node;
+                  const html = processAiElement(targetNode);
+                  const markdown = convertToMarkdown(html);
+                  if (markdown && markdown.trim()) {
+                    messages.push({ role: 'Copilot', content: markdown });
+                  }
+                }
+              });
+              if (messages.length) break;
+            }
+          }
+        } catch {
+          // Ignore cross-origin iframe security restrictions
+        }
+      }
     }
 
     // Fallback title generation if default title is generic
