@@ -1,5 +1,43 @@
 import { ExportFormatter } from './base.js';
 
+export function normalizeLatexMath(text) {
+  if (!text || typeof text !== 'string') return '';
+
+  const placeholders = [];
+  let tokenCounter = 0;
+
+  // 1. Protect fenced code blocks (``` ... ``` or ~~~ ... ~~~)
+  let processed = text.replace(/(```[\s\S]*?```|~~~[\s\S]*?~~~)/g, (match) => {
+    const id = `@@MATH_CODE_BLOCK_${tokenCounter++}@@`;
+    placeholders.push({ id, content: match });
+    return id;
+  });
+
+  // 2. Protect inline code (`...`)
+  processed = processed.replace(/`([^`\n]+?)`/g, (match) => {
+    const id = `@@MATH_INLINE_CODE_${tokenCounter++}@@`;
+    placeholders.push({ id, content: match });
+    return id;
+  });
+
+  // 3. Convert display math: \[ ... \] or \\[ ... \\]
+  processed = processed.replace(/(?:\\{1,2}\[)([\s\S]+?)(?:\\{1,2}\])/g, (match, math) => {
+    return `$$${math.trim()}$$`;
+  });
+
+  // 4. Convert inline math: \( ... \) or \\( ... \\)
+  processed = processed.replace(/(?:\\{1,2}\()([\s\S]+?)(?:\\{1,2}\))/g, (match, math) => {
+    return `$${math.trim()}$`;
+  });
+
+  // 5. Restore protected code blocks & inline code
+  placeholders.forEach(({ id, content }) => {
+    processed = processed.replace(id, () => content);
+  });
+
+  return processed;
+}
+
 export class MarkdownFormatter extends ExportFormatter {
   format(conversation) {
     const { title, messages } = conversation;
@@ -44,7 +82,7 @@ export class MarkdownFormatter extends ExportFormatter {
       // Use "Prompt:" for user, "Response:" for model
       const heading = msg.role === 'User' ? '## Prompt:' : '## Response:';
       output += `${heading}\n`;
-      output += `${msg.content}\n\n`;
+      output += `${normalizeLatexMath(msg.content)}\n\n`;
 
       // Don't add separator after last message
       if (index < messages.length - 1) {
