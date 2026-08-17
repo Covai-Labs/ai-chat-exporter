@@ -275,7 +275,59 @@ export class CopilotParser extends ChatParser {
       });
     }
 
-    // Tier 7: Check embedded iframe documents (e.g. Edge Sidebar panel iframe)
+    // Tier 7: Universal role="article" scanner for Copilot
+    if (!messages.length) {
+      const articles = Array.from(document.querySelectorAll('[role="article"]'));
+      articles.forEach((art) => {
+        const headingText = (
+          art.querySelector('h1, h2, h3, h4, h5, h6')?.textContent || ''
+        ).toLowerCase();
+        const ariaLabel = (
+          art.getAttribute('aria-label') ||
+          art.getAttribute('aria-labelledby') ||
+          ''
+        ).toLowerCase();
+        const className = typeof art.className === 'string' ? art.className : '';
+
+        const isUser =
+          headingText.includes('you said') ||
+          ariaLabel.includes('user-message') ||
+          ariaLabel.includes('you said') ||
+          className.includes('UserMessage') ||
+          art.matches('[data-testid="chatQuestion"], [data-testid="user-message"]');
+
+        const isCopilot =
+          headingText.includes('copilot said') ||
+          ariaLabel.includes('copilot-message') ||
+          ariaLabel.includes('copilot said') ||
+          className.includes('CopilotMessage') ||
+          art.matches('[data-testid="copilot-message-div"], [data-testid="ai-message"]');
+
+        if (isUser) {
+          const clone = art.cloneNode(true);
+          clone
+            .querySelectorAll('h1, h2, h3, h4, h5, h6, .sr-only, button')
+            .forEach((el) => el.remove());
+          const text = clone.innerText || clone.textContent;
+          if (text && text.trim()) {
+            messages.push({ role: 'User', content: text.trim() });
+          }
+        } else if (isCopilot) {
+          const targetNode =
+            art.querySelector('[data-testid="markdown-reply"]') ||
+            art.querySelector('.fai-CopilotMessage__content') ||
+            art.querySelector('[data-testid="ai-message-body"]') ||
+            art;
+          const html = processAiElement(targetNode);
+          const markdown = convertToMarkdown(html);
+          if (markdown && markdown.trim()) {
+            messages.push({ role: 'Copilot', content: markdown });
+          }
+        }
+      });
+    }
+
+    // Tier 8: Check embedded iframe documents (e.g. Edge Sidebar panel iframe)
     if (!messages.length) {
       const iframes = Array.from(document.querySelectorAll('iframe'));
       for (const iframe of iframes) {
