@@ -216,6 +216,40 @@ export class ImageFormatter extends ExportFormatter {
   }
 
   /**
+   * Calculates a safe scale factor to prevent CanvasRenderingContext2D dimension/memory limit errors
+   * ("Canvas exceeds max size" in Firefox/Chrome).
+   * @param {HTMLElement} container
+   * @param {number} requestedScale
+   * @returns {number}
+   */
+  calculateSafeScale(container, requestedScale = 2) {
+    const containerHeight = Math.max(
+      container.offsetHeight || 0,
+      container.scrollHeight || 0,
+      container.clientHeight || 0,
+      100,
+    );
+    const containerWidth = Math.max(
+      container.offsetWidth || 0,
+      container.scrollWidth || 0,
+      container.clientWidth || 0,
+      800,
+    );
+
+    // Max safe dimensions across desktop/mobile browsers (Gecko/Firefox caps at 16,384px or 32,767px)
+    const MAX_SAFE_DIMENSION = 16384;
+    const MAX_SAFE_AREA = 16384 * 8192; // ~134 megapixels
+
+    const maxScaleByWidth = MAX_SAFE_DIMENSION / containerWidth;
+    const maxScaleByHeight = MAX_SAFE_DIMENSION / containerHeight;
+    const maxScaleByArea = Math.sqrt(MAX_SAFE_AREA / (containerWidth * containerHeight));
+
+    let safeScale = Math.min(requestedScale, maxScaleByWidth, maxScaleByHeight, maxScaleByArea);
+    safeScale = Math.max(0.2, Math.min(safeScale, requestedScale));
+    return Math.floor(safeScale * 100) / 100;
+  }
+
+  /**
    * Formats the conversation into a PNG Blob
    * @param {Object} conversation
    * @param {Object} [options]
@@ -259,16 +293,42 @@ export class ImageFormatter extends ExportFormatter {
       }
 
       const isHighQuality = options ? options.highQuality !== false : true;
-      const renderScale = isHighQuality ? 2 : 1;
+      const requestedScale = isHighQuality ? 2 : 1;
+      const safeScale = this.calculateSafeScale(container, requestedScale);
 
-      const canvas = await html2canvasFn(container, {
-        backgroundColor: isDark ? '#0f172a' : '#ffffff',
-        scale: renderScale,
-        useCORS: true,
-        allowTaint: false,
-        logging: false,
-        imageTimeout: 3000,
-      });
+      const renderWithScale = async (scale) => {
+        return await html2canvasFn(container, {
+          backgroundColor: isDark ? '#0f172a' : '#ffffff',
+          scale: scale,
+          useCORS: true,
+          allowTaint: false,
+          logging: false,
+          imageTimeout: 3000,
+        });
+      };
+
+      let canvas;
+      try {
+        canvas = await renderWithScale(safeScale);
+      } catch (err) {
+        console.warn(`[ImageFormatter] Initial canvas render failed with scale ${safeScale}:`, err);
+        if (safeScale > 1.0) {
+          try {
+            canvas = await renderWithScale(1.0);
+          } catch (retryErr1) {
+            console.warn(
+              '[ImageFormatter] Retry at scale 1.0 failed, trying scale 0.5:',
+              retryErr1,
+            );
+            canvas = await renderWithScale(0.5);
+          }
+        } else if (safeScale > 0.5) {
+          console.warn('[ImageFormatter] Retrying with safe scale 0.5:', err);
+          canvas = await renderWithScale(0.5);
+        } else {
+          throw err;
+        }
+      }
 
       return new Promise((resolve, reject) => {
         try {

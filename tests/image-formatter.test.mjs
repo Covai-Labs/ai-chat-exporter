@@ -109,3 +109,21 @@ test('ImageFormatter.preloadImages sanitizes cross-origin images to prevent canv
   assert.ok(placeholder);
   assert.ok(placeholder.textContent.includes('User Avatar'));
 });
+
+test('ImageFormatter.calculateSafeScale clamps scale on large containers to prevent canvas overflow', async () => {
+  const { ImageFormatter } = await importFormatter();
+  const formatter = new ImageFormatter();
+
+  // 1. Standard sized container: scale remains requested scale (2)
+  const standardEl = { offsetHeight: 2000, offsetWidth: 800 };
+  assert.equal(formatter.calculateSafeScale(standardEl, 2), 2);
+
+  // 2. Extremely tall container (e.g. 20,000px): scale is clamped so 20000 * scale <= 16384
+  const giantEl = { offsetHeight: 20000, offsetWidth: 800 };
+  const safeGiantScale = formatter.calculateSafeScale(giantEl, 2);
+  assert.ok(safeGiantScale <= 16384 / 20000);
+  assert.ok(safeGiantScale >= 0.2);
+
+  // 3. Requested scale 1 on normal container remains 1
+  assert.equal(formatter.calculateSafeScale(standardEl, 1), 1);
+});
