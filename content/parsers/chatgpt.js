@@ -65,23 +65,61 @@ function fetchConversation(convId, token, includeImages) {
   });
 }
 
-function linearize(mapping, includeImages) {
-  const root = Object.values(mapping).find((n) => !n.parent || !mapping[n.parent]);
-
-  const subtreeSize = {};
-  function size(id) {
-    if (id in subtreeSize) return subtreeSize[id];
-    const node = mapping[id];
-    if (!node) return (subtreeSize[id] = 0);
-    const childSizes = (node.children ?? []).map((cid) => size(cid));
-    return (subtreeSize[id] = 1 + (childSizes.length ? Math.max(...childSizes) : 0));
+function findLeafFromCurrent(mapping, currentNodeId) {
+  let nodeId = currentNodeId;
+  if (!nodeId || !mapping[nodeId]) return null;
+  let node = mapping[nodeId];
+  while (node.children?.length) {
+    const lastChildId = node.children[node.children.length - 1];
+    if (!mapping[lastChildId]) break;
+    node = mapping[lastChildId];
+    nodeId = lastChildId;
   }
-  for (const id of Object.keys(mapping)) size(id);
+  return nodeId;
+}
+
+function linearize(mapping, includeImages, currentNodeId) {
+  let path = [];
+  const leafId = findLeafFromCurrent(mapping, currentNodeId);
+
+  if (leafId) {
+    let id = leafId;
+    while (id && mapping[id]) {
+      path.push(mapping[id]);
+      id = mapping[id].parent;
+    }
+    path.reverse();
+  } else {
+    const root = Object.values(mapping).find((n) => !n.parent || !mapping[n.parent]);
+    if (!root) return [];
+
+    const subtreeSize = {};
+    function size(id) {
+      if (id in subtreeSize) return subtreeSize[id];
+      const node = mapping[id];
+      if (!node) return (subtreeSize[id] = 0);
+      const childSizes = (node.children ?? []).map((cid) => size(cid));
+      return (subtreeSize[id] = 1 + (childSizes.length ? Math.max(...childSizes) : 0));
+    }
+    for (const id of Object.keys(mapping)) size(id);
+
+    let node = root;
+    while (node) {
+      path.push(node);
+      const validChildren = (node.children ?? []).filter((cid) => cid in mapping);
+      node = validChildren.length
+        ? mapping[
+            validChildren.reduce(
+              (best, cid) => (subtreeSize[cid] > subtreeSize[best] ? cid : best),
+            )
+          ]
+        : null;
+    }
+  }
 
   const messages = [];
-  let node = root;
 
-  while (node) {
+  for (const node of path) {
     const msg = node.message;
     const role = msg?.author?.role;
     const authorName = msg?.author?.name;
@@ -156,12 +194,6 @@ function linearize(mapping, includeImages) {
         }
       }
     }
-    const validChildren = (node.children ?? []).filter((cid) => cid in mapping);
-    node = validChildren.length
-      ? mapping[
-          validChildren.reduce((best, cid) => (subtreeSize[cid] > subtreeSize[best] ? cid : best))
-        ]
-      : null;
   }
 
   return messages;
@@ -526,7 +558,7 @@ export class ChatGPTParser extends ChatParser {
           };
         }
 
-        const apiMessages = linearize(result.data.mapping, includeImages);
+        const apiMessages = linearize(result.data.mapping, includeImages, result.data.current_node);
 
         const convTitle = result.data.title || title;
 
