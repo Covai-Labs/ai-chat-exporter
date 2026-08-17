@@ -14,7 +14,7 @@ export default defineBackground(() => {
     perplexity: 'https://www.perplexity.ai/',
     qwen: 'https://chat.qwen.ai/',
     mistral: 'https://chat.mistral.ai/',
-    notebooklm: 'https://notebooklm.google.com/',
+    notebooklm: 'https://notebook.google.com/',
     copilot: 'https://copilot.microsoft.com/',
     meta: 'https://www.meta.ai/',
     z_ai: 'https://chat.z.ai/',

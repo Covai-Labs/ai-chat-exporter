@@ -3,7 +3,7 @@ import { convertToMarkdown } from '../utils/html-to-markdown.js';
 
 export class NotebookLMParser extends ChatParser {
   isAvailable(url) {
-    return url.includes('notebooklm.google.com');
+    return url.includes('notebooklm.google.com') || url.includes('notebook.google.com');
   }
 
   async parse() {

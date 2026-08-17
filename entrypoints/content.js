@@ -37,6 +37,7 @@ export default defineContentScript({
     '*://console.cloud.google.com/*',
     '*://aistudio.google.com/*',
     '*://notebooklm.google.com/*',
+    '*://notebook.google.com/*',
     '*://copilot.microsoft.com/*',
     '*://www.copilot.microsoft.com/*',
     '*://copilot.com/*',

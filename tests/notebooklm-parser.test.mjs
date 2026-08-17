@@ -2,12 +2,14 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { parseHTML } from 'linkedom';
 
-test('NotebookLMParser detects notebooklm.google.com URLs', async () => {
+test('NotebookLMParser detects notebook.google.com and notebooklm.google.com URLs', async () => {
   const { NotebookLMParser } = await import('../content/parsers/notebooklm.js');
   const parser = new NotebookLMParser();
 
   assert.equal(parser.isAvailable('https://notebooklm.google.com/notebook/12345'), true);
   assert.equal(parser.isAvailable('https://notebooklm.google.com/'), true);
+  assert.equal(parser.isAvailable('https://notebook.google.com/notebook/12345'), true);
+  assert.equal(parser.isAvailable('https://notebook.google.com/'), true);
   assert.equal(parser.isAvailable('https://chatgpt.com/'), false);
 });
 
