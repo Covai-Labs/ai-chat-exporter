@@ -31,6 +31,9 @@ export default defineConfig({
         fs.readFileSync(path.resolve('content/lib/prismjs/prism-bundle.js'), 'utf8'),
       ),
     },
+    build: {
+      modulePreload: false,
+    },
     plugins: [
       {
         name: 'escape-non-printable-utf8',
