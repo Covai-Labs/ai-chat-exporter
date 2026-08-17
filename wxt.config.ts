@@ -122,6 +122,15 @@ export default defineConfig({
     }
 
     if (isFirefox) {
+      baseManifest.sidebar_action = {
+        default_panel: 'entrypoints/sidepanel/index.html',
+        default_title: '__MSG_extensionName__',
+        default_icon: {
+          '16': 'icons/icon16.png',
+          '48': 'icons/icon48.png',
+          '128': 'icons/icon128.png',
+        },
+      };
       baseManifest.browser_specific_settings = {
         gecko: {
           id: 'ai-chat-exporter@local.dev',

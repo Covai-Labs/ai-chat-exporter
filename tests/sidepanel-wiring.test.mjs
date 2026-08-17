@@ -15,7 +15,8 @@ test('wxt.config.ts configures sidepanel permission and target-specific override
   assert.match(wxtConfig, /const isFirefox = browser === 'firefox'/);
 });
 
-test('wxt.config.ts configures gecko settings for firefox target', () => {
+test('wxt.config.ts configures gecko settings and sidebar_action for firefox target', () => {
+  assert.match(wxtConfig, /sidebar_action/);
   assert.match(wxtConfig, /browser_specific_settings/);
   assert.match(wxtConfig, /gecko/);
 });
@@ -26,12 +27,12 @@ test('background.js syncs side panel behavior and handles OPEN_SIDE_PANEL', () =
   assert.match(backgroundJs, /action === ['"]OPEN_SIDE_PANEL['"]/);
 });
 
-test('sidepanel.html includes export, preview, and settings iframe tabs', () => {
+test('sidepanel.html includes export and settings iframe tabs and excludes embedded preview tab', () => {
   assert.match(sidepanelHtml, /data-tab="export-tab"/);
-  assert.match(sidepanelHtml, /data-tab="preview-tab"/);
+  assert.doesNotMatch(sidepanelHtml, /data-tab="preview-tab"/);
   assert.match(sidepanelHtml, /data-tab="settings-tab"/);
   assert.match(sidepanelHtml, /id="sp-export-iframe"/);
-  assert.match(sidepanelHtml, /id="sp-preview-iframe"/);
+  assert.doesNotMatch(sidepanelHtml, /id="sp-preview-iframe"/);
   assert.match(sidepanelHtml, /id="sp-settings-iframe"/);
 });
 

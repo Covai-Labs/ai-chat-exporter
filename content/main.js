@@ -192,6 +192,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
   if (request.action === 'EXPORT_CHAT') {
     if (!activeParser) {
+      detectParser();
+    }
+    if (!activeParser) {
       sendResponse({ success: false, error: 'No parser available' });
       return true;
     }
@@ -267,6 +270,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 
   if (request.action === 'COPY_CHAT') {
+    if (!activeParser) {
+      detectParser();
+    }
     if (!activeParser) {
       sendResponse({ success: false, error: 'No parser available' });
       return true;

@@ -209,6 +209,9 @@ export default defineContentScript({
 
         if (request.action === 'EXPORT_CHAT') {
           if (!activeParser) {
+            detectParser();
+          }
+          if (!activeParser) {
             sendResponse({ success: false, error: 'No parser available' });
             return true;
           }
@@ -283,6 +286,9 @@ export default defineContentScript({
         }
 
         if (request.action === 'COPY_CHAT') {
+          if (!activeParser) {
+            detectParser();
+          }
           if (!activeParser) {
             sendResponse({ success: false, error: 'No parser available' });
             return true;

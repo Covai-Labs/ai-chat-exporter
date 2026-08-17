@@ -101,6 +101,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           }
           await sidePanelApi['open']({ windowId });
           sendResponse({ success: true });
+        } else if (
+          typeof browser !== 'undefined' &&
+          browser.sidebarAction &&
+          typeof browser.sidebarAction.open === 'function'
+        ) {
+          await browser.sidebarAction.open();
+          sendResponse({ success: true });
         } else {
           sendResponse({ success: false, error: 'Side panel API unavailable' });
         }
