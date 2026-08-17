@@ -11,7 +11,7 @@ trigger: always_on
 
 ## Repository & Automation
 
-- **Repository:** Public GitHub repository (`https://github.com/Rat-S/ai-chat-exporter.git`)
+- **Repository:** Public GitHub repository (`https://github.com/Covai-Labs/ai-chat-exporter.git`)
 - **CI/CD & Release Workflow:** Pushing a version tag (e.g. `v1.1.0`) triggers `.github/workflows/build.yml` to draft GitHub releases and publish Firefox AMO updates.
 
 ## Agent Guidelines & Safeguards

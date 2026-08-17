@@ -38,10 +38,10 @@
       }
       .banner {
         flex: 0 0 auto;
-        background: rgba(19, 30, 49, 0.7);
+        background: rgba(19, 30, 49, 0.85);
         backdrop-filter: blur(10px);
         border-bottom: 1px solid rgba(148, 163, 184, 0.12);
-        padding: 10px 20px;
+        padding: 12px 24px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -51,36 +51,68 @@
       .banner-info {
         display: flex;
         align-items: center;
-        gap: 8px;
-        color: #94a3b8;
+        gap: 14px;
+        flex-wrap: wrap;
       }
-      .banner-info strong {
-        color: #f8fafc;
+      .banner-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 3px 10px;
+        border-radius: 9999px;
+        background: rgba(59, 130, 246, 0.12);
+        border: 1px solid rgba(59, 130, 246, 0.25);
+        color: #60a5fa;
+        font-size: 12px;
         font-weight: 600;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+      }
+      .banner-text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .banner-text span:first-child {
+        color: #f8fafc;
+        font-weight: 500;
+      }
+      .banner-subtext {
+        color: #94a3b8;
+        font-size: 12.5px;
+      }
+      .banner-subtext a {
+        color: #60a5fa;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+      .banner-subtext a:hover {
+        color: #93c5fd;
       }
       .github-link {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
-        color: #94a3b8;
+        gap: 8px;
+        color: #f8fafc;
         text-decoration: none;
         font-weight: 500;
-        padding: 5px 12px;
-        border-radius: 6px;
-        background: rgba(148, 163, 184, 0.08);
-        border: 1px solid rgba(148, 163, 184, 0.15);
+        padding: 7px 14px;
+        border-radius: 8px;
+        background: rgba(148, 163, 184, 0.1);
+        border: 1px solid rgba(148, 163, 184, 0.18);
         transition: all 0.2s ease;
         white-space: nowrap;
         font-size: 13px;
+        flex-shrink: 0;
       }
       .github-link:hover {
-        background: rgba(59, 130, 246, 0.15);
-        border-color: rgba(59, 130, 246, 0.3);
+        background: rgba(59, 130, 246, 0.18);
+        border-color: rgba(59, 130, 246, 0.35);
         color: #60a5fa;
+        transform: translateY(-1px);
       }
       .github-icon {
-        width: 14px;
-        height: 14px;
+        width: 16px;
+        height: 16px;
         fill: currentColor;
       }
       .form-container {
@@ -98,12 +130,19 @@
         width: 100%;
         height: 100%;
       }
-      @media (max-width: 640px) {
+      @media (max-width: 768px) {
         .banner {
           flex-direction: column;
           align-items: flex-start;
+          gap: 12px;
+          padding: 12px 16px;
+        }
+        .banner-info {
           gap: 8px;
-          padding: 10px 14px;
+        }
+        .github-link {
+          width: 100%;
+          justify-content: center;
         }
       }
     </style>
@@ -111,11 +150,25 @@
   <body>
     <div class="banner">
       <div class="banner-info">
-        <span>💡 Have a GitHub account?</span>
-        <span>You can also report issues directly on GitHub.</span>
+        <div class="banner-badge">100% Local &amp; Open Source</div>
+        <div class="banner-text">
+          <span
+            >AI Chat Exporter is fully local, free, and open source. All contributions and feedback
+            are warmly welcomed!</span
+          >
+          <span class="banner-subtext"
+            >You can directly fix issues or contribute on
+            <a
+              href="https://github.com/Covai-Labs/ai-chat-exporter"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub</a
+            >, or submit your thoughts below and I will surely look into them.</span
+          >
+        </div>
       </div>
       <a
-        href="https://github.com/Rat-S/ai-chat-exporter/issues"
+        href="https://github.com/Covai-Labs/ai-chat-exporter"
         target="_blank"
         rel="noopener noreferrer"
         class="github-link"
@@ -125,7 +178,7 @@
             d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
           />
         </svg>
-        Report on GitHub
+        <span>Contribute on GitHub</span>
       </a>
     </div>
     <div class="form-container">

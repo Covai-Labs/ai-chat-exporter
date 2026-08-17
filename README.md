@@ -16,7 +16,7 @@ A simple, privacy-focused browser extension to export AI chats from ChatGPT, Cla
 
 #### Chrome / Edge / Chromium
 
-1. Download the latest `ai-chat-exporter-chromium.zip` from the [Releases page](https://github.com/Rat-S/ai-chat-exporter/releases).
+1. Download the latest `ai-chat-exporter-chromium.zip` from the [Releases page](https://github.com/Covai-Labs/ai-chat-exporter/releases).
 2. Extract the zip file to a folder on your computer.
 3. Open your browser and navigate to `chrome://extensions/` (or `edge://extensions/`).
 4. Enable **Developer mode** using the toggle switch.
@@ -24,7 +24,7 @@ A simple, privacy-focused browser extension to export AI chats from ChatGPT, Cla
 
 #### Firefox
 
-1. Download the latest `ai-chat-exporter-firefox.zip` from the [Releases page](https://github.com/Rat-S/ai-chat-exporter/releases).
+1. Download the latest `ai-chat-exporter-firefox.zip` from the [Releases page](https://github.com/Covai-Labs/ai-chat-exporter/releases).
 2. Extract the zip file to a folder on your computer.
 3. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`.
 4. Click **Load Temporary Add-on...**
@@ -107,4 +107,4 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 
 > **Nota bene:** This extension was developed for personal use and may not be very polished. I release it with the hope that it can be useful to others. Additionally, formatting of exported items from certain chats may currently not work well due to changes in those chat platforms. You are welcome to submit an issue or PR.
 
-_Note: Feedback and issue reports are very welcome — feel free to submit [Feedback / Issue Reports](https://ai-chat-exporter.covai.org/feedback.html) or open a [GitHub Issue](https://github.com/Rat-S/ai-chat-exporter/issues)._
+_Note: Feedback and issue reports are very welcome — feel free to submit [Feedback / Issue Reports](https://ai-chat-exporter.covai.org/feedback.html) or open a [GitHub Issue](https://github.com/Covai-Labs/ai-chat-exporter/issues)._
