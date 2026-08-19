@@ -12,6 +12,11 @@ export default defineConfig({
         wxt.config.zip.artifactTemplate = '{{name}}-chromium.zip';
       }
     },
+    'build:manifestGenerated': (wxt, manifest) => {
+      if (manifest.options_ui) {
+        manifest.options_ui.open_in_tab = true;
+      }
+    },
   },
   vite: () => ({
     define: {
@@ -108,9 +113,10 @@ export default defineConfig({
         '128': 'icons/icon128.png',
       },
       options_ui: {
-        page: 'entrypoints/options/index.html',
+        page: 'options.html',
         open_in_tab: true,
       },
+      options_page: 'options.html',
       commands: {
         copy_markdown: {
           suggested_key: {
