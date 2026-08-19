@@ -510,5 +510,21 @@
   "filenameTemplatePreview": {
     "message": "預覽：",
     "description": "Label for filename template live preview"
+  },
+  "contextMenuParent": {
+    "message": "匯出 AI 對話",
+    "description": "Parent context menu item title"
+  },
+  "contextMenuCopyMarkdown": {
+    "message": "複製 Markdown",
+    "description": "Context menu item to copy conversation in markdown format"
+  },
+  "contextMenuDownloadMarkdown": {
+    "message": "下載 Markdown",
+    "description": "Context menu item to download conversation as a markdown file"
+  },
+  "contextMenuOpenPreview": {
+    "message": "在預覽標籤頁中開啟",
+    "description": "Context menu item to open conversation in preview tab"
   }
 }

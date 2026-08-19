@@ -511,5 +511,21 @@
   "filenameTemplatePreview": {
     "message": "Предпросмотр:",
     "description": "Label for filename template live preview"
+  },
+  "contextMenuParent": {
+    "message": "Экспортировать чат ИИ",
+    "description": "Parent context menu item title"
+  },
+  "contextMenuCopyMarkdown": {
+    "message": "Копировать Markdown",
+    "description": "Context menu item to copy conversation in markdown format"
+  },
+  "contextMenuDownloadMarkdown": {
+    "message": "Скачать Markdown",
+    "description": "Context menu item to download conversation as a markdown file"
+  },
+  "contextMenuOpenPreview": {
+    "message": "Открыть во вкладке предпросмотра",
+    "description": "Context menu item to open conversation in preview tab"
   }
 }

@@ -510,5 +510,21 @@
   "filenameTemplatePreview": {
     "message": "미리보기:",
     "description": "Label for filename template live preview"
+  },
+  "contextMenuParent": {
+    "message": "AI 채팅 내보내기",
+    "description": "Parent context menu item title"
+  },
+  "contextMenuCopyMarkdown": {
+    "message": "Markdown 복사",
+    "description": "Context menu item to copy conversation in markdown format"
+  },
+  "contextMenuDownloadMarkdown": {
+    "message": "Markdown 다운로드",
+    "description": "Context menu item to download conversation as a markdown file"
+  },
+  "contextMenuOpenPreview": {
+    "message": "미리보기 탭에서 열기",
+    "description": "Context menu item to open conversation in preview tab"
   }
 }

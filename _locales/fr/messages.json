@@ -510,5 +510,21 @@
   "filenameTemplatePreview": {
     "message": "Aperçu :",
     "description": "Label for filename template live preview"
+  },
+  "contextMenuParent": {
+    "message": "Exporter le chat IA",
+    "description": "Parent context menu item title"
+  },
+  "contextMenuCopyMarkdown": {
+    "message": "Copier le Markdown",
+    "description": "Context menu item to copy conversation in markdown format"
+  },
+  "contextMenuDownloadMarkdown": {
+    "message": "Télécharger le Markdown",
+    "description": "Context menu item to download conversation as a markdown file"
+  },
+  "contextMenuOpenPreview": {
+    "message": "Ouvrir dans l'onglet d'aperçu",
+    "description": "Context menu item to open conversation in preview tab"
   }
 }

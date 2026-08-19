@@ -511,5 +511,21 @@
   "filenameTemplatePreview": {
     "message": "முன்னோட்டம்:",
     "description": "Label for filename template live preview"
+  },
+  "contextMenuParent": {
+    "message": "AI உரையாடலை ஏற்றுமதி செய்",
+    "description": "Parent context menu item title"
+  },
+  "contextMenuCopyMarkdown": {
+    "message": "Markdown-ஐ நகலெடு",
+    "description": "Context menu item to copy conversation in markdown format"
+  },
+  "contextMenuDownloadMarkdown": {
+    "message": "Markdown-ஐ பதிவிறக்கு",
+    "description": "Context menu item to download conversation as a markdown file"
+  },
+  "contextMenuOpenPreview": {
+    "message": "முன்னோட்ட தாவலில் திற",
+    "description": "Context menu item to open conversation in preview tab"
   }
 }

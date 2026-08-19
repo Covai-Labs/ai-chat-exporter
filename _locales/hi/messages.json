@@ -510,5 +510,21 @@
   "filenameTemplatePreview": {
     "message": "पूर्वावलोकन:",
     "description": "Label for filename template live preview"
+  },
+  "contextMenuParent": {
+    "message": "AI चैट निर्यात करें",
+    "description": "Parent context menu item title"
+  },
+  "contextMenuCopyMarkdown": {
+    "message": "मार्कडाउन कॉपी करें",
+    "description": "Context menu item to copy conversation in markdown format"
+  },
+  "contextMenuDownloadMarkdown": {
+    "message": "मार्कडाउन डाउनलोड करें",
+    "description": "Context menu item to download conversation as a markdown file"
+  },
+  "contextMenuOpenPreview": {
+    "message": "पूर्वावलोकन टैब में खोलें",
+    "description": "Context menu item to open conversation in preview tab"
   }
 }

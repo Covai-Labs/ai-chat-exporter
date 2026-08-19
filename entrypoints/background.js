@@ -22,6 +22,90 @@ export default defineBackground(() => {
     lumo: 'https://lumo.proton.me/',
   };
 
+  const SUPPORTED_DOCUMENT_URL_PATTERNS = [
+    '*://chatgpt.com/*',
+    '*://gemini.google.com/*',
+    '*://claude.ai/*',
+    '*://qwen.ai/*',
+    '*://chat.qwen.ai/*',
+    '*://www.perplexity.ai/*',
+    '*://chat.deepseek.com/*',
+    '*://www.meta.ai/*',
+    '*://meta.ai/*',
+    '*://chat.mistral.ai/*',
+    '*://chat.z.ai/*',
+    '*://console.cloud.google.com/*',
+    '*://aistudio.google.com/*',
+    '*://notebooklm.google.com/*',
+    '*://notebook.google.com/*',
+    '*://copilot.microsoft.com/*',
+    '*://www.copilot.microsoft.com/*',
+    '*://copilot.com/*',
+    '*://www.copilot.com/*',
+    '*://copilot.cloud.microsoft/*',
+    '*://m365.cloud.microsoft/*',
+    '*://www.m365.cloud.microsoft/*',
+    '*://www.bing.com/*',
+    '*://bing.com/*',
+    '*://edgeservices.bing.com/*',
+    '*://lumo.proton.me/*',
+    '*://www.google.com/*',
+    '*://www.google.co.in/*',
+    '*://www.google.co.uk/*',
+    '*://www.google.ca/*',
+    '*://www.google.com.au/*',
+    '*://www.google.de/*',
+    '*://www.google.fr/*',
+  ];
+
+  function setupContextMenus() {
+    if (typeof chrome === 'undefined' || !chrome.contextMenus) return;
+
+    chrome.contextMenus.removeAll(() => {
+      const parentTitle = chrome.i18n?.getMessage('contextMenuParent') || 'Export AI Chat';
+      const copyTitle = chrome.i18n?.getMessage('contextMenuCopyMarkdown') || 'Copy Markdown';
+      const downloadTitle =
+        chrome.i18n?.getMessage('contextMenuDownloadMarkdown') || 'Download Markdown';
+      const previewTitle =
+        chrome.i18n?.getMessage('contextMenuOpenPreview') || 'Open in Preview Tab';
+
+      // Root item scoped only to supported AI chat platforms
+      chrome.contextMenus.create({
+        id: 'ai-exporter-root',
+        title: parentTitle,
+        contexts: ['page', 'selection'],
+        documentUrlPatterns: SUPPORTED_DOCUMENT_URL_PATTERNS,
+      });
+
+      // Sub-item: Copy Markdown
+      chrome.contextMenus.create({
+        id: 'ai-exporter-copy-markdown',
+        parentId: 'ai-exporter-root',
+        title: `${copyTitle} (Alt+Shift+C)`,
+        contexts: ['page', 'selection'],
+        documentUrlPatterns: SUPPORTED_DOCUMENT_URL_PATTERNS,
+      });
+
+      // Sub-item: Download Markdown
+      chrome.contextMenus.create({
+        id: 'ai-exporter-download-markdown',
+        parentId: 'ai-exporter-root',
+        title: `${downloadTitle} (Alt+Shift+D)`,
+        contexts: ['page', 'selection'],
+        documentUrlPatterns: SUPPORTED_DOCUMENT_URL_PATTERNS,
+      });
+
+      // Sub-item: Open Preview Tab
+      chrome.contextMenus.create({
+        id: 'ai-exporter-open-preview',
+        parentId: 'ai-exporter-root',
+        title: `${previewTitle} (Alt+Shift+P)`,
+        contexts: ['page', 'selection'],
+        documentUrlPatterns: SUPPORTED_DOCUMENT_URL_PATTERNS,
+      });
+    });
+  }
+
   async function syncSidePanelBehavior() {
     const sidePanelApi = typeof chrome !== 'undefined' ? chrome['sidePanel'] : undefined;
     if (sidePanelApi && typeof sidePanelApi['setPanelBehavior'] === 'function') {
@@ -36,7 +120,10 @@ export default defineBackground(() => {
   }
 
   if (typeof chrome !== 'undefined' && chrome.runtime?.onStartup) {
-    chrome.runtime.onStartup.addListener(syncSidePanelBehavior);
+    chrome.runtime.onStartup.addListener(() => {
+      syncSidePanelBehavior();
+      setupContextMenus();
+    });
   }
 
   if (typeof chrome !== 'undefined' && chrome.storage?.onChanged) {
@@ -60,6 +147,7 @@ export default defineBackground(() => {
       }
 
       await syncSidePanelBehavior();
+      setupContextMenus();
     });
   }
 
@@ -232,6 +320,18 @@ export default defineBackground(() => {
   if (typeof chrome !== 'undefined' && chrome.commands?.onCommand) {
     chrome.commands.onCommand.addListener((command) => {
       handleCommand(command, 'preview.html');
+    });
+  }
+
+  if (typeof chrome !== 'undefined' && chrome.contextMenus?.onClicked) {
+    chrome.contextMenus.onClicked.addListener((info) => {
+      if (info.menuItemId === 'ai-exporter-copy-markdown') {
+        handleCommand('copy_markdown', 'preview.html');
+      } else if (info.menuItemId === 'ai-exporter-download-markdown') {
+        handleCommand('download_markdown', 'preview.html');
+      } else if (info.menuItemId === 'ai-exporter-open-preview') {
+        handleCommand('open_preview', 'preview.html');
+      }
     });
   }
 });
