@@ -498,5 +498,17 @@
   },
   "copiedAboutAddons": {
     "message": "已复制！"
+  },
+  "filenameTemplateLabel": {
+    "message": "导出文件名格式",
+    "description": "Label for filename template input"
+  },
+  "filenameTemplateHelp": {
+    "message": "导出文件名的格式。支持的变量：{platform}、{title}、{date}、{time}、{datetime}。",
+    "description": "Help text for filename template setting"
+  },
+  "filenameTemplatePreview": {
+    "message": "预览：",
+    "description": "Label for filename template live preview"
   }
 }

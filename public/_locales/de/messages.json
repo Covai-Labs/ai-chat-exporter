@@ -506,5 +506,17 @@
   },
   "copiedAboutAddons": {
     "message": "Kopiert!"
+  },
+  "filenameTemplateLabel": {
+    "message": "Dateinamen-Muster für Export",
+    "description": "Label for filename template input"
+  },
+  "filenameTemplateHelp": {
+    "message": "Muster für exportierte Dateinamen. Unterstützte Platzhalter: {platform}, {title}, {date}, {time}, {datetime}.",
+    "description": "Help text for filename template setting"
+  },
+  "filenameTemplatePreview": {
+    "message": "Vorschau:",
+    "description": "Label for filename template live preview"
   }
 }

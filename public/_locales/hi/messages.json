@@ -506,5 +506,17 @@
   },
   "copiedAboutAddons": {
     "message": "कॉपी किया गया!"
+  },
+  "filenameTemplateLabel": {
+    "message": "निर्यात फ़ाइल नाम पैटर्न",
+    "description": "Label for filename template input"
+  },
+  "filenameTemplateHelp": {
+    "message": "निर्यात की गई फ़ाइलों के लिए पैटर्न। समर्थित टोकन: {platform}, {title}, {date}, {time}, {datetime}।",
+    "description": "Help text for filename template setting"
+  },
+  "filenameTemplatePreview": {
+    "message": "पूर्वावलोकन:",
+    "description": "Label for filename template live preview"
   }
 }

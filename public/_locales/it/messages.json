@@ -506,5 +506,17 @@
   },
   "copiedAboutAddons": {
     "message": "Copiato!"
+  },
+  "filenameTemplateLabel": {
+    "message": "Modello nome file di esportazione",
+    "description": "Label for filename template input"
+  },
+  "filenameTemplateHelp": {
+    "message": "Modello per i nomi dei file esportati. Token supportati: {platform}, {title}, {date}, {time}, {datetime}.",
+    "description": "Help text for filename template setting"
+  },
+  "filenameTemplatePreview": {
+    "message": "Anteprima:",
+    "description": "Label for filename template live preview"
   }
 }

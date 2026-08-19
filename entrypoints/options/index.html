@@ -132,6 +132,43 @@
                 <span data-i18n="includeImagesDefault">Include images in exports by default</span>
               </label>
             </div>
+
+            <div class="field-group" style="margin-top: 12px">
+              <label
+                for="filename-template-input"
+                class="field-label"
+                data-i18n="filenameTemplateLabel"
+                >Export Filename Pattern</label
+              >
+              <input
+                type="text"
+                id="filename-template-input"
+                class="select-input"
+                placeholder="{platform} - {title} - {datetime}"
+                value="{platform} - {title} - {datetime}"
+              />
+              <span class="field-help" data-i18n="filenameTemplateHelp"
+                >Template for exported filenames. Supported tokens: {platform}, {title}, {date},
+                {time}, {datetime}.</span
+              >
+              <div
+                class="field-help"
+                style="margin-top: 6px; font-weight: 500; color: var(--text-primary)"
+              >
+                <span data-i18n="filenameTemplatePreview">Preview:</span>
+                <code
+                  id="filename-preview"
+                  style="
+                    background: var(--input-bg);
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                    border: 1px solid var(--border-color);
+                    font-family: monospace;
+                  "
+                  >Gemini - Comparing Markdown and PDF - 2026-08-19_11-35</code
+                >
+              </div>
+            </div>
           </div>
         </section>
 
