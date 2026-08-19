@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           }
           return;
         } else {
-          logger.warn(
+          logger.debug(
             'Response indicated parser is not available or returned empty response:',
             response,
           );
@@ -214,9 +214,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       } catch (e) {
         const isNotReady = e.message && e.message.includes('Receiving end does not exist');
-        logger.warn(`Attempt ${attempt + 1} communication error:`, e.message);
+        logger.debug(`Attempt ${attempt + 1} communication status:`, e.message);
         if (!isNotReady) {
-          logger.error('Unexpected error:', e);
+          logger.debug('Unexpected error connecting to tab:', e);
           showError();
           return;
         }
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       }
     }
-    logger.error('Exhausted all retries connecting to content script.');
+    logger.debug('Exhausted connection attempts to content script.');
     showError();
   }
 
