@@ -3,7 +3,7 @@ import test from 'node:test';
 import { parseHTML } from 'linkedom';
 
 test('NotebookLMParser detects notebook.google.com and notebooklm.google.com URLs', async () => {
-  const { NotebookLMParser } = await import('@covai/parser-core');
+  const { NotebookLMParser } = await import('decant-core');
   const parser = new NotebookLMParser();
 
   assert.equal(parser.isAvailable('https://notebooklm.google.com/notebook/12345'), true);
@@ -78,7 +78,7 @@ test('NotebookLMParser parses user prompt and assistant response with citations'
   global.Node = Node;
   global.DOMParser = DOMParser;
 
-  const { NotebookLMParser } = await import('@covai/parser-core');
+  const { NotebookLMParser } = await import('decant-core');
   const parser = new NotebookLMParser();
 
   const conversation = await parser.parse();

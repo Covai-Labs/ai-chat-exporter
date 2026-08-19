@@ -19,7 +19,7 @@ test('GoogleSearchAIParser correctly parses chat content from fixture', async ()
 
   window.location = { href: 'https://www.google.com/search?q=Please+write+a+short+response' };
 
-  const { GoogleSearchAIParser } = await import('@covai/parser-core');
+  const { GoogleSearchAIParser } = await import('decant-core');
   const parser = new GoogleSearchAIParser();
 
   const result = await parser.parse();
@@ -72,7 +72,7 @@ test('GoogleSearchAIParser correctly parses multi-turn SGE chat content from fix
 
   window.location = { href: 'https://www.google.com/search?q=Please+write+a+short+response' };
 
-  const { GoogleSearchAIParser } = await import('@covai/parser-core');
+  const { GoogleSearchAIParser } = await import('decant-core');
   const parser = new GoogleSearchAIParser();
 
   const result = await parser.parse();

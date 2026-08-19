@@ -20,7 +20,7 @@ test('DeepSeekParser falls back to DOM parsing when API fetch fails or token is 
   global.localStorage = { getItem: () => null };
   global.fetch = async () => ({ ok: false, status: 401 });
 
-  const { DeepSeekParser } = await import('@covai/parser-core');
+  const { DeepSeekParser } = await import('decant-core');
   const parser = new DeepSeekParser();
 
   const result = await parser.parse();
@@ -75,7 +75,7 @@ test('DeepSeekParser extracts conversation via API when token and session ID are
     };
   };
 
-  const { DeepSeekParser } = await import('@covai/parser-core');
+  const { DeepSeekParser } = await import('decant-core');
   const parser = new DeepSeekParser();
 
   const result = await parser.parse();

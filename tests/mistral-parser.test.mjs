@@ -19,7 +19,7 @@ test('MistralParser correctly parses chat content from fixture', async () => {
 
   window.location = { href: 'https://chat.mistral.ai/' };
 
-  const { MistralParser } = await import('@covai/parser-core');
+  const { MistralParser } = await import('decant-core');
   const parser = new MistralParser();
 
   const result = await parser.parse();

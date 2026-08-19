@@ -15,7 +15,7 @@ import {
   NotebookLMParser,
   CopilotParser,
   LumoParser,
-} from '@covai/parser-core';
+} from 'decant-core';
 
 import { MarkdownFormatter } from './formatters/markdown.js';
 import { JsonFormatter } from './formatters/json.js';

@@ -11,7 +11,7 @@ global.Node = Node;
 global.DOMParser = DOMParser;
 
 // Dynamically import the converter at top-level after setting globals
-const { convertToMarkdown, cleanMarkdown } = await import('@covai/parser-core');
+const { convertToMarkdown, cleanMarkdown } = await import('decant-core');
 
 test('converts basic inline elements correctly', () => {
   const el = document.createElement('div');

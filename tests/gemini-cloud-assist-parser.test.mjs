@@ -22,7 +22,7 @@ test('GeminiCloudAssistParser correctly parses chat content from fixture', async
 
   window.location = { href: 'https://console.cloud.google.com/gemini' };
 
-  const { GeminiCloudAssistParser } = await import('@covai/parser-core');
+  const { GeminiCloudAssistParser } = await import('decant-core');
   const parser = new GeminiCloudAssistParser();
 
   const result = await parser.parse();

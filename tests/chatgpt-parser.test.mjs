@@ -16,7 +16,7 @@ global.Node = Node;
 global.DOMParser = DOMParser;
 
 // Import ChatGPTParser after globals are set so Turndown loads correctly
-const { ChatGPTParser } = await import('@covai/parser-core');
+const { ChatGPTParser } = await import('decant-core');
 
 test('extractMessage combines multiple assistant blocks in one ChatGPT turn', () => {
   const parser = new ChatGPTParser();
@@ -183,7 +183,7 @@ test('ChatGPTParser correctly extracts API image carousels from content_referenc
 });
 
 test('linearize selects active branch based on currentNodeId over longer branches', async () => {
-  const { linearize } = await import('@covai/parser-core/ai/chatgpt');
+  const { linearize } = await import('decant-core/ai/chatgpt');
 
   const mapping = {
     root: { id: 'root', parent: null, children: ['user1'] },
@@ -235,7 +235,7 @@ test('linearize selects active branch based on currentNodeId over longer branche
 });
 
 test('linearize extracts o1/o3 reasoning thoughts and Deep Research reports', async () => {
-  const { linearize } = await import('@covai/parser-core/ai/chatgpt');
+  const { linearize } = await import('decant-core/ai/chatgpt');
 
   const mapping = {
     root: { id: 'root', parent: null, children: ['user1'] },
@@ -316,7 +316,7 @@ test('linearize extracts o1/o3 reasoning thoughts and Deep Research reports', as
 });
 
 test('extractSharedConversationFromDom extracts mapping from embedded SSR script tags', async () => {
-  const { extractSharedConversationFromDom } = await import('@covai/parser-core/ai/chatgpt');
+  const { extractSharedConversationFromDom } = await import('decant-core/ai/chatgpt');
 
   const fakeHtml = `
     <!DOCTYPE html>

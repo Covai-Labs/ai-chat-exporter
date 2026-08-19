@@ -21,7 +21,7 @@ test('GeminiParser correctly parses chat content from fixture', async () => {
   // Mock window.location
   window.location = { href: 'https://gemini.google.com/app' };
 
-  const { GeminiParser } = await import('@covai/parser-core');
+  const { GeminiParser } = await import('decant-core');
   const parser = new GeminiParser();
 
   const result = await parser.parse();
@@ -68,7 +68,7 @@ test('GeminiParser extracts title from document.title if valid', async () => {
   document.title = 'The Core Difference - Google Gemini';
   window.location = { href: 'https://gemini.google.com/app' };
 
-  const { GeminiParser } = await import('@covai/parser-core');
+  const { GeminiParser } = await import('decant-core');
   const parser = new GeminiParser();
   const result = await parser.parse();
 
@@ -88,7 +88,7 @@ test('GeminiParser extracts title from active navigation if document.title is ge
   document.title = 'Gemini';
   window.location = { href: 'https://gemini.google.com/app' };
 
-  const { GeminiParser } = await import('@covai/parser-core');
+  const { GeminiParser } = await import('decant-core');
   const parser = new GeminiParser();
   const result = await parser.parse();
 
@@ -116,7 +116,7 @@ test('GeminiParser does not extract title from headers inside chat messages', as
   document.title = 'Gemini';
   window.location = { href: 'https://gemini.google.com/app' };
 
-  const { GeminiParser } = await import('@covai/parser-core');
+  const { GeminiParser } = await import('decant-core');
   const parser = new GeminiParser();
   const result = await parser.parse();
 
