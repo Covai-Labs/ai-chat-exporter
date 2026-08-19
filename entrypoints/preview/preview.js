@@ -192,6 +192,61 @@ document.addEventListener('DOMContentLoaded', async () => {
           });
         }
         if (doc.body && typeof Prism !== 'undefined' && Prism.highlightAllUnder) {
+          if (!Prism.languages['markup-templating']) {
+            Prism.languages['markup-templating'] = {
+              buildPlaceholders: function (env, language, placeholderPattern) {
+                if (env.language !== language) return;
+                env.tokenStack = [];
+                env.code = env.code.replace(placeholderPattern, function (match) {
+                  var placeholder = '___' + language.toUpperCase() + env.tokenStack.length + '___';
+                  env.tokenStack.push(match);
+                  return placeholder;
+                });
+              },
+              tokenizePlaceholders: function (env, language) {
+                if (env.language !== language || !env.tokenStack) return;
+                env.grammar = Prism.languages[language];
+                var j = 0;
+                function walkTokens(tokens) {
+                  for (var i = 0; i < tokens.length; i++) {
+                    if (j >= env.tokenStack.length) break;
+                    var token = tokens[i];
+                    if (
+                      typeof token === 'string' ||
+                      (token && token.content && typeof token.content === 'string')
+                    ) {
+                      var str = typeof token === 'string' ? token : token.content;
+                      var placeholder = '___' + language.toUpperCase() + j + '___';
+                      var index = str.indexOf(placeholder);
+                      if (index > -1) {
+                        var before = str.substring(0, index);
+                        var middle = new Prism.Token(
+                          language,
+                          Prism.tokenize(env.tokenStack[j], env.grammar),
+                          'language-' + language,
+                          env.tokenStack[j],
+                        );
+                        var after = str.substring(index + placeholder.length);
+                        var replacement = [];
+                        if (before) replacement.push(before);
+                        replacement.push(middle);
+                        if (after) replacement.push(after);
+                        if (typeof token === 'string') {
+                          tokens.splice.apply(tokens, [i, 1].concat(replacement));
+                        } else {
+                          token.content = replacement;
+                        }
+                        j++;
+                      }
+                    } else if (token && token.content && Array.isArray(token.content)) {
+                      walkTokens(token.content);
+                    }
+                  }
+                }
+                walkTokens(env.tokens);
+              },
+            };
+          }
           Prism.highlightAllUnder(doc.body);
         }
       } catch (e) {
