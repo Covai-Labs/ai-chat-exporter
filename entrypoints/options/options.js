@@ -53,7 +53,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  const isFirefox = typeof browser !== 'undefined' || !chrome.sidePanel;
+  const isFirefox =
+    (typeof navigator !== 'undefined' && navigator.userAgent.includes('Firefox')) ||
+    (typeof browser !== 'undefined' &&
+      typeof browser.runtime !== 'undefined' &&
+      Boolean(browser.runtime.getBrowserInfo));
   if (isFirefox && launchModeSection) {
     launchModeSection.classList.add('hidden');
   }
