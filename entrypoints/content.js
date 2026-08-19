@@ -23,6 +23,9 @@ import { ImageFormatter } from '../content/formatters/image.js';
 import { ContinuationFormatter } from '../content/formatters/continuation.js';
 import { DocFormatter } from '../content/formatters/doc.js';
 import { formatFilename, DEFAULT_FILENAME_TEMPLATE } from '../content/utils/filename.js';
+import { createLogger } from '../content/utils/logger.js';
+
+const logger = createLogger('ContentScript');
 
 export default defineContentScript({
   matches: [
@@ -64,9 +67,7 @@ export default defineContentScript({
   runAt: 'document_idle',
   main() {
     const isTopFrame = typeof window === 'undefined' || window.self === window.top;
-    console.log(
-      `[AI Exporter ContentScript] Script initialized on: ${window.location.href} (isTopFrame: ${isTopFrame})`,
-    );
+    logger.debug(`Script initialized on: ${window.location.href} (isTopFrame: ${isTopFrame})`);
 
     const continuationFormatter = new ContinuationFormatter();
 
@@ -108,12 +109,10 @@ export default defineContentScript({
           }
 
           await chrome.storage.local.remove('pendingContinuation');
-          console.log(
-            '[AI Exporter ContentScript] Auto-injected transferred conversation context.',
-          );
+          logger.info('Auto-injected transferred conversation context.');
         }
       } catch (e) {
-        console.warn('[AI Exporter ContentScript] Continuation injection check failed:', e);
+        logger.warn('Continuation injection check failed:', e);
       }
     }
 
@@ -185,24 +184,24 @@ export default defineContentScript({
 
     function detectParser() {
       const currentUrl = window.location.href;
-      console.log('[AI Exporter ContentScript] Detecting parser for URL:', currentUrl);
+      logger.debug('Detecting parser for URL:', currentUrl);
       activeParser = parsers.find((p) => p.isAvailable(currentUrl));
       if (activeParser) {
         const platformName =
           typeof activeParser.getPlatformName === 'function'
             ? activeParser.getPlatformName()
             : activeParser.name || activeParser.constructor.name.replace('Parser', '');
-        console.log('[AI Exporter ContentScript] Matched active parser:', platformName);
+        logger.debug('Matched active parser:', platformName);
       } else {
-        console.log('[AI Exporter ContentScript] No parser matched for URL:', currentUrl);
+        logger.debug('No parser matched for URL:', currentUrl);
       }
     }
 
     if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
       chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         const currentFrameIsTop = typeof window === 'undefined' || window.self === window.top;
-        console.log(
-          `[AI Exporter ContentScript] Message received: action=${request.action} on frame=${currentFrameIsTop ? 'TOP' : 'IFRAME'}`,
+        logger.debug(
+          `Message received: action=${request.action} on frame=${currentFrameIsTop ? 'TOP' : 'IFRAME'}`,
         );
 
         if (request.action === 'CHECK_AVAILABILITY') {
@@ -210,17 +209,13 @@ export default defineContentScript({
           if (activeParser) {
             (async () => {
               try {
-                console.log(
-                  '[AI Exporter ContentScript] Executing activeParser.parse({ full: false })...',
-                );
+                logger.debug('Executing activeParser.parse({ full: false })...');
                 const conversation = await activeParser.parse({ full: false });
-                console.log(
-                  `[AI Exporter ContentScript] Availability check parsed ${conversation.messages.length} messages, title: "${conversation.title || ''}"`,
+                logger.debug(
+                  `Availability check parsed ${conversation.messages.length} messages, title: "${conversation.title || ''}"`,
                 );
                 if (!currentFrameIsTop && conversation.messages.length === 0) {
-                  console.log(
-                    '[AI Exporter ContentScript] Subframe has 0 messages, ignoring subframe response',
-                  );
+                  logger.debug('Subframe has 0 messages, ignoring subframe response');
                   return;
                 }
                 const platformName =
@@ -233,16 +228,10 @@ export default defineContentScript({
                   count: conversation.messages.length,
                   title: conversation.title || '',
                 };
-                console.log(
-                  '[AI Exporter ContentScript] Sending CHECK_AVAILABILITY response:',
-                  responseData,
-                );
+                logger.debug('Sending CHECK_AVAILABILITY response:', responseData);
                 sendResponse(responseData);
               } catch (e) {
-                console.error(
-                  '[AI Exporter ContentScript] Check availability parse threw error:',
-                  e,
-                );
+                logger.error('Check availability parse threw error:', e);
                 if (currentFrameIsTop) {
                   const platformName =
                     typeof activeParser.getPlatformName === 'function'
@@ -259,9 +248,7 @@ export default defineContentScript({
             })();
             return true;
           } else if (currentFrameIsTop) {
-            console.log(
-              '[AI Exporter ContentScript] No active parser on top frame, sending available: false',
-            );
+            logger.debug('No active parser on top frame, sending available: false');
             sendResponse({ available: false });
           }
         }
@@ -350,7 +337,7 @@ export default defineContentScript({
 
               sendResponse({ success: true });
             } catch (e) {
-              console.error(e);
+              logger.error('Export failed:', e);
               sendResponse({ success: false, error: e.message });
             }
           })();
@@ -386,7 +373,7 @@ export default defineContentScript({
                   }
                 });
               }
-              console.log('Parsed conversation with', conversation.messages.length, 'messages');
+              logger.debug('Parsed conversation with', conversation.messages.length, 'messages');
               const primaryContent = formatter.format(conversation);
               const htmlFormatter = formatters.html;
               const richHtmlContent = htmlFormatter ? htmlFormatter.format(conversation) : null;
@@ -398,7 +385,7 @@ export default defineContentScript({
                 conversation: conversation,
               });
             } catch (e) {
-              console.error(e);
+              logger.error('Copy chat failed:', e);
               sendResponse({ success: false, error: e.message });
             }
           })();
@@ -434,7 +421,7 @@ export default defineContentScript({
 
               sendResponse({ success: true, payload });
             } catch (e) {
-              console.error(e);
+              logger.error('Get continuation payload failed:', e);
               sendResponse({ success: false, error: e.message });
             }
           })();
@@ -520,7 +507,7 @@ export default defineContentScript({
                 sendResponse({ success: false, error: 'Unknown shortcut action' });
               }
             } catch (e) {
-              console.error('[AI Exporter] Shortcut action failed:', e);
+              logger.error('Shortcut action failed:', e);
               if (isTopFrame) {
                 showExporterToast('⚠️ Failed to export conversation', 'error');
               }
@@ -543,7 +530,7 @@ export default defineContentScript({
           return true;
         }
       } catch (err) {
-        console.warn('[AI Exporter] navigator.clipboard failed, attempting fallback:', err);
+        logger.warn('navigator.clipboard failed, attempting fallback:', err);
       }
       try {
         if (typeof document !== 'undefined') {
@@ -561,7 +548,7 @@ export default defineContentScript({
           if (successful) return true;
         }
       } catch (err) {
-        console.error('[AI Exporter] execCommand fallback failed:', err);
+        logger.error('execCommand fallback failed:', err);
       }
       return false;
     }

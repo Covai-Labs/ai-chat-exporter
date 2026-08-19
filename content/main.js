@@ -24,11 +24,12 @@ import { ImageFormatter } from './formatters/image.js';
 import { ContinuationFormatter } from './formatters/continuation.js';
 import { DocFormatter } from './formatters/doc.js';
 import { formatFilename, DEFAULT_FILENAME_TEMPLATE } from './utils/filename.js';
+import { createLogger } from './utils/logger.js';
+
+const logger = createLogger('ContentScript');
 
 const isTopFrame = typeof window === 'undefined' || window.self === window.top;
-console.log(
-  `[AI Exporter ContentScript] Script initialized on: ${window.location.href} (isTopFrame: ${isTopFrame})`,
-);
+logger.debug(`Script initialized on: ${window.location.href} (isTopFrame: ${isTopFrame})`);
 
 const continuationFormatter = new ContinuationFormatter();
 
@@ -70,10 +71,10 @@ async function checkAndInjectContinuation() {
       }
 
       await chrome.storage.local.remove('pendingContinuation');
-      console.log('[AI Exporter ContentScript] Auto-injected transferred conversation context.');
+      logger.info('Auto-injected transferred conversation context.');
     }
   } catch (e) {
-    console.warn('[AI Exporter ContentScript] Continuation injection check failed:', e);
+    logger.warn('Continuation injection check failed:', e);
   }
 }
 
@@ -155,350 +156,342 @@ let activeParser = null;
 
 function detectParser() {
   const currentUrl = window.location.href;
-  console.log('[AI Exporter ContentScript] Detecting parser for URL:', currentUrl);
+  logger.debug('Detecting parser for URL:', currentUrl);
   activeParser = parsers.find((p) => p.isAvailable(currentUrl));
   if (activeParser) {
     const platformName =
       typeof activeParser.getPlatformName === 'function'
         ? activeParser.getPlatformName()
         : activeParser.name || activeParser.constructor.name.replace('Parser', '');
-    console.log('[AI Exporter ContentScript] Matched active parser:', platformName);
+    logger.debug('Matched active parser:', platformName);
   } else {
-    console.log('[AI Exporter ContentScript] No parser matched for URL:', currentUrl);
+    logger.debug('No parser matched for URL:', currentUrl);
   }
 }
 
 // Listen for messages from the popup
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  const currentFrameIsTop = typeof window === 'undefined' || window.self === window.top;
-  console.log(
-    `[AI Exporter ContentScript] Message received: action=${request.action} on frame=${currentFrameIsTop ? 'TOP' : 'IFRAME'}`,
-  );
+if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    const currentFrameIsTop = typeof window === 'undefined' || window.self === window.top;
+    logger.debug(
+      `Message received: action=${request.action} on frame=${currentFrameIsTop ? 'TOP' : 'IFRAME'}`,
+    );
 
-  if (request.action === 'CHECK_AVAILABILITY') {
-    detectParser(); // Re-check in case URL changed
-
-    if (activeParser) {
-      (async () => {
-        try {
-          console.log(
-            '[AI Exporter ContentScript] Executing activeParser.parse({ full: false })...',
-          );
-          const conversation = await activeParser.parse({ full: false });
-          console.log(
-            `[AI Exporter ContentScript] Availability check parsed ${conversation.messages.length} messages, title: "${conversation.title || ''}"`,
-          );
-          if (!currentFrameIsTop && conversation.messages.length === 0) {
-            console.log(
-              '[AI Exporter ContentScript] Subframe has 0 messages, ignoring subframe response',
+    if (request.action === 'CHECK_AVAILABILITY') {
+      detectParser();
+      if (activeParser) {
+        (async () => {
+          try {
+            logger.debug('Executing activeParser.parse({ full: false })...');
+            const conversation = await activeParser.parse({ full: false });
+            logger.debug(
+              `Availability check parsed ${conversation.messages.length} messages, title: "${conversation.title || ''}"`,
             );
-            return;
-          }
-          const platformName =
-            typeof activeParser.getPlatformName === 'function'
-              ? activeParser.getPlatformName()
-              : activeParser.name || activeParser.constructor.name.replace('Parser', '');
-          const responseData = {
-            available: true,
-            platform: platformName,
-            count: conversation.messages.length,
-            title: conversation.title || '',
-          };
-          console.log(
-            '[AI Exporter ContentScript] Sending CHECK_AVAILABILITY response:',
-            responseData,
-          );
-          sendResponse(responseData);
-        } catch (e) {
-          console.error('[AI Exporter ContentScript] Check availability parse threw error:', e);
-          if (currentFrameIsTop) {
+            if (!currentFrameIsTop && conversation.messages.length === 0) {
+              logger.debug('Subframe has 0 messages, ignoring subframe response');
+              return;
+            }
             const platformName =
               typeof activeParser.getPlatformName === 'function'
                 ? activeParser.getPlatformName()
                 : activeParser.name || activeParser.constructor.name.replace('Parser', '');
-            sendResponse({
+            const responseData = {
               available: true,
               platform: platformName,
-              count: 0, // Fallback
-              title: '',
+              count: conversation.messages.length,
+              title: conversation.title || '',
+            };
+            logger.debug('Sending CHECK_AVAILABILITY response:', responseData);
+            sendResponse(responseData);
+          } catch (e) {
+            logger.error('Check availability parse threw error:', e);
+            if (currentFrameIsTop) {
+              const platformName =
+                typeof activeParser.getPlatformName === 'function'
+                  ? activeParser.getPlatformName()
+                  : activeParser.name || activeParser.constructor.name.replace('Parser', '');
+              sendResponse({
+                available: true,
+                platform: platformName,
+                count: 0,
+                title: '',
+              });
+            }
+          }
+        })();
+        return true;
+      } else if (currentFrameIsTop) {
+        logger.debug('No active parser on top frame, sending available: false');
+        sendResponse({ available: false });
+      }
+    }
+
+    if (request.action === 'EXPORT_CHAT') {
+      if (!activeParser) {
+        detectParser();
+      }
+      if (!activeParser) {
+        sendResponse({ success: false, error: 'No parser available' });
+        return true;
+      }
+
+      const formatter = formatters[request.format];
+      if (!formatter) {
+        sendResponse({ success: false, error: 'Invalid format' });
+        return true;
+      }
+
+      (async () => {
+        try {
+          const conversation = await activeParser.parse({
+            full: true,
+            parserMode: request.parserMode || 'auto',
+            includeImages: request.includeImages !== false,
+          });
+          if (request.includeImages === false) {
+            conversation.messages.forEach((msg) => {
+              if (msg.content) {
+                msg.content = stripImages(msg.content);
+              }
             });
           }
-        }
-      })();
-      return true;
-    } else if (currentFrameIsTop) {
-      console.log(
-        '[AI Exporter ContentScript] No active parser on top frame, sending available: false',
-      );
-      sendResponse({ available: false });
-    }
-  }
-
-  if (request.action === 'EXPORT_CHAT') {
-    if (!activeParser) {
-      detectParser();
-    }
-    if (!activeParser) {
-      sendResponse({ success: false, error: 'No parser available' });
-      return true;
-    }
-
-    const formatter = formatters[request.format];
-    if (!formatter) {
-      sendResponse({ success: false, error: 'Invalid format' });
-      return true;
-    }
-
-    (async () => {
-      try {
-        const conversation = await activeParser.parse({
-          full: true,
-          parserMode: request.parserMode || 'auto',
-          includeImages: request.includeImages !== false,
-        });
-        if (request.includeImages === false) {
-          conversation.messages.forEach((msg) => {
-            if (msg.content) {
-              msg.content = stripImages(msg.content);
-            }
-          });
-        }
-        if (request.format === 'png') {
-          await ensureHtml2CanvasLoaded();
-        }
-        const options = { highQuality: request.highQualityPng !== false };
-        const formattedResult = await formatter.format(conversation, options);
-        const mimeType = formatter.getMimeType();
-        const blob =
-          formattedResult instanceof Blob
-            ? formattedResult
-            : new Blob(
-                formatter.getFileExtension() === 'doc'
-                  ? ['\ufeff', formattedResult]
-                  : [formattedResult],
-                { type: `${mimeType};charset=utf-8` },
-              );
-
-        // Trigger download
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-
-        let downloadName;
-        if (request.customFilename && request.customFilename.trim().length > 0) {
-          const userCustom = request.customFilename.trim().replace(/[\\/:*?"<>|]/g, '');
-          downloadName = userCustom.endsWith(`.${formatter.getFileExtension()}`)
-            ? userCustom
-            : `${userCustom}.${formatter.getFileExtension()}`;
-        } else {
-          let filenameTemplate = DEFAULT_FILENAME_TEMPLATE;
-          try {
-            const syncData = await chrome.storage.sync.get('filenameTemplate');
-            if (syncData && syncData.filenameTemplate) {
-              filenameTemplate = syncData.filenameTemplate;
-            }
-          } catch {
-            // Fallback to default
+          if (request.format === 'png') {
+            await ensureHtml2CanvasLoaded();
           }
-          const platformName =
-            typeof activeParser.getPlatformName === 'function'
-              ? activeParser.getPlatformName()
-              : activeParser.name || activeParser.constructor.name.replace('Parser', '');
-          const formattedName = formatFilename(filenameTemplate, {
-            platform: platformName,
-            title: conversation.title || 'Conversation',
-          });
-          downloadName = `${formattedName}.${formatter.getFileExtension()}`;
-        }
-
-        a.download = downloadName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-
-        sendResponse({ success: true });
-      } catch (e) {
-        console.error(e);
-        sendResponse({ success: false, error: e.message });
-      }
-    })();
-    return true; // Indicates async response
-  }
-
-  if (request.action === 'COPY_CHAT') {
-    if (!activeParser) {
-      detectParser();
-    }
-    if (!activeParser) {
-      sendResponse({ success: false, error: 'No parser available' });
-      return true;
-    }
-
-    const formatter = formatters[request.format];
-    if (!formatter) {
-      sendResponse({ success: false, error: 'Invalid format' });
-      return true;
-    }
-
-    (async () => {
-      try {
-        const conversation = await activeParser.parse({
-          full: true,
-          parserMode: request.parserMode || 'auto',
-          includeImages: request.includeImages !== false,
-        });
-        if (request.includeImages === false) {
-          conversation.messages.forEach((msg) => {
-            if (msg.content) {
-              msg.content = stripImages(msg.content);
-            }
-          });
-        }
-        console.log('Parsed conversation with', conversation.messages.length, 'messages');
-        const primaryContent = formatter.format(conversation);
-        const htmlFormatter = formatters.html;
-        const richHtmlContent = htmlFormatter ? htmlFormatter.format(conversation) : null;
-
-        sendResponse({
-          success: true,
-          content: primaryContent,
-          htmlContent: richHtmlContent,
-          conversation: conversation,
-        });
-      } catch (e) {
-        console.error(e);
-        sendResponse({ success: false, error: e.message });
-      }
-    })();
-    return true;
-  }
-
-  if (request.action === 'GET_CONTINUATION_PAYLOAD') {
-    if (!activeParser) {
-      sendResponse({ success: false, error: 'No parser available' });
-      return true;
-    }
-
-    (async () => {
-      try {
-        const conversation = await activeParser.parse({
-          full: true,
-          parserMode: request.parserMode || 'auto',
-          includeImages: request.includeImages !== false,
-        });
-        if (request.includeImages === false) {
-          conversation.messages.forEach((msg) => {
-            if (msg.content) {
-              msg.content = stripImages(msg.content);
-            }
-          });
-        }
-        const platformName =
-          typeof activeParser.getPlatformName === 'function'
-            ? activeParser.getPlatformName()
-            : activeParser.name || activeParser.constructor.name.replace('Parser', '');
-        conversation.metadata = { ...conversation.metadata, Source: platformName };
-        const payload = continuationFormatter.format(conversation, request.instruction || '');
-
-        sendResponse({ success: true, payload });
-      } catch (e) {
-        console.error(e);
-        sendResponse({ success: false, error: e.message });
-      }
-    })();
-    return true;
-  }
-
-  if (request.action === 'EXECUTE_SHORTCUT') {
-    const isTopFrame = typeof window === 'undefined' || window.self === window.top;
-    if (!activeParser) {
-      detectParser();
-    }
-    if (!activeParser) {
-      if (isTopFrame) {
-        showExporterToast('⚠️ No supported AI chat found on this tab', 'error');
-      }
-      sendResponse({ success: false, error: 'No parser available' });
-      return true;
-    }
-
-    const shortcut = request.shortcutAction;
-
-    (async () => {
-      try {
-        const conversation = await activeParser.parse({
-          full: true,
-          parserMode: 'auto',
-          includeImages: true,
-        });
-
-        if (!conversation || !conversation.messages || conversation.messages.length === 0) {
-          if (isTopFrame) {
-            showExporterToast('⚠️ No messages found in conversation', 'error');
-          }
-          sendResponse({ success: false, error: 'No messages found' });
-          return;
-        }
-
-        const formatter = formatters.markdown;
-        const markdownContent = formatter.format(conversation);
-
-        if (shortcut === 'copy_markdown') {
-          const copied = await copyToClipboard(markdownContent);
-          if (copied && isTopFrame) {
-            showExporterToast('📋 Markdown copied to clipboard!');
-          }
-          sendResponse({ success: copied });
-        } else if (shortcut === 'download_markdown') {
+          const options = { highQuality: request.highQualityPng !== false };
+          const formattedResult = await formatter.format(conversation, options);
           const mimeType = formatter.getMimeType();
-          const blob = new Blob([markdownContent], { type: `${mimeType};charset=utf-8` });
+          const blob =
+            formattedResult instanceof Blob
+              ? formattedResult
+              : new Blob(
+                  formatter.getFileExtension() === 'doc'
+                    ? ['\ufeff', formattedResult]
+                    : [formattedResult],
+                  { type: `${mimeType};charset=utf-8` },
+                );
+
+          // Trigger download
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
 
-          let filenameTemplate = DEFAULT_FILENAME_TEMPLATE;
-          try {
-            const syncData = await chrome.storage.sync.get('filenameTemplate');
-            if (syncData && syncData.filenameTemplate) {
-              filenameTemplate = syncData.filenameTemplate;
+          let downloadName;
+          if (request.customFilename && request.customFilename.trim().length > 0) {
+            const userCustom = request.customFilename.trim().replace(/[\\/:*?"<>|]/g, '');
+            downloadName = userCustom.endsWith(`.${formatter.getFileExtension()}`)
+              ? userCustom
+              : `${userCustom}.${formatter.getFileExtension()}`;
+          } else {
+            let filenameTemplate = DEFAULT_FILENAME_TEMPLATE;
+            try {
+              const syncData = await chrome.storage.sync.get('filenameTemplate');
+              if (syncData && syncData.filenameTemplate) {
+                filenameTemplate = syncData.filenameTemplate;
+              }
+            } catch {
+              // Fallback to default
             }
-          } catch {
-            // Fallback to default
+            const platformName =
+              typeof activeParser.getPlatformName === 'function'
+                ? activeParser.getPlatformName()
+                : activeParser.name || activeParser.constructor.name.replace('Parser', '');
+            const formattedName = formatFilename(filenameTemplate, {
+              platform: platformName,
+              title: conversation.title || 'Conversation',
+            });
+            downloadName = `${formattedName}.${formatter.getFileExtension()}`;
           }
-          const platformName =
-            typeof activeParser.getPlatformName === 'function'
-              ? activeParser.getPlatformName()
-              : activeParser.name || activeParser.constructor.name.replace('Parser', '');
-          const formattedName = formatFilename(filenameTemplate, {
-            platform: platformName,
-            title: conversation.title || 'Conversation',
-          });
-          a.download = `${formattedName}.${formatter.getFileExtension()}`;
 
+          a.download = downloadName;
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
           URL.revokeObjectURL(url);
 
-          if (isTopFrame) {
-            showExporterToast('📥 Markdown file downloaded!');
-          }
           sendResponse({ success: true });
-        } else {
-          sendResponse({ success: false, error: 'Unknown shortcut action' });
+        } catch (e) {
+          console.error(e);
+          sendResponse({ success: false, error: e.message });
         }
-      } catch (e) {
-        console.error('[AI Exporter] Shortcut action failed:', e);
-        if (isTopFrame) {
-          showExporterToast('⚠️ Failed to export conversation', 'error');
-        }
-        sendResponse({ success: false, error: e.message });
+      })();
+      return true; // Indicates async response
+    }
+
+    if (request.action === 'COPY_CHAT') {
+      if (!activeParser) {
+        detectParser();
       }
-    })();
-    return true;
-  }
-});
+      if (!activeParser) {
+        sendResponse({ success: false, error: 'No parser available' });
+        return true;
+      }
+
+      const formatter = formatters[request.format];
+      if (!formatter) {
+        sendResponse({ success: false, error: 'Invalid format' });
+        return true;
+      }
+
+      (async () => {
+        try {
+          const conversation = await activeParser.parse({
+            full: true,
+            parserMode: request.parserMode || 'auto',
+            includeImages: request.includeImages !== false,
+          });
+          if (request.includeImages === false) {
+            conversation.messages.forEach((msg) => {
+              if (msg.content) {
+                msg.content = stripImages(msg.content);
+              }
+            });
+          }
+          console.log('Parsed conversation with', conversation.messages.length, 'messages');
+          const primaryContent = formatter.format(conversation);
+          const htmlFormatter = formatters.html;
+          const richHtmlContent = htmlFormatter ? htmlFormatter.format(conversation) : null;
+
+          sendResponse({
+            success: true,
+            content: primaryContent,
+            htmlContent: richHtmlContent,
+            conversation: conversation,
+          });
+        } catch (e) {
+          console.error(e);
+          sendResponse({ success: false, error: e.message });
+        }
+      })();
+      return true;
+    }
+
+    if (request.action === 'GET_CONTINUATION_PAYLOAD') {
+      if (!activeParser) {
+        sendResponse({ success: false, error: 'No parser available' });
+        return true;
+      }
+
+      (async () => {
+        try {
+          const conversation = await activeParser.parse({
+            full: true,
+            parserMode: request.parserMode || 'auto',
+            includeImages: request.includeImages !== false,
+          });
+          if (request.includeImages === false) {
+            conversation.messages.forEach((msg) => {
+              if (msg.content) {
+                msg.content = stripImages(msg.content);
+              }
+            });
+          }
+          const platformName =
+            typeof activeParser.getPlatformName === 'function'
+              ? activeParser.getPlatformName()
+              : activeParser.name || activeParser.constructor.name.replace('Parser', '');
+          conversation.metadata = { ...conversation.metadata, Source: platformName };
+          const payload = continuationFormatter.format(conversation, request.instruction || '');
+
+          sendResponse({ success: true, payload });
+        } catch (e) {
+          console.error(e);
+          sendResponse({ success: false, error: e.message });
+        }
+      })();
+      return true;
+    }
+
+    if (request.action === 'EXECUTE_SHORTCUT') {
+      const isTopFrame = typeof window === 'undefined' || window.self === window.top;
+      if (!activeParser) {
+        detectParser();
+      }
+      if (!activeParser) {
+        if (isTopFrame) {
+          showExporterToast('⚠️ No supported AI chat found on this tab', 'error');
+        }
+        sendResponse({ success: false, error: 'No parser available' });
+        return true;
+      }
+
+      const shortcut = request.shortcutAction;
+
+      (async () => {
+        try {
+          const conversation = await activeParser.parse({
+            full: true,
+            parserMode: 'auto',
+            includeImages: true,
+          });
+
+          if (!conversation || !conversation.messages || conversation.messages.length === 0) {
+            if (isTopFrame) {
+              showExporterToast('⚠️ No messages found in conversation', 'error');
+            }
+            sendResponse({ success: false, error: 'No messages found' });
+            return;
+          }
+
+          const formatter = formatters.markdown;
+          const markdownContent = formatter.format(conversation);
+
+          if (shortcut === 'copy_markdown') {
+            const copied = await copyToClipboard(markdownContent);
+            if (copied && isTopFrame) {
+              showExporterToast('📋 Markdown copied to clipboard!');
+            }
+            sendResponse({ success: copied });
+          } else if (shortcut === 'download_markdown') {
+            const mimeType = formatter.getMimeType();
+            const blob = new Blob([markdownContent], { type: `${mimeType};charset=utf-8` });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+
+            let filenameTemplate = DEFAULT_FILENAME_TEMPLATE;
+            try {
+              const syncData = await chrome.storage.sync.get('filenameTemplate');
+              if (syncData && syncData.filenameTemplate) {
+                filenameTemplate = syncData.filenameTemplate;
+              }
+            } catch {
+              // Fallback to default
+            }
+            const platformName =
+              typeof activeParser.getPlatformName === 'function'
+                ? activeParser.getPlatformName()
+                : activeParser.name || activeParser.constructor.name.replace('Parser', '');
+            const formattedName = formatFilename(filenameTemplate, {
+              platform: platformName,
+              title: conversation.title || 'Conversation',
+            });
+            a.download = `${formattedName}.${formatter.getFileExtension()}`;
+
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            if (isTopFrame) {
+              showExporterToast('📥 Markdown file downloaded!');
+            }
+            sendResponse({ success: true });
+          } else {
+            sendResponse({ success: false, error: 'Unknown shortcut action' });
+          }
+        } catch (e) {
+          console.error('[AI Exporter] Shortcut action failed:', e);
+          if (isTopFrame) {
+            showExporterToast('⚠️ Failed to export conversation', 'error');
+          }
+          sendResponse({ success: false, error: e.message });
+        }
+      })();
+      return true;
+    }
+  });
+}
 
 async function copyToClipboard(text) {
   try {

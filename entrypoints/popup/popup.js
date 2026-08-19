@@ -1,5 +1,8 @@
 import { initI18n, applyI18n, t } from '../../content/utils/i18n.js';
 import { formatFilename, DEFAULT_FILENAME_TEMPLATE } from '../../content/utils/filename.js';
+import { createLogger } from '../../content/utils/logger.js';
+
+const logger = createLogger('Popup');
 
 function applyTheme(theme) {
   if (theme === 'dark') {
@@ -131,14 +134,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   let tab = await getActiveTab();
-  console.log('[AI Exporter Popup] Active tab detected:', {
+  logger.debug('Active tab detected:', {
     id: tab?.id,
     url: tab?.url,
     title: tab?.title,
   });
 
   if (!tab) {
-    console.warn('[AI Exporter Popup] No active tab found');
+    logger.warn('No active tab found');
     statusEl.textContent = 'Error: No active tab';
     return;
   }
@@ -148,25 +151,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   async function checkAvailability() {
     tab = await getActiveTab();
-    console.log('[AI Exporter Popup] checkAvailability() starting for tab:', tab?.id, tab?.url);
+    logger.debug('checkAvailability() starting for tab:', tab?.id, tab?.url);
     if (!tab || !tab.id) {
-      console.warn('[AI Exporter Popup] Tab or Tab ID invalid');
+      logger.warn('Tab or Tab ID invalid');
       statusEl.textContent = 'Error: No active tab';
       showError();
       return;
     }
     for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
       try {
-        console.log(
-          `[AI Exporter Popup] Attempt ${attempt + 1}/${MAX_RETRIES}: Sending CHECK_AVAILABILITY to tab ${tab.id}`,
+        logger.debug(
+          `Attempt ${attempt + 1}/${MAX_RETRIES}: Sending CHECK_AVAILABILITY to tab ${tab.id}`,
         );
         const response = await chrome.tabs.sendMessage(tab.id, {
           action: 'CHECK_AVAILABILITY',
         });
-        console.log('[AI Exporter Popup] Response received:', response);
+        logger.debug('Response received:', response);
         if (response && response.available) {
-          console.log(
-            `[AI Exporter Popup] Successfully connected to platform: ${response.platform} with ${response.count} messages`,
+          logger.info(
+            `Successfully connected to platform: ${response.platform} with ${response.count} messages`,
           );
           statusEl.textContent = `${t('statusReady') || 'Ready'}: ${response.platform}`;
           const displayTitle = response.title || tab.title || 'Untitled Chat';
@@ -201,8 +204,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           }
           return;
         } else {
-          console.warn(
-            '[AI Exporter Popup] Response indicated parser is not available or returned empty response:',
+          logger.warn(
+            'Response indicated parser is not available or returned empty response:',
             response,
           );
           showError();
@@ -210,19 +213,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       } catch (e) {
         const isNotReady = e.message && e.message.includes('Receiving end does not exist');
-        console.warn(`[AI Exporter Popup] Attempt ${attempt + 1} communication error:`, e.message);
+        logger.warn(`Attempt ${attempt + 1} communication error:`, e.message);
         if (!isNotReady) {
-          console.error('[AI Exporter Popup] Unexpected error:', e);
+          logger.error('Unexpected error:', e);
           showError();
           return;
         }
         if (attempt < MAX_RETRIES - 1) {
-          console.log(`[AI Exporter Popup] Waiting ${RETRY_DELAY_MS}ms before retry...`);
+          logger.debug(`Waiting ${RETRY_DELAY_MS}ms before retry...`);
           await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
         }
       }
     }
-    console.error('[AI Exporter Popup] Exhausted all retries connecting to content script.');
+    logger.error('Exhausted all retries connecting to content script.');
     showError();
   }
 
@@ -368,7 +371,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               }),
             ]);
           } catch (writeErr) {
-            console.warn('Dual-MIME clipboard write failed, falling back to text:', writeErr);
+            logger.warn('Dual-MIME clipboard write failed, falling back to text:', writeErr);
             await navigator.clipboard.writeText(response.content);
           }
         } else {
