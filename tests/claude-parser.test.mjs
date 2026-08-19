@@ -62,7 +62,7 @@ test('ClaudeParser extracts standard messages and Claude Artifacts via DOM fallb
   artifactEl.className = 'artifact-block-cell';
   responseEl.parentNode.appendChild(artifactEl);
 
-  const { ClaudeParser } = await import('../content/parsers/claude.js');
+  const { ClaudeParser } = await import('@covai/parser-core');
   const parser = new ClaudeParser();
 
   const result = await parser.parse();
@@ -188,7 +188,7 @@ test('ClaudeParser extracts conversation from Claude API when available', async 
     return { ok: false, status: 404 };
   };
 
-  const { ClaudeParser } = await import('../content/parsers/claude.js');
+  const { ClaudeParser } = await import('@covai/parser-core');
   const parser = new ClaudeParser();
 
   const result = await parser.parse();

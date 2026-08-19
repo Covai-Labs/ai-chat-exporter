@@ -19,7 +19,7 @@ test('PerplexityParser correctly parses chat content from fixture', async () => 
 
   window.location = { href: 'https://www.perplexity.ai/' };
 
-  const { PerplexityParser } = await import('../content/parsers/perplexity.js');
+  const { PerplexityParser } = await import('@covai/parser-core');
   const parser = new PerplexityParser();
 
   const result = await parser.parse();

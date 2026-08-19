@@ -17,7 +17,7 @@ global.Node = Node;
 global.DOMParser = DOMParser;
 
 test('CopilotParser detects copilot.microsoft.com, copilot.com, copilot.cloud.microsoft, m365.cloud.microsoft, bing.com, and edgeservices.bing.com URLs', async () => {
-  const { CopilotParser } = await import('../content/parsers/copilot.js');
+  const { CopilotParser } = await import('@covai/parser-core');
   const parser = new CopilotParser();
 
   assert.equal(parser.isAvailable('https://copilot.microsoft.com/'), true);
@@ -42,7 +42,7 @@ test('CopilotParser detects copilot.microsoft.com, copilot.com, copilot.cloud.mi
 test('CopilotParser correctly parses chat content from fixture', async () => {
   window.location = { href: 'https://copilot.microsoft.com/chats/fixture' };
 
-  const { CopilotParser } = await import('../content/parsers/copilot.js');
+  const { CopilotParser } = await import('@covai/parser-core');
   const parser = new CopilotParser();
 
   const result = await parser.parse();
@@ -83,7 +83,7 @@ test('CopilotParser correctly parses M365 / Bebop Copilot layout from fixture', 
   global.DOMParser = dom.DOMParser;
   dom.window.location = { href: 'https://copilot.com/chat/conversation/12345' };
 
-  const { CopilotParser } = await import('../content/parsers/copilot.js');
+  const { CopilotParser } = await import('@covai/parser-core');
   const parser = new CopilotParser();
 
   const result = await parser.parse();
@@ -136,7 +136,7 @@ test('CopilotParser correctly parses modern Copilot layout using data-message-au
   global.DOMParser = dom.DOMParser;
   dom.window.location = { href: 'https://copilot.microsoft.com/chats/u1yRSJwM2me3A96y5VL2y' };
 
-  const { CopilotParser } = await import('../content/parsers/copilot.js');
+  const { CopilotParser } = await import('@covai/parser-core');
   const parser = new CopilotParser();
 
   const result = await parser.parse();

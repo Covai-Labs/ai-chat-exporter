@@ -18,7 +18,7 @@ test('LumoParser correctly matches URL and extracts conversation', async () => {
   global.Node = Node;
   global.DOMParser = DOMParser;
 
-  const { LumoParser } = await import('../content/parsers/lumo.js');
+  const { LumoParser } = await import('@covai/parser-core');
   const parser = new LumoParser();
 
   assert.equal(

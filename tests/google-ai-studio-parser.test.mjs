@@ -17,7 +17,7 @@ test('GoogleAIStudioParser correctly extracts user and assistant messages from f
   global.Node = Node;
   global.DOMParser = DOMParser;
 
-  const { GoogleAIStudioParser } = await import('../content/parsers/google_ai_studio.js');
+  const { GoogleAIStudioParser } = await import('@covai/parser-core');
   const parser = new GoogleAIStudioParser();
 
   assert.equal(parser.isAvailable('https://aistudio.google.com/app/prompts/new_chat'), true);

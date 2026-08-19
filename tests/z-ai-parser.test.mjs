@@ -18,7 +18,7 @@ test('ZAiParser correctly extracts user and assistant messages', async () => {
   global.Node = Node;
   global.DOMParser = DOMParser;
 
-  const { ZAiParser } = await import('../content/parsers/z_ai.js');
+  const { ZAiParser } = await import('@covai/parser-core');
   const parser = new ZAiParser();
 
   const result = await parser.parse();
