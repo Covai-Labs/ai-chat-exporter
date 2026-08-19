@@ -61,7 +61,10 @@ export default defineContentScript({
   allFrames: true,
   runAt: 'document_idle',
   main() {
-    console.log('AI Chat Exporter content script loaded via WXT');
+    const isTopFrame = typeof window === 'undefined' || window.self === window.top;
+    console.log(
+      `[AI Exporter ContentScript] Script initialized on: ${window.location.href} (isTopFrame: ${isTopFrame})`,
+    );
 
     const continuationFormatter = new ContinuationFormatter();
 
@@ -103,10 +106,12 @@ export default defineContentScript({
           }
 
           await chrome.storage.local.remove('pendingContinuation');
-          console.log('[AI Exporter] Auto-injected transferred conversation context.');
+          console.log(
+            '[AI Exporter ContentScript] Auto-injected transferred conversation context.',
+          );
         }
       } catch (e) {
-        console.warn('[AI Exporter] Continuation injection check failed:', e);
+        console.warn('[AI Exporter ContentScript] Continuation injection check failed:', e);
       }
     }
 
@@ -143,7 +148,7 @@ export default defineContentScript({
         await import(scriptUrl);
       } catch (e) {
         console.warn(
-          '[AI Exporter] Dynamic import of html2canvas failed, attempting script injection:',
+          '[AI Exporter ContentScript] Dynamic import of html2canvas failed, attempting script injection:',
           e,
         );
         return new Promise((resolve, reject) => {
@@ -178,43 +183,65 @@ export default defineContentScript({
 
     function detectParser() {
       const currentUrl = window.location.href;
-      console.log('Detecting parser for URL:', currentUrl);
+      console.log('[AI Exporter ContentScript] Detecting parser for URL:', currentUrl);
       activeParser = parsers.find((p) => p.isAvailable(currentUrl));
       if (activeParser) {
         const platformName =
           typeof activeParser.getPlatformName === 'function'
             ? activeParser.getPlatformName()
             : activeParser.name || activeParser.constructor.name.replace('Parser', '');
-        console.log('[AI Exporter] Active parser:', platformName);
+        console.log('[AI Exporter ContentScript] Matched active parser:', platformName);
+      } else {
+        console.log('[AI Exporter ContentScript] No parser matched for URL:', currentUrl);
       }
     }
 
     if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
       chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+        const currentFrameIsTop = typeof window === 'undefined' || window.self === window.top;
+        console.log(
+          `[AI Exporter ContentScript] Message received: action=${request.action} on frame=${currentFrameIsTop ? 'TOP' : 'IFRAME'}`,
+        );
+
         if (request.action === 'CHECK_AVAILABILITY') {
           detectParser();
-          const isTopFrame = typeof window === 'undefined' || window.self === window.top;
           if (activeParser) {
             (async () => {
               try {
+                console.log(
+                  '[AI Exporter ContentScript] Executing activeParser.parse({ full: false })...',
+                );
                 const conversation = await activeParser.parse({ full: false });
-                console.log('Parsed conversation with', conversation.messages.length, 'messages');
-                if (!isTopFrame && conversation.messages.length === 0) {
+                console.log(
+                  `[AI Exporter ContentScript] Availability check parsed ${conversation.messages.length} messages, title: "${conversation.title || ''}"`,
+                );
+                if (!currentFrameIsTop && conversation.messages.length === 0) {
+                  console.log(
+                    '[AI Exporter ContentScript] Subframe has 0 messages, ignoring subframe response',
+                  );
                   return;
                 }
                 const platformName =
                   typeof activeParser.getPlatformName === 'function'
                     ? activeParser.getPlatformName()
                     : activeParser.name || activeParser.constructor.name.replace('Parser', '');
-                sendResponse({
+                const responseData = {
                   available: true,
                   platform: platformName,
                   count: conversation.messages.length,
                   title: conversation.title || '',
-                });
+                };
+                console.log(
+                  '[AI Exporter ContentScript] Sending CHECK_AVAILABILITY response:',
+                  responseData,
+                );
+                sendResponse(responseData);
               } catch (e) {
-                console.error('Check availability parse failed:', e);
-                if (isTopFrame) {
+                console.error(
+                  '[AI Exporter ContentScript] Check availability parse threw error:',
+                  e,
+                );
+                if (currentFrameIsTop) {
                   const platformName =
                     typeof activeParser.getPlatformName === 'function'
                       ? activeParser.getPlatformName()
@@ -229,7 +256,10 @@ export default defineContentScript({
               }
             })();
             return true;
-          } else if (isTopFrame) {
+          } else if (currentFrameIsTop) {
+            console.log(
+              '[AI Exporter ContentScript] No active parser on top frame, sending available: false',
+            );
             sendResponse({ available: false });
           }
         }

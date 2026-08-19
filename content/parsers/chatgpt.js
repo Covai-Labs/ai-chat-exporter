@@ -747,6 +747,12 @@ export class ChatGPTParser extends ChatParser {
   }
 
   async parse(options = {}) {
+    console.log(
+      '[ChatGPT Parser] parse() invoked. URL:',
+      typeof window !== 'undefined' ? window.location.href : 'N/A',
+      'options:',
+      options,
+    );
     const title = document.title || 'ChatGPT Session';
     const messages = [];
 
@@ -754,6 +760,22 @@ export class ChatGPTParser extends ChatParser {
     const convId = getConversationId();
     const parserMode = options.parserMode || 'auto';
     const includeImages = options.includeImages !== false;
+
+    console.log('[ChatGPT Parser] Diagnostic State:', {
+      tokenFound: Boolean(token),
+      tokenLength: token ? token.length : 0,
+      convId: convId || 'None',
+      parserMode,
+      clientBootstrapExists: Boolean(
+        typeof document !== 'undefined' && document.getElementById('client-bootstrap'),
+      ),
+      articlesCount:
+        typeof document !== 'undefined' ? document.querySelectorAll('article').length : 0,
+      roleElementsCount:
+        typeof document !== 'undefined'
+          ? document.querySelectorAll('[data-message-author-role]').length
+          : 0,
+    });
 
     // 1. If on shared chat URL (/share/...) or SSR conversation data exists in DOM, try SSR data first
     const isShareUrl =
@@ -765,8 +787,18 @@ export class ChatGPTParser extends ChatParser {
     );
 
     if (isShareUrl && sharedData?.mapping && parserMode !== 'prefer_dom') {
+      console.log(
+        '[ChatGPT Parser] Found shared SSR mapping with',
+        Object.keys(sharedData.mapping).length,
+        'keys',
+      );
       const apiMessages = linearize(sharedData.mapping, includeImages, sharedData.current_node);
       if (apiMessages.length > 0) {
+        console.log(
+          '[ChatGPT Parser] Linearized',
+          apiMessages.length,
+          'messages from shared SSR mapping',
+        );
         return this.formatApiResult(sharedData, apiMessages, title);
       }
     }
@@ -774,6 +806,7 @@ export class ChatGPTParser extends ChatParser {
     // 2. Try fetching from ChatGPT backend API
     if (token && convId && parserMode !== 'prefer_dom') {
       try {
+        console.log('[ChatGPT Parser] Attempting API fetch for convId:', convId);
         const now = Date.now();
         let result;
 
@@ -783,9 +816,11 @@ export class ChatGPTParser extends ChatParser {
           this.lastFetch.includeImages === includeImages &&
           now - this.lastFetch.timestamp < 20000
         ) {
+          console.log('[ChatGPT Parser] Using cached API fetch result');
           result = this.lastFetch.result;
         } else {
           if (!document.getElementById('ai-export-chatgpt-helper')) {
+            console.log('[ChatGPT Parser] Injecting chatgpt_helper.js into page...');
             const script = document.createElement('script');
             script.src = chrome.runtime.getURL('content/chatgpt_helper.js');
             script.id = 'ai-export-chatgpt-helper';
@@ -796,7 +831,12 @@ export class ChatGPTParser extends ChatParser {
             await new Promise((r) => setTimeout(r, 100));
           }
 
+          console.log('[ChatGPT Parser] Sending fetch_conversation postMessage...');
           result = await fetchConversation(convId, token, includeImages);
+          console.log(
+            '[ChatGPT Parser] fetchConversation response received with mapping keys:',
+            Object.keys(result?.data?.mapping || {}).length,
+          );
           this.lastFetch = {
             convId,
             includeImages,
@@ -806,18 +846,29 @@ export class ChatGPTParser extends ChatParser {
         }
 
         const apiMessages = linearize(result.data.mapping, includeImages, result.data.current_node);
+        console.log('[ChatGPT Parser] Linearized API messages count:', apiMessages.length);
         if (apiMessages.length > 0) {
           return this.formatApiResult(result.data, apiMessages, title, result.images);
         }
       } catch (e) {
-        console.error('[AI Exporter] API parse failed, falling back to SSR/DOM:', e);
+        console.warn('[ChatGPT Parser] API parse failed, falling back to SSR/DOM:', e.message);
       }
     }
 
     // 3. If API failed or was not available, check if SSR shared/embedded conversation data exists
     if (sharedData?.mapping && parserMode !== 'prefer_dom') {
+      console.log(
+        '[ChatGPT Parser] Trying fallback SSR mapping with',
+        Object.keys(sharedData.mapping).length,
+        'keys',
+      );
       const apiMessages = linearize(sharedData.mapping, includeImages, sharedData.current_node);
       if (apiMessages.length > 0) {
+        console.log(
+          '[ChatGPT Parser] Linearized',
+          apiMessages.length,
+          'messages from fallback SSR mapping',
+        );
         return this.formatApiResult(sharedData, apiMessages, title);
       }
     }
@@ -951,12 +1002,15 @@ export class ChatGPTParser extends ChatParser {
     }
 
     const fullExport = options.full !== false;
+    console.log('[ChatGPT Parser] Attempting DOM extraction. fullExport:', fullExport);
     const extractedMessages = fullExport
       ? await this.extractAllConversationTurns()
       : this.extractMountedMessages();
+    console.log('[ChatGPT Parser] Extracted messages from DOM count:', extractedMessages.length);
     messages.push(
       ...(extractedMessages.length > 0 ? extractedMessages : this.extractMountedMessages()),
     );
+    console.log('[ChatGPT Parser] Final total messages collected:', messages.length);
 
     const currentUrl =
       typeof window !== 'undefined' && window.location ? window.location.href || '' : '';
