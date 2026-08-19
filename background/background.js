@@ -31,6 +31,8 @@ const TARGET_MATCHES = [
   '*://bing.com/*',
   '*://edgeservices.bing.com/*',
   '*://lumo.proton.me/*',
+  '*://joyland.ai/*',
+  '*://www.joyland.ai/*',
   '*://www.google.com/*',
   '*://www.google.co.in/*',
   '*://www.google.co.uk/*',
@@ -54,6 +56,7 @@ const PLATFORM_URLS = {
   z_ai: 'https://chat.z.ai/',
   aistudio: 'https://aistudio.google.com/',
   lumo: 'https://lumo.proton.me/',
+  joyland: 'https://www.joyland.ai/',
 };
 
 async function syncSidePanelBehavior() {

@@ -70,7 +70,9 @@
     "*://www.bing.com/*",
     "*://bing.com/*",
     "*://edgeservices.bing.com/*",
-    "*://lumo.proton.me/*"
+    "*://lumo.proton.me/*",
+    "*://joyland.ai/*",
+    "*://www.joyland.ai/*"
   ],
   "action": {
     "default_popup": "popup/popup.html",
@@ -112,6 +114,8 @@
         "*://bing.com/*",
         "*://edgeservices.bing.com/*",
         "*://lumo.proton.me/*",
+        "*://joyland.ai/*",
+        "*://www.joyland.ai/*",
         "*://www.google.com/*",
         "*://www.google.co.in/*",
         "*://www.google.co.uk/*",
@@ -167,6 +171,8 @@
         "*://bing.com/*",
         "*://edgeservices.bing.com/*",
         "*://lumo.proton.me/*",
+        "*://joyland.ai/*",
+        "*://www.joyland.ai/*",
         "*://www.google.com/*",
         "*://www.google.co.in/*",
         "*://www.google.co.uk/*",

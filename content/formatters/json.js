@@ -121,7 +121,8 @@ function normalizeRole(role) {
     normalized.includes('deepseek') ||
     normalized.includes('qwen') ||
     normalized.includes('perplexity') ||
-    normalized.includes('lumo')
+    normalized.includes('lumo') ||
+    normalized.includes('joyland')
   ) {
     return 'assistant';
   }

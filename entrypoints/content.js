@@ -14,6 +14,7 @@ import {
   NotebookLMParser,
   CopilotParser,
   LumoParser,
+  JoylandParser,
 } from 'decant-core';
 
 import { MarkdownFormatter } from '../content/formatters/markdown.js';
@@ -55,6 +56,8 @@ export default defineContentScript({
     '*://bing.com/*',
     '*://edgeservices.bing.com/*',
     '*://lumo.proton.me/*',
+    '*://joyland.ai/*',
+    '*://www.joyland.ai/*',
     '*://www.google.com/*',
     '*://www.google.co.in/*',
     '*://www.google.co.uk/*',
@@ -132,6 +135,7 @@ export default defineContentScript({
       new NotebookLMParser(),
       new CopilotParser(),
       new LumoParser(),
+      new JoylandParser(),
     ];
 
     const formatters = {

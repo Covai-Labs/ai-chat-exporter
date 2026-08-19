@@ -90,6 +90,8 @@ export default defineConfig({
       '*://bing.com/*',
       '*://edgeservices.bing.com/*',
       '*://lumo.proton.me/*',
+      '*://joyland.ai/*',
+      '*://www.joyland.ai/*',
     ];
 
     const baseManifest: any = {

@@ -15,6 +15,7 @@ import {
   NotebookLMParser,
   CopilotParser,
   LumoParser,
+  JoylandParser,
 } from 'decant-core';
 
 import { MarkdownFormatter } from './formatters/markdown.js';
@@ -95,6 +96,7 @@ const parsers = [
   new NotebookLMParser(),
   new CopilotParser(),
   new LumoParser(),
+  new JoylandParser(),
 ];
 
 // Registry of formatters

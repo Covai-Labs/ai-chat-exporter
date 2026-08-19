@@ -20,6 +20,7 @@ export default defineBackground(() => {
     z_ai: 'https://chat.z.ai/',
     aistudio: 'https://aistudio.google.com/',
     lumo: 'https://lumo.proton.me/',
+    joyland: 'https://www.joyland.ai/',
   };
 
   const SUPPORTED_DOCUMENT_URL_PATTERNS = [
@@ -49,6 +50,8 @@ export default defineBackground(() => {
     '*://bing.com/*',
     '*://edgeservices.bing.com/*',
     '*://lumo.proton.me/*',
+    '*://joyland.ai/*',
+    '*://www.joyland.ai/*',
     '*://www.google.com/*',
     '*://www.google.co.in/*',
     '*://www.google.co.uk/*',
