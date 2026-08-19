@@ -21,6 +21,7 @@ export default defineBackground(() => {
     aistudio: 'https://aistudio.google.com/',
     lumo: 'https://lumo.proton.me/',
     joyland: 'https://www.joyland.ai/',
+    chub: 'https://chub.ai/',
   };
 
   const SUPPORTED_DOCUMENT_URL_PATTERNS = [
@@ -52,6 +53,10 @@ export default defineBackground(() => {
     '*://lumo.proton.me/*',
     '*://joyland.ai/*',
     '*://www.joyland.ai/*',
+    '*://chub.ai/*',
+    '*://www.chub.ai/*',
+    '*://characterhub.org/*',
+    '*://www.characterhub.org/*',
     '*://www.google.com/*',
     '*://www.google.co.in/*',
     '*://www.google.co.uk/*',

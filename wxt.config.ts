@@ -92,6 +92,10 @@ export default defineConfig({
       '*://lumo.proton.me/*',
       '*://joyland.ai/*',
       '*://www.joyland.ai/*',
+      '*://chub.ai/*',
+      '*://www.chub.ai/*',
+      '*://characterhub.org/*',
+      '*://www.characterhub.org/*',
     ];
 
     const baseManifest: any = {

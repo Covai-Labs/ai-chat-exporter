@@ -33,6 +33,10 @@ const TARGET_MATCHES = [
   '*://lumo.proton.me/*',
   '*://joyland.ai/*',
   '*://www.joyland.ai/*',
+  '*://chub.ai/*',
+  '*://www.chub.ai/*',
+  '*://characterhub.org/*',
+  '*://www.characterhub.org/*',
   '*://www.google.com/*',
   '*://www.google.co.in/*',
   '*://www.google.co.uk/*',
@@ -57,6 +61,7 @@ const PLATFORM_URLS = {
   aistudio: 'https://aistudio.google.com/',
   lumo: 'https://lumo.proton.me/',
   joyland: 'https://www.joyland.ai/',
+  chub: 'https://chub.ai/',
 };
 
 async function syncSidePanelBehavior() {

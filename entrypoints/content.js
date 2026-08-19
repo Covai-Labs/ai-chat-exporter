@@ -15,6 +15,7 @@ import {
   CopilotParser,
   LumoParser,
   JoylandParser,
+  ChubParser,
 } from 'decant-core';
 
 import { MarkdownFormatter } from '../content/formatters/markdown.js';
@@ -58,6 +59,10 @@ export default defineContentScript({
     '*://lumo.proton.me/*',
     '*://joyland.ai/*',
     '*://www.joyland.ai/*',
+    '*://chub.ai/*',
+    '*://www.chub.ai/*',
+    '*://characterhub.org/*',
+    '*://www.characterhub.org/*',
     '*://www.google.com/*',
     '*://www.google.co.in/*',
     '*://www.google.co.uk/*',
@@ -136,6 +141,7 @@ export default defineContentScript({
       new CopilotParser(),
       new LumoParser(),
       new JoylandParser(),
+      new ChubParser(),
     ];
 
     const formatters = {
