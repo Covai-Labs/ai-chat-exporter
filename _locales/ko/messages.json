@@ -498,5 +498,17 @@
   },
   "copiedAboutAddons": {
     "message": "복사되었습니다!"
+  },
+  "filenameTemplateLabel": {
+    "message": "내보내기 파일 이름 패턴",
+    "description": "Label for filename template input"
+  },
+  "filenameTemplateHelp": {
+    "message": "내보낸 파일 이름 패턴입니다. 지원되는 토큰: {platform}, {title}, {date}, {time}, {datetime}.",
+    "description": "Help text for filename template setting"
+  },
+  "filenameTemplatePreview": {
+    "message": "미리보기:",
+    "description": "Label for filename template live preview"
   }
 }

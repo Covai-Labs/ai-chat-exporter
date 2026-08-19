@@ -499,5 +499,17 @@
   "copiedAboutAddons": {
     "message": "Скопировано!",
     "description": "Toast/feedback when about:addons copied"
+  },
+  "filenameTemplateLabel": {
+    "message": "Шаблон имени файла экспорта",
+    "description": "Label for filename template input"
+  },
+  "filenameTemplateHelp": {
+    "message": "Шаблон для экспортируемых файлов. Поддерживаемые токены: {platform}, {title}, {date}, {time}, {datetime}.",
+    "description": "Help text for filename template setting"
+  },
+  "filenameTemplatePreview": {
+    "message": "Предпросмотр:",
+    "description": "Label for filename template live preview"
   }
 }

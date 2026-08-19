@@ -1,4 +1,5 @@
 import { initI18n, applyI18n, t } from '../../content/utils/i18n.js';
+import { formatFilename, DEFAULT_FILENAME_TEMPLATE } from '../../content/utils/filename.js';
 
 function applyTheme(theme) {
   if (theme === 'dark') {
@@ -50,7 +51,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (reportIssueLink) {
     reportIssueLink.addEventListener('click', (e) => {
       e.preventDefault();
-      chrome.tabs.create({ url: reportIssueLink.href });
+      const issueUrl =
+        'https://github.com/Covai-Labs/ai-chat-exporter/issues/new?template=bug_report.md';
+      chrome.tabs.create({ url: issueUrl });
     });
   }
 
@@ -80,6 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     'uiLanguage',
     'defaultFormat',
     'includeImages',
+    'filenameTemplate',
     'defaultTransferTarget',
     'parserMode',
   ]);
@@ -95,6 +99,9 @@ document.addEventListener('DOMContentLoaded', async () => {
           await initI18n(changes.uiLanguage.newValue || 'auto');
           applyI18n();
           updateCopyButtonVisibility();
+        }
+        if (changes.filenameTemplate) {
+          storedSettings.filenameTemplate = changes.filenameTemplate.newValue;
         }
       }
     });
@@ -152,8 +159,14 @@ document.addEventListener('DOMContentLoaded', async () => {
           const count = response.count || 0;
           msgCountEl.textContent = t('messagesFound', count) || `${count} messages found`;
           if (filenameInput) {
-            const safeDefault = displayTitle.replace(/[\\/:*?"<>|]/g, '').trim();
-            filenameInput.value = safeDefault;
+            const formattedDefault = formatFilename(
+              storedSettings.filenameTemplate || DEFAULT_FILENAME_TEMPLATE,
+              {
+                platform: response.platform,
+                title: displayTitle,
+              },
+            );
+            filenameInput.value = formattedDefault;
           }
           if (continueTargetSelect) {
             const platformKey = (response.platform || '').toLowerCase();
@@ -261,7 +274,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           await chrome.storage.local.set({
             previewConversation: response.conversation || null,
             previewContent: response.content,
-            previewTitle: customFilename || tab.title || 'Untitled Chat',
+            previewTitle: response.conversation?.title || tab.title || 'Untitled Chat',
+            previewFilename: customFilename || null,
             previewFormat: format,
             autoPrint: format === 'pdf',
             autoDownloadPng: format === 'png',
@@ -365,10 +379,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
 
       if (response && response.success) {
+        const customFilename = filenameInput ? filenameInput.value.trim() : '';
         await chrome.storage.local.set({
           previewConversation: response.conversation || null,
           previewContent: response.content,
           previewTitle: response.conversation?.title || tab.title || 'Untitled Chat',
+          previewFilename: customFilename || null,
           previewFormat: format,
           autoPrint: false,
           autoDownloadPng: false,

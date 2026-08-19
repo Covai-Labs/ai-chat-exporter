@@ -507,5 +507,17 @@
   "copiedAboutAddons": {
     "message": "Copied!",
     "description": "Toast/feedback when about:addons copied"
+  },
+  "filenameTemplateLabel": {
+    "message": "Export Filename Pattern",
+    "description": "Label for filename template input"
+  },
+  "filenameTemplateHelp": {
+    "message": "Template for exported filenames. Supported tokens: {platform}, {title}, {date}, {time}, {datetime}.",
+    "description": "Help text for filename template setting"
+  },
+  "filenameTemplatePreview": {
+    "message": "Preview:",
+    "description": "Label for filename template live preview"
   }
 }

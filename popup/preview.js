@@ -6,6 +6,7 @@ import { ImageFormatter } from '../content/formatters/image.js';
 import { ContinuationFormatter, stripEncodedImages } from '../content/formatters/continuation.js';
 import { sanitizeHtml } from '../content/utils/sanitizer.js';
 import { initI18n, applyI18n, t } from '../content/utils/i18n.js';
+import { formatFilename, DEFAULT_FILENAME_TEMPLATE } from '../content/utils/filename.js';
 
 function applyTheme(theme, targetDoc = document) {
   if (!targetDoc || !targetDoc.documentElement) return;
@@ -316,11 +317,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     syncThemeToIframe(currentSyncTheme);
   });
 
+  let previewFilename = null;
+
   try {
     const data = await chrome.storage.local.get([
       'previewConversation',
       'previewContent',
       'previewTitle',
+      'previewFilename',
       'previewFormat',
       'autoPrint',
       'autoDownloadPng',
@@ -330,6 +334,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     conversation = data.previewConversation || null;
     title = data.previewTitle || 'Untitled Chat';
+    previewFilename = data.previewFilename || null;
     initialFormat = data.previewFormat || 'markdown';
     const autoPrint = data.autoPrint || false;
     const autoDownloadPng = data.autoDownloadPng || false;
@@ -433,12 +438,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Download button logic
   downloadBtn.addEventListener('click', async () => {
-    const sanitizedTitle = title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '');
+    let downloadBaseName = previewFilename;
+    if (!downloadBaseName) {
+      let filenameTemplate = DEFAULT_FILENAME_TEMPLATE;
+      try {
+        const syncData = await chrome.storage.sync.get('filenameTemplate');
+        if (syncData && syncData.filenameTemplate) {
+          filenameTemplate = syncData.filenameTemplate;
+        }
+      } catch {
+        // Fallback to default
+      }
+      const platform = conversation?.metadata?.Source || 'AI';
+      downloadBaseName = formatFilename(filenameTemplate, {
+        platform,
+        title: conversation?.title || title || 'Conversation',
+      });
+    }
 
-    const filename = `${sanitizedTitle || 'chat-export'}.${activeExtension}`;
+    const filename = `${downloadBaseName}.${activeExtension}`;
 
     const getIframeTheme = () => {
       try {

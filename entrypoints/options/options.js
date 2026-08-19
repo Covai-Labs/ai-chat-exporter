@@ -1,4 +1,5 @@
 import { initI18n, applyI18n, t } from '../../content/utils/i18n.js';
+import { formatFilename, DEFAULT_FILENAME_TEMPLATE } from '../../content/utils/filename.js';
 
 function applyTheme(theme) {
   if (theme === 'dark') {
@@ -23,6 +24,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const languageSelect = document.getElementById('language-select');
   const defaultFormatSelect = document.getElementById('default-format-select');
   const defaultIncludeImages = document.getElementById('default-include-images');
+  const filenameTemplateInput = document.getElementById('filename-template-input');
+  const filenamePreview = document.getElementById('filename-preview');
   const parserModeSelect = document.getElementById('parser-mode-select');
   const defaultTransferSelect = document.getElementById('default-transfer-select');
   const launchModeSection = document.getElementById('launch-mode-section');
@@ -40,6 +43,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, 2000);
   }
 
+  function updateFilenamePreview(template) {
+    if (!filenamePreview) return;
+    const sampleDate = new Date();
+    filenamePreview.textContent = formatFilename(template || DEFAULT_FILENAME_TEMPLATE, {
+      platform: 'Gemini',
+      title: 'Comparing Markdown and PDF',
+      date: sampleDate,
+    });
+  }
+
   const isFirefox = typeof browser !== 'undefined' || !chrome.sidePanel;
   if (isFirefox && launchModeSection) {
     launchModeSection.classList.add('hidden');
@@ -52,6 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     'uiLanguage',
     'defaultFormat',
     'includeImages',
+    'filenameTemplate',
     'parserMode',
     'defaultTransferTarget',
     'obsidianVaultName',
@@ -67,6 +81,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (stored.defaultFormat) defaultFormatSelect.value = stored.defaultFormat;
   if (stored.includeImages !== undefined) defaultIncludeImages.checked = stored.includeImages;
+  if (filenameTemplateInput) {
+    filenameTemplateInput.value = stored.filenameTemplate || DEFAULT_FILENAME_TEMPLATE;
+    updateFilenamePreview(filenameTemplateInput.value);
+  }
   if (stored.parserMode) parserModeSelect.value = stored.parserMode;
   if (stored.defaultTransferTarget) defaultTransferSelect.value = stored.defaultTransferTarget;
   if (stored.obsidianVaultName && obsidianVaultInput)
@@ -104,6 +122,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     chrome.storage.sync.set({ includeImages: defaultIncludeImages.checked });
     showToast();
   });
+
+  if (filenameTemplateInput) {
+    filenameTemplateInput.addEventListener('input', () => {
+      updateFilenamePreview(filenameTemplateInput.value);
+    });
+    filenameTemplateInput.addEventListener('change', () => {
+      const template = filenameTemplateInput.value.trim() || DEFAULT_FILENAME_TEMPLATE;
+      filenameTemplateInput.value = template;
+      chrome.storage.sync.set({ filenameTemplate: template });
+      updateFilenamePreview(template);
+      showToast();
+    });
+  }
 
   parserModeSelect.addEventListener('change', () => {
     chrome.storage.sync.set({ parserMode: parserModeSelect.value });

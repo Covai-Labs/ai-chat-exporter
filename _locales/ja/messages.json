@@ -498,5 +498,17 @@
   },
   "copiedAboutAddons": {
     "message": "コピーしました！"
+  },
+  "filenameTemplateLabel": {
+    "message": "エクスポート ファイル名パターン",
+    "description": "Label for filename template input"
+  },
+  "filenameTemplateHelp": {
+    "message": "エクスポートされるファイル名のパターン。使用可能なトークン: {platform}、{title}、{date}、{time}、{datetime}。",
+    "description": "Help text for filename template setting"
+  },
+  "filenameTemplatePreview": {
+    "message": "プレビュー:",
+    "description": "Label for filename template live preview"
   }
 }

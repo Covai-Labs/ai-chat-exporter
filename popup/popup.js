@@ -1,4 +1,5 @@
 import { initI18n, applyI18n, t } from '../content/utils/i18n.js';
+import { formatFilename, DEFAULT_FILENAME_TEMPLATE } from '../content/utils/filename.js';
 
 function applyTheme(theme) {
   if (theme === 'dark') {
@@ -58,17 +59,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (decantLink) {
     decantLink.addEventListener('click', (e) => {
       e.preventDefault();
-      chrome.tabs.create({ url: decantLink.href });
+      chrome.tabs.create({ url: 'https://decant.in/' });
     });
   }
 
   const copilotRedirectBox = document.getElementById('copilot-redirect-box');
   const copilotRedirectBtn = document.getElementById('copilot-redirect-btn');
   if (copilotRedirectBtn) {
-    copilotRedirectBtn.addEventListener('click', async () => {
-      if (tab && tab.url) {
-        const targetUrl = tab.url.replace('copilot.microsoft.com', 'copilot.com');
-        chrome.tabs.create({ url: targetUrl });
+    copilotRedirectBtn.addEventListener('click', () => {
+      const isEdge = /Edg\//.test(navigator.userAgent);
+      if (isEdge) {
+        chrome.tabs.create({ url: 'edge://copilot' });
       } else {
         chrome.tabs.create({ url: 'https://copilot.com/' });
       }
@@ -81,6 +82,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     'uiLanguage',
     'defaultFormat',
     'includeImages',
+    'filenameTemplate',
     'defaultTransferTarget',
     'parserMode',
   ]);
@@ -96,6 +98,9 @@ document.addEventListener('DOMContentLoaded', async () => {
           await initI18n(changes.uiLanguage.newValue || 'auto');
           applyI18n();
           updateCopyButtonVisibility();
+        }
+        if (changes.filenameTemplate) {
+          storedSettings.filenameTemplate = changes.filenameTemplate.newValue;
         }
       }
     });
@@ -155,8 +160,14 @@ document.addEventListener('DOMContentLoaded', async () => {
           const count = response.count || 0;
           msgCountEl.textContent = t('messagesFound', count) || `${count} messages found`;
           if (filenameInput) {
-            const safeDefault = displayTitle.replace(/[\\/:*?"<>|]/g, '').trim();
-            filenameInput.value = safeDefault;
+            const formattedDefault = formatFilename(
+              storedSettings.filenameTemplate || DEFAULT_FILENAME_TEMPLATE,
+              {
+                platform: response.platform,
+                title: displayTitle,
+              },
+            );
+            filenameInput.value = formattedDefault;
           }
           if (continueTargetSelect) {
             const platformKey = (response.platform || '').toLowerCase();
@@ -264,7 +275,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           await chrome.storage.local.set({
             previewConversation: response.conversation || null,
             previewContent: response.content,
-            previewTitle: customFilename || tab.title || 'Untitled Chat',
+            previewTitle: response.conversation?.title || tab.title || 'Untitled Chat',
+            previewFilename: customFilename || null,
             previewFormat: format,
             autoPrint: format === 'pdf',
             autoDownloadPng: format === 'png',
@@ -368,10 +380,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
 
       if (response && response.success) {
+        const customFilename = filenameInput ? filenameInput.value.trim() : '';
         await chrome.storage.local.set({
           previewConversation: response.conversation || null,
           previewContent: response.content,
           previewTitle: response.conversation?.title || tab.title || 'Untitled Chat',
+          previewFilename: customFilename || null,
           previewFormat: format,
           autoPrint: false,
           autoDownloadPng: false,

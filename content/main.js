@@ -23,6 +23,7 @@ import { HtmlFormatter } from './formatters/html.js';
 import { ImageFormatter } from './formatters/image.js';
 import { ContinuationFormatter } from './formatters/continuation.js';
 import { DocFormatter } from './formatters/doc.js';
+import { formatFilename, DEFAULT_FILENAME_TEMPLATE } from './utils/filename.js';
 
 console.log('AI Chat Exporter script loaded');
 
@@ -265,14 +266,24 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             ? userCustom
             : `${userCustom}.${formatter.getFileExtension()}`;
         } else {
+          let filenameTemplate = DEFAULT_FILENAME_TEMPLATE;
+          try {
+            const syncData = await chrome.storage.sync.get('filenameTemplate');
+            if (syncData && syncData.filenameTemplate) {
+              filenameTemplate = syncData.filenameTemplate;
+            }
+          } catch {
+            // Fallback to default
+          }
           const platformName =
             typeof activeParser.getPlatformName === 'function'
               ? activeParser.getPlatformName()
               : activeParser.name || activeParser.constructor.name.replace('Parser', '');
-          const safeTitle = (conversation.title || 'Untitled_Chat')
-            .replace(/[\\/:*?"<>|]/g, '')
-            .replace(/\s+/g, '_');
-          downloadName = `${platformName}-${safeTitle}.${formatter.getFileExtension()}`;
+          const formattedName = formatFilename(filenameTemplate, {
+            platform: platformName,
+            title: conversation.title || 'Conversation',
+          });
+          downloadName = `${formattedName}.${formatter.getFileExtension()}`;
         }
 
         a.download = downloadName;
@@ -421,14 +432,24 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           const a = document.createElement('a');
           a.href = url;
 
+          let filenameTemplate = DEFAULT_FILENAME_TEMPLATE;
+          try {
+            const syncData = await chrome.storage.sync.get('filenameTemplate');
+            if (syncData && syncData.filenameTemplate) {
+              filenameTemplate = syncData.filenameTemplate;
+            }
+          } catch {
+            // Fallback to default
+          }
           const platformName =
             typeof activeParser.getPlatformName === 'function'
               ? activeParser.getPlatformName()
               : activeParser.name || activeParser.constructor.name.replace('Parser', '');
-          const safeTitle = (conversation.title || 'Untitled_Chat')
-            .replace(/[\\/:*?"<>|]/g, '')
-            .replace(/\s+/g, '_');
-          a.download = `${platformName}-${safeTitle}.${formatter.getFileExtension()}`;
+          const formattedName = formatFilename(filenameTemplate, {
+            platform: platformName,
+            title: conversation.title || 'Conversation',
+          });
+          a.download = `${formattedName}.${formatter.getFileExtension()}`;
 
           document.body.appendChild(a);
           a.click();

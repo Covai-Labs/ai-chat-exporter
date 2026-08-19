@@ -22,6 +22,7 @@ import { HtmlFormatter } from '../content/formatters/html.js';
 import { ImageFormatter } from '../content/formatters/image.js';
 import { ContinuationFormatter } from '../content/formatters/continuation.js';
 import { DocFormatter } from '../content/formatters/doc.js';
+import { formatFilename, DEFAULT_FILENAME_TEMPLATE } from '../content/utils/filename.js';
 
 export default defineContentScript({
   matches: [
@@ -291,14 +292,24 @@ export default defineContentScript({
                   ? userCustom
                   : `${userCustom}.${formatter.getFileExtension()}`;
               } else {
+                let filenameTemplate = DEFAULT_FILENAME_TEMPLATE;
+                try {
+                  const syncData = await chrome.storage.sync.get('filenameTemplate');
+                  if (syncData && syncData.filenameTemplate) {
+                    filenameTemplate = syncData.filenameTemplate;
+                  }
+                } catch {
+                  // Fallback to default
+                }
                 const platformName =
                   typeof activeParser.getPlatformName === 'function'
                     ? activeParser.getPlatformName()
                     : activeParser.name || activeParser.constructor.name.replace('Parser', '');
-                const safeTitle = (conversation.title || 'Untitled_Chat')
-                  .replace(/[\\/:*?"<>|]/g, '')
-                  .replace(/\s+/g, '_');
-                downloadName = `${platformName}-${safeTitle}.${formatter.getFileExtension()}`;
+                const formattedName = formatFilename(filenameTemplate, {
+                  platform: platformName,
+                  title: conversation.title || 'Conversation',
+                });
+                downloadName = `${formattedName}.${formatter.getFileExtension()}`;
               }
 
               a.download = downloadName;
@@ -447,14 +458,24 @@ export default defineContentScript({
                 const a = document.createElement('a');
                 a.href = url;
 
+                let filenameTemplate = DEFAULT_FILENAME_TEMPLATE;
+                try {
+                  const syncData = await chrome.storage.sync.get('filenameTemplate');
+                  if (syncData && syncData.filenameTemplate) {
+                    filenameTemplate = syncData.filenameTemplate;
+                  }
+                } catch {
+                  // Fallback to default
+                }
                 const platformName =
                   typeof activeParser.getPlatformName === 'function'
                     ? activeParser.getPlatformName()
                     : activeParser.name || activeParser.constructor.name.replace('Parser', '');
-                const safeTitle = (conversation.title || 'Untitled_Chat')
-                  .replace(/[\\/:*?"<>|]/g, '')
-                  .replace(/\s+/g, '_');
-                a.download = `${platformName}-${safeTitle}.${formatter.getFileExtension()}`;
+                const formattedName = formatFilename(filenameTemplate, {
+                  platform: platformName,
+                  title: conversation.title || 'Conversation',
+                });
+                a.download = `${formattedName}.${formatter.getFileExtension()}`;
 
                 document.body.appendChild(a);
                 a.click();

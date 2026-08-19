@@ -506,5 +506,17 @@
   },
   "copiedAboutAddons": {
     "message": "Copié !"
+  },
+  "filenameTemplateLabel": {
+    "message": "Modèle de nom de fichier d'exportation",
+    "description": "Label for filename template input"
+  },
+  "filenameTemplateHelp": {
+    "message": "Modèle pour les noms de fichiers exportés. Balises prises en charge : {platform}, {title}, {date}, {time}, {datetime}.",
+    "description": "Help text for filename template setting"
+  },
+  "filenameTemplatePreview": {
+    "message": "Aperçu :",
+    "description": "Label for filename template live preview"
   }
 }

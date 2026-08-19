@@ -5,6 +5,7 @@ test('chrome.storage.sync schema defaults for options system', () => {
   const defaultOptions = {
     defaultFormat: 'markdown',
     includeImages: true,
+    filenameTemplate: '{platform} - {title} - {datetime}',
     parserMode: 'auto',
     defaultTransferTarget: 'claude',
     launchMode: 'popup',
@@ -13,6 +14,7 @@ test('chrome.storage.sync schema defaults for options system', () => {
 
   assert.equal(defaultOptions.defaultFormat, 'markdown');
   assert.equal(defaultOptions.includeImages, true);
+  assert.equal(defaultOptions.filenameTemplate, '{platform} - {title} - {datetime}');
   assert.equal(defaultOptions.parserMode, 'auto');
   assert.equal(defaultOptions.defaultTransferTarget, 'claude');
   assert.equal(defaultOptions.launchMode, 'popup');
