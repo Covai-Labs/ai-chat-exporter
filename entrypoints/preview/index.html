@@ -12,7 +12,20 @@
         <div class="header-top-row">
           <div class="header-main">
             <span class="badge" data-i18n="previewWorkspaceBadge">Chat Export Workspace</span>
-            <h1 id="preview-title">Chat Title</h1>
+            <div class="preview-filename-wrapper">
+              <input
+                type="text"
+                id="preview-filename-input"
+                class="preview-filename-input"
+                placeholder="Export Filename"
+                title="Click to edit export filename"
+                data-i18n-placeholder="filenamePlaceholder"
+                data-i18n-title="filenameTooltip"
+                autocomplete="off"
+                spellcheck="false"
+              />
+              <span id="preview-title" class="hidden">Chat Title</span>
+            </div>
           </div>
           <div class="action-buttons">
             <button
@@ -72,6 +85,7 @@
               📄 Word (.doc)
             </button>
             <button data-tab="png" class="control-btn" data-i18n="imageTab">🖼️ Image (.png)</button>
+            <button data-tab="pdf" class="control-btn" data-i18n="pdfTab">📄 PDF (.pdf)</button>
           </div>
 
           <div class="transfer-control-group">

@@ -526,5 +526,9 @@
   "contextMenuOpenPreview": {
     "message": "在預覽標籤頁中開啟",
     "description": "Context menu item to open conversation in preview tab"
+  },
+  "pdfTab": {
+    "message": "📄 PDF (.pdf)",
+    "description": "PDF preview tab"
   }
 }

@@ -527,5 +527,9 @@
   "contextMenuOpenPreview": {
     "message": "Abrir en pestaña de vista previa",
     "description": "Context menu item to open conversation in preview tab"
+  },
+  "pdfTab": {
+    "message": "📄 PDF (.pdf)",
+    "description": "PDF preview tab"
   }
 }

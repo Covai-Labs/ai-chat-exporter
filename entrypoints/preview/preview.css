@@ -102,7 +102,8 @@ html.in-iframe .preview-header {
   gap: 8px;
 }
 
-html.in-iframe .header-top-row h1 {
+html.in-iframe .header-top-row h1,
+html.in-iframe .header-top-row .preview-filename-wrapper {
   display: none;
 }
 
@@ -118,6 +119,43 @@ html.in-iframe .header-top-row h1 {
   flex: 1;
   min-width: 0;
   overflow: hidden;
+}
+
+.preview-filename-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+.preview-filename-input {
+  width: 100%;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--text-color);
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 4px 8px;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.preview-filename-input:hover {
+  background-color: var(--secondary-bg);
+  border-color: var(--border-color);
+}
+
+.preview-filename-input:focus {
+  background-color: var(--card-bg);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(47, 129, 247, 0.2);
 }
 
 .header-toolbar {

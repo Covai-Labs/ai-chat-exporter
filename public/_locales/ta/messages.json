@@ -519,5 +519,9 @@
   "filenameTemplatePreview": {
     "message": "முன்னோட்டம்:",
     "description": "Label for filename template live preview"
+  },
+  "pdfTab": {
+    "message": "📄 PDF (.pdf)",
+    "description": "PDF preview tab"
   }
 }

@@ -13,6 +13,14 @@ test('preview page includes format tabs and action buttons', () => {
   assert.match(previewHtml, /data-tab="json"/);
   assert.match(previewHtml, /data-tab="doc"/);
   assert.match(previewHtml, /data-tab="png"/);
+  assert.match(previewHtml, /data-tab="pdf"/);
+});
+
+test('preview page includes editable filename input and wrapper', () => {
+  assert.match(previewHtml, /id="preview-filename-input"/);
+  assert.match(previewHtml, /class="preview-filename-input"/);
+  assert.match(previewJs, /preview-filename-input/);
+  assert.match(previewJs, /computedDefaultFilename/);
 });
 
 test('preview page includes code wrapper and sandboxed render wrapper with iframe', () => {
@@ -69,4 +77,12 @@ test('preview script dynamically updates download button label based on format t
   assert.match(previewJs, /Download Markdown/);
   assert.match(previewJs, /Download JSON/);
   assert.match(previewJs, /Download Word Doc/);
+  assert.match(previewJs, /printSavePdf/);
+});
+
+test('preview script contextually toggles copy button on png, pdf, and doc tabs', () => {
+  assert.match(
+    previewJs,
+    /if\s*\(\s*tabName === 'png' \|\| tabName === 'pdf' \|\| tabName === 'doc'\s*\)/,
+  );
 });

@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   applyI18n();
 
   const titleEl = document.getElementById('preview-title');
+  const filenameInput = document.getElementById('preview-filename-input');
   const codeEl = document.getElementById('preview-code');
   const copyBtn = document.getElementById('copy-btn');
   const downloadBtn = document.getElementById('download-btn');
@@ -520,8 +521,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const updateDownloadButtonLabel = (extension) => {
     if (!downloadBtn) return;
-    const svgIcon = `<svg viewBox="0 0 24 24" class="icon"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"/></svg>`;
+    const downloadSvgIcon = `<svg viewBox="0 0 24 24" class="icon"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"/></svg>`;
+    const printSvgIcon = `<svg viewBox="0 0 24 24" class="icon"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>`;
     let label = t('downloadFile') || 'Download File';
+    let icon = downloadSvgIcon;
     if (extension === 'png') {
       label = t('downloadPng') || 'Download PNG';
     } else if (extension === 'html') {
@@ -532,8 +535,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       label = t('downloadJson') || 'Download JSON';
     } else if (extension === 'doc') {
       label = t('downloadWordDoc') || 'Download Word Doc';
+    } else if (extension === 'pdf') {
+      label = t('printSavePdf') || 'Print / Save PDF';
+      icon = printSvgIcon;
     }
-    downloadBtn.innerHTML = `${svgIcon} ${label}`;
+    downloadBtn.innerHTML = `${icon} ${label}`;
   };
 
   const switchTab = (tabName) => {
@@ -554,17 +560,32 @@ document.addEventListener('DOMContentLoaded', async () => {
       pngOptionsBar.classList.toggle('hidden', tabName !== 'png');
     }
     if (printOptionsBar) {
-      printOptionsBar.classList.toggle('hidden', tabName !== 'html-render');
+      printOptionsBar.classList.toggle('hidden', tabName !== 'html-render' && tabName !== 'pdf');
     }
 
-    if (tabName === 'html-render' || tabName === 'png') {
+    // Contextual copy button: hide on png, pdf, and doc; show on text code/markup formats
+    if (copyBtn) {
+      if (tabName === 'png' || tabName === 'pdf' || tabName === 'doc') {
+        copyBtn.classList.add('hidden');
+      } else {
+        copyBtn.classList.remove('hidden');
+      }
+    }
+
+    if (tabName === 'html-render' || tabName === 'png' || tabName === 'pdf') {
       activeContent = htmlContent;
-      activeExtension = tabName === 'png' ? 'png' : 'html';
+      if (tabName === 'png') {
+        activeExtension = 'png';
+      } else if (tabName === 'pdf') {
+        activeExtension = 'pdf';
+      } else {
+        activeExtension = 'html';
+      }
+
       codeWrapper.classList.add('hidden');
       renderWrapper.classList.remove('hidden');
       if (printBtn) {
-        if (tabName === 'png') printBtn.classList.add('hidden');
-        else printBtn.classList.remove('hidden');
+        printBtn.classList.add('hidden');
       }
 
       if (
@@ -648,7 +669,31 @@ document.addEventListener('DOMContentLoaded', async () => {
       includeImagesCheckbox.checked = data.includeImages;
     }
 
-    titleEl.textContent = title;
+    let filenameTemplate = DEFAULT_FILENAME_TEMPLATE;
+    try {
+      const syncData = await chrome.storage.sync.get('filenameTemplate');
+      if (syncData && syncData.filenameTemplate) {
+        filenameTemplate = syncData.filenameTemplate;
+      }
+    } catch {
+      // Fallback to default
+    }
+
+    const platform = conversation?.metadata?.Source || 'AI';
+    const displayTitle = conversation?.title || title || 'Conversation';
+    const computedDefaultFilename = formatFilename(filenameTemplate, {
+      platform,
+      title: displayTitle,
+    });
+
+    const effectiveFilename = previewFilename || computedDefaultFilename;
+    if (filenameInput) {
+      filenameInput.value = effectiveFilename;
+    }
+    if (titleEl) {
+      titleEl.textContent = displayTitle;
+    }
+    document.title = `${effectiveFilename} - Chat Export Preview`;
 
     if (conversation) {
       htmlContent = htmlFormatter.format(conversation);
@@ -674,7 +719,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       initialTab = 'doc';
     } else if (initialFormat === 'png') {
       initialTab = 'png';
-    } else if (initialFormat === 'html' || initialFormat === 'pdf') {
+    } else if (initialFormat === 'pdf') {
+      initialTab = 'pdf';
+    } else if (initialFormat === 'html') {
       initialTab = 'html-render';
     }
 
@@ -740,7 +787,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   downloadBtn.addEventListener('click', async () => {
-    let downloadBaseName = previewFilename;
+    if (activeExtension === 'pdf') {
+      printIframe();
+      return;
+    }
+
+    let downloadBaseName = filenameInput ? filenameInput.value.trim() : '';
+    if (!downloadBaseName) {
+      downloadBaseName = previewFilename;
+    }
     if (!downloadBaseName) {
       let filenameTemplate = DEFAULT_FILENAME_TEMPLATE;
       try {
