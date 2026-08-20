@@ -30,7 +30,9 @@ jobs:
           cache-dependency-path: package.json
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          npm install decant-core@latest --no-save
 
       - name: Run lint & formatting checks
         run: |
