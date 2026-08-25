@@ -59,6 +59,7 @@ test('HTML formatter converts parsed conversation into structured HTML document'
     metadata: {
       Source: 'ChatGPT',
       Model: 'GPT-4',
+      Method: 'API',
     },
   };
 
@@ -70,6 +71,7 @@ test('HTML formatter converts parsed conversation into structured HTML document'
   assert.ok(output.includes('<span class="badge">ChatGPT</span>'));
   assert.ok(output.includes('https://ai-chat-exporter.covai.org/'));
   assert.ok(output.includes('Model: GPT-4'));
+  assert.ok(output.includes('Method: API'));
   assert.ok(output.includes('Self-Consistency Test</h1>'));
   assert.ok(output.includes('theme-toggle-checkbox'));
 

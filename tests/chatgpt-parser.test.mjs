@@ -72,6 +72,7 @@ test('ChatGPTParser correctly parses chat content from real HTML fixture', async
     assert.match(result.messages[1].content, /Here is a short example response/);
     assert.match(result.messages[1].content, /defmodule Hello do/); // elixir code block
     assert.match(result.messages[1].content, /\| Country \| Median Monthly Wage/); // GFM table
+    assert.equal(result.metadata.Method, 'DOM');
   } finally {
     // Restore original context
     global.window = oldWindow;

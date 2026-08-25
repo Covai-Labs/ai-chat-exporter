@@ -77,6 +77,7 @@ test('ClaudeParser extracts standard messages and Claude Artifacts via DOM fallb
   assert.equal(result.messages[2].role, 'Claude Artifact');
   assert.match(result.messages[2].content, /Artifact: hello-world.js/);
   assert.match(result.messages[2].content, /console.log/);
+  assert.equal(result.metadata.Method, 'DOM');
 });
 
 test('ClaudeParser extracts conversation from Claude API when available', async () => {
@@ -197,6 +198,7 @@ test('ClaudeParser extracts conversation from Claude API when available', async 
   assert.equal(result.title, 'Test Claude API Title');
   assert.equal(result.metadata.Model, 'claude-3-7-sonnet-20250219');
   assert.equal(result.metadata.Source, 'Claude');
+  assert.equal(result.metadata.Method, 'API');
 
   assert.equal(result.messages.length, 4);
 

@@ -66,6 +66,7 @@ test('JSON formatter emits normalized schema v1 exports', async () => {
       metadata: {
         Source: 'ChatGPT',
         Model: 'GPT',
+        Method: 'API',
       },
     }),
   );
@@ -101,6 +102,7 @@ test('JSON formatter emits normalized schema v1 exports', async () => {
   assert.deepEqual(output.metadata, {
     Source: 'ChatGPT',
     Model: 'GPT',
+    Method: 'API',
   });
   assert.equal(formatter.getFileExtension(), 'json');
   assert.equal(formatter.getMimeType(), 'application/json');

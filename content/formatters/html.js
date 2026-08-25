@@ -11,6 +11,7 @@ export class HtmlFormatter extends ExportFormatter {
     const platform = conversation.metadata?.Source || 'AI';
     const link = conversation.url || conversation.metadata?.Link || '';
     const model = conversation.metadata?.Model || '';
+    const method = conversation.metadata?.Method || '';
 
     // Convert messages
     const formattedMessages = messages
@@ -761,6 +762,7 @@ ${prismJs}
           <span class="meta-item"><a href="https://ai-chat-exporter.covai.org/" target="_blank" style="color: inherit;">AI Chat Exporter</a></span>
           ${link ? `<span class="meta-item"><a href="${escapeHtml(link)}" target="_blank" style="color: inherit;">Original Link</a></span>` : ''}
           ${model ? `<span class="meta-item">Model: ${escapeHtml(model)}</span>` : ''}
+          ${method ? `<span class="meta-item">Method: ${escapeHtml(method)}</span>` : ''}
         </div>
         <h1>${escapeHtml(title || 'AI Chat Export')}</h1>
       </div>

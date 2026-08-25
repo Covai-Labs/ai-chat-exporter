@@ -16,6 +16,7 @@ test('MarkdownFormatter includes top site link, platform source, hyperlinked URL
       Date: '8/6/2026 12:00:00',
       Link: 'https://claude.ai/chat/123',
       Model: 'Claude 3.5 Sonnet',
+      Method: 'API',
     },
   };
 
@@ -29,6 +30,7 @@ test('MarkdownFormatter includes top site link, platform source, hyperlinked URL
   assert.ok(output.includes('**Date:** 8/6/2026 12:00:00'));
   assert.ok(output.includes('**Link:** [https://claude.ai/chat/123](https://claude.ai/chat/123)'));
   assert.ok(output.includes('**Model:** Claude 3.5 Sonnet'));
+  assert.ok(output.includes('**Method:** API'));
 });
 
 test('MarkdownFormatter omits Model and Link when missing', () => {

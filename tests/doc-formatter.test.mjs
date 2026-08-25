@@ -65,6 +65,7 @@ test('DocFormatter generates Word-compliant HTML document with MSO XML headers',
     ],
     metadata: {
       Source: 'ChatGPT',
+      Method: 'DOM',
     },
   };
 
@@ -74,6 +75,7 @@ test('DocFormatter generates Word-compliant HTML document with MSO XML headers',
   assert.ok(output.includes('application/msword') || output.includes('<w:WordDocument>'));
   assert.ok(output.includes('<title>Word Export Test</title>'));
   assert.ok(output.includes('Exported from ChatGPT'));
+  assert.ok(output.includes('Method: DOM'));
   assert.ok(output.includes('<strong>Gravity</strong>'));
   assert.ok(output.includes('<pre><code class="language-python">'));
   assert.ok(output.includes('<table>'));

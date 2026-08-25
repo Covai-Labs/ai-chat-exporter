@@ -10,6 +10,7 @@ export class DocFormatter extends ExportFormatter {
     const platform = conversation.metadata?.Source || 'AI';
     const link = conversation.url || conversation.metadata?.Link || '';
     const model = conversation.metadata?.Model || '';
+    const method = conversation.metadata?.Method || '';
 
     const metaParts = [`Exported from ${escapeHtml(platform)}`, formattedDate];
     metaParts.push(
@@ -20,6 +21,9 @@ export class DocFormatter extends ExportFormatter {
     }
     if (model) {
       metaParts.push(`Model: ${escapeHtml(model)}`);
+    }
+    if (method) {
+      metaParts.push(`Method: ${escapeHtml(method)}`);
     }
 
     const formattedMessages = messages

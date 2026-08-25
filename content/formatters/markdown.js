@@ -53,6 +53,7 @@ export class MarkdownFormatter extends ExportFormatter {
     const date = metadata.Date || formattedDate;
     const link = conversation.url || metadata.Link || '';
     const model = metadata.Model;
+    const method = metadata.Method;
 
     output += `**Source:** ${platform}  \n`;
     output += `**Date:** ${date}  \n`;
@@ -65,7 +66,11 @@ export class MarkdownFormatter extends ExportFormatter {
       output += `**Model:** ${model}  \n`;
     }
 
-    const standardKeys = new Set(['Source', 'Date', 'Link', 'Model']);
+    if (method) {
+      output += `**Method:** ${method}  \n`;
+    }
+
+    const standardKeys = new Set(['Source', 'Date', 'Link', 'Model', 'Method']);
     Object.entries(metadata).forEach(([key, value]) => {
       if (!standardKeys.has(key) && value) {
         if (typeof value === 'string' && value.startsWith('http')) {

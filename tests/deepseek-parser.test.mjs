@@ -30,6 +30,7 @@ test('DeepSeekParser falls back to DOM parsing when API fetch fails or token is 
   assert.match(result.messages[0].content, /Please write a short response/);
   assert.equal(result.messages[1].role, 'DeepSeek');
   assert.match(result.messages[1].content, /curiosity.*remarkable.*deadrat\.in/);
+  assert.equal(result.metadata.Method, 'DOM');
 });
 
 test('DeepSeekParser extracts conversation via API when token and session ID are present', async () => {
@@ -85,4 +86,5 @@ test('DeepSeekParser extracts conversation via API when token and session ID are
   assert.equal(result.messages[0].content, 'What is DeepSeek?');
   assert.equal(result.messages[1].role, 'DeepSeek');
   assert.equal(result.messages[1].content, 'DeepSeek is an AI assistant.');
+  assert.equal(result.metadata.Method, 'API');
 });
