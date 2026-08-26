@@ -1,0 +1,76 @@
+name: Feature request
+description: Suggest a new capability or improvement
+title: 'feat: '
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tell us what problem you are trying to solve and how the feature would help.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What are you trying to do that is currently difficult or impossible?
+      placeholder: |
+        I want to...
+        Currently...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe what you would like AI Chat Exporter to do.
+      placeholder: |
+        It would be useful if...
+    validations:
+      required: true
+
+  - type: textarea
+    id: example
+    attributes:
+      label: Example workflow
+      description: If possible, show what the feature would look like in practice.
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+
+  - type: input
+    id: platforms
+    attributes:
+      label: AI platform(s)
+      description: Which AI service(s) would this apply to?
+      placeholder: 'ChatGPT, Claude, Gemini, all platforms, etc.'
+
+  - type: input
+    id: formats
+    attributes:
+      label: Export format(s)
+      description: Which export format(s) would this affect?
+      placeholder: 'Markdown, HTML, PDF, PNG, JSON, etc.'
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Have you found another way to accomplish this?
+      placeholder: 'Optional'
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Anything else that might help us understand the request.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submission checks
+      options:
+        - label: I have searched existing issues to ensure this feature has not already been requested.
+          required: true

@@ -1,0 +1,115 @@
+name: Platform support
+description: Add or update support for an AI platform
+title: 'platform: '
+labels:
+  - platform
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to request support for a new AI platform or report changes to an existing platform that require parser updates.
+
+        **Privacy Warning:** Please do NOT include private conversations, personal data, API keys, credentials, or sensitive tokens.
+
+  - type: dropdown
+    id: request-type
+    attributes:
+      label: Request type
+      options:
+        - Support a new AI platform
+        - Existing platform updated (selectors / layout / DOM changed)
+        - Other platform compatibility issue
+    validations:
+      required: true
+
+  - type: input
+    id: platform
+    attributes:
+      label: Platform name
+      placeholder: 'e.g. Lumo, Microsoft Copilot, Gemini, Mistral'
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: Platform URL
+      description: The web URL where this AI chat service is accessed.
+      placeholder: 'https://example.com/chat'
+    validations:
+      required: true
+
+  - type: textarea
+    id: request
+    attributes:
+      label: What should be supported?
+      description: Describe the platform or the specific part that needs support / update.
+      placeholder: |
+        New platform details or changes observed:
+    validations:
+      required: true
+
+  - type: textarea
+    id: behaviour
+    attributes:
+      label: Current behaviour
+      description: What happens when you attempt to export on this platform?
+      placeholder: |
+        For example:
+        - "No compatible chat found"
+        - Export succeeds but assistant messages or markdown code blocks are missing
+        - Exported HTML / Markdown is incorrectly formatted
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      description: Which browser did you test this on?
+      options:
+        - Google Chrome
+        - Mozilla Firefox
+        - Microsoft Edge
+        - Brave
+        - Arc
+        - Opera / Vivaldi
+        - Other Chromium-based browser
+        - Other Gecko-based browser
+        - Other
+
+  - type: input
+    id: browser-version-os
+    attributes:
+      label: Browser version & OS
+      placeholder: 'e.g. Firefox 142 on Linux, Chrome 140 on Windows 11'
+
+  - type: textarea
+    id: example
+    attributes:
+      label: Example public URL or screenshots
+      description: Provide a public shared conversation URL or screenshots if available.
+      placeholder: 'Do not include private or sensitive conversation URLs.'
+
+  - type: textarea
+    id: dom
+    attributes:
+      label: Relevant HTML or DOM information
+      description: If you have inspected the webpage via DevTools, paste relevant selectors, class names, or HTML snippets here.
+      render: html
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Anything else that could help implement or reproduce support (e.g. authentication needed, streaming behavior).
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submission checks
+      options:
+        - label: I have searched existing issues to ensure this platform hasn't already been requested or reported.
+          required: true
+        - label: I confirm this issue contains no private credentials, personal conversation data, or API keys.
+          required: true
