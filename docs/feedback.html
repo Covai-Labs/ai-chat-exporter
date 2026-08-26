@@ -184,6 +184,7 @@
     </div>
     <div class="form-container">
       <iframe
+        id="tally-feedback-iframe"
         data-tally-src="https://tally.so/r/PdWV2b?transparentBackground=1&formEventsForwarding=1"
         width="100%"
         height="100%"
@@ -193,5 +194,18 @@
         title="Feedback, Complaint or anything you want to tell us."
       ></iframe>
     </div>
+    <script>
+      (function () {
+        if (window.location.search) {
+          const iframe = document.getElementById('tally-feedback-iframe');
+          if (iframe) {
+            const currentSrc = iframe.getAttribute('data-tally-src');
+            const separator = currentSrc.includes('?') ? '&' : '?';
+            const params = window.location.search.substring(1);
+            iframe.setAttribute('data-tally-src', currentSrc + separator + params);
+          }
+        }
+      })();
+    </script>
   </body>
 </html>

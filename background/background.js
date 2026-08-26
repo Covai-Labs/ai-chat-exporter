@@ -1,10 +1,16 @@
 // Background service worker
 // Currently used for handling extension installation events or global context menus
 
-const UNINSTALL_URL = 'https://ai-chat-exporter.covai.org/uninstall-feedback.html';
+const extVersion =
+  typeof chrome !== 'undefined' && chrome.runtime?.getManifest
+    ? chrome.runtime.getManifest()?.version || '1.12.1'
+    : '1.12.1';
+const UNINSTALL_URL = `https://ai-chat-exporter.covai.org/uninstall-feedback.html?v=${extVersion}`;
 const WELCOME_URL = 'https://ai-chat-exporter.covai.org/welcome.html';
 
-chrome.runtime.setUninstallURL(UNINSTALL_URL);
+if (typeof chrome !== 'undefined' && chrome.runtime?.setUninstallURL) {
+  chrome.runtime.setUninstallURL(UNINSTALL_URL);
+}
 
 const PLATFORM_URLS = {
   chatgpt: 'https://chatgpt.com/',

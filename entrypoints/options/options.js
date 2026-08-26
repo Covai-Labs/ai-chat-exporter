@@ -249,6 +249,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
+  const feedbackLink = document.getElementById('feedback-link');
+  if (feedbackLink) {
+    const manifest =
+      typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getManifest
+        ? chrome.runtime.getManifest()
+        : { version: '1.12.1' };
+    const userAgent = navigator.userAgent || '';
+    let browser = 'Other';
+    if (userAgent.includes('Firefox/')) browser = 'Firefox';
+    else if (userAgent.includes('Edg/')) browser = 'Edge';
+    else if (userAgent.includes('Chrome/')) browser = 'Chrome';
+    else if (userAgent.includes('Safari/')) browser = 'Safari';
+
+    const os = navigator.platform || '';
+    const params = new URLSearchParams({
+      v: manifest.version || '1.12.1',
+      browser: browser,
+      os: os,
+    });
+    feedbackLink.href = `https://ai-chat-exporter.covai.org/feedback.html?${params.toString()}`;
+  }
+
   if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
     chrome.storage.onChanged.addListener(async (changes, areaName) => {
       if (areaName === 'sync') {
