@@ -66,23 +66,34 @@ body:
     id: browser
     attributes:
       label: Browser
-      description: Which browser did you test this on?
+      description: Which browser did you test this on? (If selecting an 'Other*' option, please specify details in the version/OS field below)
       options:
-        - Google Chrome
         - Mozilla Firefox
+        - Google Chrome
         - Microsoft Edge
-        - Brave
-        - Arc
-        - Opera / Vivaldi
         - Other Chromium-based browser
         - Other Gecko-based browser
+        - Other
+
+  - type: dropdown
+    id: install-source
+    attributes:
+      label: Installation source
+      description: Where did you install the extension from?
+      options:
+        - Chrome Web Store
+        - Firefox Add-ons (AMO)
+        - Microsoft Edge Add-ons
+        - GitHub Releases (Manual / Unpacked zip)
+        - Built from source / Local dev
         - Other
 
   - type: input
     id: browser-version-os
     attributes:
       label: Browser version & OS
-      placeholder: 'e.g. Firefox 142 on Linux, Chrome 140 on Windows 11'
+      description: Browser version and operating system (please mention the browser name if you selected 'Other*')
+      placeholder: 'e.g. Firefox 142 on Linux, Chrome 140 on Windows 11, Brave on macOS'
 
   - type: textarea
     id: example

@@ -62,16 +62,28 @@ body:
     id: browser
     attributes:
       label: Browser
-      description: Which browser are you using?
+      description: Which browser are you using? (If selecting an 'Other*' option, please specify details in the version/OS field below)
       options:
-        - Google Chrome
         - Mozilla Firefox
+        - Google Chrome
         - Microsoft Edge
-        - Brave
-        - Arc
-        - Opera / Vivaldi
         - Other Chromium-based browser
         - Other Gecko-based browser
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: install-source
+    attributes:
+      label: Installation source
+      description: Where did you install the extension from?
+      options:
+        - Chrome Web Store
+        - Firefox Add-ons (AMO)
+        - Microsoft Edge Add-ons
+        - GitHub Releases (Manual / Unpacked zip)
+        - Built from source / Local dev
         - Other
     validations:
       required: true
@@ -80,8 +92,8 @@ body:
     id: browser-version-os
     attributes:
       label: Browser version & OS
-      description: What version of your browser and OS are you running?
-      placeholder: 'e.g. Chrome 140 on macOS Sonoma, Firefox 142 on Windows 11'
+      description: Browser version and operating system (please mention the browser name if you selected 'Other*')
+      placeholder: 'e.g. Firefox 142 on Linux, Chrome 140 on Windows 11, Brave on macOS'
     validations:
       required: true
 
@@ -93,6 +105,16 @@ body:
       placeholder: 'e.g. 1.12.1'
     validations:
       required: true
+
+  - type: textarea
+    id: debug-info
+    attributes:
+      label: System / Debug info (optional)
+      description: If you used the "Copy System Info" button in the extension options/settings, paste it here.
+      placeholder: |
+        - Extension Version: ...
+        - Browser / OS: ...
+      render: text
 
   - type: textarea
     id: logs
