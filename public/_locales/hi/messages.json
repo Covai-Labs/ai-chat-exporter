@@ -522,5 +522,13 @@
   "pdfTab": {
     "message": "📄 PDF (.pdf)",
     "description": "PDF preview tab"
+  },
+  "copySystemInfo": {
+    "message": "📋 समस्या रिपोर्ट के लिए सिस्टम विवरण कॉपी करें",
+    "description": "Button label to copy system and environment info for GitHub issues"
+  },
+  "systemInfoCopied": {
+    "message": "सिस्टम विवरण क्लिपबोर्ड पर कॉपी हो गया!",
+    "description": "Toast message when system info is copied"
   }
 }

@@ -531,5 +531,13 @@
   "pdfTab": {
     "message": "📄 PDF (.pdf)",
     "description": "PDF preview tab"
+  },
+  "copySystemInfo": {
+    "message": "📋 Copy System Info for Issues",
+    "description": "Button label to copy system and environment info for GitHub issues"
+  },
+  "systemInfoCopied": {
+    "message": "System info copied to clipboard!",
+    "description": "Toast message when system info is copied"
   }
 }

@@ -530,5 +530,13 @@
   "pdfTab": {
     "message": "📄 PDF (.pdf)",
     "description": "PDF preview tab"
+  },
+  "copySystemInfo": {
+    "message": "📋 複製用於 Issue 的系統資訊",
+    "description": "Button label to copy system and environment info for GitHub issues"
+  },
+  "systemInfoCopied": {
+    "message": "系統資訊已複製到剪貼簿！",
+    "description": "Toast message when system info is copied"
   }
 }

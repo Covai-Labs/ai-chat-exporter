@@ -200,6 +200,55 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
+  const copySystemInfoBtn = document.getElementById('copy-system-info-btn');
+  if (copySystemInfoBtn) {
+    copySystemInfoBtn.addEventListener('click', async () => {
+      const manifest =
+        typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getManifest
+          ? chrome.runtime.getManifest()
+          : { version: '1.12.1' };
+
+      const userAgent = navigator.userAgent || 'Unknown';
+      let browserName = 'Unknown';
+      if (userAgent.includes('Firefox/')) {
+        const match = userAgent.match(/Firefox\/([\d.]+)/);
+        browserName = `Mozilla Firefox ${match ? match[1] : ''}`.trim();
+      } else if (userAgent.includes('Edg/')) {
+        const match = userAgent.match(/Edg\/([\d.]+)/);
+        browserName = `Microsoft Edge ${match ? match[1] : ''}`.trim();
+      } else if (userAgent.includes('Chrome/')) {
+        const match = userAgent.match(/Chrome\/([\d.]+)/);
+        browserName = `Google Chrome / Chromium ${match ? match[1] : ''}`.trim();
+      } else if (userAgent.includes('Safari/')) {
+        browserName = 'Safari';
+      }
+
+      const platform =
+        navigator.platform ||
+        (navigator.userAgentData && navigator.userAgentData.platform) ||
+        'Unknown';
+      const language = navigator.language || 'en';
+
+      const debugInfo = [
+        '### System & Environment Info',
+        `- **Extension Version:** ${manifest.version || '1.12.1'}`,
+        `- **Browser:** ${browserName}`,
+        `- **Platform / OS:** ${platform}`,
+        `- **Language:** ${language}`,
+        `- **User Agent:** \`${userAgent}\``,
+      ].join('\n');
+
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(debugInfo);
+        }
+        showToast(t('systemInfoCopied') || 'System info copied to clipboard!');
+      } catch {
+        showToast('System info copied!');
+      }
+    });
+  }
+
   if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
     chrome.storage.onChanged.addListener(async (changes, areaName) => {
       if (areaName === 'sync') {

@@ -530,5 +530,13 @@
   "pdfTab": {
     "message": "📄 PDF (.pdf)",
     "description": "PDF preview tab"
+  },
+  "copySystemInfo": {
+    "message": "📋 イシュー用のシステム情報をコピー",
+    "description": "Button label to copy system and environment info for GitHub issues"
+  },
+  "systemInfoCopied": {
+    "message": "システム情報をクリップボードにコピーしました！",
+    "description": "Toast message when system info is copied"
   }
 }

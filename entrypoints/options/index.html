@@ -425,27 +425,49 @@
                 Found a bug, want to request a platform parser feature, or have feedback? We'd love
                 to hear from you.
               </span>
-              <a
-                href="https://ai-chat-exporter.covai.org/feedback.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="secondary-btn"
-                style="
-                  display: inline-flex;
-                  align-items: center;
-                  gap: 8px;
-                  text-decoration: none;
-                  padding: 8px 16px;
-                  border-radius: 6px;
-                  background: rgba(59, 130, 246, 0.15);
-                  color: #60a5fa;
-                  border: 1px solid rgba(59, 130, 246, 0.3);
-                  font-weight: 500;
-                  font-size: 13px;
-                "
-              >
-                <span data-i18n="submitFeedback">💬 Submit Feedback or Issue Report</span>
-              </a>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center">
+                <a
+                  href="https://ai-chat-exporter.covai.org/feedback.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="secondary-btn"
+                  style="
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    text-decoration: none;
+                    padding: 8px 16px;
+                    border-radius: 6px;
+                    background: rgba(59, 130, 246, 0.15);
+                    color: #60a5fa;
+                    border: 1px solid rgba(59, 130, 246, 0.3);
+                    font-weight: 500;
+                    font-size: 13px;
+                  "
+                >
+                  <span data-i18n="submitFeedback">💬 Submit Feedback or Issue Report</span>
+                </a>
+                <button
+                  type="button"
+                  id="copy-system-info-btn"
+                  class="secondary-btn"
+                  style="
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 8px 16px;
+                    border-radius: 6px;
+                    background: rgba(255, 255, 255, 0.08);
+                    color: var(--text-color, #ffffff);
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    font-weight: 500;
+                    font-size: 13px;
+                    cursor: pointer;
+                  "
+                >
+                  <span data-i18n="copySystemInfo">📋 Copy System Info for Issues</span>
+                </button>
+              </div>
             </div>
           </div>
         </section>

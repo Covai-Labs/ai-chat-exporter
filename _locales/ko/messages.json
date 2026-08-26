@@ -530,5 +530,13 @@
   "pdfTab": {
     "message": "📄 PDF (.pdf)",
     "description": "PDF preview tab"
+  },
+  "copySystemInfo": {
+    "message": "📋 이슈 보고용 시스템 정보 복사",
+    "description": "Button label to copy system and environment info for GitHub issues"
+  },
+  "systemInfoCopied": {
+    "message": "시스템 정보가 클립보드에 복사되었습니다!",
+    "description": "Toast message when system info is copied"
   }
 }
