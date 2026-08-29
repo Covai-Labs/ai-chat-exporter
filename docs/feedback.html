@@ -196,14 +196,44 @@
     </div>
     <script>
       (function () {
-        if (window.location.search) {
-          const iframe = document.getElementById('tally-feedback-iframe');
-          if (iframe) {
-            const currentSrc = iframe.getAttribute('data-tally-src');
-            const separator = currentSrc.includes('?') ? '&' : '?';
-            const params = window.location.search.substring(1);
-            iframe.setAttribute('data-tally-src', currentSrc + separator + params);
-          }
+        const iframe = document.getElementById('tally-feedback-iframe');
+        if (!iframe) return;
+
+        const ua = navigator.userAgent || '';
+        let browser = 'Unknown';
+        if (ua.includes('Edg/')) browser = 'Edge';
+        else if (ua.includes('OPR/') || ua.includes('Opera/')) browser = 'Opera';
+        else if (ua.includes('Firefox/') || ua.includes('FxiOS/')) browser = 'Firefox';
+        else if (ua.includes('Chrome/') || ua.includes('CriOS/')) browser = 'Chrome';
+        else if (ua.includes('Safari/') && !ua.includes('Chrome/')) browser = 'Safari';
+
+        let os = 'Unknown';
+        if (ua.includes('Win')) os = 'Windows';
+        else if (ua.includes('Mac')) os = 'macOS';
+        else if (ua.includes('Android')) os = 'Android';
+        else if (ua.includes('iPhone') || ua.includes('iPad') || ua.includes('iPod')) os = 'iOS';
+        else if (ua.includes('CrOS')) os = 'ChromeOS';
+        else if (ua.includes('Linux') || ua.includes('X11')) os = 'Linux';
+
+        const params = new URLSearchParams(window.location.search);
+        if (!params.has('user_agent')) params.set('user_agent', ua);
+        if (!params.has('browser')) params.set('browser', browser);
+        if (!params.has('os')) params.set('os', os);
+        if (!params.has('language') && navigator.language)
+          params.set('language', navigator.language);
+        if (!params.has('screen') && window.screen)
+          params.set('screen', `${window.screen.width}x${window.screen.height}`);
+        if (!params.has('timezone')) {
+          try {
+            params.set('timezone', Intl.DateTimeFormat().resolvedOptions().timeZone || '');
+          } catch (e) {}
+        }
+
+        const currentSrc = iframe.getAttribute('data-tally-src');
+        const separator = currentSrc.includes('?') ? '&' : '?';
+        iframe.setAttribute('data-tally-src', currentSrc + separator + params.toString());
+        if (window.Tally && typeof window.Tally.loadEmbeds === 'function') {
+          window.Tally.loadEmbeds();
         }
       })();
     </script>
