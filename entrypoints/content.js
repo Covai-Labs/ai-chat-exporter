@@ -285,6 +285,13 @@ export default defineContentScript({
                 parserMode: request.parserMode || 'auto',
                 includeImages: request.includeImages !== false,
               });
+              if (
+                !currentFrameIsTop &&
+                (!conversation || !conversation.messages || conversation.messages.length === 0)
+              ) {
+                logger.debug('Subframe has 0 messages, ignoring subframe export');
+                return;
+              }
               if (request.includeImages === false) {
                 conversation.messages.forEach((msg) => {
                   if (msg.content) {
@@ -348,7 +355,9 @@ export default defineContentScript({
               sendResponse({ success: true });
             } catch (e) {
               logger.error('Export failed:', e);
-              sendResponse({ success: false, error: e.message });
+              if (currentFrameIsTop) {
+                sendResponse({ success: false, error: e.message });
+              }
             }
           })();
           return true;
@@ -376,6 +385,13 @@ export default defineContentScript({
                 parserMode: request.parserMode || 'auto',
                 includeImages: request.includeImages !== false,
               });
+              if (
+                !currentFrameIsTop &&
+                (!conversation || !conversation.messages || conversation.messages.length === 0)
+              ) {
+                logger.debug('Subframe has 0 messages, ignoring subframe copy');
+                return;
+              }
               if (request.includeImages === false) {
                 conversation.messages.forEach((msg) => {
                   if (msg.content) {
@@ -396,13 +412,18 @@ export default defineContentScript({
               });
             } catch (e) {
               logger.error('Copy chat failed:', e);
-              sendResponse({ success: false, error: e.message });
+              if (currentFrameIsTop) {
+                sendResponse({ success: false, error: e.message });
+              }
             }
           })();
           return true;
         }
 
         if (request.action === 'GET_CONTINUATION_PAYLOAD') {
+          if (!activeParser) {
+            detectParser();
+          }
           if (!activeParser) {
             sendResponse({ success: false, error: 'No parser available' });
             return true;
@@ -415,6 +436,13 @@ export default defineContentScript({
                 parserMode: request.parserMode || 'auto',
                 includeImages: request.includeImages !== false,
               });
+              if (
+                !currentFrameIsTop &&
+                (!conversation || !conversation.messages || conversation.messages.length === 0)
+              ) {
+                logger.debug('Subframe has 0 messages, ignoring subframe continuation');
+                return;
+              }
               if (request.includeImages === false) {
                 conversation.messages.forEach((msg) => {
                   if (msg.content) {
@@ -432,7 +460,9 @@ export default defineContentScript({
               sendResponse({ success: true, payload });
             } catch (e) {
               logger.error('Get continuation payload failed:', e);
-              sendResponse({ success: false, error: e.message });
+              if (currentFrameIsTop) {
+                sendResponse({ success: false, error: e.message });
+              }
             }
           })();
           return true;

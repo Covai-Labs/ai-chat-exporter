@@ -123,3 +123,37 @@ test('GeminiParser does not extract title from headers inside chat messages', as
   // Should fall back to 'Gemini Conversation' because the <h1> is inside a message
   assert.equal(result.title, 'Gemini Conversation');
 });
+
+test('GeminiParser parses real multi-turn conversation from fixture', async () => {
+  const fixturePath = path.join(__dirname, 'fixtures/gemini-multiturn.html');
+  const html = fs.readFileSync(fixturePath, 'utf8');
+  const { window, document, HTMLElement, Node, DOMParser } = parseHTML(html);
+
+  global.window = window;
+  global.document = document;
+  global.HTMLElement = HTMLElement;
+  global.Node = Node;
+  global.DOMParser = DOMParser;
+  window.location = { href: 'https://gemini.google.com/app/test-convo-id' };
+
+  const { GeminiParser } = await import('decant-core');
+  const parser = new GeminiParser();
+  const result = await parser.parse({ parserMode: 'dom' });
+
+  assert.equal(result.title, 'Formatting Text and Links');
+  assert.equal(result.messages.length, 8);
+  assert.equal(result.messages[0].role, 'User');
+  assert.ok(
+    result.messages[0].content.includes('bold text, italic text, and a link to deadrat.in'),
+  );
+  assert.equal(result.messages[1].role, 'Model');
+  assert.ok(result.messages[1].content.includes('strong technical execution'));
+  assert.equal(result.messages[2].role, 'User');
+  assert.ok(result.messages[2].content.includes('Elixir showing a hello world'));
+  assert.equal(result.messages[3].role, 'Model');
+  assert.ok(result.messages[3].content.includes('IO.puts("Hello, World!")'));
+  assert.equal(result.messages[5].role, 'Model');
+  assert.ok(result.messages[5].content.includes('| Language | Native Script |'));
+  assert.equal(result.messages[7].role, 'Model');
+  assert.ok(result.messages[7].content.includes('$$e^{i\\\\pi} + 1 = 0$$'));
+});
