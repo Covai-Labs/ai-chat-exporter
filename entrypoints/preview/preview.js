@@ -412,27 +412,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const filteredMessages = conversation.messages.filter((_, idx) => selectedIndices.has(idx));
     const activeConv = { ...conversation, messages: filteredMessages };
 
-    let activeHtml = htmlFormatter.format(activeConv, { theme: currentSyncTheme });
+    const shouldIncludeToc = Boolean(includeTocCheckbox && includeTocCheckbox.checked);
 
-    if (includeTocCheckbox && includeTocCheckbox.checked && filteredMessages.length > 0) {
-      const tocItems = filteredMessages
-        .map((m, i) => {
-          const label = m.role === 'User' ? 'User' : conversation.metadata?.Source || 'Assistant';
-          const snippet = (m.content || '')
-            .replace(/<[^>]*>/g, '')
-            .trim()
-            .substring(0, 50);
-          return `<li><a href="#msg-card-${i}"><strong>${label}:</strong> ${snippet}</a></li>`;
-        })
-        .join('');
-      const tocHtml = `<div class="toc-container" style="padding:12px;margin-bottom:16px;background:rgba(52,152,219,0.08);border:1px solid rgba(52,152,219,0.2);border-radius:8px;"><strong>Table of Contents</strong><ul style="margin:8px 0 0 20px;padding:0;">${tocItems}</ul></div>`;
-      activeHtml = activeHtml.replace(
-        '<div class="message-card',
-        `${tocHtml}<div class="message-card`,
-      );
-    }
-
-    htmlContent = activeHtml;
+    htmlContent = htmlFormatter.format(activeConv, {
+      theme: currentSyncTheme,
+      includeToc: shouldIncludeToc,
+    });
     markdownContent = markdownFormatter.format(activeConv);
     jsonContent = jsonFormatter.format(activeConv);
     docContent = docFormatter.format(activeConv);
@@ -574,7 +559,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       pngOptionsBar.classList.toggle('hidden', tabName !== 'png');
     }
     if (printOptionsBar) {
-      printOptionsBar.classList.toggle('hidden', tabName !== 'pdf');
+      const isHtmlOrPdf = tabName === 'html-render' || tabName === 'pdf';
+      printOptionsBar.classList.toggle('hidden', !isHtmlOrPdf);
+
+      const pageBreakContainer = document.getElementById('page-break-container');
+      if (pageBreakContainer) {
+        pageBreakContainer.classList.toggle('hidden', tabName !== 'pdf');
+      }
+      const printHint = document.getElementById('print-hint');
+      if (printHint) {
+        printHint.classList.toggle('hidden', tabName !== 'pdf');
+      }
     }
 
     // Contextual copy button: hide on png, pdf, and doc; show on text code/markup formats

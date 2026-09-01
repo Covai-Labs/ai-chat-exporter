@@ -17,13 +17,39 @@ export class HtmlFormatter extends ExportFormatter {
 
     const isWebArticle = platform === 'Web Article' || platform === 'WebArticle';
 
+    // Table of Contents
+    let tocHtml = '';
+    if (options?.includeToc && messages && messages.length > 0) {
+      const tocItems = messages
+        .map((m, i) => {
+          const isUser = m.role === 'User';
+          const label = isUser ? 'User' : m.role && m.role !== 'Assistant' ? m.role : platform;
+          const snippet = (m.content || '')
+            .replace(/<[^>]*>/g, '')
+            .replace(/\[(?:x|X|\s)\]/g, '')
+            .replace(/[`#*_~]/g, '')
+            .trim()
+            .substring(0, 60);
+          return `<li><a href="#msg-card-${i}"><strong>${escapeHtml(label)}:</strong> ${escapeHtml(snippet || 'Message')}</a></li>`;
+        })
+        .join('\n');
+      tocHtml = `
+        <nav class="toc-card" aria-label="Table of Contents">
+          <div class="toc-title">📑 Table of Contents</div>
+          <ol class="toc-list">
+            ${tocItems}
+          </ol>
+        </nav>
+      `;
+    }
+
     // Convert messages
     const formattedMessages = isWebArticle
       ? messages
-          .map((msg) => {
+          .map((msg, idx) => {
             const htmlContent = sanitizeHtml(markdownToHtml(msg.content));
             return `
-        <article class="article-card">
+        <article id="msg-card-${idx}" class="article-card">
           <div class="message-content">
             ${htmlContent}
           </div>
@@ -32,7 +58,7 @@ export class HtmlFormatter extends ExportFormatter {
           })
           .join('\n')
       : messages
-          .map((msg) => {
+          .map((msg, idx) => {
             const isUser = msg.role === 'User';
             const roleClass = isUser ? 'role-user' : 'role-assistant';
             const roleName = isUser ? 'User' : msg.role && msg.role !== 'Assistant' ? msg.role : platform;
@@ -40,7 +66,7 @@ export class HtmlFormatter extends ExportFormatter {
             const htmlContent = sanitizeHtml(markdownToHtml(msg.content));
 
             return `
-        <div class="message-card ${roleClass}">
+        <div id="msg-card-${idx}" class="message-card ${roleClass}">
           <div class="message-header">
             <div class="message-header-info">
               <div class="message-avatar">${avatarText}</div>
@@ -347,6 +373,50 @@ ${prismJs}
 
     input:checked + .slider:before {
       transform: translateX(24px);
+    }
+
+    .toc-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.1rem 1.35rem;
+      margin-bottom: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+
+    .toc-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .toc-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      list-style-type: decimal;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .toc-list li {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    .toc-list a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .toc-list a:hover {
+      text-decoration: underline;
     }
 
     .message-list {
@@ -828,6 +898,7 @@ ${prismJs}
     </header>
 
     <main class="message-list">
+      ${tocHtml}
       ${formattedMessages}
     </main>
 

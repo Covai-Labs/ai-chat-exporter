@@ -147,15 +147,15 @@
         </div>
 
         <div id="print-options-bar" class="print-options-bar hidden">
-          <label class="checkbox-label">
-            <input type="checkbox" id="page-break-prompt-checkbox" />
-            <span data-i18n="pageBreakPerPrompt">Page Break Per Prompt</span>
-          </label>
-          <label class="checkbox-label">
+          <label class="checkbox-label" id="include-toc-container">
             <input type="checkbox" id="include-toc-checkbox" />
             <span data-i18n="includeToc">Include Table of Contents</span>
           </label>
-          <span class="print-hint" style="font-size: 11.5px; color: var(--text-muted); margin-left: auto;">💡 Tip: Check "Background graphics" in the print dialog for dark/colored themes</span>
+          <label class="checkbox-label" id="page-break-container">
+            <input type="checkbox" id="page-break-prompt-checkbox" />
+            <span data-i18n="pageBreakPerPrompt">Page Break Per Prompt</span>
+          </label>
+          <span id="print-hint" class="print-hint hidden" style="font-size: 11.5px; color: var(--text-muted); margin-left: auto;">💡 Tip: Check "Background graphics" in the print dialog for dark/colored themes</span>
         </div>
 
         <div id="png-options-bar" class="png-options-bar hidden">
