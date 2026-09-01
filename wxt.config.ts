@@ -128,7 +128,6 @@ export default defineConfig({
             'content/claude_react_reader.js',
             'content/lib/*',
             'schemas/*',
-            '_locales/*',
           ],
           matches: ['<all_urls>'],
         },
