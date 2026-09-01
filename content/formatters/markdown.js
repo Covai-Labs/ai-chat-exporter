@@ -85,7 +85,7 @@ export class MarkdownFormatter extends ExportFormatter {
 
     const isWebArticle = platform === 'Web Article' || platform === 'WebArticle';
 
-    messages.forEach((msg, index) => {
+    messages.forEach((msg) => {
       const isArticleRole = msg.role === 'Article' || msg.role === 'Web Article';
       if (isWebArticle || isArticleRole) {
         output += `${normalizeLatexMath(msg.content)}\n\n`;

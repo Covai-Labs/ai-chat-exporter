@@ -127,10 +127,12 @@ export default defineBackground(() => {
           const tabs = await chrome.tabs.query({ url: ['http://*/*', 'https://*/*'] });
           for (const t of tabs) {
             if (t.id) {
-              chrome.scripting.executeScript({
-                target: { tabId: t.id },
-                files: ['content-scripts/content.js'],
-              }).catch(() => {});
+              chrome.scripting
+                .executeScript({
+                  target: { tabId: t.id },
+                  files: ['content-scripts/content.js'],
+                })
+                .catch(() => {});
             }
           }
         } catch (e) {

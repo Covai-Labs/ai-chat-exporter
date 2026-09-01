@@ -360,7 +360,9 @@ if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
           const formatOptions = request.theme ? { theme: request.theme } : {};
           const primaryContent = formatter.format(conversation, formatOptions);
           const htmlFormatter = formatters.html;
-          const richHtmlContent = htmlFormatter ? htmlFormatter.format(conversation, formatOptions) : null;
+          const richHtmlContent = htmlFormatter
+            ? htmlFormatter.format(conversation, formatOptions)
+            : null;
 
           sendResponse({
             success: true,

@@ -49,8 +49,12 @@ export class DocFormatter extends ExportFormatter {
           .map((msg) => {
             const isUser = msg.role === 'User';
             const roleClass = isUser ? 'role-user' : 'role-assistant';
-            const roleName = isUser ? 'User' : msg.role && msg.role !== 'Assistant' ? msg.role : platform;
-            const avatarText = isUser ? 'U' : (roleName[0] || 'A');
+            const roleName = isUser
+              ? 'User'
+              : msg.role && msg.role !== 'Assistant'
+                ? msg.role
+                : platform;
+            const avatarText = isUser ? 'U' : roleName[0] || 'A';
             const rawHtmlContent = markdownToHtml(msg.content);
             // Strip copy buttons and inline SVGs which cause LibreOffice HTML import filter errors
             const htmlContent = rawHtmlContent

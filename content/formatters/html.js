@@ -13,7 +13,10 @@ export class HtmlFormatter extends ExportFormatter {
     const model = conversation.metadata?.Model || '';
     const method = conversation.metadata?.Method || '';
     const selectedTheme = options?.theme || conversation?.theme || '';
-    const themeAttr = selectedTheme && selectedTheme !== 'system' ? ` data-theme="${escapeHtml(selectedTheme)}"` : '';
+    const themeAttr =
+      selectedTheme && selectedTheme !== 'system'
+        ? ` data-theme="${escapeHtml(selectedTheme)}"`
+        : '';
 
     const isWebArticle = platform === 'Web Article' || platform === 'WebArticle';
 
@@ -61,8 +64,12 @@ export class HtmlFormatter extends ExportFormatter {
           .map((msg, idx) => {
             const isUser = msg.role === 'User';
             const roleClass = isUser ? 'role-user' : 'role-assistant';
-            const roleName = isUser ? 'User' : msg.role && msg.role !== 'Assistant' ? msg.role : platform;
-            const avatarText = isUser ? 'U' : (roleName[0] || 'A');
+            const roleName = isUser
+              ? 'User'
+              : msg.role && msg.role !== 'Assistant'
+                ? msg.role
+                : platform;
+            const avatarText = isUser ? 'U' : roleName[0] || 'A';
             const htmlContent = sanitizeHtml(markdownToHtml(msg.content));
 
             return `

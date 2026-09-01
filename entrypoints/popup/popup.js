@@ -213,7 +213,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       } catch (e) {
         const isNotReady = e.message && e.message.includes('Receiving end does not exist');
         logger.debug(`Attempt ${attempt + 1} communication status:`, e.message);
-        if (isNotReady && attempt === 0 && typeof chrome !== 'undefined' && chrome.scripting?.executeScript) {
+        if (
+          isNotReady &&
+          attempt === 0 &&
+          typeof chrome !== 'undefined' &&
+          chrome.scripting?.executeScript
+        ) {
           try {
             logger.debug('Attempting on-demand script injection for tab:', tab.id);
             await chrome.scripting.executeScript({
