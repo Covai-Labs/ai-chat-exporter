@@ -2,10 +2,8 @@ import { initI18n, applyI18n, t } from '../../content/utils/i18n.js';
 import { formatFilename, DEFAULT_FILENAME_TEMPLATE } from '../../content/utils/filename.js';
 
 function applyTheme(theme) {
-  if (theme === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  } else if (theme === 'light') {
-    document.documentElement.setAttribute('data-theme', 'light');
+  if (theme && theme !== 'system') {
+    document.documentElement.setAttribute('data-theme', theme);
   } else {
     document.documentElement.removeAttribute('data-theme');
   }

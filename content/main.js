@@ -264,7 +264,10 @@ if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
           if (request.format === 'png') {
             await ensureHtml2CanvasLoaded();
           }
-          const options = { highQuality: request.highQualityPng !== false };
+          const options = {
+            highQuality: request.highQualityPng !== false,
+            theme: request.theme,
+          };
           const formattedResult = await formatter.format(conversation, options);
           const mimeType = formatter.getMimeType();
           const blob =
@@ -354,9 +357,10 @@ if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
             });
           }
           console.log('Parsed conversation with', conversation.messages.length, 'messages');
-          const primaryContent = formatter.format(conversation);
+          const formatOptions = request.theme ? { theme: request.theme } : {};
+          const primaryContent = formatter.format(conversation, formatOptions);
           const htmlFormatter = formatters.html;
-          const richHtmlContent = htmlFormatter ? htmlFormatter.format(conversation) : null;
+          const richHtmlContent = htmlFormatter ? htmlFormatter.format(conversation, formatOptions) : null;
 
           sendResponse({
             success: true,

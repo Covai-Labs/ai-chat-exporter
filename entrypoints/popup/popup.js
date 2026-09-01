@@ -5,10 +5,8 @@ import { createLogger } from '../../content/utils/logger.js';
 const logger = createLogger('Popup');
 
 function applyTheme(theme) {
-  if (theme === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  } else if (theme === 'light') {
-    document.documentElement.setAttribute('data-theme', 'light');
+  if (theme && theme !== 'system') {
+    document.documentElement.setAttribute('data-theme', theme);
   } else {
     document.documentElement.removeAttribute('data-theme');
   }
@@ -306,6 +304,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           format: formatToRequest,
           includeImages: includeImagesCheckbox.checked,
           parserMode: storedSettings.parserMode || 'auto',
+          theme: storedSettings.theme || 'system',
         });
 
         if (response && response.success) {
@@ -338,6 +337,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           customFilename: customFilename,
           highQualityPng: pngQualityCheckbox ? pngQualityCheckbox.checked : true,
           parserMode: storedSettings.parserMode || 'auto',
+          theme: storedSettings.theme || 'system',
         });
 
         if (response && response.success) {
@@ -365,6 +365,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         action: 'COPY_CHAT',
         format: format,
         includeImages: includeImagesCheckbox.checked,
+        theme: storedSettings.theme || 'system',
       });
 
       if (response && response.success) {

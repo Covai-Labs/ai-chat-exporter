@@ -3,7 +3,7 @@ import { sanitizeHtml } from '../utils/sanitizer.js';
 import { katexCss, katexJs, autoRenderJs, prismCss, prismJs } from '../lib/assets.js';
 
 export class HtmlFormatter extends ExportFormatter {
-  format(conversation) {
+  format(conversation, options = {}) {
     const { title, messages } = conversation;
     const now = new Date();
     const formattedDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.toLocaleTimeString('en-US', { hour12: false })}`;
@@ -12,6 +12,8 @@ export class HtmlFormatter extends ExportFormatter {
     const link = conversation.url || conversation.metadata?.Link || '';
     const model = conversation.metadata?.Model || '';
     const method = conversation.metadata?.Method || '';
+    const selectedTheme = options?.theme || conversation?.theme || '';
+    const themeAttr = selectedTheme && selectedTheme !== 'system' ? ` data-theme="${escapeHtml(selectedTheme)}"` : '';
 
     const isWebArticle = platform === 'Web Article' || platform === 'WebArticle';
 
@@ -94,7 +96,7 @@ ${prismJs}
     `;
 
     return `<!DOCTYPE html>
-<html lang="en">
+<html lang="en"${themeAttr}>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

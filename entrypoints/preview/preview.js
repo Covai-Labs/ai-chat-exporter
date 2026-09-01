@@ -33,10 +33,8 @@ function injectPreviewStyles(doc) {
 
 function applyTheme(theme, targetDoc = document) {
   if (!targetDoc || !targetDoc.documentElement) return;
-  if (theme === 'dark') {
-    targetDoc.documentElement.setAttribute('data-theme', 'dark');
-  } else if (theme === 'light') {
-    targetDoc.documentElement.setAttribute('data-theme', 'light');
+  if (theme && theme !== 'system') {
+    targetDoc.documentElement.setAttribute('data-theme', theme);
   } else {
     targetDoc.documentElement.removeAttribute('data-theme');
   }
@@ -404,7 +402,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const filteredMessages = conversation.messages.filter((_, idx) => selectedIndices.has(idx));
     const activeConv = { ...conversation, messages: filteredMessages };
 
-    let activeHtml = htmlFormatter.format(activeConv);
+    let activeHtml = htmlFormatter.format(activeConv, { theme: currentSyncTheme });
 
     if (includeTocCheckbox && includeTocCheckbox.checked && filteredMessages.length > 0) {
       const tocItems = filteredMessages
@@ -696,7 +694,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.title = `${effectiveFilename} - Chat Export Preview`;
 
     if (conversation) {
-      htmlContent = htmlFormatter.format(conversation);
+      htmlContent = htmlFormatter.format(conversation, { theme: currentSyncTheme });
       markdownContent = markdownFormatter.format(conversation);
       jsonContent = jsonFormatter.format(conversation);
       docContent = docFormatter.format(conversation);
