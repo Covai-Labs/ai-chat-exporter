@@ -157,3 +157,37 @@ test('GeminiParser parses real multi-turn conversation from fixture', async () =
   assert.equal(result.messages[7].role, 'Model');
   assert.ok(result.messages[7].content.includes('$$e^{i\\\\pi} + 1 = 0$$'));
 });
+
+test('GeminiParser rejects API response when it contains conversation IDs and falls back to DOM', async () => {
+  const html = fs.readFileSync(path.join(__dirname, 'fixtures/gemini-chat.html'), 'utf8');
+  const { window, document, HTMLElement, Node, DOMParser } = parseHTML(html);
+
+  global.window = window;
+  global.document = document;
+  global.HTMLElement = HTMLElement;
+  global.Node = Node;
+  global.DOMParser = DOMParser;
+  window.location = { href: 'https://gemini.google.com/app/27959a7cc57dfb66' };
+
+  window.WIZ_global_data = {
+    SNlM0e: 'mock-token',
+    FdrFJe: 'mock-sid',
+  };
+
+  const { GeminiParser } = await import('decant-core');
+  const parser = new GeminiParser();
+
+  global.fetch = async () => {
+    return {
+      text: async () =>
+        ')]}\'\n[["wrb.fr","hNvQHb","[[[\\"c_27959a7cc57dfb66\\",\\"c_27959a7cc57dfb66\\"]]]"]]',
+    };
+  };
+
+  const result = await parser.parse();
+
+  assert.equal(result.messages[0].role, 'User');
+  assert.notEqual(result.messages[0].content, 'c_27959a7cc57dfb66');
+  assert.ok(result.messages[0].content.includes('bold text'));
+  assert.equal(result.metadata.Method, 'DOM');
+});
