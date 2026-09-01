@@ -83,15 +83,16 @@ export class MarkdownFormatter extends ExportFormatter {
 
     output += `\n`;
 
-    messages.forEach((msg, index) => {
-      // Use "Prompt:" for user, "Response:" for model
-      const heading = msg.role === 'User' ? '## Prompt:' : '## Response:';
-      output += `${heading}\n`;
-      output += `${normalizeLatexMath(msg.content)}\n\n`;
+    const isWebArticle = platform === 'Web Article' || platform === 'WebArticle';
 
-      // Don't add separator after last message
-      if (index < messages.length - 1) {
-        // No separator needed - just blank line between messages
+    messages.forEach((msg) => {
+      const isArticleRole = msg.role === 'Article' || msg.role === 'Web Article';
+      if (isWebArticle || isArticleRole) {
+        output += `${normalizeLatexMath(msg.content)}\n\n`;
+      } else {
+        const heading = msg.role === 'User' ? '## Prompt:' : '## Response:';
+        output += `${heading}\n`;
+        output += `${normalizeLatexMath(msg.content)}\n\n`;
       }
     });
 

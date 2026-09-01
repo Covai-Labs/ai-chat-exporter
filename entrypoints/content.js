@@ -16,6 +16,7 @@ import {
   LumoParser,
   JoylandParser,
   ChubParser,
+  ArticleParser,
 } from 'decant-core';
 
 import { MarkdownFormatter } from '../content/formatters/markdown.js';
@@ -30,47 +31,7 @@ import { createLogger } from '../content/utils/logger.js';
 const logger = createLogger('ContentScript');
 
 export default defineContentScript({
-  matches: [
-    '*://chatgpt.com/*',
-    '*://gemini.google.com/*',
-    '*://claude.ai/*',
-    '*://qwen.ai/*',
-    '*://chat.qwen.ai/*',
-    '*://www.perplexity.ai/*',
-    '*://chat.deepseek.com/*',
-    '*://www.meta.ai/*',
-    '*://meta.ai/*',
-    '*://chat.mistral.ai/*',
-    '*://chat.z.ai/*',
-    '*://console.cloud.google.com/*',
-    '*://aistudio.google.com/*',
-    '*://notebooklm.google.com/*',
-    '*://notebook.google.com/*',
-    '*://copilot.microsoft.com/*',
-    '*://www.copilot.microsoft.com/*',
-    '*://copilot.com/*',
-    '*://www.copilot.com/*',
-    '*://copilot.cloud.microsoft/*',
-    '*://m365.cloud.microsoft/*',
-    '*://www.m365.cloud.microsoft/*',
-    '*://www.bing.com/*',
-    '*://bing.com/*',
-    '*://edgeservices.bing.com/*',
-    '*://lumo.proton.me/*',
-    '*://joyland.ai/*',
-    '*://www.joyland.ai/*',
-    '*://chub.ai/*',
-    '*://www.chub.ai/*',
-    '*://characterhub.org/*',
-    '*://www.characterhub.org/*',
-    '*://www.google.com/*',
-    '*://www.google.co.in/*',
-    '*://www.google.co.uk/*',
-    '*://www.google.ca/*',
-    '*://www.google.com.au/*',
-    '*://www.google.de/*',
-    '*://www.google.fr/*',
-  ],
+  matches: ['<all_urls>'],
   allFrames: true,
   runAt: 'document_idle',
   main() {
@@ -142,6 +103,7 @@ export default defineContentScript({
       new LumoParser(),
       new JoylandParser(),
       new ChubParser(),
+      new ArticleParser(),
     ];
 
     const formatters = {
@@ -302,7 +264,10 @@ export default defineContentScript({
               if (request.format === 'png') {
                 await ensureHtml2CanvasLoaded();
               }
-              const options = { highQuality: request.highQualityPng !== false };
+              const options = {
+                highQuality: request.highQualityPng !== false,
+                theme: request.theme,
+              };
               const formattedResult = await formatter.format(conversation, options);
               const mimeType = formatter.getMimeType();
               const blob =
@@ -400,9 +365,12 @@ export default defineContentScript({
                 });
               }
               logger.debug('Parsed conversation with', conversation.messages.length, 'messages');
-              const primaryContent = formatter.format(conversation);
+              const formatOptions = request.theme ? { theme: request.theme } : {};
+              const primaryContent = formatter.format(conversation, formatOptions);
               const htmlFormatter = formatters.html;
-              const richHtmlContent = htmlFormatter ? htmlFormatter.format(conversation) : null;
+              const richHtmlContent = htmlFormatter
+                ? htmlFormatter.format(conversation, formatOptions)
+                : null;
 
               sendResponse({
                 success: true,

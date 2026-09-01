@@ -33,10 +33,8 @@ function injectPreviewStyles(doc) {
 
 function applyTheme(theme, targetDoc = document) {
   if (!targetDoc || !targetDoc.documentElement) return;
-  if (theme === 'dark') {
-    targetDoc.documentElement.setAttribute('data-theme', 'dark');
-  } else if (theme === 'light') {
-    targetDoc.documentElement.setAttribute('data-theme', 'light');
+  if (theme && theme !== 'system') {
+    targetDoc.documentElement.setAttribute('data-theme', theme);
   } else {
     targetDoc.documentElement.removeAttribute('data-theme');
   }
@@ -97,6 +95,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Ignore theme loading errors when running standalone
   }
 
+  const previewThemeSelect = document.getElementById('preview-theme-select');
+  if (previewThemeSelect) {
+    previewThemeSelect.value = currentSyncTheme || 'system';
+    previewThemeSelect.addEventListener('change', () => {
+      const selected = previewThemeSelect.value;
+      currentSyncTheme = selected;
+      chrome.storage.sync.set({ theme: selected });
+      applyTheme(selected, document);
+      syncThemeToIframe(selected);
+      cachedPngBlob = null;
+      recalculateContent();
+    });
+  }
+
   const syncThemeToIframe = (theme) => {
     try {
       if (previewRendered && previewRendered.contentWindow) {
@@ -110,21 +122,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         previewRendered.contentDocument ||
         (previewRendered.contentWindow && previewRendered.contentWindow.document);
       if (!doc || !doc.documentElement) return;
-      const toggle = doc.getElementById('theme-toggle-checkbox');
-      let isDark = false;
-      if (theme === 'dark') {
-        isDark = true;
-      } else if (theme === 'light') {
-        isDark = false;
+      const themeDropdown = doc.getElementById('theme-select-dropdown');
+      if (theme && theme !== 'system') {
+        doc.documentElement.setAttribute('data-theme', theme);
+        if (themeDropdown) themeDropdown.value = theme;
       } else {
-        isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      }
-      if (isDark) {
-        doc.documentElement.setAttribute('data-theme', 'dark');
-        if (toggle) toggle.checked = true;
-      } else {
-        doc.documentElement.removeAttribute('data-theme');
-        if (toggle) toggle.checked = false;
+        const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        doc.documentElement.setAttribute('data-theme', isDark ? 'modern-dark' : 'modern-light');
+        if (themeDropdown) themeDropdown.value = isDark ? 'modern-dark' : 'modern-light';
       }
     } catch {
       // Ignore iframe DOM access error
@@ -135,8 +140,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     chrome.storage.onChanged.addListener((changes, areaName) => {
       if (areaName === 'sync' && changes.theme) {
         currentSyncTheme = changes.theme.newValue || 'system';
+        if (previewThemeSelect) previewThemeSelect.value = currentSyncTheme;
         applyTheme(currentSyncTheme, document);
         syncThemeToIframe(currentSyncTheme);
+        cachedPngBlob = null;
+        recalculateContent();
       }
     });
   }
@@ -404,27 +412,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const filteredMessages = conversation.messages.filter((_, idx) => selectedIndices.has(idx));
     const activeConv = { ...conversation, messages: filteredMessages };
 
-    let activeHtml = htmlFormatter.format(activeConv);
+    const shouldIncludeToc = Boolean(includeTocCheckbox && includeTocCheckbox.checked);
 
-    if (includeTocCheckbox && includeTocCheckbox.checked && filteredMessages.length > 0) {
-      const tocItems = filteredMessages
-        .map((m, i) => {
-          const label = m.role === 'User' ? 'User' : conversation.metadata?.Source || 'Assistant';
-          const snippet = (m.content || '')
-            .replace(/<[^>]*>/g, '')
-            .trim()
-            .substring(0, 50);
-          return `<li><a href="#msg-card-${i}"><strong>${label}:</strong> ${snippet}</a></li>`;
-        })
-        .join('');
-      const tocHtml = `<div class="toc-container" style="padding:12px;margin-bottom:16px;background:rgba(52,152,219,0.08);border:1px solid rgba(52,152,219,0.2);border-radius:8px;"><strong>Table of Contents</strong><ul style="margin:8px 0 0 20px;padding:0;">${tocItems}</ul></div>`;
-      activeHtml = activeHtml.replace(
-        '<div class="message-card',
-        `${tocHtml}<div class="message-card`,
-      );
-    }
-
-    htmlContent = activeHtml;
+    htmlContent = htmlFormatter.format(activeConv, {
+      theme: currentSyncTheme,
+      includeToc: shouldIncludeToc,
+    });
     markdownContent = markdownFormatter.format(activeConv);
     jsonContent = jsonFormatter.format(activeConv);
     docContent = docFormatter.format(activeConv);
@@ -489,7 +482,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       const doc =
         previewRendered.contentDocument ||
         (previewRendered.contentWindow && previewRendered.contentWindow.document);
-      if (doc && doc.head) {
+      if (doc && doc.documentElement) {
+        if (currentSyncTheme && currentSyncTheme !== 'system') {
+          doc.documentElement.setAttribute('data-theme', currentSyncTheme);
+        } else {
+          const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          doc.documentElement.setAttribute('data-theme', isDark ? 'modern-dark' : 'modern-light');
+        }
         let printStyle = doc.getElementById('print-custom-style');
         if (!printStyle) {
           printStyle = doc.createElement('style');
@@ -560,7 +559,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       pngOptionsBar.classList.toggle('hidden', tabName !== 'png');
     }
     if (printOptionsBar) {
-      printOptionsBar.classList.toggle('hidden', tabName !== 'html-render' && tabName !== 'pdf');
+      const isHtmlOrPdf = tabName === 'html-render' || tabName === 'pdf';
+      printOptionsBar.classList.toggle('hidden', !isHtmlOrPdf);
+
+      const pageBreakContainer = document.getElementById('page-break-container');
+      if (pageBreakContainer) {
+        pageBreakContainer.classList.toggle('hidden', tabName !== 'pdf');
+      }
+      const printHint = document.getElementById('print-hint');
+      if (printHint) {
+        printHint.classList.toggle('hidden', tabName !== 'pdf');
+      }
     }
 
     // Contextual copy button: hide on png, pdf, and doc; show on text code/markup formats
@@ -696,7 +705,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.title = `${effectiveFilename} - Chat Export Preview`;
 
     if (conversation) {
-      htmlContent = htmlFormatter.format(conversation);
+      htmlContent = htmlFormatter.format(conversation, { theme: currentSyncTheme });
       markdownContent = markdownFormatter.format(conversation);
       jsonContent = jsonFormatter.format(conversation);
       docContent = docFormatter.format(conversation);

@@ -5,10 +5,8 @@ import { createLogger } from '../../content/utils/logger.js';
 const logger = createLogger('Popup');
 
 function applyTheme(theme) {
-  if (theme === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  } else if (theme === 'light') {
-    document.documentElement.setAttribute('data-theme', 'light');
+  if (theme && theme !== 'system') {
+    document.documentElement.setAttribute('data-theme', theme);
   } else {
     document.documentElement.removeAttribute('data-theme');
   }
@@ -96,7 +94,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     chrome.storage.onChanged.addListener(async (changes, areaName) => {
       if (areaName === 'sync') {
         if (changes.theme) {
-          applyTheme(changes.theme.newValue || 'system');
+          storedSettings.theme = changes.theme.newValue || 'system';
+          applyTheme(storedSettings.theme);
         }
         if (changes.uiLanguage) {
           await initI18n(changes.uiLanguage.newValue || 'auto');
@@ -214,6 +213,24 @@ document.addEventListener('DOMContentLoaded', async () => {
       } catch (e) {
         const isNotReady = e.message && e.message.includes('Receiving end does not exist');
         logger.debug(`Attempt ${attempt + 1} communication status:`, e.message);
+        if (
+          isNotReady &&
+          attempt === 0 &&
+          typeof chrome !== 'undefined' &&
+          chrome.scripting?.executeScript
+        ) {
+          try {
+            logger.debug('Attempting on-demand script injection for tab:', tab.id);
+            await chrome.scripting.executeScript({
+              target: { tabId: tab.id },
+              files: ['content-scripts/content.js'],
+            });
+            await new Promise((resolve) => setTimeout(resolve, 200));
+            continue;
+          } catch (injectErr) {
+            logger.debug('Dynamic script injection failed:', injectErr);
+          }
+        }
         if (!isNotReady) {
           logger.debug('Unexpected error connecting to tab:', e);
           showError();
@@ -293,6 +310,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           format: formatToRequest,
           includeImages: includeImagesCheckbox.checked,
           parserMode: storedSettings.parserMode || 'auto',
+          theme: storedSettings.theme || 'system',
         });
 
         if (response && response.success) {
@@ -325,6 +343,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           customFilename: customFilename,
           highQualityPng: pngQualityCheckbox ? pngQualityCheckbox.checked : true,
           parserMode: storedSettings.parserMode || 'auto',
+          theme: storedSettings.theme || 'system',
         });
 
         if (response && response.success) {
@@ -352,6 +371,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         action: 'COPY_CHAT',
         format: format,
         includeImages: includeImagesCheckbox.checked,
+        theme: storedSettings.theme || 'system',
       });
 
       if (response && response.success) {

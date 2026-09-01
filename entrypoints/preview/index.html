@@ -88,6 +88,21 @@
             <button data-tab="pdf" class="control-btn" data-i18n="pdfTab">📄 PDF (.pdf)</button>
           </div>
 
+          <div class="theme-control-group">
+            <span class="transfer-label">Theme:</span>
+            <select id="preview-theme-select" class="transfer-select" title="Switch Theme">
+              <option value="system">🎨 System Theme</option>
+              <option value="modern-light">☀️ Modern Light</option>
+              <option value="modern-dark">🌙 Modern Dark</option>
+              <option value="github-light">🐙 GitHub Light</option>
+              <option value="github-dark">🐙 GitHub Dark</option>
+              <option value="nord">❄️ Nord Slate</option>
+              <option value="dracula">🧛 Dracula</option>
+              <option value="solarized-light">🌅 Solarized Light</option>
+              <option value="solarized-dark">🌌 Solarized Dark</option>
+            </select>
+          </div>
+
           <div class="transfer-control-group">
             <span class="transfer-label" data-i18n="continueOn">Continue On:</span>
             <select
@@ -132,14 +147,20 @@
         </div>
 
         <div id="print-options-bar" class="print-options-bar hidden">
-          <label class="checkbox-label">
-            <input type="checkbox" id="page-break-prompt-checkbox" />
-            <span data-i18n="pageBreakPerPrompt">Page Break Per Prompt</span>
-          </label>
-          <label class="checkbox-label">
+          <label class="checkbox-label" id="include-toc-container">
             <input type="checkbox" id="include-toc-checkbox" />
             <span data-i18n="includeToc">Include Table of Contents</span>
           </label>
+          <label class="checkbox-label" id="page-break-container">
+            <input type="checkbox" id="page-break-prompt-checkbox" />
+            <span data-i18n="pageBreakPerPrompt">Page Break Per Prompt</span>
+          </label>
+          <span
+            id="print-hint"
+            class="print-hint hidden"
+            style="font-size: 11.5px; color: var(--text-muted); margin-left: auto"
+            >💡 Tip: Check "Background graphics" in the print dialog for dark/colored themes</span
+          >
         </div>
 
         <div id="png-options-bar" class="png-options-bar hidden">

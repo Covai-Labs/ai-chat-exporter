@@ -3,7 +3,7 @@ import { sanitizeHtml } from '../utils/sanitizer.js';
 import { katexCss, katexJs, autoRenderJs, prismCss, prismJs } from '../lib/assets.js';
 
 export class HtmlFormatter extends ExportFormatter {
-  format(conversation) {
+  format(conversation, options = {}) {
     const { title, messages } = conversation;
     const now = new Date();
     const formattedDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.toLocaleTimeString('en-US', { hour12: false })}`;
@@ -12,22 +12,72 @@ export class HtmlFormatter extends ExportFormatter {
     const link = conversation.url || conversation.metadata?.Link || '';
     const model = conversation.metadata?.Model || '';
     const method = conversation.metadata?.Method || '';
+    const selectedTheme = options?.theme || conversation?.theme || '';
+    const themeAttr =
+      selectedTheme && selectedTheme !== 'system'
+        ? ` data-theme="${escapeHtml(selectedTheme)}"`
+        : '';
+
+    const isWebArticle = platform === 'Web Article' || platform === 'WebArticle';
+
+    // Table of Contents
+    let tocHtml = '';
+    if (options?.includeToc && messages && messages.length > 0) {
+      const tocItems = messages
+        .map((m, i) => {
+          const isUser = m.role === 'User';
+          const label = isUser ? 'User' : m.role && m.role !== 'Assistant' ? m.role : platform;
+          const snippet = (m.content || '')
+            .replace(/<[^>]*>/g, '')
+            .replace(/\[(?:x|X|\s)\]/g, '')
+            .replace(/[`#*_~]/g, '')
+            .trim()
+            .substring(0, 60);
+          return `<li><a href="#msg-card-${i}"><strong>${escapeHtml(label)}:</strong> ${escapeHtml(snippet || 'Message')}</a></li>`;
+        })
+        .join('\n');
+      tocHtml = `
+        <nav class="toc-card" aria-label="Table of Contents">
+          <div class="toc-title">📑 Table of Contents</div>
+          <ol class="toc-list">
+            ${tocItems}
+          </ol>
+        </nav>
+      `;
+    }
 
     // Convert messages
-    const formattedMessages = messages
-      .map((msg) => {
-        const isUser = msg.role === 'User';
-        const roleClass = isUser ? 'role-user' : 'role-assistant';
-        const roleName = isUser ? 'User' : platform;
-        const avatarText = isUser ? 'U' : platform[0];
-        const htmlContent = sanitizeHtml(markdownToHtml(msg.content));
+    const formattedMessages = isWebArticle
+      ? messages
+          .map((msg, idx) => {
+            const htmlContent = sanitizeHtml(markdownToHtml(msg.content));
+            return `
+        <article id="msg-card-${idx}" class="article-card">
+          <div class="message-content">
+            ${htmlContent}
+          </div>
+        </article>
+      `;
+          })
+          .join('\n')
+      : messages
+          .map((msg, idx) => {
+            const isUser = msg.role === 'User';
+            const roleClass = isUser ? 'role-user' : 'role-assistant';
+            const roleName = isUser
+              ? 'User'
+              : msg.role && msg.role !== 'Assistant'
+                ? msg.role
+                : platform;
+            const avatarText = isUser ? 'U' : roleName[0] || 'A';
+            const htmlContent = sanitizeHtml(markdownToHtml(msg.content));
 
-        return `
-        <div class="message-card ${roleClass}">
+            return `
+        <div id="msg-card-${idx}" class="message-card ${roleClass}">
           <div class="message-header">
             <div class="message-header-info">
               <div class="message-avatar">${avatarText}</div>
-              <span>${roleName}</span>
+              <span>${escapeHtml(roleName)}</span>
             </div>
             <button class="copy-msg-btn" title="Copy message text">
               <svg class="copy-icon" viewBox="0 0 24 24" width="13" height="13"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
@@ -39,8 +89,8 @@ export class HtmlFormatter extends ExportFormatter {
           </div>
         </div>
       `;
-      })
-      .join('\n');
+          })
+          .join('\n');
 
     const katexHeaders = `
   <style>
@@ -79,7 +129,7 @@ ${prismJs}
     `;
 
     return `<!DOCTYPE html>
-<html lang="en">
+<html lang="en"${themeAttr}>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -87,7 +137,7 @@ ${prismJs}
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700&family=Fira+Code:wght@400;500&display=swap');
 
-    :root {
+    :root, [data-theme="modern-light"] {
       --bg-app: #f8fafc;
       --bg-card: #ffffff;
       --bg-bubble-user: #e2e8f0;
@@ -103,7 +153,7 @@ ${prismJs}
       --scrollbar-thumb: #cbd5e1;
     }
 
-    [data-theme="dark"] {
+    [data-theme="modern-dark"], [data-theme="dark"] {
       --bg-app: #0f172a;
       --bg-card: #1e293b;
       --bg-bubble-user: #334155;
@@ -117,6 +167,102 @@ ${prismJs}
       --code-text: #f8fafc;
       --code-header-bg: #0f172a;
       --scrollbar-thumb: #475569;
+    }
+
+    [data-theme="github-light"] {
+      --bg-app: #ffffff;
+      --bg-card: #ffffff;
+      --bg-bubble-user: #f6f8fa;
+      --bg-bubble-ai: #ffffff;
+      --text-primary: #1f2328;
+      --text-secondary: #656d76;
+      --accent: #0969da;
+      --accent-light: #ddf4ff;
+      --border: #d0d7de;
+      --code-bg: #f6f8fa;
+      --code-text: #1f2328;
+      --code-header-bg: #eaeef2;
+      --scrollbar-thumb: #d0d7de;
+    }
+
+    [data-theme="github-dark"] {
+      --bg-app: #0d1117;
+      --bg-card: #161b22;
+      --bg-bubble-user: #21262d;
+      --bg-bubble-ai: #161b22;
+      --text-primary: #e6edf3;
+      --text-secondary: #8d96a0;
+      --accent: #2f81f7;
+      --accent-light: #101d2e;
+      --border: #30363d;
+      --code-bg: #161b22;
+      --code-text: #e6edf3;
+      --code-header-bg: #21262d;
+      --scrollbar-thumb: #30363d;
+    }
+
+    [data-theme="nord"] {
+      --bg-app: #2e3440;
+      --bg-card: #3b4252;
+      --bg-bubble-user: #434c5e;
+      --bg-bubble-ai: #3b4252;
+      --text-primary: #eceff4;
+      --text-secondary: #d8dee9;
+      --accent: #88c0d0;
+      --accent-light: #3b4252;
+      --border: #4c566a;
+      --code-bg: #242933;
+      --code-text: #eceff4;
+      --code-header-bg: #2e3440;
+      --scrollbar-thumb: #4c566a;
+    }
+
+    [data-theme="dracula"] {
+      --bg-app: #282a36;
+      --bg-card: #343746;
+      --bg-bubble-user: #44475a;
+      --bg-bubble-ai: #343746;
+      --text-primary: #f8f8f2;
+      --text-secondary: #6272a4;
+      --accent: #bd93f9;
+      --accent-light: #3b2d54;
+      --border: #44475a;
+      --code-bg: #1e1f29;
+      --code-text: #f8f8f2;
+      --code-header-bg: #282a36;
+      --scrollbar-thumb: #6272a4;
+    }
+
+    [data-theme="solarized-light"] {
+      --bg-app: #fdf6e3;
+      --bg-card: #eee8d5;
+      --bg-bubble-user: #eee8d5;
+      --bg-bubble-ai: #fdf6e3;
+      --text-primary: #657b83;
+      --text-secondary: #93a1a1;
+      --accent: #268bd2;
+      --accent-light: #e0f2fe;
+      --border: #d3cbb7;
+      --code-bg: #073642;
+      --code-text: #839496;
+      --code-header-bg: #002b36;
+      --scrollbar-thumb: #93a1a1;
+    }
+
+    [data-theme="solarized-dark"] {
+      --bg-app: #002b36;
+      --bg-card: #073642;
+      --bg-bubble-user: #073642;
+      --bg-bubble-ai: #002b36;
+      --text-primary: #839496;
+      --text-secondary: #586e75;
+      --accent: #2ab7ca;
+      --accent-light: #0d3b46;
+      --border: #095264;
+      --code-bg: #073642;
+      --code-text: #93a1a1;
+      --code-header-bg: #002b36;
+      --scrollbar-thumb: #586e75;
     }
 
     html, body {
@@ -234,6 +380,50 @@ ${prismJs}
 
     input:checked + .slider:before {
       transform: translateX(24px);
+    }
+
+    .toc-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.1rem 1.35rem;
+      margin-bottom: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+
+    .toc-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .toc-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      list-style-type: decimal;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .toc-list li {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    .toc-list a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .toc-list a:hover {
+      text-decoration: underline;
     }
 
     .message-list {
@@ -572,57 +762,27 @@ ${prismJs}
     }
 
     @media print {
-      :root,
-      [data-theme="dark"] {
-        --bg-app: #ffffff !important;
-        --bg-card: #ffffff !important;
-        --bg-bubble-user: #f1f5f9 !important;
-        --bg-bubble-ai: #ffffff !important;
-        --text-primary: #0f172a !important;
-        --text-secondary: #475569 !important;
-        --accent: #4f46e5 !important;
-        --accent-light: #e0e7ff !important;
-        --border: #e2e8f0 !important;
-        --code-bg: #0f172a !important;
-        --code-text: #f8fafc !important;
-        --code-header-bg: #1e293b !important;
-        --scrollbar-thumb: #cbd5e1 !important;
-      }
       @page {
-        size: portrait;
-        margin: 0;
+        margin: 12mm 15mm;
+        size: auto;
       }
-      @media print {
-        html, body {
-          -webkit-print-color-adjust: exact !important;
-          print-color-adjust: exact !important;
-        }
-        html:not([data-theme='dark']), body:not([data-theme='dark']) {
-          background-color: #ffffff !important;
-          color: #0f172a !important;
-          width: 100% !important;
-          margin: 0 !important;
-          padding: 12mm 15mm !important;
-          box-sizing: border-box !important;
-        }
-        html[data-theme='dark'], html[data-theme='dark'] body {
-          background-color: #0f172a !important;
-          color: #f8fafc !important;
-          width: 100% !important;
-          margin: 0 !important;
-          padding: 12mm 15mm !important;
-          box-sizing: border-box !important;
-        }
-      .theme-switch-wrapper,
-      .copy-code-btn,
-      .copy-msg-btn {
-        display: none !important;
+      body {
+        background-color: var(--bg-app) !important;
+        color: var(--text-primary) !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
       .container {
         padding: 0 !important;
         max-width: 100% !important;
         width: 100% !important;
         box-sizing: border-box !important;
+      }
+      .copy-code-btn,
+      .copy-msg-btn,
+      .theme-switch-wrapper {
+        display: none !important;
       }
       .message-card {
         max-width: 100% !important;
@@ -631,61 +791,37 @@ ${prismJs}
         page-break-inside: auto;
         break-inside: auto;
         box-shadow: none !important;
-        border: 1px solid #cbd5e1 !important;
+        border: 1px solid var(--border) !important;
       }
-      html[data-theme='dark'] .message-card {
-        border-color: #334155 !important;
+      .message-card.role-user {
+        background-color: var(--bg-bubble-user) !important;
+        color: var(--text-primary) !important;
       }
-      html:not([data-theme='dark']) .message-card.role-user {
-        align-self: stretch !important;
-        max-width: 100% !important;
-        background-color: #f1f5f9 !important;
-        color: #0f172a !important;
+      .message-card.role-assistant {
+        background-color: var(--bg-bubble-ai) !important;
+        color: var(--text-primary) !important;
       }
-      html[data-theme='dark'] .message-card.role-user {
-        align-self: stretch !important;
-        max-width: 100% !important;
-        background-color: #1e293b !important;
-        color: #f8fafc !important;
-      }
-      html:not([data-theme='dark']) .message-card.role-assistant {
-        align-self: stretch !important;
-        max-width: 100% !important;
-        background-color: #ffffff !important;
-        color: #0f172a !important;
-      }
-      html[data-theme='dark'] .message-card.role-assistant {
-        align-self: stretch !important;
-        max-width: 100% !important;
-        background-color: #0f172a !important;
-        color: #f8fafc !important;
+      .article-card {
+        background-color: var(--bg-card) !important;
+        border: 1px solid var(--border) !important;
+        color: var(--text-primary) !important;
       }
       .message-header,
       h1, h2, h3, h4, h5, h6 {
         page-break-after: avoid;
         break-after: avoid;
-      }
-      html:not([data-theme='dark']) .message-header,
-      html:not([data-theme='dark']) h1, html:not([data-theme='dark']) h2, html:not([data-theme='dark']) h3, html:not([data-theme='dark']) h4, html:not([data-theme='dark']) h5, html:not([data-theme='dark']) h6 {
-        color: #0f172a !important;
-      }
-      html[data-theme='dark'] .message-header,
-      html[data-theme='dark'] h1, html[data-theme='dark'] h2, html[data-theme='dark'] h3, html[data-theme='dark'] h4, html[data-theme='dark'] h5, html[data-theme='dark'] h6 {
-        color: #f8fafc !important;
-      }
-      .message-header {
-        color: #475569 !important;
+        color: var(--text-primary) !important;
       }
       .thinking-block {
-        background-color: rgba(79, 70, 229, 0.04) !important;
-        border-color: #e2e8f0 !important;
+        background-color: rgba(99, 102, 241, 0.08) !important;
+        border-color: var(--border) !important;
       }
       .thinking-summary {
-        color: #4f46e5 !important;
+        color: var(--accent) !important;
       }
       .thinking-content {
-        color: #475569 !important;
-        border-top-color: #e2e8f0 !important;
+        color: var(--text-secondary) !important;
+        border-top-color: var(--border) !important;
         display: block !important;
       }
       details.thinking-block .thinking-content {
@@ -696,14 +832,14 @@ ${prismJs}
         box-sizing: border-box !important;
         page-break-inside: avoid;
         break-inside: avoid;
-        background-color: #0f172a !important;
-        color: #f8fafc !important;
-        border-color: #1e293b !important;
+        background-color: var(--code-bg) !important;
+        color: var(--code-text) !important;
+        border-color: var(--border) !important;
       }
       .code-card-header {
-        background-color: #1e293b !important;
-        color: #94a3b8 !important;
-        border-bottom-color: #334155 !important;
+        background-color: var(--code-header-bg) !important;
+        color: var(--text-secondary) !important;
+        border-bottom-color: var(--border) !important;
       }
       pre, code {
         white-space: pre-wrap !important;
@@ -727,11 +863,11 @@ ${prismJs}
       }
       th, td {
         word-break: break-word !important;
-        border-color: #cbd5e1 !important;
+        border-color: var(--border) !important;
       }
       th {
-        background-color: #f1f5f9 !important;
-        color: #0f172a !important;
+        background-color: var(--bg-bubble-user) !important;
+        color: var(--text-primary) !important;
       }
       img {
         max-width: 100% !important;
@@ -742,7 +878,7 @@ ${prismJs}
       .export-footer {
         margin-top: 1.5rem !important;
         border-top: none !important;
-        color: #64748b !important;
+        color: var(--text-secondary) !important;
       }
       * {
         -webkit-print-color-adjust: exact !important;
@@ -766,16 +902,10 @@ ${prismJs}
         </div>
         <h1>${escapeHtml(title || 'AI Chat Export')}</h1>
       </div>
-      <div class="theme-switch-wrapper">
-        <span style="font-size: 0.85rem; color: var(--text-secondary);">Dark Theme</span>
-        <label class="theme-switch" for="theme-toggle-checkbox">
-          <input type="checkbox" id="theme-toggle-checkbox" />
-          <div class="slider"></div>
-        </label>
-      </div>
     </header>
 
     <main class="message-list">
+      ${tocHtml}
       ${formattedMessages}
     </main>
 
@@ -785,53 +915,13 @@ ${prismJs}
   </div>
 
   <script>
-    const toggle = document.getElementById('theme-toggle-checkbox');
-    let storedTheme = null;
-    try {
-      storedTheme = localStorage.getItem('theme');
-    } catch (e) {
-      console.warn('localStorage is not available:', e);
-    }
-    
-    if (!storedTheme) {
-      storedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    
     function applyDocumentTheme(theme) {
-      if (theme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        if (toggle) toggle.checked = true;
-      } else if (theme === 'light') {
-        document.documentElement.removeAttribute('data-theme');
-        if (toggle) toggle.checked = false;
+      if (theme && theme !== 'system') {
+        document.documentElement.setAttribute('data-theme', theme);
       } else {
-        const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (isSystemDark) {
-          document.documentElement.setAttribute('data-theme', 'dark');
-          if (toggle) toggle.checked = true;
-        } else {
-          document.documentElement.removeAttribute('data-theme');
-          if (toggle) toggle.checked = false;
-        }
+        const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', isDark ? 'modern-dark' : 'modern-light');
       }
-    }
-
-    applyDocumentTheme(storedTheme);
-    
-    if (toggle) {
-      toggle.addEventListener('change', (e) => {
-        if (e.target.checked) {
-          document.documentElement.setAttribute('data-theme', 'dark');
-          try {
-            localStorage.setItem('theme', 'dark');
-          } catch (err) {}
-        } else {
-          document.documentElement.removeAttribute('data-theme');
-          try {
-            localStorage.setItem('theme', 'light');
-          } catch (err) {}
-        }
-      });
     }
 
     window.addEventListener('message', (event) => {

@@ -58,45 +58,20 @@ export default defineConfig({
   manifest: ({ browser }) => {
     const isFirefox = browser === 'firefox';
 
-    const permissions = ['activeTab', 'storage', 'contextMenus'];
+    const permissions = [
+      'activeTab',
+      'tabs',
+      'downloads',
+      'scripting',
+      'storage',
+      'contextMenus',
+      'clipboardWrite',
+    ];
     if (!isFirefox) {
       permissions.push('sidePanel');
     }
 
-    const hostPermissions = [
-      '*://chatgpt.com/*',
-      '*://gemini.google.com/*',
-      '*://claude.ai/*',
-      '*://qwen.ai/*',
-      '*://chat.qwen.ai/*',
-      '*://www.perplexity.ai/*',
-      '*://chat.deepseek.com/*',
-      '*://www.meta.ai/*',
-      '*://meta.ai/*',
-      '*://chat.mistral.ai/*',
-      '*://chat.z.ai/*',
-      '*://console.cloud.google.com/*',
-      '*://aistudio.google.com/*',
-      '*://notebooklm.google.com/*',
-      '*://notebook.google.com/*',
-      '*://copilot.microsoft.com/*',
-      '*://www.copilot.microsoft.com/*',
-      '*://copilot.com/*',
-      '*://www.copilot.com/*',
-      '*://copilot.cloud.microsoft/*',
-      '*://m365.cloud.microsoft/*',
-      '*://www.m365.cloud.microsoft/*',
-      '*://www.bing.com/*',
-      '*://bing.com/*',
-      '*://edgeservices.bing.com/*',
-      '*://lumo.proton.me/*',
-      '*://joyland.ai/*',
-      '*://www.joyland.ai/*',
-      '*://chub.ai/*',
-      '*://www.chub.ai/*',
-      '*://characterhub.org/*',
-      '*://www.characterhub.org/*',
-    ];
+    const hostPermissions = ['<all_urls>'];
 
     const baseManifest: any = {
       default_locale: 'en',
@@ -153,9 +128,8 @@ export default defineConfig({
             'content/claude_react_reader.js',
             'content/lib/*',
             'schemas/*',
-            '_locales/*',
           ],
-          matches: hostPermissions,
+          matches: ['<all_urls>'],
         },
       ],
     };
