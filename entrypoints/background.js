@@ -120,6 +120,23 @@ export default defineBackground(() => {
 
       await syncSidePanelBehavior();
       setupContextMenus();
+
+      // Inject content script into existing tabs on install/reload
+      if (typeof chrome !== 'undefined' && chrome.scripting?.executeScript && chrome.tabs?.query) {
+        try {
+          const tabs = await chrome.tabs.query({ url: ['http://*/*', 'https://*/*'] });
+          for (const t of tabs) {
+            if (t.id) {
+              chrome.scripting.executeScript({
+                target: { tabId: t.id },
+                files: ['content-scripts/content.js'],
+              }).catch(() => {});
+            }
+          }
+        } catch (e) {
+          console.warn('[AI Exporter Background] Failed to inject content script on install:', e);
+        }
+      }
     });
   }
 
