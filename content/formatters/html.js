@@ -717,25 +717,28 @@ ${prismJs}
           margin: 0 !important;
           padding: 12mm 15mm !important;
           box-sizing: border-box !important;
-        }
-        html[data-theme='dark'], html[data-theme='dark'] body {
-          background-color: #0f172a !important;
-          color: #f8fafc !important;
-          width: 100% !important;
-          margin: 0 !important;
-          padding: 12mm 15mm !important;
-          box-sizing: border-box !important;
-        }
-      .theme-switch-wrapper,
-      .copy-code-btn,
-      .copy-msg-btn {
-        display: none !important;
+    @media print {
+      @page {
+        margin: 12mm 15mm;
+        size: auto;
+      }
+      body {
+        background-color: var(--bg-app) !important;
+        color: var(--text-primary) !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
       .container {
         padding: 0 !important;
         max-width: 100% !important;
         width: 100% !important;
         box-sizing: border-box !important;
+      }
+      .copy-code-btn,
+      .copy-msg-btn,
+      .theme-switch-wrapper {
+        display: none !important;
       }
       .message-card {
         max-width: 100% !important;
@@ -744,61 +747,37 @@ ${prismJs}
         page-break-inside: auto;
         break-inside: auto;
         box-shadow: none !important;
-        border: 1px solid #cbd5e1 !important;
+        border: 1px solid var(--border) !important;
       }
-      html[data-theme='dark'] .message-card {
-        border-color: #334155 !important;
+      .message-card.role-user {
+        background-color: var(--bg-bubble-user) !important;
+        color: var(--text-primary) !important;
       }
-      html:not([data-theme='dark']) .message-card.role-user {
-        align-self: stretch !important;
-        max-width: 100% !important;
-        background-color: #f1f5f9 !important;
-        color: #0f172a !important;
+      .message-card.role-assistant {
+        background-color: var(--bg-bubble-ai) !important;
+        color: var(--text-primary) !important;
       }
-      html[data-theme='dark'] .message-card.role-user {
-        align-self: stretch !important;
-        max-width: 100% !important;
-        background-color: #1e293b !important;
-        color: #f8fafc !important;
-      }
-      html:not([data-theme='dark']) .message-card.role-assistant {
-        align-self: stretch !important;
-        max-width: 100% !important;
-        background-color: #ffffff !important;
-        color: #0f172a !important;
-      }
-      html[data-theme='dark'] .message-card.role-assistant {
-        align-self: stretch !important;
-        max-width: 100% !important;
-        background-color: #0f172a !important;
-        color: #f8fafc !important;
+      .article-card {
+        background-color: var(--bg-card) !important;
+        border: 1px solid var(--border) !important;
+        color: var(--text-primary) !important;
       }
       .message-header,
       h1, h2, h3, h4, h5, h6 {
         page-break-after: avoid;
         break-after: avoid;
-      }
-      html:not([data-theme='dark']) .message-header,
-      html:not([data-theme='dark']) h1, html:not([data-theme='dark']) h2, html:not([data-theme='dark']) h3, html:not([data-theme='dark']) h4, html:not([data-theme='dark']) h5, html:not([data-theme='dark']) h6 {
-        color: #0f172a !important;
-      }
-      html[data-theme='dark'] .message-header,
-      html[data-theme='dark'] h1, html[data-theme='dark'] h2, html[data-theme='dark'] h3, html[data-theme='dark'] h4, html[data-theme='dark'] h5, html[data-theme='dark'] h6 {
-        color: #f8fafc !important;
-      }
-      .message-header {
-        color: #475569 !important;
+        color: var(--text-primary) !important;
       }
       .thinking-block {
-        background-color: rgba(79, 70, 229, 0.04) !important;
-        border-color: #e2e8f0 !important;
+        background-color: rgba(99, 102, 241, 0.08) !important;
+        border-color: var(--border) !important;
       }
       .thinking-summary {
-        color: #4f46e5 !important;
+        color: var(--accent) !important;
       }
       .thinking-content {
-        color: #475569 !important;
-        border-top-color: #e2e8f0 !important;
+        color: var(--text-secondary) !important;
+        border-top-color: var(--border) !important;
         display: block !important;
       }
       details.thinking-block .thinking-content {
@@ -809,14 +788,14 @@ ${prismJs}
         box-sizing: border-box !important;
         page-break-inside: avoid;
         break-inside: avoid;
-        background-color: #0f172a !important;
-        color: #f8fafc !important;
-        border-color: #1e293b !important;
+        background-color: var(--code-bg) !important;
+        color: var(--code-text) !important;
+        border-color: var(--border) !important;
       }
       .code-card-header {
-        background-color: #1e293b !important;
-        color: #94a3b8 !important;
-        border-bottom-color: #334155 !important;
+        background-color: var(--code-header-bg) !important;
+        color: var(--text-secondary) !important;
+        border-bottom-color: var(--border) !important;
       }
       pre, code {
         white-space: pre-wrap !important;
@@ -840,11 +819,11 @@ ${prismJs}
       }
       th, td {
         word-break: break-word !important;
-        border-color: #cbd5e1 !important;
+        border-color: var(--border) !important;
       }
       th {
-        background-color: #f1f5f9 !important;
-        color: #0f172a !important;
+        background-color: var(--bg-bubble-user) !important;
+        color: var(--text-primary) !important;
       }
       img {
         max-width: 100% !important;
@@ -855,10 +834,7 @@ ${prismJs}
       .export-footer {
         margin-top: 1.5rem !important;
         border-top: none !important;
-        color: #64748b !important;
-      }
-      .theme-switch-wrapper {
-        display: none !important;
+        color: var(--text-secondary) !important;
       }
       * {
         -webkit-print-color-adjust: exact !important;
@@ -882,19 +858,6 @@ ${prismJs}
         </div>
         <h1>${escapeHtml(title || 'AI Chat Export')}</h1>
       </div>
-      <div class="theme-switch-wrapper">
-        <label for="theme-select-dropdown" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; margin-right: 6px;">Theme:</label>
-        <select id="theme-select-dropdown" style="background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border); border-radius: 6px; padding: 4px 8px; font-size: 0.85rem; outline: none; cursor: pointer;">
-          <option value="modern-light">Modern Light</option>
-          <option value="modern-dark">Modern Dark</option>
-          <option value="github-light">GitHub Light</option>
-          <option value="github-dark">GitHub Dark</option>
-          <option value="nord">Nord Slate</option>
-          <option value="dracula">Dracula</option>
-          <option value="solarized-light">Solarized Light</option>
-          <option value="solarized-dark">Solarized Dark</option>
-        </select>
-      </div>
     </header>
 
     <main class="message-list">
@@ -907,44 +870,13 @@ ${prismJs}
   </div>
 
   <script>
-    const themeDropdown = document.getElementById('theme-select-dropdown');
-    let storedTheme = null;
-    try {
-      storedTheme = localStorage.getItem('theme');
-    } catch (e) {
-      console.warn('localStorage is not available:', e);
-    }
-    
-    if (!storedTheme) {
-      const docTheme = document.documentElement.getAttribute('data-theme');
-      if (docTheme && docTheme !== 'system') {
-        storedTheme = docTheme;
-      } else {
-        storedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'modern-dark' : 'modern-light';
-      }
-    }
-    
     function applyDocumentTheme(theme) {
-      let resolvedTheme = theme;
-      if (theme === 'dark') resolvedTheme = 'modern-dark';
-      if (theme === 'light') resolvedTheme = 'modern-light';
-
-      document.documentElement.setAttribute('data-theme', resolvedTheme);
-      if (themeDropdown) {
-        themeDropdown.value = resolvedTheme;
+      if (theme && theme !== 'system') {
+        document.documentElement.setAttribute('data-theme', theme);
+      } else {
+        const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', isDark ? 'modern-dark' : 'modern-light');
       }
-    }
-
-    applyDocumentTheme(storedTheme);
-    
-    if (themeDropdown) {
-      themeDropdown.addEventListener('change', (e) => {
-        const selectedTheme = e.target.value;
-        applyDocumentTheme(selectedTheme);
-        try {
-          localStorage.setItem('theme', selectedTheme);
-        } catch (err) {}
-      });
     }
 
     window.addEventListener('message', (event) => {

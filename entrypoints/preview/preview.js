@@ -497,7 +497,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       const doc =
         previewRendered.contentDocument ||
         (previewRendered.contentWindow && previewRendered.contentWindow.document);
-      if (doc && doc.head) {
+      if (doc && doc.documentElement) {
+        if (currentSyncTheme && currentSyncTheme !== 'system') {
+          doc.documentElement.setAttribute('data-theme', currentSyncTheme);
+        } else {
+          const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          doc.documentElement.setAttribute('data-theme', isDark ? 'modern-dark' : 'modern-light');
+        }
         let printStyle = doc.getElementById('print-custom-style');
         if (!printStyle) {
           printStyle = doc.createElement('style');
