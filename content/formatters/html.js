@@ -878,17 +878,11 @@ ${prismJs}
         <h1>${escapeHtml(title || 'AI Chat Export')}</h1>
       </div>
       <div class="theme-switch-wrapper">
-        <label for="theme-select-dropdown" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">Theme:</label>
-        <select id="theme-select-dropdown" style="background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border); border-radius: 6px; padding: 4px 8px; font-size: 0.85rem; outline: none; cursor: pointer;">
-          <option value="modern-light">Modern Light</option>
-          <option value="modern-dark">Modern Dark</option>
-          <option value="github-light">GitHub Light</option>
-          <option value="github-dark">GitHub Dark</option>
-          <option value="nord">Nord Slate</option>
-          <option value="dracula">Dracula</option>
-          <option value="solarized-light">Solarized Light</option>
-          <option value="solarized-dark">Solarized Dark</option>
-        </select>
+        <span style="font-size: 0.85rem; color: var(--text-secondary);">Dark Theme</span>
+        <label class="theme-switch" for="theme-toggle-checkbox">
+          <input type="checkbox" id="theme-toggle-checkbox" />
+          <div class="slider"></div>
+        </label>
       </div>
     </header>
 
@@ -902,7 +896,7 @@ ${prismJs}
   </div>
 
   <script>
-    const themeDropdown = document.getElementById('theme-select-dropdown');
+    const toggle = document.getElementById('theme-toggle-checkbox');
     let storedTheme = null;
     try {
       storedTheme = localStorage.getItem('theme');
@@ -911,29 +905,43 @@ ${prismJs}
     }
     
     if (!storedTheme) {
-      storedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'modern-dark' : 'modern-light';
+      storedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
     
     function applyDocumentTheme(theme) {
-      let resolvedTheme = theme;
-      if (theme === 'dark') resolvedTheme = 'modern-dark';
-      if (theme === 'light') resolvedTheme = 'modern-light';
-
-      document.documentElement.setAttribute('data-theme', resolvedTheme);
-      if (themeDropdown) {
-        themeDropdown.value = resolvedTheme;
+      if (theme === 'dark' || theme === 'modern-dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        if (toggle) toggle.checked = true;
+      } else if (theme === 'light' || theme === 'modern-light') {
+        document.documentElement.removeAttribute('data-theme');
+        if (toggle) toggle.checked = false;
+      } else {
+        const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (isSystemDark) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          if (toggle) toggle.checked = true;
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+          if (toggle) toggle.checked = false;
+        }
       }
     }
 
     applyDocumentTheme(storedTheme);
     
-    if (themeDropdown) {
-      themeDropdown.addEventListener('change', (e) => {
-        const selectedTheme = e.target.value;
-        applyDocumentTheme(selectedTheme);
-        try {
-          localStorage.setItem('theme', selectedTheme);
-        } catch (err) {}
+    if (toggle) {
+      toggle.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          try {
+            localStorage.setItem('theme', 'dark');
+          } catch (err) {}
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+          try {
+            localStorage.setItem('theme', 'light');
+          } catch (err) {}
+        }
       });
     }
 

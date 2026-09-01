@@ -73,7 +73,7 @@ test('HTML formatter converts parsed conversation into structured HTML document'
   assert.ok(output.includes('Model: GPT-4'));
   assert.ok(output.includes('Method: API'));
   assert.ok(output.includes('Self-Consistency Test</h1>'));
-  assert.ok(output.includes('theme-select-dropdown'));
+  assert.ok(output.includes('theme-toggle-checkbox'));
   assert.ok(output.includes('data-theme="modern-dark"'));
   assert.ok(output.includes('data-theme="nord"'));
 
