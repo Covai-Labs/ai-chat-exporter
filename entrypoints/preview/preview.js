@@ -95,6 +95,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Ignore theme loading errors when running standalone
   }
 
+  const previewThemeSelect = document.getElementById('preview-theme-select');
+  if (previewThemeSelect) {
+    previewThemeSelect.value = currentSyncTheme || 'system';
+    previewThemeSelect.addEventListener('change', () => {
+      const selected = previewThemeSelect.value;
+      currentSyncTheme = selected;
+      chrome.storage.sync.set({ theme: selected });
+      applyTheme(selected, document);
+      syncThemeToIframe(selected);
+      cachedPngBlob = null;
+      recalculateContent();
+    });
+  }
+
   const syncThemeToIframe = (theme) => {
     try {
       if (previewRendered && previewRendered.contentWindow) {
@@ -108,21 +122,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         previewRendered.contentDocument ||
         (previewRendered.contentWindow && previewRendered.contentWindow.document);
       if (!doc || !doc.documentElement) return;
-      const toggle = doc.getElementById('theme-toggle-checkbox');
-      let isDark = false;
-      if (theme === 'dark') {
-        isDark = true;
-      } else if (theme === 'light') {
-        isDark = false;
+      const themeDropdown = doc.getElementById('theme-select-dropdown');
+      if (theme && theme !== 'system') {
+        doc.documentElement.setAttribute('data-theme', theme);
+        if (themeDropdown) themeDropdown.value = theme;
       } else {
-        isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      }
-      if (isDark) {
-        doc.documentElement.setAttribute('data-theme', 'dark');
-        if (toggle) toggle.checked = true;
-      } else {
-        doc.documentElement.removeAttribute('data-theme');
-        if (toggle) toggle.checked = false;
+        const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        doc.documentElement.setAttribute('data-theme', isDark ? 'modern-dark' : 'modern-light');
+        if (themeDropdown) themeDropdown.value = isDark ? 'modern-dark' : 'modern-light';
       }
     } catch {
       // Ignore iframe DOM access error
@@ -133,8 +140,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     chrome.storage.onChanged.addListener((changes, areaName) => {
       if (areaName === 'sync' && changes.theme) {
         currentSyncTheme = changes.theme.newValue || 'system';
+        if (previewThemeSelect) previewThemeSelect.value = currentSyncTheme;
         applyTheme(currentSyncTheme, document);
         syncThemeToIframe(currentSyncTheme);
+        cachedPngBlob = null;
+        recalculateContent();
       }
     });
   }

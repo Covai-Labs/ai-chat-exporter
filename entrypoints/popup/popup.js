@@ -90,11 +90,24 @@ document.addEventListener('DOMContentLoaded', async () => {
   ]);
   applyTheme(storedSettings.theme || 'system');
 
+  const popupThemeSelect = document.getElementById('popup-theme-select');
+  if (popupThemeSelect) {
+    popupThemeSelect.value = storedSettings.theme || 'system';
+    popupThemeSelect.addEventListener('change', () => {
+      const selected = popupThemeSelect.value;
+      storedSettings.theme = selected;
+      chrome.storage.sync.set({ theme: selected });
+      applyTheme(selected);
+    });
+  }
+
   if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
     chrome.storage.onChanged.addListener(async (changes, areaName) => {
       if (areaName === 'sync') {
         if (changes.theme) {
-          applyTheme(changes.theme.newValue || 'system');
+          storedSettings.theme = changes.theme.newValue || 'system';
+          if (popupThemeSelect) popupThemeSelect.value = storedSettings.theme;
+          applyTheme(storedSettings.theme);
         }
         if (changes.uiLanguage) {
           await initI18n(changes.uiLanguage.newValue || 'auto');
