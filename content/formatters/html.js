@@ -685,39 +685,6 @@ ${prismJs}
     }
 
     @media print {
-      :root,
-      [data-theme="dark"] {
-        --bg-app: #ffffff !important;
-        --bg-card: #ffffff !important;
-        --bg-bubble-user: #f1f5f9 !important;
-        --bg-bubble-ai: #ffffff !important;
-        --text-primary: #0f172a !important;
-        --text-secondary: #475569 !important;
-        --accent: #4f46e5 !important;
-        --accent-light: #e0e7ff !important;
-        --border: #e2e8f0 !important;
-        --code-bg: #0f172a !important;
-        --code-text: #f8fafc !important;
-        --code-header-bg: #1e293b !important;
-        --scrollbar-thumb: #cbd5e1 !important;
-      }
-      @page {
-        size: portrait;
-        margin: 0;
-      }
-      @media print {
-        html, body {
-          -webkit-print-color-adjust: exact !important;
-          print-color-adjust: exact !important;
-        }
-        html:not([data-theme='dark']), body:not([data-theme='dark']) {
-          background-color: #ffffff !important;
-          color: #0f172a !important;
-          width: 100% !important;
-          margin: 0 !important;
-          padding: 12mm 15mm !important;
-          box-sizing: border-box !important;
-    @media print {
       @page {
         margin: 12mm 15mm;
         size: auto;

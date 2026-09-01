@@ -574,7 +574,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       pngOptionsBar.classList.toggle('hidden', tabName !== 'png');
     }
     if (printOptionsBar) {
-      printOptionsBar.classList.toggle('hidden', tabName !== 'html-render' && tabName !== 'pdf');
+      printOptionsBar.classList.toggle('hidden', tabName !== 'pdf');
     }
 
     // Contextual copy button: hide on png, pdf, and doc; show on text code/markup formats
