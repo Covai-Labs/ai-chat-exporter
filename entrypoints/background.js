@@ -28,47 +28,7 @@ export default defineBackground(() => {
     chub: 'https://chub.ai/',
   };
 
-  const SUPPORTED_DOCUMENT_URL_PATTERNS = [
-    '*://chatgpt.com/*',
-    '*://gemini.google.com/*',
-    '*://claude.ai/*',
-    '*://qwen.ai/*',
-    '*://chat.qwen.ai/*',
-    '*://www.perplexity.ai/*',
-    '*://chat.deepseek.com/*',
-    '*://www.meta.ai/*',
-    '*://meta.ai/*',
-    '*://chat.mistral.ai/*',
-    '*://chat.z.ai/*',
-    '*://console.cloud.google.com/*',
-    '*://aistudio.google.com/*',
-    '*://notebooklm.google.com/*',
-    '*://notebook.google.com/*',
-    '*://copilot.microsoft.com/*',
-    '*://www.copilot.microsoft.com/*',
-    '*://copilot.com/*',
-    '*://www.copilot.com/*',
-    '*://copilot.cloud.microsoft/*',
-    '*://m365.cloud.microsoft/*',
-    '*://www.m365.cloud.microsoft/*',
-    '*://www.bing.com/*',
-    '*://bing.com/*',
-    '*://edgeservices.bing.com/*',
-    '*://lumo.proton.me/*',
-    '*://joyland.ai/*',
-    '*://www.joyland.ai/*',
-    '*://chub.ai/*',
-    '*://www.chub.ai/*',
-    '*://characterhub.org/*',
-    '*://www.characterhub.org/*',
-    '*://www.google.com/*',
-    '*://www.google.co.in/*',
-    '*://www.google.co.uk/*',
-    '*://www.google.ca/*',
-    '*://www.google.com.au/*',
-    '*://www.google.de/*',
-    '*://www.google.fr/*',
-  ];
+  const SUPPORTED_DOCUMENT_URL_PATTERNS = ['<all_urls>'];
 
   function setupContextMenus() {
     if (typeof chrome === 'undefined' || !chrome.contextMenus) return;

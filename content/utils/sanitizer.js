@@ -33,7 +33,8 @@ export function sanitizeHtml(html) {
   if (purify && typeof purify.sanitize === 'function') {
     const sanitized = purify.sanitize(html, {
       USE_PROFILES: { html: true, svg: true, mathMl: true },
-      ADD_ATTR: ['target', 'rel', 'class', 'style'],
+      ADD_TAGS: ['details', 'summary', 'input'],
+      ADD_ATTR: ['target', 'rel', 'class', 'style', 'disabled', 'checked', 'type'],
     });
     if (sanitized !== undefined) {
       return sanitized

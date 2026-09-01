@@ -26,19 +26,38 @@ export class DocFormatter extends ExportFormatter {
       metaParts.push(`Method: ${escapeHtml(method)}`);
     }
 
-    const formattedMessages = messages
-      .map((msg) => {
-        const isUser = msg.role === 'User';
-        const roleClass = isUser ? 'role-user' : 'role-assistant';
-        const roleName = isUser ? 'User' : platform;
-        const avatarText = isUser ? 'U' : platform[0];
-        const rawHtmlContent = markdownToHtml(msg.content);
-        // Strip copy buttons and inline SVGs which cause LibreOffice HTML import filter errors
-        const htmlContent = rawHtmlContent
-          .replace(/<button[^>]*>[\s\S]*?<\/button>/gi, '')
-          .replace(/<svg[^>]*>[\s\S]*?<\/svg>/gi, '');
+    const isWebArticle = platform === 'Web Article' || platform === 'WebArticle';
 
-        return `
+    const formattedMessages = isWebArticle
+      ? messages
+          .map((msg) => {
+            const rawHtmlContent = markdownToHtml(msg.content);
+            const htmlContent = rawHtmlContent
+              .replace(/<button[^>]*>[\s\S]*?<\/button>/gi, '')
+              .replace(/<svg[^>]*>[\s\S]*?<\/svg>/gi, '');
+
+            return `
+        <div class="message-card role-assistant">
+          <div class="message-content">
+            ${htmlContent}
+          </div>
+        </div>
+      `;
+          })
+          .join('\n')
+      : messages
+          .map((msg) => {
+            const isUser = msg.role === 'User';
+            const roleClass = isUser ? 'role-user' : 'role-assistant';
+            const roleName = isUser ? 'User' : msg.role && msg.role !== 'Assistant' ? msg.role : platform;
+            const avatarText = isUser ? 'U' : (roleName[0] || 'A');
+            const rawHtmlContent = markdownToHtml(msg.content);
+            // Strip copy buttons and inline SVGs which cause LibreOffice HTML import filter errors
+            const htmlContent = rawHtmlContent
+              .replace(/<button[^>]*>[\s\S]*?<\/button>/gi, '')
+              .replace(/<svg[^>]*>[\s\S]*?<\/svg>/gi, '');
+
+            return `
         <div class="message-card ${roleClass}">
           <div class="message-header">
             <span class="message-avatar">${avatarText}</span>
@@ -49,8 +68,8 @@ export class DocFormatter extends ExportFormatter {
           </div>
         </div>
       `;
-      })
-      .join('\n');
+          })
+          .join('\n');
 
     return `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
 <head>

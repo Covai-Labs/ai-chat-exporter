@@ -17,6 +17,7 @@ import {
   LumoParser,
   JoylandParser,
   ChubParser,
+  ArticleParser,
 } from 'decant-core';
 
 import { MarkdownFormatter } from './formatters/markdown.js';
@@ -99,6 +100,7 @@ const parsers = [
   new LumoParser(),
   new JoylandParser(),
   new ChubParser(),
+  new ArticleParser(),
 ];
 
 // Registry of formatters
