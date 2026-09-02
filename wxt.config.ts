@@ -16,6 +16,14 @@ export default defineConfig({
       if (manifest.options_ui) {
         manifest.options_ui.open_in_tab = true;
       }
+      if (wxt.config.browser === 'firefox' && manifest.sidebar_action) {
+        manifest.sidebar_action.default_icon = {
+          '16': 'icons/icon16.png',
+          '48': 'icons/icon48.png',
+          '128': 'icons/icon128.png',
+        };
+        manifest.sidebar_action.default_title = '__MSG_extensionName__';
+      }
     },
   },
   vite: () => ({
