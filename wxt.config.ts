@@ -69,7 +69,6 @@ export default defineConfig({
     const permissions = [
       'activeTab',
       'tabs',
-      'downloads',
       'scripting',
       'storage',
       'contextMenus',
