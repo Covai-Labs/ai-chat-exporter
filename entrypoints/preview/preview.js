@@ -876,6 +876,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         let pngBlob = cachedPngBlob;
         if (!pngBlob && conversation) {
           const isHighQuality = pngQualityCheckbox ? pngQualityCheckbox.checked : true;
+          const includeImages = includeImagesCheckbox ? includeImagesCheckbox.checked : true;
           const activeTheme = getActiveTheme();
           const filteredMessages =
             conversation && Array.isArray(conversation.messages) && selectedIndices
@@ -883,10 +884,37 @@ document.addEventListener('DOMContentLoaded', async () => {
               : conversation?.messages || [];
           const activeConv = { ...conversation, messages: filteredMessages };
 
-          pngBlob = await imageFormatter.format(activeConv, {
-            highQuality: isHighQuality,
-            theme: activeTheme,
-          });
+          // Directly capture the rendered HTML container from the preview iframe
+          let container = null;
+          try {
+            let doc =
+              previewRendered.contentDocument ||
+              (previewRendered.contentWindow && previewRendered.contentWindow.document);
+            container = doc?.querySelector('.container');
+            if (!container) {
+              await new Promise((res) => setTimeout(res, 200));
+              doc =
+                previewRendered.contentDocument ||
+                (previewRendered.contentWindow && previewRendered.contentWindow.document);
+              container = doc?.querySelector('.container');
+            }
+          } catch {
+            // Ignore iframe DOM access error
+          }
+
+          if (container && typeof imageFormatter.captureElement === 'function') {
+            pngBlob = await imageFormatter.captureElement(container, {
+              highQuality: isHighQuality,
+              includeImages,
+              theme: activeTheme,
+            });
+          } else {
+            pngBlob = await imageFormatter.format(activeConv, {
+              highQuality: isHighQuality,
+              includeImages,
+              theme: activeTheme,
+            });
+          }
           cachedPngBlob = pngBlob;
         }
 

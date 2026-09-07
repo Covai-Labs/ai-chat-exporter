@@ -466,60 +466,97 @@ export class ImageFormatter extends ExportFormatter {
   }
 
   /**
-   * Formats the conversation into a PNG Blob
-   * @param {Object} conversation
+   * Captures a DOM container element (such as from a preview iframe) to a PNG Blob
+   * @param {HTMLElement} container
    * @param {Object} [options]
    * @returns {Promise<Blob>}
    */
-  async format(conversation, options = {}) {
-    const palette = this.resolveThemePalette(options);
-    const container = this.createScreenshotContainer(conversation, options);
-    document.body.appendChild(container);
+  async captureElement(container, options = {}) {
+    await this.preloadImages(container);
 
     try {
-      await this.preloadImages(container);
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(container, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\[', right: '\\]', display: true },
+            { left: '\\(', right: '\\)', display: false },
+          ],
+          throwOnError: false,
+        });
+      }
+    } catch (e) {
+      console.warn('[ImageFormatter] KaTeX math rendering failed:', e);
+    }
 
+    const html2canvasFn =
+      (options && options.html2canvas) ||
+      (typeof window !== 'undefined' && window.html2canvas) ||
+      (typeof globalThis !== 'undefined' && globalThis.html2canvas) ||
+      (typeof html2canvas === 'function' ? html2canvas : null);
+
+    if (!html2canvasFn) {
+      throw new Error('html2canvas library is not loaded');
+    }
+
+    const doc = container.ownerDocument || (typeof document !== 'undefined' ? document : null);
+    const win = (doc && doc.defaultView) || (typeof window !== 'undefined' ? window : null);
+
+    let backgroundColor = options.backgroundColor;
+    if (!backgroundColor && win && win.getComputedStyle) {
+      const containerBg = win.getComputedStyle(container).backgroundColor;
+      const bodyBg = doc && doc.body ? win.getComputedStyle(doc.body).backgroundColor : null;
+      if (containerBg && containerBg !== 'rgba(0, 0, 0, 0)' && containerBg !== 'transparent') {
+        backgroundColor = containerBg;
+      } else if (bodyBg && bodyBg !== 'rgba(0, 0, 0, 0)' && bodyBg !== 'transparent') {
+        backgroundColor = bodyBg;
+      }
+    }
+    if (
+      !backgroundColor ||
+      backgroundColor === 'rgba(0, 0, 0, 0)' ||
+      backgroundColor === 'transparent'
+    ) {
+      const palette = this.resolveThemePalette(options);
+      backgroundColor = palette.bg;
+    }
+
+    const isHighQuality = options ? options.highQuality !== false : true;
+    const requestedScale = isHighQuality ? 2 : 1;
+    const safeScale = this.calculateSafeScale(container, requestedScale);
+
+    const prevScrollX = win ? win.scrollX || 0 : 0;
+    const prevScrollY = win ? win.scrollY || 0 : 0;
+    if (win && typeof win.scrollTo === 'function') {
       try {
-        if (typeof renderMathInElement === 'function') {
-          renderMathInElement(container, {
-            delimiters: [
-              { left: '$$', right: '$$', display: true },
-              { left: '$', right: '$', display: false },
-              { left: '\\[', right: '\\]', display: true },
-              { left: '\\(', right: '\\)', display: false },
-            ],
-            throwOnError: false,
-          });
-        }
-      } catch (e) {
-        console.warn('[ImageFormatter] KaTeX math rendering failed:', e);
+        win.scrollTo(0, 0);
+      } catch {
+        // Ignore scroll reset error
       }
+    }
 
-      const html2canvasFn =
-        typeof html2canvas === 'function'
-          ? html2canvas
-          : typeof window !== 'undefined' && window.html2canvas
-            ? window.html2canvas
-            : typeof globalThis !== 'undefined' && globalThis.html2canvas
-              ? globalThis.html2canvas
-              : null;
-
-      if (!html2canvasFn) {
-        throw new Error('html2canvas library is not loaded');
-      }
-
-      const isHighQuality = options ? options.highQuality !== false : true;
-      const requestedScale = isHighQuality ? 2 : 1;
-      const safeScale = this.calculateSafeScale(container, requestedScale);
-
+    try {
       const renderWithScale = async (scale) => {
         return await html2canvasFn(container, {
-          backgroundColor: palette.bg,
-          scale: scale,
+          backgroundColor,
+          scale,
           useCORS: true,
           allowTaint: false,
           logging: false,
           imageTimeout: 3000,
+          scrollX: 0,
+          scrollY: 0,
+          ignoreElements: (el) => {
+            if (options.includeImages === false && el.tagName === 'IMG') {
+              return true;
+            }
+            return (
+              el.classList?.contains('copy-code-btn') ||
+              el.classList?.contains('copy-msg-btn') ||
+              el.classList?.contains('theme-switch-wrapper')
+            );
+          },
         });
       };
 
@@ -546,7 +583,7 @@ export class ImageFormatter extends ExportFormatter {
         }
       }
 
-      return new Promise((resolve, reject) => {
+      return await new Promise((resolve, reject) => {
         try {
           canvas.toBlob((blob) => {
             if (blob) {
@@ -559,6 +596,29 @@ export class ImageFormatter extends ExportFormatter {
           reject(err);
         }
       });
+    } finally {
+      if (win && typeof win.scrollTo === 'function') {
+        try {
+          win.scrollTo(prevScrollX, prevScrollY);
+        } catch {
+          // Ignore scroll restore error
+        }
+      }
+    }
+  }
+
+  /**
+   * Formats the conversation into a PNG Blob
+   * @param {Object} conversation
+   * @param {Object} [options]
+   * @returns {Promise<Blob>}
+   */
+  async format(conversation, options = {}) {
+    const container = this.createScreenshotContainer(conversation, options);
+    document.body.appendChild(container);
+
+    try {
+      return await this.captureElement(container, options);
     } finally {
       if (container.parentNode) {
         container.parentNode.removeChild(container);

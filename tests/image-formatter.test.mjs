@@ -210,3 +210,45 @@ test('ImageFormatter.createScreenshotContainer applies selected theme colors and
   assert.ok(solarizedLightContainer.style.cssText.includes('#fdf6e3')); // Solarized Light bg
   assert.ok(solarizedLightContainer.style.cssText.includes('#657b83')); // Solarized Light text
 });
+
+test('ImageFormatter.captureElement renders container with html2canvas and returns PNG blob', async () => {
+  const { ImageFormatter } = await importFormatter();
+  const formatter = new ImageFormatter();
+
+  if (typeof globalThis.document === 'undefined') {
+    const { document, window } = parseHTML('<!DOCTYPE html><html><body></body></html>');
+    globalThis.document = document;
+    globalThis.window = window;
+  }
+
+  let capturedOptions = null;
+  globalThis.html2canvas = async (el, opts) => {
+    capturedOptions = opts;
+    return {
+      toBlob: (cb) => cb(new Blob(['mock-png-data'], { type: 'image/png' })),
+    };
+  };
+
+  const container = document.createElement('div');
+  container.className = 'container';
+  container.innerHTML = '<p>Test conversation</p>';
+  document.body.appendChild(container);
+
+  try {
+    const blob = await formatter.captureElement(container, {
+      highQuality: true,
+      theme: 'dracula',
+    });
+
+    assert.ok(blob);
+    assert.equal(blob.type, 'image/png');
+    assert.ok(capturedOptions);
+    assert.equal(capturedOptions.scale, 2);
+    assert.equal(capturedOptions.backgroundColor, '#282a36');
+  } finally {
+    delete globalThis.html2canvas;
+    if (container.parentNode) {
+      container.parentNode.removeChild(container);
+    }
+  }
+});
