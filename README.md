@@ -32,7 +32,9 @@ A simple, privacy-focused browser extension to export AI chats from ChatGPT, Cla
 
 </details>
 
-![AI Chat Exporter Preview](docs/images/screenshot1_export.png)
+[![AI Chat Exporter Preview](docs/images/screenshot1_export.png)](https://www.youtube.com/watch?v=5V2EZqDkUnU)
+
+> 📺 **Video Walkthrough**: Watch the [1-minute demo on YouTube](https://www.youtube.com/watch?v=5V2EZqDkUnU).
 
 ---
 
