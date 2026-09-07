@@ -196,7 +196,9 @@
     </div>
     <script>
       (function () {
-        const iframe = document.getElementById('tally-uninstall-iframe') || document.querySelector('iframe[data-tally-src]');
+        const iframe =
+          document.getElementById('tally-uninstall-iframe') ||
+          document.querySelector('iframe[data-tally-src]');
         if (!iframe) return;
 
         const ua = navigator.userAgent || '';
@@ -210,10 +212,12 @@
             { match: 'Brave', name: 'Brave' },
             { match: 'Vivaldi', name: 'Vivaldi' },
             { match: 'Google Chrome', name: 'Chrome' },
-            { match: 'Chromium', name: 'Chromium' }
+            { match: 'Chromium', name: 'Chromium' },
           ];
           for (const item of brandPriority) {
-            const b = navigator.userAgentData.brands.find(x => x.brand.includes(item.match) || x.brand === item.match);
+            const b = navigator.userAgentData.brands.find(
+              (x) => x.brand.includes(item.match) || x.brand === item.match,
+            );
             if (b) {
               browser = item.name;
               browserVersion = b.version;
@@ -272,8 +276,16 @@
         const baseSrc = iframe.getAttribute('data-tally-src') || iframe.getAttribute('src') || '';
         const urlObj = new URL(baseSrc, window.location.href);
 
-        urlObj.searchParams.set('browser', pageParams.get('browser') && pageParams.get('browser') !== 'Other' ? pageParams.get('browser') : browser);
-        urlObj.searchParams.set('browser_version', pageParams.get('browser_version') || browserVersion);
+        urlObj.searchParams.set(
+          'browser',
+          pageParams.get('browser') && pageParams.get('browser') !== 'Other'
+            ? pageParams.get('browser')
+            : browser,
+        );
+        urlObj.searchParams.set(
+          'browser_version',
+          pageParams.get('browser_version') || browserVersion,
+        );
         urlObj.searchParams.set('os', pageParams.get('os') || os);
         urlObj.searchParams.set('user_agent', ua);
 
