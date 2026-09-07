@@ -209,6 +209,34 @@ test('ImageFormatter.createScreenshotContainer applies selected theme colors and
   });
   assert.ok(solarizedLightContainer.style.cssText.includes('#fdf6e3')); // Solarized Light bg
   assert.ok(solarizedLightContainer.style.cssText.includes('#657b83')); // Solarized Light text
+
+  // 5. Catppuccin Mocha Theme
+  const catppuccinContainer = formatter.createScreenshotContainer(conversation, {
+    theme: 'catppuccin',
+  });
+  assert.ok(catppuccinContainer.style.cssText.includes('#1e1e2e')); // Catppuccin Mocha bg
+  assert.ok(catppuccinContainer.style.cssText.includes('#cdd6f4')); // Catppuccin text
+  assert.ok(catppuccinContainer.innerHTML.includes('#b4befe')); // Catppuccin accent
+
+  // 6. Monokai Theme
+  const monokaiContainer = formatter.createScreenshotContainer(conversation, { theme: 'monokai' });
+  assert.ok(monokaiContainer.style.cssText.includes('#272822')); // Monokai bg
+  assert.ok(monokaiContainer.style.cssText.includes('#f8f8f2')); // Monokai text
+  assert.ok(monokaiContainer.innerHTML.includes('#a6e22e')); // Monokai accent
+
+  // 7. Synthwave '84 Theme
+  const synthwaveContainer = formatter.createScreenshotContainer(conversation, {
+    theme: 'synthwave',
+  });
+  assert.ok(synthwaveContainer.style.cssText.includes('#262335')); // Synthwave bg
+  assert.ok(synthwaveContainer.style.cssText.includes('#f8f8f2')); // Synthwave text
+  assert.ok(synthwaveContainer.innerHTML.includes('#ff7edb')); // Synthwave accent
+
+  // 8. Gruvbox Theme
+  const gruvboxContainer = formatter.createScreenshotContainer(conversation, { theme: 'gruvbox' });
+  assert.ok(gruvboxContainer.style.cssText.includes('#282828')); // Gruvbox bg
+  assert.ok(gruvboxContainer.style.cssText.includes('#ebdbb2')); // Gruvbox text
+  assert.ok(gruvboxContainer.innerHTML.includes('#fe8019')); // Gruvbox accent
 });
 
 test('ImageFormatter.captureElement renders container with html2canvas and returns PNG blob', async () => {

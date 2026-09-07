@@ -1,6 +1,23 @@
 import { initI18n, applyI18n, t } from '../content/utils/i18n.js';
 
+function applyTheme(theme) {
+  if (theme && theme !== 'system') {
+    document.documentElement.setAttribute('data-theme', theme);
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
+  if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.sync) {
+    try {
+      const stored = await chrome.storage.sync.get(['theme']);
+      applyTheme(stored.theme || 'system');
+    } catch {
+      // Ignore
+    }
+  }
+
   await initI18n();
   applyI18n();
 
@@ -103,9 +120,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
     chrome.storage.onChanged.addListener(async (changes, areaName) => {
-      if (areaName === 'sync' && changes.uiLanguage) {
-        await initI18n(changes.uiLanguage.newValue || 'auto');
-        applyI18n();
+      if (areaName === 'sync') {
+        if (changes.theme) {
+          applyTheme(changes.theme.newValue || 'system');
+        }
+        if (changes.uiLanguage) {
+          await initI18n(changes.uiLanguage.newValue || 'auto');
+          applyI18n();
+        }
       }
     });
   }
