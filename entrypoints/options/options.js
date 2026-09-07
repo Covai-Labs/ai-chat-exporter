@@ -263,6 +263,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const os = navigator.platform || '';
     const params = new URLSearchParams({
       v: manifest.version || '1.12.1',
+      app_version: manifest.version || '1.12.1',
       browser: browser,
       os: os,
     });
