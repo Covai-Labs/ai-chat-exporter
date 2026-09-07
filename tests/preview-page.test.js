@@ -51,6 +51,7 @@ test('preview page and script handle real PNG rendering and Word .doc MIME type 
   assert.match(previewJs, /application\/msword/);
   assert.match(previewJs, /\\ufeff/);
   assert.match(previewJs, /imageFormatter\.format/);
+  assert.match(previewJs, /theme:\s*activeTheme/);
 });
 
 test('preview page and script include Transfer Chat option and ContinuationFormatter', () => {

@@ -6,11 +6,7 @@ import { ImageFormatter } from '../content/formatters/image.js';
 import { ContinuationFormatter, stripEncodedImages } from '../content/formatters/continuation.js';
 import { sanitizeHtml } from '../content/utils/sanitizer.js';
 import { initI18n, applyI18n, t } from '../content/utils/i18n.js';
-import {
-  formatFilename,
-  resolveConversationTitle,
-  DEFAULT_FILENAME_TEMPLATE,
-} from '../content/utils/filename.js';
+import { formatFilename, DEFAULT_FILENAME_TEMPLATE } from '../content/utils/filename.js';
 
 function applyTheme(theme, targetDoc = document) {
   if (!targetDoc || !targetDoc.documentElement) return;
@@ -78,6 +74,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Ignore theme loading errors when running standalone
   }
 
+  const normalizeThemeForDropdown = (theme) => {
+    if (theme === 'dark') return 'modern-dark';
+    if (theme === 'light') return 'modern-light';
+    return theme || 'system';
+  };
+
+  const previewThemeSelect = document.getElementById('preview-theme-select');
+  if (previewThemeSelect) {
+    previewThemeSelect.value = normalizeThemeForDropdown(currentSyncTheme);
+    previewThemeSelect.addEventListener('change', () => {
+      const selected = previewThemeSelect.value;
+      currentSyncTheme = selected;
+      chrome.storage.sync.set({ theme: selected });
+      applyTheme(selected, document);
+      syncThemeToIframe(selected);
+      cachedPngBlob = null;
+    });
+  }
+
   const syncThemeToIframe = (theme) => {
     try {
       if (previewRendered && previewRendered.contentWindow) {
@@ -91,21 +106,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         previewRendered.contentDocument ||
         (previewRendered.contentWindow && previewRendered.contentWindow.document);
       if (!doc || !doc.documentElement) return;
-      const toggle = doc.getElementById('theme-toggle-checkbox');
-      let isDark = false;
-      if (theme === 'dark') {
-        isDark = true;
-      } else if (theme === 'light') {
-        isDark = false;
+      const themeDropdown = doc.getElementById('theme-select-dropdown');
+      if (theme && theme !== 'system') {
+        doc.documentElement.setAttribute('data-theme', theme);
+        if (themeDropdown) themeDropdown.value = theme;
       } else {
-        isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      }
-      if (isDark) {
-        doc.documentElement.setAttribute('data-theme', 'dark');
-        if (toggle) toggle.checked = true;
-      } else {
-        doc.documentElement.removeAttribute('data-theme');
-        if (toggle) toggle.checked = false;
+        const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        doc.documentElement.setAttribute('data-theme', isDark ? 'modern-dark' : 'modern-light');
+        if (themeDropdown) themeDropdown.value = isDark ? 'modern-dark' : 'modern-light';
       }
     } catch {
       // Ignore iframe DOM access error
@@ -116,8 +124,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     chrome.storage.onChanged.addListener((changes, areaName) => {
       if (areaName === 'sync' && changes.theme) {
         currentSyncTheme = changes.theme.newValue || 'system';
+        if (previewThemeSelect)
+          previewThemeSelect.value = normalizeThemeForDropdown(currentSyncTheme);
         applyTheme(currentSyncTheme, document);
         syncThemeToIframe(currentSyncTheme);
+        cachedPngBlob = null;
       }
     });
   }
@@ -330,11 +341,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       'previewTitle',
       'previewFilename',
       'previewFormat',
+      'previewTheme',
       'autoPrint',
       'autoDownloadPng',
       'highQualityPng',
       'includeImages',
     ]);
+
+    if (data.previewTheme && (!currentSyncTheme || currentSyncTheme === 'system')) {
+      currentSyncTheme = data.previewTheme;
+      if (previewThemeSelect) {
+        previewThemeSelect.value = normalizeThemeForDropdown(currentSyncTheme);
+      }
+      applyTheme(currentSyncTheme, document);
+      syncThemeToIframe(currentSyncTheme);
+    }
 
     conversation = data.previewConversation || null;
     title = data.previewTitle || 'Untitled Chat';
@@ -444,44 +465,31 @@ document.addEventListener('DOMContentLoaded', async () => {
   downloadBtn.addEventListener('click', async () => {
     let downloadBaseName = previewFilename;
     if (!downloadBaseName) {
-      let filenameTemplate = DEFAULT_FILENAME_TEMPLATE;
-      try {
-        const syncData = await chrome.storage.sync.get('filenameTemplate');
-        if (syncData && syncData.filenameTemplate) {
-          filenameTemplate = syncData.filenameTemplate;
-        }
-      } catch {
-        // Fallback to default
-      }
       const platform = conversation?.metadata?.Source || 'AI';
-      const displayTitle = resolveConversationTitle(
-        conversation?.title || title,
+      downloadBaseName = formatFilename(DEFAULT_FILENAME_TEMPLATE, {
         platform,
-        typeof document !== 'undefined' ? document : null,
-      );
-      downloadBaseName = formatFilename(filenameTemplate, {
-        platform,
-        title: displayTitle,
+        title: conversation?.title || title || 'Conversation',
       });
     }
 
     const filename = `${downloadBaseName}.${activeExtension}`;
 
-    const getIframeTheme = () => {
+    const getActiveTheme = () => {
+      if (previewThemeSelect && previewThemeSelect.value) {
+        return previewThemeSelect.value;
+      }
       try {
         const doc =
           previewRendered.contentDocument ||
           (previewRendered.contentWindow && previewRendered.contentWindow.document);
         if (doc && doc.documentElement) {
-          if (doc.documentElement.getAttribute('data-theme') === 'dark') return 'dark';
-          if (doc.documentElement.getAttribute('data-theme') === 'light') return 'light';
+          const dt = doc.documentElement.getAttribute('data-theme');
+          if (dt) return dt;
         }
       } catch {
         // Ignore cross-origin error
       }
-      if (currentSyncTheme === 'dark') return 'dark';
-      if (currentSyncTheme === 'light') return 'light';
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      return currentSyncTheme || 'system';
     };
 
     if (activeExtension === 'png') {
@@ -493,10 +501,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         let pngBlob = cachedPngBlob;
         if (!pngBlob && conversation) {
           const isHighQuality = pngQualityCheckbox ? pngQualityCheckbox.checked : true;
-          const isDarkTheme = getIframeTheme() === 'dark';
+          const activeTheme = getActiveTheme();
           pngBlob = await imageFormatter.format(conversation, {
             highQuality: isHighQuality,
-            isDark: isDarkTheme,
+            theme: activeTheme,
           });
           cachedPngBlob = pngBlob;
         }

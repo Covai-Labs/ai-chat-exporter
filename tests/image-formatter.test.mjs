@@ -127,3 +127,86 @@ test('ImageFormatter.calculateSafeScale clamps scale on large containers to prev
   // 3. Requested scale 1 on normal container remains 1
   assert.equal(formatter.calculateSafeScale(standardEl, 1), 1);
 });
+
+test('ImageFormatter.resolveThemePalette correctly maps themes and aliases', async () => {
+  const { ImageFormatter, THEME_PALETTES } = await importFormatter();
+  const formatter = new ImageFormatter();
+
+  assert.equal(formatter.resolveThemePalette({ theme: 'dracula' }), THEME_PALETTES.dracula);
+  assert.equal(formatter.resolveThemePalette({ theme: 'nord' }), THEME_PALETTES.nord);
+  assert.equal(
+    formatter.resolveThemePalette({ theme: 'github-dark' }),
+    THEME_PALETTES['github-dark'],
+  );
+  assert.equal(
+    formatter.resolveThemePalette({ theme: 'github-light' }),
+    THEME_PALETTES['github-light'],
+  );
+  assert.equal(
+    formatter.resolveThemePalette({ theme: 'solarized-dark' }),
+    THEME_PALETTES['solarized-dark'],
+  );
+  assert.equal(
+    formatter.resolveThemePalette({ theme: 'solarized-light' }),
+    THEME_PALETTES['solarized-light'],
+  );
+  assert.equal(
+    formatter.resolveThemePalette({ theme: 'modern-dark' }),
+    THEME_PALETTES['modern-dark'],
+  );
+  assert.equal(
+    formatter.resolveThemePalette({ theme: 'modern-light' }),
+    THEME_PALETTES['modern-light'],
+  );
+
+  // Aliases
+  assert.equal(formatter.resolveThemePalette({ theme: 'dark' }), THEME_PALETTES['modern-dark']);
+  assert.equal(formatter.resolveThemePalette({ theme: 'light' }), THEME_PALETTES['modern-light']);
+
+  // Backward compatibility with isDark boolean
+  assert.equal(formatter.resolveThemePalette({ isDark: true }), THEME_PALETTES['modern-dark']);
+  assert.equal(formatter.resolveThemePalette({ isDark: false }), THEME_PALETTES['modern-light']);
+});
+
+test('ImageFormatter.createScreenshotContainer applies selected theme colors and styles', async () => {
+  const { ImageFormatter } = await importFormatter();
+  const formatter = new ImageFormatter();
+
+  if (typeof globalThis.document === 'undefined') {
+    const { document, window } = parseHTML('<!DOCTYPE html><html><body></body></html>');
+    globalThis.document = document;
+    globalThis.window = window;
+  }
+
+  const conversation = {
+    title: 'Themed Export Test',
+    messages: [
+      { role: 'User', content: 'What is the theme?' },
+      { role: 'Assistant', content: 'This is Dracula theme.' },
+    ],
+    metadata: { Source: 'Claude' },
+  };
+
+  // 1. Dracula Theme
+  const draculaContainer = formatter.createScreenshotContainer(conversation, { theme: 'dracula' });
+  assert.ok(draculaContainer.style.cssText.includes('#282a36')); // Dracula bg
+  assert.ok(draculaContainer.style.cssText.includes('#f8f8f2')); // Dracula text
+  assert.ok(draculaContainer.innerHTML.includes('#bd93f9')); // Dracula accent
+
+  // 2. Nord Theme
+  const nordContainer = formatter.createScreenshotContainer(conversation, { theme: 'nord' });
+  assert.ok(nordContainer.style.cssText.includes('#2e3440')); // Nord bg
+  assert.ok(nordContainer.style.cssText.includes('#eceff4')); // Nord text
+
+  // 3. Modern Dark Theme via theme: 'dark'
+  const darkContainer = formatter.createScreenshotContainer(conversation, { theme: 'dark' });
+  assert.ok(darkContainer.style.cssText.includes('#0f172a')); // Modern Dark bg
+  assert.ok(darkContainer.style.cssText.includes('#f8fafc')); // Modern Dark text
+
+  // 4. Solarized Light Theme
+  const solarizedLightContainer = formatter.createScreenshotContainer(conversation, {
+    theme: 'solarized-light',
+  });
+  assert.ok(solarizedLightContainer.style.cssText.includes('#fdf6e3')); // Solarized Light bg
+  assert.ok(solarizedLightContainer.style.cssText.includes('#657b83')); // Solarized Light text
+});

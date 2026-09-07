@@ -384,6 +384,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             previewTitle: response.conversation?.title || tab.title || 'Untitled Chat',
             previewFilename: customFilename || null,
             previewFormat: format,
+            previewTheme: storedSettings.theme || 'system',
             autoPrint: format === 'pdf',
             autoDownloadPng: format === 'png',
             highQualityPng: pngQualityCheckbox ? pngQualityCheckbox.checked : true,
@@ -407,6 +408,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           customFilename: customFilename,
           highQualityPng: pngQualityCheckbox ? pngQualityCheckbox.checked : true,
           parserMode: storedSettings.parserMode || 'auto',
+          theme: storedSettings.theme || 'system',
         });
 
         if (response && response.success) {
@@ -493,6 +495,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           previewTitle: response.conversation?.title || tab.title || 'Untitled Chat',
           previewFilename: customFilename || null,
           previewFormat: format,
+          previewTheme: storedSettings.theme || 'system',
           autoPrint: false,
           autoDownloadPng: false,
           highQualityPng: pngQualityCheckbox ? pngQualityCheckbox.checked : true,

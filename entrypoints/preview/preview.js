@@ -99,9 +99,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Ignore theme loading errors when running standalone
   }
 
+  const normalizeThemeForDropdown = (theme) => {
+    if (theme === 'dark') return 'modern-dark';
+    if (theme === 'light') return 'modern-light';
+    return theme || 'system';
+  };
+
   const previewThemeSelect = document.getElementById('preview-theme-select');
   if (previewThemeSelect) {
-    previewThemeSelect.value = currentSyncTheme || 'system';
+    previewThemeSelect.value = normalizeThemeForDropdown(currentSyncTheme);
     previewThemeSelect.addEventListener('change', () => {
       const selected = previewThemeSelect.value;
       currentSyncTheme = selected;
@@ -144,7 +150,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     chrome.storage.onChanged.addListener((changes, areaName) => {
       if (areaName === 'sync' && changes.theme) {
         currentSyncTheme = changes.theme.newValue || 'system';
-        if (previewThemeSelect) previewThemeSelect.value = currentSyncTheme;
+        if (previewThemeSelect)
+          previewThemeSelect.value = normalizeThemeForDropdown(currentSyncTheme);
         applyTheme(currentSyncTheme, document);
         syncThemeToIframe(currentSyncTheme);
         cachedPngBlob = null;
@@ -658,11 +665,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       'previewTitle',
       'previewFilename',
       'previewFormat',
+      'previewTheme',
       'autoPrint',
       'autoDownloadPng',
       'highQualityPng',
       'includeImages',
     ]);
+
+    if (data.previewTheme && (!currentSyncTheme || currentSyncTheme === 'system')) {
+      currentSyncTheme = data.previewTheme;
+      if (previewThemeSelect) {
+        previewThemeSelect.value = normalizeThemeForDropdown(currentSyncTheme);
+      }
+      applyTheme(currentSyncTheme, document);
+      syncThemeToIframe(currentSyncTheme);
+    }
 
     conversation = data.previewConversation || null;
     title = data.previewTitle || 'Untitled Chat';
@@ -832,21 +849,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const filename = `${downloadBaseName}.${activeExtension}`;
 
-    const getIframeTheme = () => {
+    const getActiveTheme = () => {
+      if (previewThemeSelect && previewThemeSelect.value) {
+        return previewThemeSelect.value;
+      }
       try {
         const doc =
           previewRendered.contentDocument ||
           (previewRendered.contentWindow && previewRendered.contentWindow.document);
         if (doc && doc.documentElement) {
-          if (doc.documentElement.getAttribute('data-theme') === 'dark') return 'dark';
-          if (doc.documentElement.getAttribute('data-theme') === 'light') return 'light';
+          const dt = doc.documentElement.getAttribute('data-theme');
+          if (dt) return dt;
         }
       } catch {
         // Ignore cross-origin error
       }
-      if (currentSyncTheme === 'dark') return 'dark';
-      if (currentSyncTheme === 'light') return 'light';
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      return currentSyncTheme || 'system';
     };
 
     if (activeExtension === 'png') {
@@ -858,10 +876,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         let pngBlob = cachedPngBlob;
         if (!pngBlob && conversation) {
           const isHighQuality = pngQualityCheckbox ? pngQualityCheckbox.checked : true;
-          const isDarkTheme = getIframeTheme() === 'dark';
-          pngBlob = await imageFormatter.format(conversation, {
+          const activeTheme = getActiveTheme();
+          const filteredMessages =
+            conversation && Array.isArray(conversation.messages) && selectedIndices
+              ? conversation.messages.filter((_, idx) => selectedIndices.has(idx))
+              : conversation?.messages || [];
+          const activeConv = { ...conversation, messages: filteredMessages };
+
+          pngBlob = await imageFormatter.format(activeConv, {
             highQuality: isHighQuality,
-            isDark: isDarkTheme,
+            theme: activeTheme,
           });
           cachedPngBlob = pngBlob;
         }

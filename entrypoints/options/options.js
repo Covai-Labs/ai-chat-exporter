@@ -75,7 +75,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   ]);
 
   const activeTheme = stored.theme || 'system';
-  if (themeSelect) themeSelect.value = activeTheme;
+  if (themeSelect) {
+    const matchedVal =
+      activeTheme === 'modern-dark'
+        ? 'dark'
+        : activeTheme === 'modern-light'
+          ? 'light'
+          : activeTheme;
+    themeSelect.value = matchedVal;
+  }
   applyTheme(activeTheme);
 
   const activeLanguage = stored.uiLanguage || 'auto';
