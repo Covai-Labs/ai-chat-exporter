@@ -10,10 +10,8 @@ import { formatFilename, DEFAULT_FILENAME_TEMPLATE } from '../content/utils/file
 
 function applyTheme(theme, targetDoc = document) {
   if (!targetDoc || !targetDoc.documentElement) return;
-  if (theme === 'dark') {
-    targetDoc.documentElement.setAttribute('data-theme', 'dark');
-  } else if (theme === 'light') {
-    targetDoc.documentElement.setAttribute('data-theme', 'light');
+  if (theme && theme !== 'system') {
+    targetDoc.documentElement.setAttribute('data-theme', theme);
   } else {
     targetDoc.documentElement.removeAttribute('data-theme');
   }

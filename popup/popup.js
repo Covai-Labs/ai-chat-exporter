@@ -9,12 +9,22 @@ import { createLogger } from '../content/utils/logger.js';
 const logger = createLogger('Popup');
 
 function applyTheme(theme) {
-  if (theme === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  } else if (theme === 'light') {
-    document.documentElement.setAttribute('data-theme', 'light');
+  if (theme && theme !== 'system') {
+    document.documentElement.setAttribute('data-theme', theme);
   } else {
     document.documentElement.removeAttribute('data-theme');
+  }
+}
+
+if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.sync) {
+  try {
+    chrome.storage.sync.get(['theme'], (res) => {
+      if (res && res.theme) {
+        applyTheme(res.theme);
+      }
+    });
+  } catch {
+    // Ignore early fetch error
   }
 }
 

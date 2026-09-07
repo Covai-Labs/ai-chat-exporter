@@ -8,6 +8,18 @@ function applyTheme(theme) {
   }
 }
 
+if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.sync) {
+  try {
+    chrome.storage.sync.get(['theme'], (res) => {
+      if (res && res.theme) {
+        applyTheme(res.theme);
+      }
+    });
+  } catch {
+    // Ignore early fetch error
+  }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.sync) {
     try {

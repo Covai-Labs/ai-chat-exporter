@@ -13,7 +13,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
+  :root:not([data-theme]) {
     --bg-color: #0f172a;
     --card-bg: #1e293b;
     --border-color: #334155;

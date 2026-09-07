@@ -2,12 +2,22 @@ import { initI18n, applyI18n, t } from '../content/utils/i18n.js';
 import { formatFilename, DEFAULT_FILENAME_TEMPLATE } from '../content/utils/filename.js';
 
 function applyTheme(theme) {
-  if (theme === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  } else if (theme === 'light') {
-    document.documentElement.setAttribute('data-theme', 'light');
+  if (theme && theme !== 'system') {
+    document.documentElement.setAttribute('data-theme', theme);
   } else {
     document.documentElement.removeAttribute('data-theme');
+  }
+}
+
+if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.sync) {
+  try {
+    chrome.storage.sync.get(['theme'], (res) => {
+      if (res && res.theme) {
+        applyTheme(res.theme);
+      }
+    });
+  } catch {
+    // Ignore early fetch error
   }
 }
 
@@ -285,7 +295,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (areaName === 'sync') {
         if (changes.theme) {
           const newTheme = changes.theme.newValue || 'system';
-          if (themeSelect) themeSelect.value = newTheme;
+          const matchedVal =
+            newTheme === 'modern-dark' ? 'dark' : newTheme === 'modern-light' ? 'light' : newTheme;
+          if (themeSelect) themeSelect.value = matchedVal;
           applyTheme(newTheme);
         }
         if (changes.uiLanguage) {

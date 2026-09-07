@@ -9,6 +9,18 @@ function applyTheme(theme) {
   }
 }
 
+if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.sync) {
+  try {
+    chrome.storage.sync.get(['theme'], (res) => {
+      if (res && res.theme) {
+        applyTheme(res.theme);
+      }
+    });
+  } catch {
+    // Ignore early fetch error
+  }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   if (window.self !== window.top) {
     document.documentElement.classList.add('in-iframe');
@@ -283,7 +295,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (areaName === 'sync') {
         if (changes.theme) {
           const newTheme = changes.theme.newValue || 'system';
-          if (themeSelect) themeSelect.value = newTheme;
+          const matchedVal =
+            newTheme === 'modern-dark' ? 'dark' : newTheme === 'modern-light' ? 'light' : newTheme;
+          if (themeSelect) themeSelect.value = matchedVal;
           applyTheme(newTheme);
         }
         if (changes.uiLanguage) {

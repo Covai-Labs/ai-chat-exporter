@@ -45,3 +45,68 @@ test('smart transfer target logic defaults away from current platform', () => {
   // When on ChatGPT and user default is deepseek -> remains deepseek
   assert.equal(getSmartTransferTarget('ChatGPT', 'deepseek'), 'deepseek');
 });
+
+test('applyTheme correctly sets data-theme for all themes and removes for system', () => {
+  const mockDoc = {
+    attrs: {},
+    documentElement: {
+      setAttribute(name, val) {
+        mockDoc.attrs[name] = val;
+      },
+      removeAttribute(name) {
+        delete mockDoc.attrs[name];
+      },
+      getAttribute(name) {
+        return mockDoc.attrs[name];
+      },
+    },
+  };
+
+  function applyTheme(theme, targetDoc = mockDoc) {
+    if (theme && theme !== 'system') {
+      targetDoc.documentElement.setAttribute('data-theme', theme);
+    } else {
+      targetDoc.documentElement.removeAttribute('data-theme');
+    }
+  }
+
+  // System removes attribute
+  applyTheme('system');
+  assert.equal(mockDoc.documentElement.getAttribute('data-theme'), undefined);
+
+  // Dark & Light
+  applyTheme('dark');
+  assert.equal(mockDoc.documentElement.getAttribute('data-theme'), 'dark');
+
+  applyTheme('light');
+  assert.equal(mockDoc.documentElement.getAttribute('data-theme'), 'light');
+
+  // Modern aliases
+  applyTheme('modern-dark');
+  assert.equal(mockDoc.documentElement.getAttribute('data-theme'), 'modern-dark');
+
+  applyTheme('modern-light');
+  assert.equal(mockDoc.documentElement.getAttribute('data-theme'), 'modern-light');
+
+  // Palette themes
+  const themes = [
+    'catppuccin',
+    'monokai',
+    'synthwave',
+    'gruvbox',
+    'dracula',
+    'nord',
+    'github-dark',
+    'github-light',
+    'solarized-dark',
+    'solarized-light',
+  ];
+  for (const th of themes) {
+    applyTheme(th);
+    assert.equal(mockDoc.documentElement.getAttribute('data-theme'), th);
+  }
+
+  // Empty or undefined removes attribute
+  applyTheme('');
+  assert.equal(mockDoc.documentElement.getAttribute('data-theme'), undefined);
+});

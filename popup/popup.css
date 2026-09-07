@@ -18,7 +18,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
+  :root:not([data-theme]) {
     /* Dark Mode Palette */
     --bg-color: #0b0f19;
     --card-bg: #151d30;
@@ -631,7 +631,7 @@ select:focus {
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .decant-promo-box {
+  :root:not([data-theme]) .decant-promo-box {
     background: linear-gradient(135deg, rgba(59, 130, 246, 0.14) 0%, rgba(99, 102, 241, 0.08) 100%);
     border-color: rgba(59, 130, 246, 0.35);
   }

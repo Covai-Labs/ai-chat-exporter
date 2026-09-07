@@ -14,7 +14,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
+  :root:not([data-theme]) {
     --bg-color: #0f1115;
     --card-bg: #161a22;
     --text-color: #e6edf3;
@@ -626,7 +626,7 @@ html[data-theme='dark'] .png-warning-banner {
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .png-warning-banner {
+  :root:not([data-theme]) .png-warning-banner {
     background-color: rgba(217, 119, 6, 0.15);
     border-color: rgba(245, 158, 11, 0.35);
     color: #fbbf24;
