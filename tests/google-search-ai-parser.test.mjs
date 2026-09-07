@@ -51,10 +51,7 @@ test('GoogleSearchAIParser correctly parses chat content from fixture', async ()
       '| Pakistan | ~$200 | 48+ | 14 | <5% |\n' +
       '| Nigeria | ~$150 | 40-48 | 6 | <10% |\n' +
       '\n' +
-      "Finally, here is Euler's Identity, often cited as one of the most beautiful equations in mathematics:\n" +
-      '\n' +
-      '\n' +
-      '\n' +
+      "Finally, here is Euler's Identity, often cited as one of the most beautiful equations in mathematics:\n\n" +
       '$$e^{i\\pi }+1=0$$',
   );
 });
