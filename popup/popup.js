@@ -150,6 +150,71 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
+  let activeTargetFrameId = null;
+
+  async function sendTabMessage(actionPayload) {
+    if (!tab || !tab.id) throw new Error('No active tab');
+    if (typeof activeTargetFrameId === 'number') {
+      try {
+        return await chrome.tabs.sendMessage(tab.id, actionPayload, {
+          frameId: activeTargetFrameId,
+        });
+      } catch (err) {
+        logger.debug('Sending to target frame failed, falling back to broadcast:', err);
+      }
+    }
+    return await chrome.tabs.sendMessage(tab.id, actionPayload);
+  }
+
+  function scoreFrameReport(report) {
+    if (!report || !report.available) return -1;
+    let score = 0;
+    if (report.isDedicatedAi) score += 1000;
+    score += (report.count || 0) * 10;
+    if (report.isTopFrame) score += 5;
+    return score;
+  }
+
+  async function discoverBestFrame(tabId) {
+    return new Promise((resolve) => {
+      const reports = [];
+      const queryId = `${Date.now()}_${Math.random()}`;
+
+      const listener = (msg, sender) => {
+        if (msg?.action === 'FRAME_REPORT' && msg?.queryId === queryId && msg.data) {
+          const fid =
+            typeof sender.frameId === 'number' ? sender.frameId : msg.data.isTopFrame ? 0 : null;
+          reports.push({
+            ...msg.data,
+            frameId: fid,
+          });
+        }
+      };
+
+      if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
+        chrome.runtime.onMessage.addListener(listener);
+      }
+
+      let resolved = false;
+      const finish = () => {
+        if (resolved) return;
+        resolved = true;
+        if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
+          chrome.runtime.onMessage.removeListener(listener);
+        }
+        if (reports.length === 0) {
+          resolve(null);
+          return;
+        }
+        reports.sort((a, b) => scoreFrameReport(b) - scoreFrameReport(a));
+        resolve(reports[0]);
+      };
+
+      chrome.tabs.sendMessage(tabId, { action: 'DISCOVER_FRAMES', queryId }).catch(() => {});
+      setTimeout(finish, 200);
+    });
+  }
+
   // Ping the content script to see if a parser is available.
   const MAX_RETRIES = 3;
   const RETRY_DELAY_MS = 500;
@@ -165,16 +230,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
       try {
-        logger.debug(
-          `Attempt ${attempt + 1}/${MAX_RETRIES}: Sending CHECK_AVAILABILITY to tab ${tab.id}`,
-        );
-        const response = await chrome.tabs.sendMessage(tab.id, {
-          action: 'CHECK_AVAILABILITY',
-        });
+        logger.debug(`Attempt ${attempt + 1}/${MAX_RETRIES}: Discovering frames in tab ${tab.id}`);
+        let bestReport = await discoverBestFrame(tab.id);
+        let response = null;
+
+        if (bestReport && bestReport.available) {
+          activeTargetFrameId = typeof bestReport.frameId === 'number' ? bestReport.frameId : null;
+          response = bestReport;
+        } else if (!bestReport) {
+          logger.debug('No DISCOVER_FRAMES reports, falling back to CHECK_AVAILABILITY');
+          response = await chrome.tabs.sendMessage(tab.id, {
+            action: 'CHECK_AVAILABILITY',
+          });
+          activeTargetFrameId = null;
+        }
+
         logger.debug('Response received:', response);
         if (response && response.available) {
           logger.info(
-            `Successfully connected to platform: ${response.platform} with ${response.count} messages`,
+            `Successfully connected to platform: ${response.platform} with ${response.count} messages (frameId: ${activeTargetFrameId})`,
           );
           statusEl.textContent = `${t('statusReady') || 'Ready'}: ${response.platform}`;
           const platformName = response.platform || 'AI';
@@ -296,7 +370,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       if (format === 'pdf' || format === 'png') {
         const formatToRequest = format === 'pdf' ? 'html' : 'markdown';
-        const response = await chrome.tabs.sendMessage(tab.id, {
+        const response = await sendTabMessage({
           action: 'COPY_CHAT',
           format: formatToRequest,
           includeImages: includeImagesCheckbox.checked,
@@ -326,7 +400,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             (t('statusError') || 'Export Failed') + ': ' + (response?.error || 'Unknown');
         }
       } else {
-        const response = await chrome.tabs.sendMessage(tab.id, {
+        const response = await sendTabMessage({
           action: 'EXPORT_CHAT',
           format: format,
           includeImages: includeImagesCheckbox.checked,
@@ -356,7 +430,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     copyBtn.textContent = t('statusExporting') || 'Copying...';
 
     try {
-      const response = await chrome.tabs.sendMessage(tab.id, {
+      const response = await sendTabMessage({
         action: 'COPY_CHAT',
         format: format,
         includeImages: includeImagesCheckbox.checked,
@@ -404,7 +478,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     try {
       const formatToRequest = format === 'pdf' ? 'html' : format === 'png' ? 'markdown' : format;
-      const response = await chrome.tabs.sendMessage(tab.id, {
+      const response = await sendTabMessage({
         action: 'COPY_CHAT',
         format: formatToRequest,
         includeImages: includeImagesCheckbox.checked,
@@ -450,7 +524,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       transferBtn.textContent = t('statusExporting') || 'Transferring...';
 
       try {
-        const response = await chrome.tabs.sendMessage(tab.id, {
+        const response = await sendTabMessage({
           action: 'GET_CONTINUATION_PAYLOAD',
           includeImages: includeImagesCheckbox.checked,
         });

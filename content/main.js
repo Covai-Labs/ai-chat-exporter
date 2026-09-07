@@ -181,7 +181,13 @@ let activeParser = null;
 function detectParser() {
   const currentUrl = window.location.href;
   logger.debug('Detecting parser for URL:', currentUrl);
-  activeParser = parsers.find((p) => p.isAvailable(currentUrl));
+  const isTop = typeof window === 'undefined' || window.self === window.top;
+  activeParser = parsers.find((p) => {
+    if (!isTop && (p.name === 'WebArticle' || p.constructor?.name === 'ArticleParser')) {
+      return false;
+    }
+    return p.isAvailable(currentUrl);
+  });
   if (activeParser) {
     const platformName =
       typeof activeParser.getPlatformName === 'function'
@@ -200,6 +206,73 @@ if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
     logger.debug(
       `Message received: action=${request.action} on frame=${currentFrameIsTop ? 'TOP' : 'IFRAME'}`,
     );
+
+    if (request.action === 'DISCOVER_FRAMES') {
+      detectParser();
+      const queryId = request.queryId;
+      if (activeParser) {
+        (async () => {
+          try {
+            const conversation = enrichConversation(await activeParser.parse({ full: false }));
+            const count = conversation?.messages?.length || 0;
+            if (!currentFrameIsTop && count === 0) {
+              return;
+            }
+            const isDedicatedAi =
+              activeParser.name !== 'WebArticle' &&
+              activeParser.constructor?.name !== 'ArticleParser';
+            const platformName =
+              typeof activeParser.getPlatformName === 'function'
+                ? activeParser.getPlatformName()
+                : activeParser.name || activeParser.constructor.name.replace('Parser', '');
+
+            chrome.runtime.sendMessage({
+              action: 'FRAME_REPORT',
+              queryId,
+              data: {
+                available: true,
+                platform: platformName,
+                isDedicatedAi,
+                count,
+                title: conversation?.title || '',
+                isTopFrame: currentFrameIsTop,
+              },
+            });
+          } catch (e) {
+            logger.error('Discover frames parse error:', e);
+            if (currentFrameIsTop) {
+              chrome.runtime.sendMessage({
+                action: 'FRAME_REPORT',
+                queryId,
+                data: {
+                  available: false,
+                  platform: '',
+                  isDedicatedAi: false,
+                  count: 0,
+                  title: '',
+                  isTopFrame: true,
+                },
+              });
+            }
+          }
+        })();
+      } else if (currentFrameIsTop) {
+        chrome.runtime.sendMessage({
+          action: 'FRAME_REPORT',
+          queryId,
+          data: {
+            available: false,
+            platform: '',
+            isDedicatedAi: false,
+            count: 0,
+            title: '',
+            isTopFrame: true,
+          },
+        });
+      }
+      sendResponse({ acknowledged: true });
+      return true;
+    }
 
     if (request.action === 'CHECK_AVAILABILITY') {
       detectParser();
