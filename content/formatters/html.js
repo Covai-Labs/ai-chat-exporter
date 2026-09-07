@@ -1042,7 +1042,12 @@ export function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
-function inlineParse(text) {
+function cleanLatexMath(latex) {
+  if (!latex || typeof latex !== 'string') return '';
+  return latex.replace(/\\\\([a-zA-Z]+)/g, '\\$1').replace(/\\([_\][*])/g, '$1');
+}
+
+function inlineParse(text, mathBlockPlaceholders = null) {
   const placeholders = [];
   let tokenCounter = 0;
 
@@ -1051,7 +1056,7 @@ function inlineParse(text) {
     const id = `{{MATHBLOCK${tokenCounter++}}}`;
     placeholders.push({
       id,
-      html: `<span class="math-block">$$${math}$$</span>`,
+      html: `<span class="math-block">$$${cleanLatexMath(math)}$$</span>`,
     });
     return id;
   });
@@ -1060,7 +1065,7 @@ function inlineParse(text) {
     const id = `{{MATHBLOCK${tokenCounter++}}}`;
     placeholders.push({
       id,
-      html: `<span class="math-block">$$${math}$$</span>`,
+      html: `<span class="math-block">$$${cleanLatexMath(math)}$$</span>`,
     });
     return id;
   });
@@ -1070,7 +1075,7 @@ function inlineParse(text) {
     const id = `{{MATHINLINE${tokenCounter++}}}`;
     placeholders.push({
       id,
-      html: `<span class="math-inline">$${math}$</span>`,
+      html: `<span class="math-inline">$${cleanLatexMath(math)}$</span>`,
     });
     return id;
   });
@@ -1079,7 +1084,7 @@ function inlineParse(text) {
     const id = `{{MATHINLINE${tokenCounter++}}}`;
     placeholders.push({
       id,
-      html: `<span class="math-inline">$${math}$</span>`,
+      html: `<span class="math-inline">$${cleanLatexMath(math)}$</span>`,
     });
     return id;
   });
@@ -1136,10 +1141,19 @@ function inlineParse(text) {
     text = text.replace(id, () => html);
   });
 
+  // 10. Restore outer block math placeholders if present
+  if (mathBlockPlaceholders && mathBlockPlaceholders.size > 0) {
+    for (const [id, mathHtml] of mathBlockPlaceholders.entries()) {
+      if (text.includes(id)) {
+        text = text.replaceAll(id, mathHtml);
+      }
+    }
+  }
+
   return text;
 }
 
-function renderTable(rows) {
+function renderTable(rows, mathBlockPlaceholders = null) {
   if (rows.length === 0) return '';
 
   const isSeparator = (r) => /^[|\s:-]+$/.test(r);
@@ -1180,7 +1194,7 @@ function renderTable(rows) {
     tableHtml += '<thead><tr>\n';
     headerCells.forEach((cell, idx) => {
       const align = alignments[idx] ? ` style="text-align: ${alignments[idx]};"` : '';
-      tableHtml += `  <th${align}>${inlineParse(cell)}</th>\n`;
+      tableHtml += `  <th${align}>${inlineParse(cell, mathBlockPlaceholders)}</th>\n`;
     });
     tableHtml += '</tr></thead>\n';
   }
@@ -1191,7 +1205,7 @@ function renderTable(rows) {
       tableHtml += '<tr>\n';
       row.forEach((cell, idx) => {
         const align = alignments[idx] ? ` style="text-align: ${alignments[idx]};"` : '';
-        tableHtml += `  <td${align}>${inlineParse(cell)}</td>\n`;
+        tableHtml += `  <td${align}>${inlineParse(cell, mathBlockPlaceholders)}</td>\n`;
       });
       tableHtml += '</tr>\n';
     });
@@ -1209,6 +1223,54 @@ export function markdownToHtml(mdText) {
   mdText = mdText.replace(/<think>([\s\S]*?)<\/think>/gi, (match, thinkContent) => {
     return `\n\n<details class="thinking-block"><summary class="thinking-summary"><svg class="thinking-icon" viewBox="0 0 24 24" width="14" height="14"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.5h-2v-2h2zm0-4h-2V7h2z"/></svg> Thinking Process</summary><div class="thinking-content">\n\n${thinkContent.trim()}\n\n</div></details>\n\n`;
   });
+
+  // 1. Protect fenced code blocks (``` ... ``` or ~~~ ... ~~~)
+  const codeBlockPlaceholders = [];
+  let codeBlockCounter = 0;
+  mdText = mdText.replace(/(```[\s\S]*?```|~~~[\s\S]*?~~~)/g, (match) => {
+    const id = `@@HTML_CODE_BLOCK_${codeBlockCounter++}@@`;
+    codeBlockPlaceholders.push({ id, content: match });
+    return id;
+  });
+
+  // 2. Protect inline code (`...`)
+  const inlineCodePlaceholders = [];
+  let inlineCodeCounter = 0;
+  mdText = mdText.replace(/`([^`\n]+?)`/g, (match) => {
+    const id = `@@HTML_INLINE_CODE_${inlineCodeCounter++}@@`;
+    inlineCodePlaceholders.push({ id, content: match });
+    return id;
+  });
+
+  // 3. Convert multi-line or bracket display math \[ ... \] or \\[ ... \\] to $$ ... $$
+  mdText = mdText.replace(/(?:\\{1,2}\[)([\s\S]+?)(?:\\{1,2}\])(?!\()/g, (match, math) => {
+    return `$$${math}$$`;
+  });
+
+  // 4. Convert inline math \( ... \) or \\( ... \\) to $ ... $
+  mdText = mdText.replace(/(?:\\{1,2}\()([\s\S]+?)(?:\\{1,2}\))(?!\()/g, (match, math) => {
+    return `$${math}$`;
+  });
+
+  // 5. Pre-extract display math blocks ($$ ... $$) so multi-line equations are preserved as single blocks
+  const mathBlockPlaceholders = new Map();
+  let mathBlockCounter = 0;
+  mdText = mdText.replace(/\$\$([\s\S]+?)\$\$/g, (match, math) => {
+    const id = `@@HTML_MATH_BLOCK_${mathBlockCounter++}@@`;
+    const cleanMath = math.includes('\n') ? cleanLatexMath(math).trim() : cleanLatexMath(math);
+    mathBlockPlaceholders.set(id, `<span class="math-block">$$${cleanMath}$$</span>`);
+    return `\n\n${id}\n\n`;
+  });
+
+  // 6. Restore code blocks
+  for (let i = inlineCodePlaceholders.length - 1; i >= 0; i--) {
+    const { id, content } = inlineCodePlaceholders[i];
+    mdText = mdText.replace(id, () => content);
+  }
+  for (let i = codeBlockPlaceholders.length - 1; i >= 0; i--) {
+    const { id, content } = codeBlockPlaceholders[i];
+    mdText = mdText.replace(id, () => content);
+  }
 
   const lines = mdText.split(/\r?\n/);
   let html = '';
@@ -1256,19 +1318,19 @@ export function markdownToHtml(mdText) {
     }
 
     if (inTable) {
-      html += renderTable(tableRows);
+      html += renderTable(tableRows, mathBlockPlaceholders);
       inTable = false;
       tableRows = [];
     }
 
     if (inBlockquote) {
-      html += `<blockquote>${blockquoteContent.map((l) => inlineParse(l)).join('<br>\n')}</blockquote>\n`;
+      html += `<blockquote>${blockquoteContent.map((l) => inlineParse(l, mathBlockPlaceholders)).join('<br>\n')}</blockquote>\n`;
       inBlockquote = false;
       blockquoteContent = [];
     }
 
     if (inParagraph) {
-      html += `<p>${paragraphContent.map((l) => inlineParse(l)).join('<br>\n')}</p>\n`;
+      html += `<p>${paragraphContent.map((l) => inlineParse(l, mathBlockPlaceholders)).join('<br>\n')}</p>\n`;
       inParagraph = false;
       paragraphContent = [];
     }
@@ -1287,6 +1349,12 @@ export function markdownToHtml(mdText) {
     ) {
       closeAllBlocks();
       html += line + '\n';
+      continue;
+    }
+
+    if (mathBlockPlaceholders.has(trimmed)) {
+      closeAllBlocks();
+      html += `<p>${mathBlockPlaceholders.get(trimmed)}</p>\n`;
       continue;
     }
 
@@ -1326,7 +1394,7 @@ export function markdownToHtml(mdText) {
       closeAllBlocks();
       const level = headingMatch[1].length;
       const text = headingMatch[2];
-      html += `<h${level}>${inlineParse(text)}</h${level}>\n`;
+      html += `<h${level}>${inlineParse(text, mathBlockPlaceholders)}</h${level}>\n`;
       continue;
     }
 
@@ -1372,9 +1440,9 @@ export function markdownToHtml(mdText) {
         html += `<ul${isTask ? ' class="task-list"' : ''}>\n`;
       }
       if (isTask) {
-        html += `<li class="task-list-item"><input type="checkbox" class="task-checkbox" disabled${isChecked ? ' checked' : ''}><span>${inlineParse(itemContent)}</span></li>\n`;
+        html += `<li class="task-list-item"><input type="checkbox" class="task-checkbox" disabled${isChecked ? ' checked' : ''}><span>${inlineParse(itemContent, mathBlockPlaceholders)}</span></li>\n`;
       } else {
-        html += `<li>${inlineParse(itemContent)}</li>\n`;
+        html += `<li>${inlineParse(itemContent, mathBlockPlaceholders)}</li>\n`;
       }
       continue;
     }
@@ -1389,7 +1457,7 @@ export function markdownToHtml(mdText) {
         listType = 'ol';
         html += `<ol>\n`;
       }
-      html += `<li>${inlineParse(olMatch[2])}</li>\n`;
+      html += `<li>${inlineParse(olMatch[2], mathBlockPlaceholders)}</li>\n`;
       continue;
     }
 

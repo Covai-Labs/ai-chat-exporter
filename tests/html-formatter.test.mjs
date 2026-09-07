@@ -208,6 +208,43 @@ test('HTML formatter formats LaTeX math equations with bracket and dollar delimi
   assert.ok(output.includes('<span class="math-inline">$ e^{ix} = \\cos x + i\\sin x $</span>'));
 });
 
+test('HTML formatter formats multi-line LaTeX math blocks without stripping slashes or injecting line breaks', async () => {
+  const { HtmlFormatter } = await importFormatter();
+  const formatter = new HtmlFormatter();
+
+  const conversation = {
+    title: 'Multi-line Math Test',
+    messages: [
+      {
+        role: 'Assistant',
+        content:
+          '### Average Treatment Effect (ATE)\n\n' +
+          '\\[\n\\boxed{\\operatorname{ATE}=\\mathbb{E}[Y(1)-Y(0)]}\n\\]\n\n' +
+          'Multi-line dollar math:\n\n' +
+          '$$\n\\tau = \\mathbb{E}[Y(1)] - \\mathbb{E}[Y(0)]\n$$\n\n' +
+          'where $Y(1)$ is treated.',
+      },
+    ],
+  };
+
+  const output = formatter.format(conversation);
+
+  assert.ok(
+    output.includes(
+      '<span class="math-block">$$\\boxed{\\operatorname{ATE}=\\mathbb{E}[Y(1)-Y(0)]}$$</span>',
+    ),
+  );
+  assert.ok(
+    output.includes(
+      '<span class="math-block">$$\\tau = \\mathbb{E}[Y(1)] - \\mathbb{E}[Y(0)]$$</span>',
+    ),
+  );
+  assert.ok(output.includes('<span class="math-inline">$Y(1)$</span>'));
+  // Ensure square brackets are NOT stripped to literal unescaped [ or ]
+  assert.ok(!output.includes('<p>[<br>'));
+  assert.ok(!output.includes('<br>]<br>'));
+});
+
 test('HTML formatter escapes malicious codeLang tags and untrusted details tags', async () => {
   const { HtmlFormatter } = await importFormatter();
   const formatter = new HtmlFormatter();
