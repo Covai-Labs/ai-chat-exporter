@@ -87,3 +87,10 @@ test('preview script contextually toggles copy button on png, pdf, and doc tabs'
     /if\s*\(\s*tabName === 'png' \|\| tabName === 'pdf' \|\| tabName === 'doc'\s*\)/,
   );
 });
+
+test('preview page has global include-images control and recalculates content on toggle', () => {
+  assert.match(previewHtml, /class="[^"]*image-control-group[^"]*"/);
+  assert.match(previewJs, /recalculateContent/);
+  assert.match(previewJs, /stripImages/);
+  assert.match(previewJs, /includeImagesCheckbox\.addEventListener\('change'/);
+});

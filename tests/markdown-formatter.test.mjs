@@ -140,3 +140,39 @@ test('MarkdownFormatter preserves math formulas with brackets and does not split
   assert.ok(output.includes('$\\beta = \\rho \\cdot \\frac{\\sigma_a}{\\sigma_m}$'));
   assert.ok(!output.includes('\\\\beta'));
 });
+
+test('MarkdownFormatter converts inline base64 images to reference definitions at the bottom while keeping web URLs inline', () => {
+  const formatter = new MarkdownFormatter();
+
+  const conversation = {
+    title: 'Image Reference Test',
+    messages: [
+      {
+        role: 'User',
+        content:
+          'Check this diagram:\n![diagram](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==)\nand this web link:\n![web logo](https://example.com/logo.png)',
+      },
+      {
+        role: 'Assistant',
+        content:
+          'Here is another one:\n![chart](data:image\\/jpeg;base64,\\/9j\\/4AAQSkZJRgABAQEASABIAAD)',
+      },
+    ],
+  };
+
+  const output = formatter.format(conversation);
+
+  // Markdown body should contain reference links
+  assert.ok(output.includes('![diagram][image-1]'));
+  assert.ok(output.includes('![chart][image-2]'));
+  // Web image should remain inline
+  assert.ok(output.includes('![web logo](https://example.com/logo.png)'));
+  // Base64 definitions should be at the bottom under <!-- Image References -->
+  assert.ok(output.includes('<!-- Image References -->'));
+  assert.ok(
+    output.includes(
+      '[image-1]: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
+    ),
+  );
+  assert.ok(output.includes('[image-2]: data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD'));
+});

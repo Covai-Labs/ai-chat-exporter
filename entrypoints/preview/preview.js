@@ -7,6 +7,7 @@ import {
   ContinuationFormatter,
   stripEncodedImages,
 } from '../../content/formatters/continuation.js';
+import { stripImages } from '../../content/utils/strip-images.js';
 import { sanitizeHtml } from '../../content/utils/sanitizer.js';
 import { initI18n, applyI18n, t } from '../../content/utils/i18n.js';
 import {
@@ -73,6 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (includeImagesCheckbox) {
     includeImagesCheckbox.addEventListener('change', () => {
       cachedPngBlob = null;
+      recalculateContent();
     });
   }
 
@@ -420,7 +422,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   const recalculateContent = () => {
     if (!conversation || !Array.isArray(conversation.messages)) return;
 
-    const filteredMessages = conversation.messages.filter((_, idx) => selectedIndices.has(idx));
+    const includeImages = includeImagesCheckbox ? includeImagesCheckbox.checked : true;
+    const filteredMessages = conversation.messages
+      .filter((_, idx) => selectedIndices.has(idx))
+      .map((msg) => {
+        if (!includeImages && msg.content) {
+          return { ...msg, content: stripImages(msg.content) };
+        }
+        return msg;
+      });
     const activeConv = { ...conversation, messages: filteredMessages };
 
     const shouldIncludeToc = Boolean(includeTocCheckbox && includeTocCheckbox.checked);
@@ -730,10 +740,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.title = `${effectiveFilename} - Chat Export Preview`;
 
     if (conversation) {
-      htmlContent = htmlFormatter.format(conversation, { theme: currentSyncTheme });
-      markdownContent = markdownFormatter.format(conversation);
-      jsonContent = jsonFormatter.format(conversation);
-      docContent = docFormatter.format(conversation);
+      const includeImages = includeImagesCheckbox ? includeImagesCheckbox.checked : true;
+      const initialMessages = conversation.messages.map((msg) => {
+        if (!includeImages && msg.content) {
+          return { ...msg, content: stripImages(msg.content) };
+        }
+        return msg;
+      });
+      const initialConv = { ...conversation, messages: initialMessages };
+      htmlContent = htmlFormatter.format(initialConv, { theme: currentSyncTheme });
+      markdownContent = markdownFormatter.format(initialConv);
+      jsonContent = jsonFormatter.format(initialConv);
+      docContent = docFormatter.format(initialConv);
     } else {
       const fallbackContent = data.previewContent || '';
       htmlContent = sanitizeHtml(fallbackContent);

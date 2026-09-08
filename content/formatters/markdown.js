@@ -61,6 +61,27 @@ export function normalizeLatexMath(text) {
   return processed;
 }
 
+export function extractBase64ImagesToReference(
+  text,
+  imageCounter = { count: 1 },
+  definitions = [],
+) {
+  if (!text || typeof text !== 'string') return { text: '', definitions };
+
+  // Match markdown images with data:image/ URIs (including escaped slashes or line breaks in base64)
+  const processed = text.replace(
+    /!\[([\s\S]*?)\]\((data:image(?:\/|\\\/)[a-zA-Z0-9+.-]+;base64,[A-Za-z0-9+/=\s\\]+)\)/gi,
+    (match, alt, dataUri) => {
+      const label = `image-${imageCounter.count++}`;
+      const cleanUri = dataUri.replace(/\\\//g, '/').replace(/\s+/g, '');
+      definitions.push(`[${label}]: ${cleanUri}`);
+      return `![${alt}][${label}]`;
+    },
+  );
+
+  return { text: processed, definitions };
+}
+
 export class MarkdownFormatter extends ExportFormatter {
   format(conversation) {
     const { title, messages } = conversation;
@@ -107,17 +128,30 @@ export class MarkdownFormatter extends ExportFormatter {
     output += `\n`;
 
     const isWebArticle = platform === 'Web Article' || platform === 'WebArticle';
+    const imageCounter = { count: 1 };
+    const imageDefinitions = [];
 
     messages.forEach((msg) => {
       const isArticleRole = msg.role === 'Article' || msg.role === 'Web Article';
+      const normalized = normalizeLatexMath(msg.content);
+      const { text: processedContent } = extractBase64ImagesToReference(
+        normalized,
+        imageCounter,
+        imageDefinitions,
+      );
+
       if (isWebArticle || isArticleRole) {
-        output += `${normalizeLatexMath(msg.content)}\n\n`;
+        output += `${processedContent}\n\n`;
       } else {
         const heading = msg.role === 'User' ? '## Prompt:' : '## Response:';
         output += `${heading}\n`;
-        output += `${normalizeLatexMath(msg.content)}\n\n`;
+        output += `${processedContent}\n\n`;
       }
     });
+
+    if (imageDefinitions.length > 0) {
+      output += `<!-- Image References -->\n\n${imageDefinitions.join('\n\n')}\n\n`;
+    }
 
     return output;
   }

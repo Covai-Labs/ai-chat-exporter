@@ -414,13 +414,14 @@ h1 {
 }
 
 .theme-control-group,
-.transfer-control-group {
+.transfer-control-group,
+.image-control-group {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   background-color: var(--secondary-bg);
   border: 1px solid var(--border-color);
-  padding: 3px;
+  padding: 3px 8px;
   border-radius: 8px;
 }
 
