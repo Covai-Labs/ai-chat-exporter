@@ -28,7 +28,7 @@
     "description": "Status shown when copied"
   },
   "statusOpenedInTab": {
-    "message": "புதிய தாவலில் திறக்கப்பட்டது!",
+    "message": "புதிய கீற்றில் திறக்கப்பட்டது!",
     "description": "Status shown when opened in new tab"
   },
   "statusError": {
@@ -106,7 +106,7 @@
     "description": "Button to copy chat"
   },
   "openInTab": {
-    "message": "👁️ தாவலில் திற",
+    "message": "👁️ கீற்றில் திற",
     "description": "Button to open preview in tab"
   },
   "crossAiTransfer": {
@@ -118,7 +118,7 @@
     "description": "Button to transfer chat to another AI"
   },
   "noChatFound": {
-    "message": "இந்த தாவலில் இணக்கமான அரட்டை எதுவும் கிடைக்கவில்லை. ஆதரிக்கப்படும் AI அரட்டை தாவலுக்குச் சென்று மீண்டும் முயற்சிக்கவும் அல்லது",
+    "message": "இந்த கீற்றில் இணக்கமான அரட்டை எதுவும் கிடைக்கவில்லை. ஆதரிக்கப்படும் AI அரட்டை கீற்றுக்குச் சென்று மீண்டும் முயற்சிக்கவும் அல்லது",
     "description": "Error message when no compatible chat is found"
   },
   "reportIssue": {
@@ -457,7 +457,7 @@
     "description": "Shortcut command to download markdown"
   },
   "commandOpenPreview": {
-    "message": "உரையாடலை Markdown முன்னோட்ட தாவலில் திற",
+    "message": "உரையாடலை Markdown முன்னோட்ட கீற்றில் திற",
     "description": "Shortcut command to open preview tab"
   },
   "shortcutsSectionTitle": {
@@ -481,7 +481,7 @@
     "description": "Description for download markdown shortcut"
   },
   "shortcutOpenPreviewLabel": {
-    "message": "முன்னோட்ட தாவலில் திற",
+    "message": "முன்னோட்ட கீற்றில் திற",
     "description": "Label for open preview shortcut"
   },
   "shortcutOpenPreviewDesc": {
