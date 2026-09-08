@@ -16,17 +16,17 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "eslint": "^10.8.0",
-    "globals": "^17.9.0",
+    "eslint": "^10.10.0",
+    "globals": "^17.12.0",
     "linkedom": "^0.18.13",
     "prettier": "^3.9.6",
     "wxt": "^0.21.3"
   },
   "dependencies": {
     "decant-core": "^1.2.6",
-    "dompurify": "^3.4.13",
+    "dompurify": "^3.4.14",
     "html2canvas": "^1.4.1",
-    "katex": "^0.18.2",
+    "katex": "^0.18.5",
     "loglevel": "^1.9.2",
     "prismjs": "^1.30.0"
   }
