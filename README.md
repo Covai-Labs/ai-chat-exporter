@@ -12,7 +12,7 @@
 
 [![Website](https://img.shields.io/badge/Website-ai--chat--exporter.covai.org-blueviolet)](https://ai-chat-exporter.covai.org/)
 
-[Quick Install](#-quick-install) • [Supported Platforms](#-supported-platforms) • [Features](#-key-features) • [Local Development](#-local-development)
+[Quick Install](#quick-install) • [Supported Platforms](#supported-platforms) • [Features](#key-features) • [Local Development](#local-development)
 
 ---
 
@@ -63,28 +63,28 @@ Most AI exporters and extensions send your chat history or API calls to third-pa
 
 AI Chat Exporter extracts full conversation threads from all major AI chat platforms, AI search overviews, and web articles. Context continuation allows you to hand off conversations directly to leading LLMs and PKM note-taking apps.
 
-| Platform                                                      | Markdown | JSON | HTML / Doc / PNG | Continuation Target |
-| :------------------------------------------------------------ | :------: | :--: | :--------------: | :-----------------: |
-| **[ChatGPT](https://chatgpt.com)**                            |    ✅    |  ✅  |        ✅        |         ✅          |
-| **[Claude](https://claude.ai)**                               |    ✅    |  ✅  |        ✅        |         ✅          |
-| **[Google Gemini](https://gemini.google.com)**                |    ✅    |  ✅  |        ✅        |         ✅          |
-| **[DeepSeek](https://chat.deepseek.com)**                     |    ✅    |  ✅  |        ✅        |         ✅          |
-| **[Microsoft Copilot](https://copilot.microsoft.com)**        |    ✅    |  ✅  |        ✅        |         ✅          |
-| **[Perplexity](https://www.perplexity.ai)**                   |    ✅    |  ✅  |        ✅        |         ✅          |
-| **[Qwen](https://chat.qwenlm.ai)**                            |    ✅    |  ✅  |        ✅        |         ✅          |
-| **[Mistral / Le Chat](https://chat.mistral.ai)**              |    ✅    |  ✅  |        ✅        |         ✅          |
-| **[Google Search AI (AI Overviews)](https://www.google.com)** |    ✅    |  ✅  |        ✅        |  — _(Export only)_  |
-| **[Google AI Studio](https://aistudio.google.com)**           |    ✅    |  ✅  |        ✅        |  — _(Export only)_  |
-| **[Google Cloud Assist](https://console.cloud.google.com)**   |    ✅    |  ✅  |        ✅        |  — _(Export only)_  |
-| **[NotebookLM](https://notebooklm.google.com)**               |    ✅    |  ✅  |        ✅        |  — _(Export only)_  |
-| **[Meta AI](https://www.meta.ai)**                            |    ✅    |  ✅  |        ✅        |  — _(Export only)_  |
-| **[Proton Lumo](https://lumo.proton.me)**                     |    ✅    |  ✅  |        ✅        |  — _(Export only)_  |
-| **[Z.ai](https://z.ai)**                                      |    ✅    |  ✅  |        ✅        |  — _(Export only)_  |
-| **[Joyland](https://www.joyland.ai)**                         |    ✅    |  ✅  |        ✅        |  — _(Export only)_  |
-| **[Chub AI](https://chub.ai)**                                |    ✅    |  ✅  |        ✅        |  — _(Export only)_  |
-| **Generic Web Articles**                                      |    ✅    |  ✅  |        ✅        |  — _(Export only)_  |
+| Platform                                                      | Markdown | JSON | HTML / Doc / PNG |    Continuation Target     |
+| :------------------------------------------------------------ | :------: | :--: | :--------------: | :------------------------: |
+| **[ChatGPT](https://chatgpt.com)**                            |    ✅    |  ✅  |        ✅        |             ✅             |
+| **[Claude](https://claude.ai)**                               |    ✅    |  ✅  |        ✅        |             ✅             |
+| **[Google Gemini](https://gemini.google.com)**                |    ✅    |  ✅  |        ✅        |             ✅             |
+| **[DeepSeek](https://chat.deepseek.com)**                     |    ✅    |  ✅  |        ✅        |             ✅             |
+| **[Microsoft Copilot](https://copilot.microsoft.com)**        |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
+| **[Perplexity](https://www.perplexity.ai)**                   |    ✅    |  ✅  |        ✅        |             ✅             |
+| **[Qwen](https://chat.qwenlm.ai)**                            |    ✅    |  ✅  |        ✅        |             ✅             |
+| **[Mistral / Le Chat](https://chat.mistral.ai)**              |    ✅    |  ✅  |        ✅        |             ✅             |
+| **[Google Search AI (AI Overviews)](https://www.google.com)** |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
+| **[Google AI Studio](https://aistudio.google.com)**           |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
+| **[Google Cloud Assist](https://console.cloud.google.com)**   |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
+| **[NotebookLM](https://notebooklm.google.com)**               |    ✅    |  ✅  |        ✅        | — _(Export audio & notes)_ |
+| **[Meta AI](https://www.meta.ai)**                            |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
+| **[Proton Lumo](https://lumo.proton.me)**                     |    ✅    |  ✅  |        ✅        |             ✅             |
+| **[Z.ai](https://z.ai)**                                      |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
+| **[Joyland](https://www.joyland.ai)**                         |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
+| **[Chub AI](https://chub.ai)**                                |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
+| **Generic Web Articles**                                      |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
 
-> **Continuation Targets:** Seamless prompt injection is supported for general-purpose chat models (ChatGPT, Claude, Gemini, DeepSeek, Copilot, Perplexity, Qwen, Mistral) and PKM note-taking apps (**Obsidian**, **Logseq**, **Bear**, **NotePlan**, **Drafts**). Platforms requiring character selection (Joyland, Chub AI) or workspace setup (NotebookLM) are supported for clean export only.
+> **Continuation Targets:** Seamless prompt injection is supported for general-purpose chat models (ChatGPT, Claude, Gemini, DeepSeek, Proton Lumo, Perplexity, Qwen, Mistral) and PKM note-taking apps (**Obsidian**, **Logseq**, **Bear**, **NotePlan**, **Drafts**). Platforms requiring character selection (Joyland, Chub AI) or workspace setup (NotebookLM) are supported for clean export only.
 
 ---
 
