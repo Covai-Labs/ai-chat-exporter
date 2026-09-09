@@ -266,7 +266,7 @@
 
     <section class="content-section">
       <h2>Organizing Monthly and Weekly Exports in Obsidian</h2>
-      <p>While each export is a single conversation, you can use the filename template settings to organize many exports into a consistent vault structure. Setting the template to <code>AI/{platform}/{title}</code> places every conversation in platform-specific folders, letting you build a searchable archive one export at a time without manual file moves.</p>
+      <p>While each export is a single conversation, you can use the filename template settings to give every export a consistent, sortable name. Setting the template to <code>{platform} - {title} - {datetime}</code> produces flat filenames like <code>ChatGPT - React Hooks Debugging - 2026-09-09_14-30.md</code>, letting you build a searchable archive one export at a time without manual renaming.</p>
       <p>Because Obsidian indexes files on disk, saved exports land directly in your vault and become immediately searchable and linkable. This turns every exported conversation into a permanent headnote that connects to the rest of your knowledge base.</p>
     </section>
 
@@ -282,7 +282,7 @@
         <div class="faq-item">
           <button class="faq-question">Does it create folders inside Obsidian?</button>
           <div class="faq-answer">
-            <p>The basic Obsidian transfer creates notes at the root level of your vault. However, you can customize the output by using the Markdown export format and specifying a folder path in the filename template settings. For example, setting the template to <code>AI/{platform}/{title}</code> organizes notes into platform-specific folders.</p>
+            <p>The basic Obsidian transfer creates notes at the root level of your vault. To keep exports organized, configure the filename template to include the platform name and timestamp (e.g. <code>{platform} - {title} - {datetime}</code>), so every note has a unique, sortable name.</p>
           </div>
         </div>
         <div class="faq-item">

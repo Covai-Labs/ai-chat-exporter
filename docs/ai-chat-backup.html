@@ -152,7 +152,7 @@
           <div class="step-number">2</div>
           <div class="step-content">
             <h3>Configure Filename Templates</h3>
-            <p>AI Chat Exporter supports filename templates that control how exported files are named. A useful backup template is <code>{platform}/{year}-{month}/{title}</code>. This automatically organizes files into platform and date folders.</p>
+            <p>AI Chat Exporter supports filename templates that control how exported files are named. A useful backup template is <code>{platform} - {title} - {datetime}</code>. This produces unique, sortable filenames for every export.</p>
           </div>
         </div>
         <div class="step">
@@ -257,7 +257,7 @@
             <tr>
               <td><code>{datetime}</code></td>
               <td>Export timestamp</td>
-              <td>2026-09-08T14:30:00</td>
+              <td>2026-09-08_14-30</td>
             </tr>
             <tr>
               <td><code>{date}</code></td>
@@ -265,19 +265,19 @@
               <td>2026-09-08</td>
             </tr>
             <tr>
-              <td><code>{year}</code></td>
-              <td>Year</td>
-              <td>2026</td>
+              <td><code>{time}</code></td>
+              <td>Time only</td>
+              <td>14-30</td>
             </tr>
             <tr>
-              <td><code>{month}</code></td>
-              <td>Month</td>
-              <td>09</td>
+              <td><code>{timestamp}</code></td>
+              <td>Date + time</td>
+              <td>2026-09-08_14-30</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <p>A useful backup template is <code>{platform}/{year}-{month}/{title}</code>, which creates platform-specific folders organized by month. This makes it easy to browse your archive and find specific conversations.</p>
+      <p>Since filename separators like <code>/</code> are stripped for filesystem safety, all exports land as flat files. Use the <code>{platform} - {title} - {datetime}</code> template to produce unique, sortable filenames that make it easy to browse and find specific conversations.</p>
     </section>
 
     <section class="content-section">

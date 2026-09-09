@@ -93,7 +93,7 @@
       <li><strong>Filename:</strong> <code>Claude-Refactor-React-Component.md</code></li>
       <li><strong>Full path:</strong> <code>Claude/2026/03/Claude-Refactor-React-Component.md</code></li>
     </ul>
-    <p>You can customize both the folder prefix and the filename template in the extension settings. Some users prefer flat organization (all notes in one folder), while others use nested year/month structures. Both are supported.</p>
+    <p>You can customize the filename template in the extension settings. For example, setting it to <code>Claude - {title} - {datetime}</code> produces unique, sortable filenames for every conversation. Note that filename separators like <code>/</code> are stripped for filesystem safety, so all exports land as flat files in your vault.</p>
 
     <h2>Why Obsidian Users Love This Workflow</h2>
     <p>Obsidian has become the go-to tool for developers and researchers who want a local-first, Markdown-based knowledge base. Claude conversations are a rich source of knowledge&mdash;code explanations, research summaries, creative drafts, and problem-solving threads. But manually copying these conversations into Obsidian is tedious and error-prone.</p>
@@ -142,7 +142,7 @@
       <div class="step">
         <div class="step-content">
           <h4>Configure Your Vault Name</h4>
-          <p>Open the AI Chat Exporter settings and enter your Obsidian vault name exactly as it appears in the vault switcher. Optionally set a target folder prefix like "Claude/" or "AI Conversations/".</p>
+          <p>Open the AI Chat Exporter settings and enter your Obsidian vault name exactly as it appears in the vault switcher. The note will be created at the root of your vault.</p>
         </div>
       </div>
       <div class="step">
