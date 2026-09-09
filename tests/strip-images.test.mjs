@@ -142,3 +142,15 @@ test('stripImages preserves content following an empty attachments section', () 
     /First section\n\n## Next Section\n\nImportant text that must be preserved\./,
   );
 });
+
+test('stripImages preserves reference definitions if shared by an ordinary text link', () => {
+  const input = [
+    'Check ![logo][shared] and also read [Documentation][shared].',
+    '',
+    '[shared]: https://example.com/shared-resource',
+  ].join('\n');
+  const output = stripImages(input);
+  assert.doesNotMatch(output, /!\[logo\]/);
+  assert.match(output, /\[Documentation\]\[shared\]/);
+  assert.match(output, /\[shared\]: https:\/\/example\.com\/shared-resource/);
+});

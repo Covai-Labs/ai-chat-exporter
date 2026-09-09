@@ -40,13 +40,26 @@ export function stripImages(content) {
     return '';
   });
 
+  // Track reference labels still used by ordinary markdown text links: [text][label]
+  const textLinkRefLabels = new Set();
+  const textLinkRegex = /(?:^|[^!])\[([^\]]+)\]\[([^\]]*)\]/g;
+  let textLinkMatch;
+  while ((textLinkMatch = textLinkRegex.exec(cleaned)) !== null) {
+    const key = (textLinkMatch[2] || textLinkMatch[1]).trim().toLowerCase();
+    if (key) textLinkRefLabels.add(key);
+  }
+
   // 1.6. Remove reference definitions for base64 images OR references matching stripped images
+  // (unless still used by an ordinary text link)
   cleaned = cleaned.replace(
     /^\s*\[([^\]]+)\]:\s*<?(\S+?)>?(?:\s+["'(].*?["')])?\s*$/gm,
     (match, label, url) => {
       const lowerLabel = label.trim().toLowerCase();
       const isDataImage = /^data:image(?:\/|\\\/)/i.test(url.trim());
-      if (isDataImage || strippedRefLabels.has(lowerLabel)) {
+      if (
+        isDataImage ||
+        (strippedRefLabels.has(lowerLabel) && !textLinkRefLabels.has(lowerLabel))
+      ) {
         return '';
       }
       return match;
@@ -78,19 +91,19 @@ export function stripImages(content) {
   cleaned = cleaned.replace(/\*\*Images:\*\*\s*(?=\*\*|$)/gi, '');
 
   // 7. Clean up ChatGPT style "**Attachments & Images:**" section header if it has no items left
-  // Only remove the header and empty list lines up to the next section or end, preserving subsequent text
-  cleaned = cleaned.replace(
-    /\*\*Attachments & Images:\*\*(?:\r?\n\s*[-*+]\s*)*(?=\r?\n\s*(?:[#*]|\S|$)|$)/gi,
-    (match, offset, fullText) => {
-      const rest = fullText.slice(offset + match.length);
-      const nextSectionIndex = rest.search(/\n\s*(?:#|\*\*)/);
-      const segment = nextSectionIndex !== -1 ? rest.slice(0, nextSectionIndex) : rest;
-      if (!/^\s*[-*+]\s+\S/m.test(segment)) {
-        return '';
-      }
-      return match;
-    },
-  );
+  const attachHeader = '**Attachments & Images:**';
+  const headerIdx = cleaned.indexOf(attachHeader);
+  if (headerIdx !== -1) {
+    const afterHeader = cleaned.slice(headerIdx + attachHeader.length);
+    const nextHeadingMatch = afterHeader.search(/\n\s*(?:#|\*\*)/);
+    const sectionBody =
+      nextHeadingMatch !== -1 ? afterHeader.slice(0, nextHeadingMatch) : afterHeader;
+    if (!/^\s*[-*+]\s+\S/m.test(sectionBody)) {
+      const remainder = nextHeadingMatch !== -1 ? afterHeader.slice(nextHeadingMatch) : '';
+      cleaned =
+        cleaned.slice(0, headerIdx).trimEnd() + (remainder ? '\n\n' + remainder.trimStart() : '');
+    }
+  }
 
   // 8. Restore protected code blocks in reverse order
   for (let i = placeholders.length - 1; i >= 0; i--) {
