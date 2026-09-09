@@ -1106,6 +1106,30 @@ export function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
+export function sanitizeUrl(url, isImage = false) {
+  if (!url || typeof url !== 'string') return '';
+  let trimmed = url.trim().replace(/^<|>$/g, '');
+  trimmed = trimmed.replace(/&amp;/g, '&');
+  if (isImage) {
+    if (/^(?:https?:|data:image(?:\/|\\\/)|blob:|\/|\.\/)/i.test(trimmed)) {
+      return trimmed
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+    return '';
+  }
+  if (/^(?:https?:|mailto:|tel:|#|\/|\.\/)/i.test(trimmed)) {
+    return trimmed
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+  return '';
+}
+
 function cleanLatexMath(latex) {
   if (!latex || typeof latex !== 'string') return '';
   return latex.replace(/\\\\([a-zA-Z]+)/g, '\\$1').replace(/\\([_\][*])/g, '$1');
@@ -1185,7 +1209,8 @@ function inlineParse(text, mathBlockPlaceholders = null, referenceDefs = null) {
 
   // 6.5 Replace images ![alt](url)
   text = text.replace(/!\[(.*?)\]\((.*?)\)/g, (match, altText, url) => {
-    const safeUrl = url.replace(/&amp;/g, '&');
+    const safeUrl = sanitizeUrl(url, true);
+    if (!safeUrl) return '';
     return `<img src="${safeUrl}" alt="${altText}" style="max-width: 350px; width: 100%; height: auto; border-radius: 8px; margin: 0.5rem 0; display: block;" />`;
   });
 
@@ -1195,7 +1220,8 @@ function inlineParse(text, mathBlockPlaceholders = null, referenceDefs = null) {
       const key = (refId || altText).trim().toLowerCase();
       const url = referenceDefs.get(key);
       if (url) {
-        const safeUrl = url.replace(/&amp;/g, '&');
+        const safeUrl = sanitizeUrl(url, true);
+        if (!safeUrl) return '';
         return `<img src="${safeUrl}" alt="${altText}" style="max-width: 350px; width: 100%; height: auto; border-radius: 8px; margin: 0.5rem 0; display: block;" />`;
       }
       return match;
@@ -1204,7 +1230,8 @@ function inlineParse(text, mathBlockPlaceholders = null, referenceDefs = null) {
 
   // 7. Replace links [text](url)
   text = text.replace(/\[(.*?)\]\((.*?)\)/g, (match, linkText, url) => {
-    const safeUrl = url.replace(/&amp;/g, '&');
+    const safeUrl = sanitizeUrl(url, false);
+    if (!safeUrl) return linkText;
     return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
   });
 
@@ -1214,7 +1241,8 @@ function inlineParse(text, mathBlockPlaceholders = null, referenceDefs = null) {
       const key = (refId || linkText).trim().toLowerCase();
       const url = referenceDefs.get(key);
       if (url) {
-        const safeUrl = url.replace(/&amp;/g, '&');
+        const safeUrl = sanitizeUrl(url, false);
+        if (!safeUrl) return linkText;
         return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
       }
       return match;

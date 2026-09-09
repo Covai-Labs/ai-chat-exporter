@@ -176,3 +176,25 @@ test('MarkdownFormatter converts inline base64 images to reference definitions a
   );
   assert.ok(output.includes('[image-2]: data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD'));
 });
+
+test('MarkdownFormatter avoids colliding with pre-existing reference labels in conversation', () => {
+  const formatter = new MarkdownFormatter();
+
+  const conversation = {
+    title: 'Reference Collision Test',
+    messages: [
+      {
+        role: 'User',
+        content:
+          'Existing ref: [image-1]: https://example.com/existing.png\n\n![existing][image-1]\n\nNow an inline base64:\n![new](data:image/png;base64,ABCDEF123456)',
+      },
+    ],
+  };
+
+  const output = formatter.format(conversation);
+
+  // Since [image-1] was already defined in the conversation, the new base64 image should get [image-2]
+  assert.ok(output.includes('![new][image-2]'));
+  assert.ok(output.includes('[image-2]: data:image/png;base64,ABCDEF123456'));
+  assert.ok(output.includes('[image-1]: https://example.com/existing.png'));
+});

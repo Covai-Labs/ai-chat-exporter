@@ -82,3 +82,63 @@ test('stripImages removes standalone data URIs with escaped slashes', () => {
   assert.equal(output, 'Content:\n\nFollowing text.');
   assert.doesNotMatch(output, /data:image/);
 });
+
+test('stripImages preserves markdown images inside inline code and fenced code blocks', () => {
+  const input = [
+    'Here is an example in code: `![alt](https://example.com/demo.png)`',
+    '',
+    '```markdown',
+    '![fenced](https://example.com/fenced.png)',
+    '```',
+    '',
+    'And an actual image: ![actual](https://example.com/real.png)',
+  ].join('\n');
+  const output = stripImages(input);
+  assert.match(output, /`!\[alt\]\(https:\/\/example\.com\/demo\.png\)`/);
+  assert.match(output, /!\[fenced\]\(https:\/\/example\.com\/fenced\.png\)/);
+  assert.doesNotMatch(output, /!\[actual\]/);
+});
+
+test('stripImages removes reference-style images and their matching definitions', () => {
+  const input = [
+    'Overview text',
+    '',
+    '![Diagram][image-1]',
+    '![Remote][remote-img]',
+    '',
+    '[image-1]: data:image/png;base64,iVBORw0KGgoAAA==',
+    '[remote-img]: https://example.com/remote.png "Remote Title"',
+    '[regular-link]: https://example.com/page',
+    '',
+    'Conclusion text',
+  ].join('\n');
+  const output = stripImages(input);
+  assert.doesNotMatch(output, /!\[Diagram\]/);
+  assert.doesNotMatch(output, /!\[Remote\]/);
+  assert.doesNotMatch(output, /\[image-1\]:/);
+  assert.doesNotMatch(output, /\[remote-img\]:/);
+  assert.match(output, /\[regular-link\]: https:\/\/example\.com\/page/);
+  assert.match(
+    output,
+    /Overview text\n\n\[regular-link\]: https:\/\/example\.com\/page\n\nConclusion text/,
+  );
+});
+
+test('stripImages preserves content following an empty attachments section', () => {
+  const input = [
+    'First section',
+    '',
+    '**Attachments & Images:**',
+    '- ![Photo](https://example.com/photo.png)',
+    '',
+    '## Next Section',
+    '',
+    'Important text that must be preserved.',
+  ].join('\n');
+  const output = stripImages(input);
+  assert.doesNotMatch(output, /\*\*Attachments & Images:\*\*/);
+  assert.match(
+    output,
+    /First section\n\n## Next Section\n\nImportant text that must be preserved\./,
+  );
+});

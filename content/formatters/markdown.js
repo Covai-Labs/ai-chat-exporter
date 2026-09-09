@@ -65,14 +65,27 @@ export function extractBase64ImagesToReference(
   text,
   imageCounter = { count: 1 },
   definitions = [],
+  occupiedLabels = new Set(),
 ) {
   if (!text || typeof text !== 'string') return { text: '', definitions };
+
+  // Collect existing reference labels from text to avoid collisions
+  const labelMatches = text.match(/\[([^\]]+)\]/g);
+  if (labelMatches) {
+    labelMatches.forEach((m) => {
+      occupiedLabels.add(m.slice(1, -1).trim().toLowerCase());
+    });
+  }
 
   // Match markdown images with data:image/ URIs (including escaped slashes or line breaks in base64)
   const processed = text.replace(
     /!\[([\s\S]*?)\]\((data:image(?:\/|\\\/)[a-zA-Z0-9+.-]+;base64,[A-Za-z0-9+/=\s\\]+)\)/gi,
     (match, alt, dataUri) => {
+      while (occupiedLabels.has(`image-${imageCounter.count}`.toLowerCase())) {
+        imageCounter.count++;
+      }
       const label = `image-${imageCounter.count++}`;
+      occupiedLabels.add(label.toLowerCase());
       const cleanUri = dataUri.replace(/\\\//g, '/').replace(/\s+/g, '');
       definitions.push(`[${label}]: ${cleanUri}`);
       return `![${alt}][${label}]`;
@@ -130,6 +143,19 @@ export class MarkdownFormatter extends ExportFormatter {
     const isWebArticle = platform === 'Web Article' || platform === 'WebArticle';
     const imageCounter = { count: 1 };
     const imageDefinitions = [];
+    const occupiedLabels = new Set();
+
+    // Pre-collect existing reference labels across all messages
+    messages.forEach((msg) => {
+      if (msg.content && typeof msg.content === 'string') {
+        const matches = msg.content.match(/\[([^\]]+)\]/g);
+        if (matches) {
+          matches.forEach((m) => {
+            occupiedLabels.add(m.slice(1, -1).trim().toLowerCase());
+          });
+        }
+      }
+    });
 
     messages.forEach((msg) => {
       const isArticleRole = msg.role === 'Article' || msg.role === 'Web Article';
@@ -138,6 +164,7 @@ export class MarkdownFormatter extends ExportFormatter {
         normalized,
         imageCounter,
         imageDefinitions,
+        occupiedLabels,
       );
 
       if (isWebArticle || isArticleRole) {

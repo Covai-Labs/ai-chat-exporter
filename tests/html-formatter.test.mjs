@@ -307,7 +307,6 @@ test('HTML formatter resolves reference-style images with bottom definitions', a
       },
     ],
   };
-
   const output = formatter.format(conversation);
 
   assert.ok(
@@ -317,4 +316,43 @@ test('HTML formatter resolves reference-style images with bottom definitions', a
   );
   // Definition lines should not appear as raw text
   assert.ok(!output.includes('[image-1]: data:image'));
+});
+
+test('HTML formatter sanitizes and escapes malicious reference URLs to prevent attribute injection', async () => {
+  const { HtmlFormatter, sanitizeUrl } = await importFormatter();
+  const formatter = new HtmlFormatter();
+
+  // Test sanitizeUrl unit logic
+  assert.equal(sanitizeUrl('javascript:alert(1)', false), '');
+  assert.equal(sanitizeUrl('javascript:alert(1)', true), '');
+  assert.equal(sanitizeUrl('data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==', true), '');
+  assert.equal(
+    sanitizeUrl('https://example.com/img.png" onerror="alert(1)', true),
+    'https://example.com/img.png&quot; onerror=&quot;alert(1)',
+  );
+
+  const conversation = {
+    title: 'Security Injection Test',
+    messages: [
+      {
+        role: 'Assistant',
+        content: [
+          '[Click me][xss-link]',
+          '',
+          '![Image XSS][xss-img]',
+          '',
+          '[xss-link]: javascript:alert(document.domain)',
+          '[xss-img]: https://example.com/pic.png"onerror="alert(1)',
+        ].join('\n'),
+      },
+    ],
+  };
+
+  const output = formatter.format(conversation);
+
+  // javascript: link must not be rendered as an active href link
+  assert.ok(!output.includes('href="javascript:'));
+  // attribute injection quotes must be escaped as &quot;
+  assert.ok(!output.includes('onerror="alert(1)"'));
+  assert.ok(output.includes('&quot;onerror=&quot;'));
 });
