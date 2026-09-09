@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude Exporter — Export Claude AI Conversations to Markdown, PDF & More</title>
+  <meta name="description" content="Export Claude conversations to Markdown, PDF, JSON, HTML, Word and PNG. Supports Artifacts, Thinking Process, Tool Use. Free, open-source." />
+  <link rel="canonical" href="https://ai-chat-exporter.covai.org/claude-exporter.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ai-chat-exporter.covai.org/claude-exporter.html" />
+  <meta property="og:title" content="Claude Exporter — Export Claude AI Conversations to Markdown, PDF & More" />
+  <meta property="og:description" content="Export Claude conversations to Markdown, PDF, JSON, HTML, Word and PNG. Supports Artifacts, Thinking Process, Tool Use. Free, open-source." />
+  <meta property="og:image" content="https://ai-chat-exporter.covai.org/og-image.png" />
+  <meta property="og:site_name" content="AI Chat Exporter" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/seo-pages.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AI Chat Exporter",
+    "operatingSystem": "Chrome, Firefox, Edge",
+    "applicationCategory": "UtilitiesApplication",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "url": "https://ai-chat-exporter.covai.org/",
+    "downloadUrl": "https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo-container">
+      <img src="icons/icon48.png" alt="AI Chat Exporter Logo" class="logo-img" />
+      <span class="logo-text">AI Chat Exporter</span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="https://github.com/Covai-Labs/ai-chat-exporter" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+  <div class="breadcrumb"><a href="index.html">Home</a> <span>&rsaquo;</span> Claude Exporter</div>
+  <main>
+    <div class="hero">
+      <span class="badge">Supports Artifacts &amp; Thinking</span>
+      <h1>Claude Exporter &mdash; Save Every Claude Conversation</h1>
+      <p class="hero-subtitle">Export your Anthropic Claude conversations to Markdown, PDF, JSON, HTML, Word, and PNG. Artifacts, Thinking Process, and Tool Use all captured from the page in one click.</p>
+      <div class="cta-group">
+        <a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener">Add to Chrome</a>
+        <a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener">Add to Firefox</a>
+      </div>
+    </div>
+
+    <h2>Why Export Claude Conversations?</h2>
+    <p>Claude is one of the most capable AI assistants available today, handling everything from code generation to long-form research and creative writing. But Anthropic does not provide a built-in export mechanism for conversations. Once a chat scrolls past the context window or you navigate away, recovering specific details becomes tedious and unreliable.</p>
+    <p>The Claude Exporter feature inside AI Chat Exporter solves this by reading the Claude DOM directly in your browser and converting conversations into portable, searchable files. Everything runs locally in the extension&mdash;no data ever leaves your machine, no API keys are required, and no telemetry is collected.</p>
+
+    <h2>Claude-Specific Features</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <h4>Artifacts with Version History</h4>
+        <p>Every Claude Artifacts you create during a conversation gets exported with its version history. Code, documents, and diagrams are saved as separate, well-formatted sections within the export.</p>
+      </div>
+      <div class="feature-card">
+        <h4>Thinking Process</h4>
+        <p>Claude's extended thinking blocks are captured and included in the export as clearly separated reasoning sections &mdash; so you keep the reasoning trail as well as the final response.</p>
+      </div>
+      <div class="feature-card">
+        <h4>Tool Use Steps</h4>
+        <p>When Claude calls tools or runs computation (widgets, data analysis, or Model Context Protocol tools), each invocation is captured with clear formatting so you can trace exactly what actions were performed during a conversation.</p>
+      </div>
+      <div class="feature-card">
+        <h4>Selective Turn Export</h4>
+        <p>Don't need the entire conversation? Pick specific message turns and export only those. Ideal when you want to save one particular exchange without the surrounding context.</p>
+      </div>
+    </div>
+
+    <h2>Supported Export Formats</h2>
+    <p>AI Chat Exporter supports six output formats, each optimized for different use cases. Here is how each format handles Claude content:</p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Format</th>
+            <th>Artifacts</th>
+            <th>Code Blocks</th>
+            <th>Images</th>
+            <th>Thinking</th>
+            <th>Best For</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Markdown (.md)</strong></td>
+            <td>Inline sections</td>
+            <td>PrismJS highlighted</td>
+            <td>Embedded as data URIs</td>
+            <td>Collapsible</td>
+            <td>Note-taking, Obsidian</td>
+          </tr>
+          <tr>
+            <td><strong>PDF (.pdf)</strong></td>
+            <td>Formatted blocks</td>
+            <td>Syntax colored</td>
+            <td>Inline images</td>
+            <td>Optional section</td>
+            <td>Printing, archival</td>
+          </tr>
+          <tr>
+            <td><strong>JSON (.json)</strong></td>
+            <td>Structured objects</td>
+            <td>Plain text in fields</td>
+            <td>Base64 encoded</td>
+            <td>Separate field</td>
+            <td>Developers, pipelines</td>
+          </tr>
+          <tr>
+            <td><strong>HTML (.html)</strong></td>
+            <td>Rendered preview</td>
+            <td>Syntax highlighted</td>
+            <td>Inline &lt;img&gt;</td>
+            <td>Collapsible</td>
+            <td>Web archival, sharing</td>
+          </tr>
+          <tr>
+            <td><strong>Word (.doc)</strong></td>
+            <td>Formatted text</td>
+            <td>Monospace blocks</td>
+            <td>Embedded images</td>
+            <td>Optional section</td>
+            <td>Documents, collaboration</td>
+          </tr>
+          <tr>
+            <td><strong>PNG (.png)</strong></td>
+            <td>Visual render</td>
+            <td>Highlighted</td>
+            <td>Captured inline</td>
+            <td>Optional</td>
+            <td>Sharing, social media</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>How Claude DOM Extraction Works</h2>
+    <p>AI Chat Exporter reads Claude conversations by inspecting the page's DOM structure. When you click the export button, the extension traverses the conversation elements in the active Claude tab, identifies user and assistant message boundaries, and extracts the raw content including markdown formatting, code blocks, and artifact containers.</p>
+    <p>For Artifacts, the extension detects Claude's artifact rendering containers and extracts each artifact's code or content along with its title and version number. This information is then passed to the appropriate format renderer (Markdown, PDF, etc.) which produces the final output file.</p>
+    <p>This DOM-based approach means no network requests are made. The extension never contacts Anthropic's servers or any third-party API. All processing happens within the browser's extension sandbox.</p>
+
+    <h2>Claude Exporter vs. Claude's Built-in Export</h2>
+    <p>Anthropic introduced a basic conversation export feature in Claude, but it comes with significant limitations:</p>
+    <ul>
+      <li><strong>Limited format support</strong> &mdash; Claude's native export only produces JSON. AI Chat Exporter offers Markdown, PDF, HTML, Word, and PNG in addition to JSON.</li>
+      <li><strong>No Artifact handling</strong> &mdash; Artifacts created during conversations are not properly exported by Claude's built-in tool. The exporter captures them with version history.</li>
+      <li><strong>No selective export</strong> &mdash; Claude exports the entire conversation or nothing. The exporter lets you pick specific turns.</li>
+      <li><strong>No Obsidian integration</strong> &mdash; Claude's export cannot send notes directly to your Obsidian vault. The exporter supports one-click Obsidian transfer via the obsidian:// URI scheme.</li>
+      <li><strong>No visual export</strong> &mdash; Need a PNG screenshot of a conversation for sharing? Claude's export does not support image output.</li>
+    </ul>
+    <p>For users who rely on Claude as a primary AI tool, having a dedicated exporter that understands Claude's unique features like Artifacts, Thinking Process, and Tool Use is essential for maintaining a complete knowledge archive.</p>
+
+    <div class="callout callout-success">
+      <p><strong>Open source and transparent.</strong> AI Chat Exporter is built under the MPL 2.0 license. You can audit the full source code on GitHub to verify that no data is transmitted externally. The extension requests only the minimum browser permissions needed to access the Claude tab.</p>
+    </div>
+
+    <div class="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <button class="faq-question">Does the exporter capture Claude Artifacts with version history?</button>
+        <div class="faq-answer"><p>Yes. When you export a conversation that contains Artifacts, the exporter extracts each artifact's content, title, and version number. In Markdown and HTML exports, artifacts appear as labeled sections. In JSON exports, they are stored as structured objects with version arrays.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Can I export only specific parts of a Claude conversation?</button>
+        <div class="faq-answer"><p>Yes. The selective turn export feature lets you choose which message turns to include. After clicking the export button, you can select individual turns by their position in the conversation. This is useful when you want to save a particular exchange without exporting hundreds of preceding messages.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">How are Claude's Thinking Process blocks handled?</button>
+        <div class="faq-answer"><p>Claude's extended thinking content is captured as a separate section in the export. In Markdown exports, thinking content appears within a collapsible blockquote labeled "Thinking Process." In JSON, it is stored in a dedicated "thinking" field separate from the response content. Because the parser recognizes Claude's thinking blocks at the DOM level, the full reasoning chain is included whenever it is visible in the conversation.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Are tool calls and code execution captured?</button>
+        <div class="faq-answer"><p>Yes. When Claude invokes tools &mdash; including interactive widgets, data analysis, or Model Context Protocol integrations &mdash; each invocation and its result are captured. In Markdown and HTML exports, tool use steps appear inline with clear labels. In JSON, tool invocations and results are stored as structured data.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Is my conversation data sent to any server?</button>
+        <div class="faq-answer"><p>No. All extraction and formatting happens locally within your browser extension. The extension never contacts Anthropic's servers, our servers, or any third-party API. The only network requests the extension makes are to fetch its own CSS and font resources. You can verify this by inspecting the extension's source code on GitHub.</p></div>
+      </div>
+    </div>
+
+    <div class="related-pages">
+      <h3>Related Guides</h3>
+      <div class="related-grid">
+        <a href="claude-to-markdown.html" class="related-link">Claude to Markdown</a>
+        <a href="claude-to-obsidian.html" class="related-link">Claude to Obsidian</a>
+        <a href="chatgpt-exporter.html" class="related-link">ChatGPT Exporter</a>
+      </div>
+    </div>
+
+    <h2>How to Export Claude Conversations</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-content">
+          <h4>Install the Extension</h4>
+          <p>Add AI Chat Exporter from the Chrome Web Store or Firefox Add-ons. The extension requires minimal permissions&mdash;only access to the AI platform tabs you want to export from.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>Open a Claude Conversation</h4>
+          <p>Navigate to claude.ai and open any conversation you want to export. The extension detects the active Claude tab automatically.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>Click the Export Button</h4>
+          <p>Open the extension popup or side panel and select your preferred format. The extension reads the conversation from the page, processes Artifacts and Thinking blocks, and generates the output file.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-content">
+          <h4>Save or Transfer</h4>
+          <p>The file downloads automatically. Alternatively, use the Obsidian transfer button to send the note directly to your vault, or copy the content to your clipboard for pasting into another application.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+  <footer>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="license.html">License (MPL 2.0)</a>
+      <a href="https://github.com/Covai-Labs/ai-chat-exporter" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <p>&copy; 2026 AI Chat Exporter. Open source under MPL 2.0.</p>
+  </footer>
+  <script>
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => btn.closest('.faq-item').classList.toggle('open'));
+    });
+  </script>
+</body>
+</html>
