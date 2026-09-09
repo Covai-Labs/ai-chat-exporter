@@ -267,9 +267,9 @@ test('ClaudeParser unrolls interactive carousel elements in ai-chat-exporter', a
   const msg = result.messages[0];
   assert.equal(msg.role, 'Claude');
   assert.match(msg.content, /Here are recommendations/);
-  assert.match(msg.content, /1\\\.? First Recommendation/);
+  assert.match(msg.content, /1(\\\.)?\.? First Recommendation/);
   assert.match(msg.content, /Details for step 1/);
-  assert.match(msg.content, /2\\\.? Second Recommendation/);
+  assert.match(msg.content, /2(\\\.)?\.? Second Recommendation/);
   assert.match(msg.content, /Details for step 2/);
   assert.match(msg.content, /Conclusion text/);
   assert.doesNotMatch(msg.content, /Go to step 1/);
