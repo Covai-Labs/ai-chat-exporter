@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Chat to Obsidian — Export Conversations Directly to Your Vault</title>
+  <meta name="description" content="Export ChatGPT, Claude, Gemini and other AI conversations directly to Obsidian as Markdown notes. One-click vault transfer. Free extension." />
+  <link rel="canonical" href="https://ai-chat-exporter.covai.org/obsidian-export.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ai-chat-exporter.covai.org/obsidian-export.html" />
+  <meta property="og:title" content="AI Chat to Obsidian — Export Conversations Directly to Your Vault" />
+  <meta property="og:description" content="Export ChatGPT, Claude, Gemini and other AI conversations directly to Obsidian as Markdown notes. One-click vault transfer. Free extension." />
+  <meta property="og:image" content="https://ai-chat-exporter.covai.org/og-image.png" />
+  <meta property="og:site_name" content="AI Chat Exporter" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/seo-pages.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AI Chat Exporter",
+    "operatingSystem": "Chrome, Firefox, Edge",
+    "applicationCategory": "UtilitiesApplication",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "url": "https://ai-chat-exporter.covai.org/",
+    "downloadUrl": "https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo-container">
+      <img src="icons/icon48.png" alt="AI Chat Exporter Logo" class="logo-img" />
+      <span class="logo-text">AI Chat Exporter</span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="https://github.com/Covai-Labs/ai-chat-exporter" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+
+  <div class="breadcrumb"><a href="index.html">Home</a> <span>&rsaquo;</span> <span>Obsidian Export</span></div>
+
+  <main>
+    <div class="hero">
+      <span class="badge">Obsidian Integration</span>
+      <h1>AI Chat to Obsidian &mdash; Direct Vault Transfer</h1>
+      <p class="hero-subtitle">Send conversations from ChatGPT, Claude, Gemini and 14 other AI platforms straight into your Obsidian vault as clean Markdown notes. One click, no API keys, no copy-paste.</p>
+      <div class="cta-group">
+        <a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener">Add to Chrome</a>
+        <a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener">Add to Firefox</a>
+      </div>
+    </div>
+
+    <section class="content-section">
+      <h2>Why Export AI Conversations to Obsidian?</h2>
+      <p>Obsidian is the most popular personal knowledge management tool for researchers, developers, and writers. It gives you full control over your notes with local Markdown files, bidirectional linking, and a powerful plugin ecosystem. But Obsidian only works as well as the content you put into it.</p>
+      <p>Every day you have valuable conversations with AI assistants&mdash;code reviews, research summaries, brainstorming sessions, technical explanations, creative drafts. Without a way to capture these, they sit trapped inside web interfaces where they cannot be linked, searched alongside your other notes, or referenced months later.</p>
+      <p>AI Chat Exporter bridges this gap by converting AI conversations into well-formatted Markdown and sending them directly to your Obsidian vault using Obsidian's native <code>obsidian://new</code> URI scheme. No manual copy-paste. No file management. No third-party sync services.</p>
+    </section>
+
+    <section class="content-section">
+      <h2>How the Obsidian Integration Works</h2>
+      <p>The extension uses Obsidian's built-in URI protocol to create notes instantly. Here is what happens behind the scenes when you click the Obsidian transfer button:</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-content">
+            <h3>Parse the Conversation</h3>
+            <p>AI Chat Exporter reads the active conversation from the AI platform's page. It identifies message boundaries, extracts content, preserves code blocks with syntax highlighting, and captures LaTeX math expressions.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h3>Convert to Obsidian-Ready Markdown</h3>
+            <p>The conversation is converted to clean Markdown with proper heading hierarchy, fenced code blocks with language tags, and KaTeX-compatible math delimiters. Platform-specific content like Claude Artifacts or ChatGPT Canvas outputs become organized sections.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h3>Sanitize the Filename</h3>
+            <p>The conversation title is sanitized for use as an Obsidian filename. Special characters are stripped, and the title is truncated to 245 characters to stay within filesystem limits. The result is a clean, readable filename like <code>ChatGPT - Refactoring Python Auth - 2026-03-15.md</code>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-content">
+            <h3>Open Obsidian via URI</h3>
+            <p>The extension constructs an <code>obsidian://new</code> URI with the filename, vault name, and formatted content. Obsidian opens automatically and creates the note in your configured vault. The note appears in your vault instantly, ready to link and tag.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h2>What Gets Transferred</h2>
+      <p>AI Chat Exporter preserves the structure and formatting of your conversations so nothing is lost in transit:</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>Full Message History</h3>
+          <p>Every user message and AI response is transferred in order. Role labels distinguish who said what. Timestamps are preserved where the platform provides them.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Code Blocks with Languages</h3>
+          <p>Fenced code blocks retain their language tags. Python, JavaScript, TypeScript, Rust, and dozens of other languages display with proper syntax highlighting in Obsidian's reading view.</p>
+        </div>
+        <div class="feature-card">
+          <h3>LaTeX Math Equations</h3>
+          <p>Block math (<code>$$...$$</code>) and inline math (<code>$...$</code>) are preserved with correct delimiters. Equations render natively in Obsidian when you have the MathJax or KaTeX plugin enabled.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Thinking and Reasoning Sections</h3>
+          <p>When Claude or ChatGPT shows its thinking process, the extension captures it and formats it as a collapsible blockquote in the Markdown output. You keep the reasoning trail without cluttering the main response.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Artifacts and Canvas Content</h3>
+          <p>Claude Artifacts and ChatGPT Canvas outputs are represented within the conversation flow. Code artifacts use fenced code blocks; document artifacts use inline Markdown. Canvas documents appear as clearly labeled placeholders (e.g. <code>[Canvas: title]</code>) so you know a Canvas document was part of the exchange.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Tables and Structured Data</h3>
+          <p>Markdown tables generated by AI responses are transferred with their original column alignment and structure intact.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h2>Platform-Specific Behavior</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Platform</th>
+              <th>Special Handling</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>ChatGPT</strong></td>
+              <td>Artifacts become labeled sections, Canvas captured as labeled placeholder, thinking process captured</td>
+              <td>Group conversations with multiple models are preserved with model attribution</td>
+            </tr>
+            <tr>
+              <td><strong>Claude</strong></td>
+              <td>Artifacts with version history, thinking blocks as collapsible callouts, tool use steps</td>
+              <td>Extended thinking is formatted as blockquotes for clean separation</td>
+            </tr>
+            <tr>
+              <td><strong>Gemini</strong></td>
+              <td>Code execution outputs, multi-modal responses, Google Workspace integrations</td>
+              <td>Large context windows mean long exports work well</td>
+            </tr>
+            <tr>
+              <td><strong>DeepSeek</strong></td>
+              <td>DeepThink reasoning sections, code generation with full context</td>
+              <td>Math-heavy conversations transfer with equations intact</td>
+            </tr>
+            <tr>
+              <td><strong>Perplexity</strong></td>
+              <td>Citations preserved as footnotes, source links maintained</td>
+              <td>Research threads become well-documented notes</td>
+            </tr>
+            <tr>
+              <td><strong>Other Platforms</strong></td>
+              <td>Copilot, Qwen, Mistral, Meta AI, NotebookLM, Google AI Studio, and 8 more</td>
+              <td>Core message structure preserved across all 17 supported platforms</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h2>Why This Beats Manual Copy-Paste</h2>
+      <p>Manually copying a conversation into Obsidian sounds simple until you try it. You have to select the entire conversation, paste it into a new note, then fix the formatting&mdash;code blocks that lost their language tags, math that renders as raw text, tables that collapsed, images that did not transfer. For long conversations, this process can take 15-20 minutes per note.</p>
+      <p>AI Chat Exporter reduces this to a single click. The extension handles all formatting, creates proper Markdown structure, sanitizes the filename, and opens Obsidian with the note ready to save. A conversation that takes 20 minutes to format manually is exported and filed in under 5 seconds.</p>
+      <div class="callout callout-info">
+        <strong>Vault Configuration:</strong> Open the extension options page and enter your Obsidian vault name in the "Obsidian Vault Name" field. This must match the exact name of your vault as it appears in Obsidian. If you leave it blank, the extension defaults to your system's default vault.
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h2>Comparison with Obsidian Plugins</h2>
+      <p>Several community plugins attempt to bridge AI platforms and Obsidian. Here is how they compare to AI Chat Exporter's approach:</p>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Community Plugins</th>
+              <th>AI Chat Exporter</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>API key required</td>
+              <td>Usually yes (OpenAI API key, Anthropic API key)</td>
+              <td>No &mdash; works through the browser extension</td>
+            </tr>
+            <tr>
+              <td>Platforms supported</td>
+              <td>Typically 1-2 (the API provider)</td>
+              <td>17 platforms through DOM extraction</td>
+            </tr>
+            <tr>
+              <td>Captures full conversation</td>
+              <td>Only what the API returns</td>
+              <td>Full conversation as displayed in the browser</td>
+            </tr>
+            <tr>
+              <td>Artifacts / Canvas</td>
+              <td>Not supported</td>
+              <td>Artifacts represented as labeled sections; Canvas captured as labeled placeholder</td>
+            </tr>
+            <tr>
+              <td>Selective export</td>
+              <td>Entire conversation only</td>
+              <td>Choose specific messages or turns</td>
+            </tr>
+            <tr>
+              <td>Cost</td>
+              <td>API usage charges apply</td>
+              <td>Completely free</td>
+            </tr>
+            <tr>
+              <td>Other formats</td>
+              <td>Markdown only (in most cases)</td>
+              <td>Markdown, PDF, JSON, HTML, Word, PNG</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout callout-success">
+        <strong>No API keys needed.</strong> Because AI Chat Exporter reads conversations directly from the browser page, it does not require API access to any AI platform. This means zero cost, zero API rate limits, and zero risk of exposing your API keys.
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h2>Setting Up the Obsidian URI Scheme</h2>
+      <p>The <code>obsidian://</code> URI scheme is a built-in feature of Obsidian. To use it with AI Chat Exporter, ensure the following:</p>
+      <ul>
+        <li><strong>Obsidian is installed</strong> on the same machine where you run the browser extension.</li>
+        <li><strong>The URI scheme is registered</strong>. On Windows and macOS, this happens automatically when Obsidian is installed. On Linux, you may need to register it manually via your desktop environment.</li>
+        <li><strong>Enter your vault name</strong> in the extension options. The vault name must match exactly, including capitalization and spaces. If your vault is called "My Knowledge Base", enter exactly that.</li>
+      </ul>
+      <p>When you click the Obsidian transfer button, the extension builds a URI like <code>obsidian://new?vault=My%20Vault&name=Note%20Title&content=...</code> and navigates to it. Obsidian intercepts the URI, creates the note with the given name and content, and opens it in the editor.</p>
+    </section>
+
+    <section class="content-section">
+      <h2>Worked Example: ChatGPT to Obsidian</h2>
+      <p>Here is a concrete walkthrough of exporting a ChatGPT conversation about Python async programming to an Obsidian vault called "Dev Notes":</p>
+      <ol>
+        <li>Open the ChatGPT conversation in Chrome or Firefox.</li>
+        <li>Click the AI Chat Exporter extension icon. The side panel opens showing the parsed conversation.</li>
+        <li>Click the Obsidian icon in the export toolbar.</li>
+        <li>The extension converts the conversation to Markdown. Code blocks retain their Python language tags. Inline code and function names are preserved.</li>
+        <li>A new tab opens with <code>obsidian://new?vault=Dev%20Notes&name=ChatGPT%20-%20Python%20Async%20Programming%20-%202026-09-08</code>.</li>
+        <li>Obsidian creates the note in your "Dev Notes" vault. The note appears in your file explorer with all code blocks, headers, and formatted content intact.</li>
+      </ol>
+      <p>The entire process takes less than 5 seconds. You can now link to this note from other notes, add tags like <code>#python</code> and <code>#async</code>, and search for it alongside all your other knowledge base content.</p>
+    </section>
+
+    <section class="content-section">
+      <h2>Organizing Monthly and Weekly Exports in Obsidian</h2>
+      <p>While each export is a single conversation, you can use the filename template settings to give every export a consistent, sortable name. Setting the template to <code>{platform} - {title} - {datetime}</code> produces flat filenames like <code>ChatGPT - React Hooks Debugging - 2026-09-09_14-30.md</code>, letting you build a searchable archive one export at a time without manual renaming.</p>
+      <p>Because Obsidian indexes files on disk, saved exports land directly in your vault and become immediately searchable and linkable. This turns every exported conversation into a permanent headnote that connects to the rest of your knowledge base.</p>
+    </section>
+
+    <section class="content-section">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq">
+        <div class="faq-item">
+          <button class="faq-question">How do I configure my vault name?</button>
+          <div class="faq-answer">
+            <p>Open the AI Chat Exporter extension options page (right-click the extension icon and select "Options"). Find the "Obsidian Vault Name" field and enter the exact name of your target vault. The name must match what appears in Obsidian's vault switcher, including capitalization and spaces. If you have multiple vaults, you can switch the vault name before each transfer.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Does it create folders inside Obsidian?</button>
+          <div class="faq-answer">
+            <p>The basic Obsidian transfer creates notes at the root level of your vault. To keep exports organized, configure the filename template to include the platform name and timestamp (e.g. <code>{platform} - {title} - {datetime}</code>), so every note has a unique, sortable name.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Can I export images to Obsidian?</button>
+          <div class="faq-answer">
+            <p>AI Chat Exporter embeds images as data URIs or base64-encoded content within the Markdown file. Obsidian supports embedded images in notes, so inline images from conversations will display correctly. External image URLs that require network access may not render if Obsidian is configured for strict CSP mode.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">What happens to Artifacts when exported to Obsidian?</button>
+          <div class="faq-answer">
+            <p>Claude Artifacts are represented as labeled sections within the conversation note. Code artifacts use fenced code blocks with the appropriate language tag. Document artifacts are converted to Markdown inline. ChatGPT Canvas outputs appear as labeled placeholders (e.g. <code>[Canvas: title]</code>) within the conversation flow. The artifacts are part of the conversation flow rather than separate files.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Does this work with Logseq, Bear, or other Markdown apps?</button>
+          <div class="faq-answer">
+            <p>Yes. AI Chat Exporter supports five personal knowledge management apps through URI schemes: Obsidian, Logseq, Bear, NotePlan, and Drafts. Each app has its own URI protocol. The extension lets you configure which app to target in the options page. Export to Markdown also works with any app that reads .md files.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">What if the URI scheme is not working?</button>
+          <div class="faq-answer">
+            <p>Ensure Obsidian is installed on your machine (not just running in a browser). On Linux, the URI scheme may need manual registration. On Windows and macOS, it registers automatically during Obsidian installation. If the URI still fails, fall back to the Markdown export and manually place the file in your vault folder.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <h2>Related Pages</h2>
+      <div class="related-grid">
+        <a href="claude-to-obsidian.html" class="related-link">
+          <h3>Claude to Obsidian</h3>
+          <p>Export Claude conversations with Artifacts and Thinking blocks directly to Obsidian.</p>
+        </a>
+        <a href="markdown-exporter.html" class="related-link">
+          <h3>Markdown Exporter</h3>
+          <p>Full guide to Markdown export with code highlighting, math, and formatting details.</p>
+        </a>
+        <a href="chatgpt-to-markdown.html" class="related-link">
+          <h3>ChatGPT to Markdown</h3>
+          <p>Export ChatGPT conversations as clean, linkable Markdown files.</p>
+        </a>
+        <a href="latex-export.html" class="related-link">
+          <h3>LaTeX Math Export</h3>
+          <p>Preserve equations and math expressions when exporting to Obsidian or other apps.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="callout callout-success">
+        <strong>Ready to connect your AI conversations to your Obsidian vault?</strong> Install AI Chat Exporter and start transferring conversations in one click. No API keys. No configuration beyond your vault name. Your notes, your vault, your control.
+        <div class="cta-group">
+          <a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener">Add to Chrome</a>
+          <a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener">Add to Firefox</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="license.html">License (MPL 2.0)</a>
+      <a href="https://github.com/Covai-Labs/ai-chat-exporter" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <p>&copy; 2026 AI Chat Exporter. Open source under MPL 2.0.</p>
+  </footer>
+  <script>
+    document.querySelectorAll('.faq-item').forEach((item, index) => {
+      const btn = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      if (!btn || !answer) return;
+      const id = 'faq-' + (index + 1);
+      btn.id = 'q-' + id;
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-controls', id);
+      answer.id = id;
+      answer.setAttribute('role', 'region');
+      answer.setAttribute('aria-labelledby', 'q-' + id);
+      btn.addEventListener('click', () => {
+        const open = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+      });
+    });
+  </script>
+</body>
+</html>
