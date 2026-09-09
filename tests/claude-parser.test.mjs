@@ -225,3 +225,52 @@ test('ClaudeParser extracts conversation from Claude API when available', async 
   assert.equal(result.messages[3].role, 'User');
   assert.match(result.messages[3].content, /Thank you!/);
 });
+
+test('ClaudeParser unrolls interactive carousel elements in ai-chat-exporter', async () => {
+  const html = `
+    <html>
+      <head><title>Claude Interactive Chat</title></head>
+      <body>
+        <div class="font-claude-response">
+          <p>Here are recommendations:</p>
+          <div class="@container bg-surface-2">
+            <button aria-label="Go to step 1">1</button>
+            <button aria-label="Go to step 2">2</button>
+            <div>
+              <span class="text-title">First Recommendation</span>
+              <span class="text-body">Details for step 1</span>
+            </div>
+            <div class="invisible">
+              <span class="text-title">Second Recommendation</span>
+              <span class="text-body">Details for step 2</span>
+            </div>
+          </div>
+          <p>Conclusion text</p>
+        </div>
+      </body>
+    </html>
+  `;
+  const { window, document, HTMLElement, Node, DOMParser } = parseHTML(html);
+  global.window = window;
+  global.document = document;
+  global.HTMLElement = HTMLElement;
+  global.Node = Node;
+  global.DOMParser = DOMParser;
+  global.chrome = { runtime: { getURL: (path) => path } };
+  global.fetch = async () => ({ ok: false, status: 404 });
+
+  const { ClaudeParser } = await import('decant-core');
+  const parser = new ClaudeParser();
+  const result = await parser.parse({ parserMode: 'prefer_dom' });
+
+  assert.equal(result.messages.length, 1);
+  const msg = result.messages[0];
+  assert.equal(msg.role, 'Claude');
+  assert.match(msg.content, /Here are recommendations/);
+  assert.match(msg.content, /1(\\\.)?\.? First Recommendation/);
+  assert.match(msg.content, /Details for step 1/);
+  assert.match(msg.content, /2(\\\.)?\.? Second Recommendation/);
+  assert.match(msg.content, /Details for step 2/);
+  assert.match(msg.content, /Conclusion text/);
+  assert.doesNotMatch(msg.content, /Go to step 1/);
+});
