@@ -30,6 +30,7 @@ import {
   resolveConversationTitle,
   DEFAULT_FILENAME_TEMPLATE,
 } from '../content/utils/filename.js';
+import { stripImages } from '../content/utils/strip-images.js';
 import { createLogger } from '../content/utils/logger.js';
 
 const logger = createLogger('ContentScript');
@@ -150,24 +151,6 @@ export default defineContentScript({
           (document.head || document.documentElement).appendChild(s);
         });
       }
-    }
-
-    function stripImages(content) {
-      if (!content) return '';
-      let cleaned = content.replace(/!\[.*?\]\(.*?\)/g, '');
-      cleaned = cleaned.replace(/^\s*[-*+]\s*$/gm, '');
-      cleaned = cleaned.replace(/\*\*Images:\*\*\s*(?=\*\*|$)/gi, '');
-      const attachmentSectionIndex = cleaned.indexOf('**Attachments & Images:**');
-      if (attachmentSectionIndex !== -1) {
-        const afterHeader = cleaned.slice(
-          attachmentSectionIndex + '**Attachments & Images:**'.length,
-        );
-        if (!/- \S/g.test(afterHeader)) {
-          cleaned = cleaned.slice(0, attachmentSectionIndex);
-        }
-      }
-      cleaned = cleaned.replace(/\n{3,}/g, '\n\n').trim();
-      return cleaned;
     }
 
     let activeParser = null;

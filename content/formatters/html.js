@@ -1106,12 +1106,36 @@ export function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
+export function sanitizeUrl(url, isImage = false) {
+  if (!url || typeof url !== 'string') return '';
+  let trimmed = url.trim().replace(/^<|>$/g, '');
+  trimmed = trimmed.replace(/&amp;/g, '&');
+  if (isImage) {
+    if (/^(?:https?:|data:image(?:\/|\\\/)|blob:|\/|\.\/)/i.test(trimmed)) {
+      return trimmed
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+    return '';
+  }
+  if (/^(?:https?:|mailto:|tel:|#|\/|\.\/)/i.test(trimmed)) {
+    return trimmed
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+  return '';
+}
+
 function cleanLatexMath(latex) {
   if (!latex || typeof latex !== 'string') return '';
   return latex.replace(/\\\\([a-zA-Z]+)/g, '\\$1').replace(/\\([_\][*])/g, '$1');
 }
 
-function inlineParse(text, mathBlockPlaceholders = null) {
+function inlineParse(text, mathBlockPlaceholders = null, referenceDefs = null) {
   const placeholders = [];
   let tokenCounter = 0;
 
@@ -1185,15 +1209,45 @@ function inlineParse(text, mathBlockPlaceholders = null) {
 
   // 6.5 Replace images ![alt](url)
   text = text.replace(/!\[(.*?)\]\((.*?)\)/g, (match, altText, url) => {
-    const safeUrl = url.replace(/&amp;/g, '&');
+    const safeUrl = sanitizeUrl(url, true);
+    if (!safeUrl) return '';
     return `<img src="${safeUrl}" alt="${altText}" style="max-width: 350px; width: 100%; height: auto; border-radius: 8px; margin: 0.5rem 0; display: block;" />`;
   });
 
+  // Reference-style images ![alt][label]
+  if (referenceDefs && referenceDefs.size > 0) {
+    text = text.replace(/!\[(.*?)\]\[(.*?)\]/g, (match, altText, refId) => {
+      const key = (refId || altText).trim().toLowerCase();
+      const url = referenceDefs.get(key);
+      if (url) {
+        const safeUrl = sanitizeUrl(url, true);
+        if (!safeUrl) return '';
+        return `<img src="${safeUrl}" alt="${altText}" style="max-width: 350px; width: 100%; height: auto; border-radius: 8px; margin: 0.5rem 0; display: block;" />`;
+      }
+      return match;
+    });
+  }
+
   // 7. Replace links [text](url)
   text = text.replace(/\[(.*?)\]\((.*?)\)/g, (match, linkText, url) => {
-    const safeUrl = url.replace(/&amp;/g, '&');
+    const safeUrl = sanitizeUrl(url, false);
+    if (!safeUrl) return linkText;
     return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
   });
+
+  // Reference-style links [text][label]
+  if (referenceDefs && referenceDefs.size > 0) {
+    text = text.replace(/\[(.*?)\]\[(.*?)\]/g, (match, linkText, refId) => {
+      const key = (refId || linkText).trim().toLowerCase();
+      const url = referenceDefs.get(key);
+      if (url) {
+        const safeUrl = sanitizeUrl(url, false);
+        if (!safeUrl) return linkText;
+        return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
+      }
+      return match;
+    });
+  }
 
   // 8. Restore escape placeholders first
   escapePlaceholders.forEach(({ id, char }) => {
@@ -1217,7 +1271,7 @@ function inlineParse(text, mathBlockPlaceholders = null) {
   return text;
 }
 
-function renderTable(rows, mathBlockPlaceholders = null) {
+function renderTable(rows, mathBlockPlaceholders = null, referenceDefs = null) {
   if (rows.length === 0) return '';
 
   const isSeparator = (r) => /^[|\s:-]+$/.test(r);
@@ -1258,7 +1312,7 @@ function renderTable(rows, mathBlockPlaceholders = null) {
     tableHtml += '<thead><tr>\n';
     headerCells.forEach((cell, idx) => {
       const align = alignments[idx] ? ` style="text-align: ${alignments[idx]};"` : '';
-      tableHtml += `  <th${align}>${inlineParse(cell, mathBlockPlaceholders)}</th>\n`;
+      tableHtml += `  <th${align}>${inlineParse(cell, mathBlockPlaceholders, referenceDefs)}</th>\n`;
     });
     tableHtml += '</tr></thead>\n';
   }
@@ -1269,7 +1323,7 @@ function renderTable(rows, mathBlockPlaceholders = null) {
       tableHtml += '<tr>\n';
       row.forEach((cell, idx) => {
         const align = alignments[idx] ? ` style="text-align: ${alignments[idx]};"` : '';
-        tableHtml += `  <td${align}>${inlineParse(cell, mathBlockPlaceholders)}</td>\n`;
+        tableHtml += `  <td${align}>${inlineParse(cell, mathBlockPlaceholders, referenceDefs)}</td>\n`;
       });
       tableHtml += '</tr>\n';
     });
@@ -1336,6 +1390,18 @@ export function markdownToHtml(mdText) {
     mdText = mdText.replace(id, () => content);
   }
 
+  // 7. Extract reference link / image definitions: [label]: url or [label]: <url>
+  const referenceDefs = new Map();
+  mdText = mdText.replace(
+    /^\s*\[([^\]]+)\]:\s*<?(\S+?)>?(?:\s+["'(].*?["')])?\s*$/gm,
+    (match, label, url) => {
+      referenceDefs.set(label.trim().toLowerCase(), url.trim());
+      return '';
+    },
+  );
+
+  const parseInline = (text) => inlineParse(text, mathBlockPlaceholders, referenceDefs);
+
   const lines = mdText.split(/\r?\n/);
   let html = '';
 
@@ -1382,19 +1448,19 @@ export function markdownToHtml(mdText) {
     }
 
     if (inTable) {
-      html += renderTable(tableRows, mathBlockPlaceholders);
+      html += renderTable(tableRows, mathBlockPlaceholders, referenceDefs);
       inTable = false;
       tableRows = [];
     }
 
     if (inBlockquote) {
-      html += `<blockquote>${blockquoteContent.map((l) => inlineParse(l, mathBlockPlaceholders)).join('<br>\n')}</blockquote>\n`;
+      html += `<blockquote>${blockquoteContent.map((l) => parseInline(l)).join('<br>\n')}</blockquote>\n`;
       inBlockquote = false;
       blockquoteContent = [];
     }
 
     if (inParagraph) {
-      html += `<p>${paragraphContent.map((l) => inlineParse(l, mathBlockPlaceholders)).join('<br>\n')}</p>\n`;
+      html += `<p>${paragraphContent.map((l) => parseInline(l)).join('<br>\n')}</p>\n`;
       inParagraph = false;
       paragraphContent = [];
     }
@@ -1458,7 +1524,7 @@ export function markdownToHtml(mdText) {
       closeAllBlocks();
       const level = headingMatch[1].length;
       const text = headingMatch[2];
-      html += `<h${level}>${inlineParse(text, mathBlockPlaceholders)}</h${level}>\n`;
+      html += `<h${level}>${parseInline(text)}</h${level}>\n`;
       continue;
     }
 
@@ -1504,9 +1570,9 @@ export function markdownToHtml(mdText) {
         html += `<ul${isTask ? ' class="task-list"' : ''}>\n`;
       }
       if (isTask) {
-        html += `<li class="task-list-item"><input type="checkbox" class="task-checkbox" disabled${isChecked ? ' checked' : ''}><span>${inlineParse(itemContent, mathBlockPlaceholders)}</span></li>\n`;
+        html += `<li class="task-list-item"><input type="checkbox" class="task-checkbox" disabled${isChecked ? ' checked' : ''}><span>${parseInline(itemContent)}</span></li>\n`;
       } else {
-        html += `<li>${inlineParse(itemContent, mathBlockPlaceholders)}</li>\n`;
+        html += `<li>${parseInline(itemContent)}</li>\n`;
       }
       continue;
     }
@@ -1521,7 +1587,7 @@ export function markdownToHtml(mdText) {
         listType = 'ol';
         html += `<ol>\n`;
       }
-      html += `<li>${inlineParse(olMatch[2], mathBlockPlaceholders)}</li>\n`;
+      html += `<li>${parseInline(olMatch[2])}</li>\n`;
       continue;
     }
 

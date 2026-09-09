@@ -61,6 +61,40 @@ export function normalizeLatexMath(text) {
   return processed;
 }
 
+export function extractBase64ImagesToReference(
+  text,
+  imageCounter = { count: 1 },
+  definitions = [],
+  occupiedLabels = new Set(),
+) {
+  if (!text || typeof text !== 'string') return { text: '', definitions };
+
+  // Collect existing reference labels from text to avoid collisions
+  const labelMatches = text.match(/\[([^\]]+)\]/g);
+  if (labelMatches) {
+    labelMatches.forEach((m) => {
+      occupiedLabels.add(m.slice(1, -1).trim().toLowerCase());
+    });
+  }
+
+  // Match markdown images with data:image/ URIs (including escaped slashes or line breaks in base64)
+  const processed = text.replace(
+    /!\[([\s\S]*?)\]\((data:image(?:\/|\\\/)[a-zA-Z0-9+.-]+;base64,[A-Za-z0-9+/=\s\\]+)\)/gi,
+    (match, alt, dataUri) => {
+      while (occupiedLabels.has(`image-${imageCounter.count}`.toLowerCase())) {
+        imageCounter.count++;
+      }
+      const label = `image-${imageCounter.count++}`;
+      occupiedLabels.add(label.toLowerCase());
+      const cleanUri = dataUri.replace(/\\\//g, '/').replace(/\s+/g, '');
+      definitions.push(`[${label}]: ${cleanUri}`);
+      return `![${alt}][${label}]`;
+    },
+  );
+
+  return { text: processed, definitions };
+}
+
 export class MarkdownFormatter extends ExportFormatter {
   format(conversation) {
     const { title, messages } = conversation;
@@ -107,17 +141,44 @@ export class MarkdownFormatter extends ExportFormatter {
     output += `\n`;
 
     const isWebArticle = platform === 'Web Article' || platform === 'WebArticle';
+    const imageCounter = { count: 1 };
+    const imageDefinitions = [];
+    const occupiedLabels = new Set();
+
+    // Pre-collect existing reference labels across all messages
+    messages.forEach((msg) => {
+      if (msg.content && typeof msg.content === 'string') {
+        const matches = msg.content.match(/\[([^\]]+)\]/g);
+        if (matches) {
+          matches.forEach((m) => {
+            occupiedLabels.add(m.slice(1, -1).trim().toLowerCase());
+          });
+        }
+      }
+    });
 
     messages.forEach((msg) => {
       const isArticleRole = msg.role === 'Article' || msg.role === 'Web Article';
+      const normalized = normalizeLatexMath(msg.content);
+      const { text: processedContent } = extractBase64ImagesToReference(
+        normalized,
+        imageCounter,
+        imageDefinitions,
+        occupiedLabels,
+      );
+
       if (isWebArticle || isArticleRole) {
-        output += `${normalizeLatexMath(msg.content)}\n\n`;
+        output += `${processedContent}\n\n`;
       } else {
         const heading = msg.role === 'User' ? '## Prompt:' : '## Response:';
         output += `${heading}\n`;
-        output += `${normalizeLatexMath(msg.content)}\n\n`;
+        output += `${processedContent}\n\n`;
       }
     });
+
+    if (imageDefinitions.length > 0) {
+      output += `<!-- Image References -->\n\n${imageDefinitions.join('\n\n')}\n\n`;
+    }
 
     return output;
   }
