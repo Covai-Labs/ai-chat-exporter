@@ -154,3 +154,16 @@ test('stripImages preserves reference definitions if shared by an ordinary text 
   assert.match(output, /\[Documentation\]\[shared\]/);
   assert.match(output, /\[shared\]: https:\/\/example\.com\/shared-resource/);
 });
+
+test('stripImages preserves definitions when image shares with the second of adjacent text links', () => {
+  const input = [
+    'Check ![logo][shared2] and visit [First][first][Second][shared2].',
+    '',
+    '[first]: https://example.com/first',
+    '[shared2]: https://example.com/shared2',
+  ].join('\n');
+  const output = stripImages(input);
+  assert.doesNotMatch(output, /!\[logo\]/);
+  assert.match(output, /\[First\]\[first\]\[Second\]\[shared2\]/);
+  assert.match(output, /\[shared2\]: https:\/\/example\.com\/shared2/);
+});

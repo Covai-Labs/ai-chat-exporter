@@ -42,7 +42,7 @@ export function stripImages(content) {
 
   // Track reference labels still used by ordinary markdown text links: [text][label]
   const textLinkRefLabels = new Set();
-  const textLinkRegex = /(?:^|[^!])\[([^\]]+)\]\[([^\]]*)\]/g;
+  const textLinkRegex = /(?<!!)\[([^\]]+)\]\[([^\]]*)\]/g;
   let textLinkMatch;
   while ((textLinkMatch = textLinkRegex.exec(cleaned)) !== null) {
     const key = (textLinkMatch[2] || textLinkMatch[1]).trim().toLowerCase();
