@@ -47,7 +47,7 @@
     <div class="hero">
       <span class="badge">100% Local</span>
       <h1>AI Chat Backup &mdash; Never Lose a Conversation</h1>
-      <p class="hero-subtitle">Back up conversations from ChatGPT, Claude, Gemini and 15 other AI platforms. Structured Markdown, JSON, or PDF. Everything stays on your machine.</p>
+      <p class="hero-subtitle">Back up conversations from ChatGPT, Claude, Gemini and 14 other AI platforms. Structured Markdown, JSON, or PDF. Everything stays on your machine.</p>
       <div class="cta-group">
         <a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener">Add to Chrome</a>
         <a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener">Add to Firefox</a>
@@ -142,28 +142,24 @@
       <h2>Recommended Backup Workflow</h2>
       <div class="steps">
         <div class="step">
-          <div class="step-number">1</div>
           <div class="step-content">
             <h3>Create a Backup Directory</h3>
             <p>Set up a dedicated folder for your AI conversation backups. A good structure is organized by platform and date: <code>backups/chatgpt/2026/</code>, <code>backups/claude/2026/</code>. This keeps things organized from the start.</p>
           </div>
         </div>
         <div class="step">
-          <div class="step-number">2</div>
           <div class="step-content">
             <h3>Configure Filename Templates</h3>
             <p>AI Chat Exporter supports filename templates that control how exported files are named. A useful backup template is <code>{platform} - {title} - {datetime}</code>. This produces unique, sortable filenames for every export.</p>
           </div>
         </div>
         <div class="step">
-          <div class="step-number">3</div>
           <div class="step-content">
             <h3>Export Important Conversations</h3>
             <p>After completing an important conversation, click the extension icon and export to Markdown (for readability) or JSON (for structured data). For critical conversations, export to both formats. The whole process takes under 5 seconds.</p>
           </div>
         </div>
         <div class="step">
-          <div class="step-number">4</div>
           <div class="step-content">
             <h3>Sync to Cloud Storage (Optional)</h3>
             <p>Since the export files are standard formats stored on your local machine, you can sync them to any cloud storage service (iCloud, Google Drive, Dropbox, Syncthing) using your preferred sync tool. This adds an off-machine backup layer without trusting any third-party backup service with your AI data.</p>
@@ -387,8 +383,22 @@
     <p>&copy; 2026 AI Chat Exporter. Open source under MPL 2.0.</p>
   </footer>
   <script>
-    document.querySelectorAll('.faq-question').forEach(btn => {
-      btn.addEventListener('click', () => btn.closest('.faq-item').classList.toggle('open'));
+    document.querySelectorAll('.faq-item').forEach((item, index) => {
+      const btn = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      if (!btn || !answer) return;
+      const id = 'faq-' + (index + 1);
+      btn.id = 'q-' + id;
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-controls', id);
+      answer.id = id;
+      answer.setAttribute('role', 'region');
+      answer.setAttribute('aria-labelledby', 'q-' + id);
+      btn.addEventListener('click', () => {
+        const open = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+      });
     });
   </script>
 </body>

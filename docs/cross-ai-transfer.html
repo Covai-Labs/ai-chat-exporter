@@ -57,7 +57,7 @@
     <section class="content-section">
       <h2>What Is Cross-AI Transfer?</h2>
       <p>Every AI platform operates in its own silo. A conversation you start on ChatGPT cannot be continued on Claude. A thread in Gemini is locked inside Google's ecosystem. You cannot copy a conversation from one platform, paste it into another, and expect the AI to understand the context&mdash;the formatting breaks, the message roles get confused, and the AI treats your pasted content as a single block of text rather than a multi-turn exchange.</p>
-      <p>Cross-AI Transfer is a feature in AI Chat Exporter that solves this problem. It extracts a conversation from any of 18 supported platforms, strips out visual elements that cannot transfer (images, embeds), reformats the remaining text as a structured continuation prompt, and opens the target AI platform with the conversation ready to paste. The target AI receives the full conversation history with clear user/assistant role markers, allowing it to pick up where the last platform left off.</p>
+      <p>Cross-AI Transfer is a feature in AI Chat Exporter that solves this problem. It extracts a conversation from any of 17 supported platforms, strips out visual elements that cannot transfer (images, embeds), reformats the remaining text as a structured continuation prompt, and opens the target AI platform with the conversation automatically pre-filled into the chat input. The target AI receives the full conversation history with clear user/assistant role markers, allowing it to pick up where the last platform left off.</p>
       <p>No other browser extension, plugin, or tool offers this capability. It is unique to AI Chat Exporter.</p>
     </section>
 
@@ -73,7 +73,7 @@
           </thead>
           <tbody>
             <tr>
-              <td>All 18 supported platforms</td>
+              <td>All 17 supported platforms</td>
               <td>ChatGPT, Claude, Gemini, DeepSeek, Perplexity, Qwen, Mistral, NotebookLM, Copilot, Meta AI, Z.AI, AI Studio, Lumo, Joyland, Chub</td>
             </tr>
           </tbody>
@@ -86,31 +86,27 @@
       <h2>How It Works</h2>
       <div class="steps">
         <div class="step">
-          <div class="step-number">1</div>
           <div class="step-content">
             <h3>Extract the Conversation</h3>
             <p>Open the source conversation in your browser. AI Chat Exporter reads the page DOM and extracts all messages with their roles (user or assistant) and content. Code blocks, text formatting, and structured content are preserved.</p>
           </div>
         </div>
         <div class="step">
-          <div class="step-number">2</div>
           <div class="step-content">
             <h3>Strip Non-Transferable Elements</h3>
             <p>Images, embedded media, file uploads, and platform-specific UI elements are stripped from the conversation. These elements cannot be meaningfully transferred between platforms because each AI handles media differently. The text content and code are preserved.</p>
           </div>
         </div>
         <div class="step">
-          <div class="step-number">3</div>
           <div class="step-content">
             <h3>Format as Continuation Prompt</h3>
             <p>The conversation is reformatted with clear role markers. User messages are prefixed and assistant responses are clearly delimited. The result is a structured prompt that the target AI can parse as a multi-turn conversation rather than a raw text dump.</p>
           </div>
         </div>
         <div class="step">
-          <div class="step-number">4</div>
           <div class="step-content">
             <h3>Open Target Platform</h3>
-            <p>The extension stores the formatted conversation in <code>chrome.storage</code> as a pending continuation and opens the target platform in a new tab. When the platform loads, the conversation content is ready to paste into the chat input as your first message, giving the AI the full context.</p>
+            <p>The extension stores the formatted conversation in <code>chrome.storage</code> as a pending continuation and opens the target platform in a new tab. When the platform loads, the extension automatically inserts the conversation content into the chat input as your first message, giving the AI the full context. If automatic insertion fails, the content is available to paste manually.</p>
           </div>
         </div>
       </div>
@@ -154,7 +150,7 @@
         <li>ChatGPT starts giving shorter responses as it approaches its context limit.</li>
         <li>Click the AI Chat Exporter icon while on the ChatGPT tab. Select "Continue on Claude" from the cross-AI transfer menu.</li>
         <li>The extension extracts the conversation, strips the screenshots you pasted earlier, formats the remaining text and code with clear role markers, and stores it as a pending continuation.</li>
-        <li>A new tab opens to claude.ai. Start a new conversation and paste the content. Claude receives the full 30-message history with proper formatting and picks up the debugging session seamlessly.</li>
+        <li>A new tab opens to claude.ai. The extension auto-injects the 30-message history into the chat input with proper formatting. Review the pre-filled prompt and press send. Claude picks up the debugging session seamlessly. If the prompt is not auto-inserted (e.g. the page layout changed), paste it into the input manually.</li>
       </ol>
       <p>The same workflow works in reverse. Start on Claude, transfer to ChatGPT. Or start on DeepSeek, transfer to Gemini. The transfer is platform-agnostic.</p>
     </section>
@@ -178,7 +174,7 @@
       <h2>Technical Details</h2>
       <p>For developers who are curious about the implementation:</p>
       <ul>
-        <li><strong>Storage mechanism:</strong> The formatted conversation is stored in <code>chrome.storage.session</code> (or <code>browser.storage.session</code> on Firefox) as a <code>pendingContinuation</code> object. This is temporary storage that persists until the target tab is loaded.</li>
+        <li><strong>Storage mechanism:</strong> The formatted conversation is stored in <code>chrome.storage.local</code> (or <code>browser.storage.local</code> on Firefox) as a <code>pendingContinuation</code> object. The target content script checks for it on load, expiring it after 5 minutes, and removes it from storage after injecting the payload into a supported chat input.</li>
         <li><strong>Role markers:</strong> Messages are delimited with <code>[User]</code> and <code>[Assistant]</code> prefixes. This format is widely recognized by LLM chat interfaces and helps the target AI understand the conversation structure.</li>
         <li><strong>Image handling:</strong> The extension detects <code>&lt;img&gt;</code> elements and base64 data URIs in the conversation DOM and strips them. Alt text is preserved where available, giving the target AI a textual description of visual content.</li>
         <li><strong>Size limits:</strong> The transfer format is plain text, so extremely long conversations may exceed the target platform's input limits. The extension includes the full conversation as-is; if a chat exceeds the platform's limit, the target AI will typically accept only the recent portion. For typical conversations the full history transfers cleanly.</li>
@@ -191,7 +187,7 @@
         <div class="faq-item">
           <button class="faq-question">How do I transfer a conversation from one AI to another?</button>
           <div class="faq-answer">
-            <p>Open the conversation you want to transfer in your browser. Click the AI Chat Exporter extension icon and select the cross-AI transfer option. Choose your target platform from the list. The extension extracts the conversation, formats it, and opens the target platform in a new tab. Paste the content into the chat input to continue the conversation.</p>
+            <p>Open the conversation you want to transfer in your browser. Click the AI Chat Exporter extension icon and select the cross-AI transfer option. Choose your target platform from the list. The extension extracts the conversation, formats it, and opens the target platform in a new tab, where it automatically inserts the full conversation into the chat input. Review and submit the pre-filled prompt to continue the conversation. If auto-insertion does not fire (for example after a target-site layout change), paste the stored content into the chat input manually within 5 minutes.</p>
           </div>
         </div>
         <div class="faq-item">
@@ -201,9 +197,9 @@
           </div>
         </div>
         <div class="faq-item">
-          <button class="faq-question">Does it work with all 18 supported platforms?</button>
+          <button class="faq-question">Does it work with all supported platforms?</button>
           <div class="faq-answer">
-            <p>You can export from any of the 18 supported platforms. Cross-AI transfer targets 15 platforms where you can continue the conversation. All major platforms are covered: ChatGPT, Claude, Gemini, DeepSeek, Perplexity, Copilot, and more.</p>
+            <p>You can export from any of the 17 supported platforms. Cross-AI transfer targets 15 platforms where you can continue the conversation. All major platforms are covered: ChatGPT, Claude, Gemini, DeepSeek, Perplexity, Copilot, and more.</p>
           </div>
         </div>
         <div class="faq-item">
@@ -275,8 +271,22 @@
     <p>&copy; 2026 AI Chat Exporter. Open source under MPL 2.0.</p>
   </footer>
   <script>
-    document.querySelectorAll('.faq-question').forEach(btn => {
-      btn.addEventListener('click', () => btn.closest('.faq-item').classList.toggle('open'));
+    document.querySelectorAll('.faq-item').forEach((item, index) => {
+      const btn = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      if (!btn || !answer) return;
+      const id = 'faq-' + (index + 1);
+      btn.id = 'q-' + id;
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-controls', id);
+      answer.id = id;
+      answer.setAttribute('role', 'region');
+      answer.setAttribute('aria-labelledby', 'q-' + id);
+      btn.addEventListener('click', () => {
+        const open = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+      });
     });
   </script>
 </body>

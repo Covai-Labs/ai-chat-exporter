@@ -167,7 +167,7 @@
             <tr><td>Image URLs</td><td>Lost</td><td>Markdown image syntax</td></tr>
             <tr><td>Nested lists</td><td>Collapsed</td><td>Proper indentation</td></tr>
             <tr><td>Thinking traces</td><td>Lost</td><td>Captured in details blocks</td></tr>
-            <tr><td>Metadata (model, date)</td><td>Lost</td><td>Written to frontmatter</td></tr>
+            <tr><td>Metadata (model, date)</td><td>Lost</td><td>Emitted as Source, Date, and Model fields</td></tr>
           </tbody>
         </table>
       </div>
@@ -181,7 +181,7 @@
       </div>
       <div class="step">
         <h3>2. Open Any Supported AI Chat</h3>
-        <p>Navigate to ChatGPT, Claude, Gemini, or any of the 18 supported platforms and have a conversation as you normally would.</p>
+        <p>Navigate to ChatGPT, Claude, Gemini, or any of the 17 supported platforms and have a conversation as you normally would.</p>
       </div>
       <div class="step">
         <h3>3. Click the Export Button</h3>
@@ -244,8 +244,22 @@
     <p>&copy; 2026 AI Chat Exporter. Open source under MPL 2.0.</p>
   </footer>
   <script>
-    document.querySelectorAll('.faq-question').forEach(btn => {
-      btn.addEventListener('click', () => btn.closest('.faq-item').classList.toggle('open'));
+    document.querySelectorAll('.faq-item').forEach((item, index) => {
+      const btn = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      if (!btn || !answer) return;
+      const id = 'faq-' + (index + 1);
+      btn.id = 'q-' + id;
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-controls', id);
+      answer.id = id;
+      answer.setAttribute('role', 'region');
+      answer.setAttribute('aria-labelledby', 'q-' + id);
+      btn.addEventListener('click', () => {
+        const open = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+      });
     });
   </script>
 </body>

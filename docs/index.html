@@ -576,6 +576,38 @@
       .footer-link:hover {
         color: var(--text-primary);
       }
+
+      .guide-card {
+        all: unset;
+        cursor: pointer;
+        padding: 14px;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.02);
+        display: block;
+        transition: border-color 0.15s ease;
+      }
+
+      .guide-card:hover,
+      .guide-card:focus-visible {
+        border-color: var(--color-primary);
+      }
+
+      .guide-card:focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+      }
+
+      .guide-card-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 4px;
+      }
+
+      .guide-card-desc {
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+      }
     </style>
   </head>
 
@@ -899,81 +931,81 @@
           Task-specific walkthroughs for exporting AI conversations from each platform and format.
         </p>
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px">
-          <a href="chatgpt-exporter.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">ChatGPT Exporter</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Export ChatGPT to Markdown, PDF, JSON &amp; more</div>
+          <a href="chatgpt-exporter.html" class="guide-card">
+            <div class="guide-card-title">ChatGPT Exporter</div>
+            <div class="guide-card-desc">Export ChatGPT to Markdown, PDF, JSON &amp; more</div>
           </a>
-          <a href="chatgpt-to-markdown.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">ChatGPT to Markdown</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Save ChatGPT conversations as .md files</div>
+          <a href="chatgpt-to-markdown.html" class="guide-card">
+            <div class="guide-card-title">ChatGPT to Markdown</div>
+            <div class="guide-card-desc">Save ChatGPT conversations as .md files</div>
           </a>
-          <a href="chatgpt-to-pdf.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">ChatGPT to PDF</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Turn ChatGPT chats into polished PDFs</div>
+          <a href="chatgpt-to-pdf.html" class="guide-card">
+            <div class="guide-card-title">ChatGPT to PDF</div>
+            <div class="guide-card-desc">Turn ChatGPT chats into polished PDFs</div>
           </a>
-          <a href="claude-exporter.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">Claude Exporter</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Export Claude conversations &amp; artifacts</div>
+          <a href="claude-exporter.html" class="guide-card">
+            <div class="guide-card-title">Claude Exporter</div>
+            <div class="guide-card-desc">Export Claude conversations &amp; artifacts</div>
           </a>
-          <a href="claude-to-markdown.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">Claude to Markdown</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Claude conversations as clean .md files</div>
+          <a href="claude-to-markdown.html" class="guide-card">
+            <div class="guide-card-title">Claude to Markdown</div>
+            <div class="guide-card-desc">Claude conversations as clean .md files</div>
           </a>
-          <a href="claude-to-obsidian.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">Claude to Obsidian</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Sync Claude chats into your Obsidian vault</div>
+          <a href="claude-to-obsidian.html" class="guide-card">
+            <div class="guide-card-title">Claude to Obsidian</div>
+            <div class="guide-card-desc">Sync Claude chats into your Obsidian vault</div>
           </a>
-          <a href="gemini-exporter.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">Gemini Exporter</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Export Google Gemini conversations</div>
+          <a href="gemini-exporter.html" class="guide-card">
+            <div class="guide-card-title">Gemini Exporter</div>
+            <div class="guide-card-desc">Export Google Gemini conversations</div>
           </a>
-          <a href="gemini-to-markdown.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">Gemini to Markdown</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Gemini chats as portable Markdown</div>
+          <a href="gemini-to-markdown.html" class="guide-card">
+            <div class="guide-card-title">Gemini to Markdown</div>
+            <div class="guide-card-desc">Gemini chats as portable Markdown</div>
           </a>
-          <a href="deepseek-exporter.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">DeepSeek Exporter</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Export DeepSeek chats with reasoning blocks</div>
+          <a href="deepseek-exporter.html" class="guide-card">
+            <div class="guide-card-title">DeepSeek Exporter</div>
+            <div class="guide-card-desc">Export DeepSeek chats with reasoning blocks</div>
           </a>
-          <a href="perplexity-exporter.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">Perplexity Exporter</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Export Perplexity searches &amp; answers</div>
+          <a href="perplexity-exporter.html" class="guide-card">
+            <div class="guide-card-title">Perplexity Exporter</div>
+            <div class="guide-card-desc">Export Perplexity searches &amp; answers</div>
           </a>
-          <a href="copilot-exporter.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">Copilot Exporter</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Save Microsoft Copilot conversations</div>
+          <a href="copilot-exporter.html" class="guide-card">
+            <div class="guide-card-title">Copilot Exporter</div>
+            <div class="guide-card-desc">Save Microsoft Copilot conversations</div>
           </a>
-          <a href="markdown-exporter.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">Markdown Export Guide</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Export any AI chat as Markdown</div>
+          <a href="markdown-exporter.html" class="guide-card">
+            <div class="guide-card-title">Markdown Export Guide</div>
+            <div class="guide-card-desc">Export any AI chat as Markdown</div>
           </a>
-          <a href="pdf-exporter.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">PDF Export Guide</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Generate PDFs from AI conversations</div>
+          <a href="pdf-exporter.html" class="guide-card">
+            <div class="guide-card-title">PDF Export Guide</div>
+            <div class="guide-card-desc">Generate PDFs from AI conversations</div>
           </a>
-          <a href="json-exporter.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">JSON Export Guide</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Structured JSON with a strict schema</div>
+          <a href="json-exporter.html" class="guide-card">
+            <div class="guide-card-title">JSON Export Guide</div>
+            <div class="guide-card-desc">Structured JSON with a strict schema</div>
           </a>
-          <a href="png-exporter.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">PNG Export Guide</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Share AI chats as polished images</div>
+          <a href="png-exporter.html" class="guide-card">
+            <div class="guide-card-title">PNG Export Guide</div>
+            <div class="guide-card-desc">Share AI chats as polished images</div>
           </a>
-          <a href="obsidian-export.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">AI Chat to Obsidian</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Send chats to Obsidian &amp; other PKM apps</div>
+          <a href="obsidian-export.html" class="guide-card">
+            <div class="guide-card-title">AI Chat to Obsidian</div>
+            <div class="guide-card-desc">Send chats to Obsidian &amp; other PKM apps</div>
           </a>
-          <a href="cross-ai-transfer.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">Cross-AI Transfer</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Continue chats in another AI platform</div>
+          <a href="cross-ai-transfer.html" class="guide-card">
+            <div class="guide-card-title">Cross-AI Transfer</div>
+            <div class="guide-card-desc">Continue chats in another AI platform</div>
           </a>
-          <a href="ai-chat-backup.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">AI Chat Backup</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Keep safe, searchable archives</div>
+          <a href="ai-chat-backup.html" class="guide-card">
+            <div class="guide-card-title">AI Chat Backup</div>
+            <div class="guide-card-desc">Keep safe, searchable archives</div>
           </a>
-          <a href="latex-export.html" style="all: unset; cursor: pointer; padding: 14px; border: 1px solid var(--border-color); border-radius: 10px; background: rgba(255, 255, 255, 0.02); display: block; transition: border-color 0.15s ease">
-            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px">LaTeX Export</div>
-            <div style="font-size: 0.82rem; color: var(--text-secondary)">Export math-heavy chats for LaTeX</div>
+          <a href="latex-export.html" class="guide-card">
+            <div class="guide-card-title">LaTeX Export</div>
+            <div class="guide-card-desc">Export math-heavy chats for LaTeX</div>
           </a>
         </div>
       </div>

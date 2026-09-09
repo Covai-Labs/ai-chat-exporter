@@ -188,28 +188,24 @@
       <h2>Output Formats with Math Support</h2>
       <div class="steps">
         <div class="step">
-          <div class="step-number">1</div>
           <div class="step-content">
             <h3>Markdown (.md)</h3>
             <p>Equations are exported with <code>$$</code> and <code>$</code> delimiters. This format is KaTeX-ready and works directly with Obsidian (with MathJax or KaTeX plugin), Logseq, Typora, HackMD, and any editor that supports KaTeX or MathJax rendering.</p>
           </div>
         </div>
         <div class="step">
-          <div class="step-number">2</div>
           <div class="step-content">
             <h3>HTML (.html)</h3>
             <p>The HTML export bundles KaTeX JavaScript and CSS. Open the file in any modern browser and equations render automatically. Block math is centered, inline math flows with the text, and the full KaTeX symbol library is available. No additional setup required.</p>
           </div>
         </div>
         <div class="step">
-          <div class="step-number">3</div>
           <div class="step-content">
             <h3>PDF (.pdf)</h3>
             <p>Equations are rendered through KaTeX before PDF generation. The result is a print-ready document with properly typeset mathematics. Supports multi-page documents with page breaks, table of contents, and both dark and light themes.</p>
           </div>
         </div>
         <div class="step">
-          <div class="step-number">4</div>
           <div class="step-content">
             <h3>PNG (.png)</h3>
             <p>Full conversation is rendered to a scrollable image with KaTeX-rendered equations. Equations appear with professional typography and correct spacing. Ideal for sharing math-heavy conversations on social media or in presentations.</p>
@@ -384,8 +380,22 @@
     <p>&copy; 2026 AI Chat Exporter. Open source under MPL 2.0.</p>
   </footer>
   <script>
-    document.querySelectorAll('.faq-question').forEach(btn => {
-      btn.addEventListener('click', () => btn.closest('.faq-item').classList.toggle('open'));
+    document.querySelectorAll('.faq-item').forEach((item, index) => {
+      const btn = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      if (!btn || !answer) return;
+      const id = 'faq-' + (index + 1);
+      btn.id = 'q-' + id;
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-controls', id);
+      answer.id = id;
+      answer.setAttribute('role', 'region');
+      answer.setAttribute('aria-labelledby', 'q-' + id);
+      btn.addEventListener('click', () => {
+        const open = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+      });
     });
   </script>
 </body>

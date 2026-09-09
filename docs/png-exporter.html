@@ -59,7 +59,7 @@
       </div>
       <div class="feature-card">
         <h3>2x High Resolution</h3>
-        <p>Enable the high-quality rendering option for 2x pixel density. The output looks crisp on Retina displays, in presentations, and when shared on social media platforms that compress images.</p>
+        <p>Enable the high-quality rendering option, which targets 2x pixel density. The output looks crisp on Retina displays, in presentations, and when shared on social media platforms that compress images.</p>
       </div>
       <div class="feature-card">
         <h3>KaTeX Math in Images</h3>
@@ -114,7 +114,7 @@
 
     <section>
       <h2>High-Resolution Rendering</h2>
-      <p>The standard export produces a 1x image suitable for most use cases. When you enable the high-quality option, the extension renders at 2x pixel density, effectively doubling the resolution in each dimension. This produces a sharper image that holds up well on:</p>
+      <p>The standard export produces a 1x image suitable for most use cases. When you enable the high-quality option, the extension targets 2x pixel density, effectively doubling the resolution in each dimension when your device and the conversation length allow it. For very long conversations, the renderer may fall back to a lower scale to stay within canvas memory limits. Either way you get a sharper image that holds up well on:</p>
       <p>High-DPI monitors and Retina displays, where standard-resolution images appear blurry. Social media platforms like Twitter and LinkedIn, which compress uploaded images and benefit from higher source resolution. Printed materials and slide decks, where images are often scaled up from their original size.</p>
       <p>Higher-resolution images are larger in file size. For conversations with many messages, the 2x option may produce images several megabytes in size. Use the standard resolution for quick shares and the high-quality option for polished deliverables.</p>
     </section>
@@ -148,7 +148,7 @@
       </div>
       <div class="step">
         <h3>2. Open Any Supported AI Chat</h3>
-        <p>Navigate to a conversation on any of the 18 supported platforms. Ensure the messages you want to capture are visible in the chat window.</p>
+        <p>Navigate to a conversation on any of the 17 supported platforms. Ensure the messages you want to capture are visible in the chat window.</p>
       </div>
       <div class="step">
         <h3>3. Select Theme and Export</h3>
@@ -160,7 +160,7 @@
       <h2>Frequently Asked Questions</h2>
       <div class="faq-item">
         <button class="faq-question">How do I get high quality images?</button>
-        <div class="faq-answer"><p>Enable the high-resolution (2x) option in the PNG export settings before generating the image. This doubles the pixel density in both dimensions, producing a sharper image suitable for Retina displays, presentations, and social media where compression is applied.</p></div>
+        <div class="faq-answer"><p>Enable the high-resolution (2x) option in the PNG export settings before generating the image. This targets double the pixel density in both dimensions, producing a sharper image suitable for Retina displays, presentations, and social media where compression is applied.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-question">Can I select which messages to capture?</button>
@@ -203,8 +203,22 @@
     <p>&copy; 2026 AI Chat Exporter. Open source under MPL 2.0.</p>
   </footer>
   <script>
-    document.querySelectorAll('.faq-question').forEach(btn => {
-      btn.addEventListener('click', () => btn.closest('.faq-item').classList.toggle('open'));
+    document.querySelectorAll('.faq-item').forEach((item, index) => {
+      const btn = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      if (!btn || !answer) return;
+      const id = 'faq-' + (index + 1);
+      btn.id = 'q-' + id;
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-controls', id);
+      answer.id = id;
+      answer.setAttribute('role', 'region');
+      answer.setAttribute('aria-labelledby', 'q-' + id);
+      btn.addEventListener('click', () => {
+        const open = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+      });
     });
   </script>
 </body>

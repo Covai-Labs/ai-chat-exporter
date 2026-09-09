@@ -135,7 +135,7 @@
       </div>
       <div class="step">
         <h3>2. Open Any Supported AI Chat</h3>
-        <p>Start or continue a conversation on any of the 18 supported AI platforms. The extension detects the active chat page automatically.</p>
+        <p>Start or continue a conversation on any of the 17 supported AI platforms. The extension detects the active chat page automatically.</p>
       </div>
       <div class="step">
         <h3>3. Click Export and Choose Settings</h3>
@@ -190,8 +190,22 @@
     <p>&copy; 2026 AI Chat Exporter. Open source under MPL 2.0.</p>
   </footer>
   <script>
-    document.querySelectorAll('.faq-question').forEach(btn => {
-      btn.addEventListener('click', () => btn.closest('.faq-item').classList.toggle('open'));
+    document.querySelectorAll('.faq-item').forEach((item, index) => {
+      const btn = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      if (!btn || !answer) return;
+      const id = 'faq-' + (index + 1);
+      btn.id = 'q-' + id;
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-controls', id);
+      answer.id = id;
+      answer.setAttribute('role', 'region');
+      answer.setAttribute('aria-labelledby', 'q-' + id);
+      btn.addEventListener('click', () => {
+        const open = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+      });
     });
   </script>
 </body>

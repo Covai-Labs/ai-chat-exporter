@@ -75,12 +75,12 @@
       <h2>What the Markdown Output Looks Like</h2>
       <p>AI Chat Exporter produces well-structured Markdown that follows conventions compatible with GitHub Flavored Markdown and CommonMark. Here is an example of what an exported conversation looks like:</p>
       <div class="callout callout-info" data-testid="callout-md-preview">
-<pre style="margin:0;overflow-x:auto;"><code># ChatGPT Conversation: Building a REST API in Python
+<pre class="md-preview"><code># ChatGPT Conversation: Building a REST API in Python
 
-## User
+## Prompt:
 How do I create a REST API with FastAPI?
 
-## Assistant
+## Response:
 Here's a basic FastAPI example:
 
 ```python
@@ -95,10 +95,10 @@ def read_root():
 
 Then run it with: `uvicorn main:app --reload`
 
-## User
+## Prompt:
 How do I add a database?
 
-## Assistant
+## Response:
 Use SQLAlchemy with FastAPI:
 
 ```python
@@ -112,7 +112,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 This sets up a local SQLite database connection...</code></pre>
       </div>
-      <p>Each message is clearly attributed to its role (User or Assistant), code blocks retain their language tags, and the overall structure is flat and scannable.</p>
+      <p>Each message is clearly attributed to its role (Prompt or Response), code blocks retain their language tags, and the overall structure is flat and scannable.</p>
     </section>
 
     <!-- LaTeX Math Handling -->
@@ -226,7 +226,7 @@ This sets up a local SQLite database connection...</code></pre>
             <tr>
               <td>Role attribution</td>
               <td>Manual — you must label who said what</td>
-              <td>Automatic — User/Assistant headers added</td>
+              <td>Automatic — Prompt/Response headers added</td>
             </tr>
             <tr>
               <td>Long conversations</td>
@@ -243,21 +243,18 @@ This sets up a local SQLite database connection...</code></pre>
       <h2>How to Export ChatGPT to Markdown</h2>
       <div class="steps" data-testid="steps">
         <div class="step">
-          <div class="step-number">1</div>
           <div class="step-content">
             <h3>Install AI Chat Exporter</h3>
             <p>Add the extension from the Chrome Web Store, Firefox Add-ons, or Edge Add-ons. Takes under 30 seconds with no configuration needed.</p>
           </div>
         </div>
         <div class="step">
-          <div class="step-number">2</div>
           <div class="step-content">
             <h3>Open Your ChatGPT Conversation</h3>
             <p>Navigate to any conversation on chatgpt.com. The extension detects the page and activates the export toolbar.</p>
           </div>
         </div>
         <div class="step">
-          <div class="step-number">3</div>
           <div class="step-content">
             <h3>Click Export as Markdown</h3>
             <p>Select "Markdown" from the export format dropdown. Optionally select specific messages. The .md file downloads instantly with all formatting preserved.</p>
@@ -330,7 +327,7 @@ This sets up a local SQLite database connection...</code></pre>
     <section class="content-section" data-testid="section-final-cta">
       <div class="callout callout-success">
         <strong>Start exporting ChatGPT to Markdown today.</strong> Install the extension, open a conversation, and get a clean .md file in seconds. No account, no servers, no data leaves your browser.
-        <div class="cta-group" style="margin-top: 1rem;">
+        <div class="cta-group compact">
           <a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener">Add to Chrome</a>
           <a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener">Add to Firefox</a>
         </div>
@@ -348,9 +345,21 @@ This sets up a local SQLite database connection...</code></pre>
   </footer>
 
   <script>
-    document.querySelectorAll('.faq-question').forEach(btn => {
+    document.querySelectorAll('.faq-item').forEach((item, index) => {
+      const btn = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      if (!btn || !answer) return;
+      const id = 'faq-' + (index + 1);
+      btn.id = 'q-' + id;
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-controls', id);
+      answer.id = id;
+      answer.setAttribute('role', 'region');
+      answer.setAttribute('aria-labelledby', 'q-' + id);
       btn.addEventListener('click', () => {
-        btn.closest('.faq-item').classList.toggle('open');
+        const open = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        answer.setAttribute('aria-hidden', open ? 'false' : 'true');
       });
     });
   </script>

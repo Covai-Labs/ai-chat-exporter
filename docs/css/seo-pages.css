@@ -164,6 +164,15 @@ h1 {
   margin-top: 24px;
 }
 
+.cta-group.compact {
+  margin-top: 1rem;
+}
+
+.md-preview {
+  margin: 0;
+  overflow-x: auto;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;

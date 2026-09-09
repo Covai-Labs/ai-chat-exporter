@@ -47,7 +47,7 @@
     <div class="hero">
       <span class="badge">Obsidian Integration</span>
       <h1>AI Chat to Obsidian &mdash; Direct Vault Transfer</h1>
-      <p class="hero-subtitle">Send conversations from ChatGPT, Claude, Gemini and 15 other AI platforms straight into your Obsidian vault as clean Markdown notes. One click, no API keys, no copy-paste.</p>
+      <p class="hero-subtitle">Send conversations from ChatGPT, Claude, Gemini and 14 other AI platforms straight into your Obsidian vault as clean Markdown notes. One click, no API keys, no copy-paste.</p>
       <div class="cta-group">
         <a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener">Add to Chrome</a>
         <a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener">Add to Firefox</a>
@@ -66,28 +66,24 @@
       <p>The extension uses Obsidian's built-in URI protocol to create notes instantly. Here is what happens behind the scenes when you click the Obsidian transfer button:</p>
       <div class="steps">
         <div class="step">
-          <div class="step-number">1</div>
           <div class="step-content">
             <h3>Parse the Conversation</h3>
             <p>AI Chat Exporter reads the active conversation from the AI platform's page. It identifies message boundaries, extracts content, preserves code blocks with syntax highlighting, and captures LaTeX math expressions.</p>
           </div>
         </div>
         <div class="step">
-          <div class="step-number">2</div>
           <div class="step-content">
             <h3>Convert to Obsidian-Ready Markdown</h3>
             <p>The conversation is converted to clean Markdown with proper heading hierarchy, fenced code blocks with language tags, and KaTeX-compatible math delimiters. Platform-specific content like Claude Artifacts or ChatGPT Canvas outputs become organized sections.</p>
           </div>
         </div>
         <div class="step">
-          <div class="step-number">3</div>
           <div class="step-content">
             <h3>Sanitize the Filename</h3>
             <p>The conversation title is sanitized for use as an Obsidian filename. Special characters are stripped, and the title is truncated to 245 characters to stay within filesystem limits. The result is a clean, readable filename like <code>ChatGPT - Refactoring Python Auth - 2026-03-15.md</code>.</p>
           </div>
         </div>
         <div class="step">
-          <div class="step-number">4</div>
           <div class="step-content">
             <h3>Open Obsidian via URI</h3>
             <p>The extension constructs an <code>obsidian://new</code> URI with the filename, vault name, and formatted content. Obsidian opens automatically and creates the note in your configured vault. The note appears in your vault instantly, ready to link and tag.</p>
@@ -167,7 +163,7 @@
             <tr>
               <td><strong>Other Platforms</strong></td>
               <td>Copilot, Qwen, Mistral, Meta AI, NotebookLM, Google AI Studio, and 8 more</td>
-              <td>Core message structure preserved across all 18 supported platforms</td>
+              <td>Core message structure preserved across all 17 supported platforms</td>
             </tr>
           </tbody>
         </table>
@@ -354,8 +350,22 @@
     <p>&copy; 2026 AI Chat Exporter. Open source under MPL 2.0.</p>
   </footer>
   <script>
-    document.querySelectorAll('.faq-question').forEach(btn => {
-      btn.addEventListener('click', () => btn.closest('.faq-item').classList.toggle('open'));
+    document.querySelectorAll('.faq-item').forEach((item, index) => {
+      const btn = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      if (!btn || !answer) return;
+      const id = 'faq-' + (index + 1);
+      btn.id = 'q-' + id;
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-controls', id);
+      answer.id = id;
+      answer.setAttribute('role', 'region');
+      answer.setAttribute('aria-labelledby', 'q-' + id);
+      btn.addEventListener('click', () => {
+        const open = item.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+      });
     });
   </script>
 </body>
