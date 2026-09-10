@@ -266,6 +266,8 @@ const { title, description, tallySrc, iframeId, canonicalPath } = Astro.props;
       border: 0;
       width: 100%;
       height: 100%;
+      /* Keep the embedded Tally form on its own theme. */
+      color-scheme: normal;
     }
     @media (max-width: 768px) {
       .banner {
