@@ -42,6 +42,13 @@ jobs:
         working-directory: web
         run: npm run build
 
+      - name: Generate IndexNow key file
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: |
+          test -n "$INDEXNOW_KEY"
+          printf '%s\n' "$INDEXNOW_KEY" > "docs/${INDEXNOW_KEY}.txt"
+
       - name: Setup Pages
         uses: actions/configure-pages@v6
 
@@ -53,3 +60,9 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+      - name: Submit sitemap to IndexNow
+        uses: bojieyang/indexnow-action@v3.0.0
+        with:
+          sitemap-location: https://ai-chat-exporter.covai.org/sitemap.xml
+          key: ${{ secrets.INDEXNOW_KEY }}
