@@ -8,12 +8,24 @@ interface Props {
 
 const { prompt } = Astro.props;
 ---
+
 <section class="content-section">
   <div class="callout callout-success">
-    <p><strong>{prompt}</strong></p>
+    <p>
+      <strong>{prompt}</strong>
+    </p>
     <div class="cta-group compact">
-      <a href={SITE.chromeStore} class="btn btn-primary" target="_blank" rel="noopener noreferrer">Add to Chrome</a>
-      <a href={SITE.firefoxAddons} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Add to Firefox</a>
+      <a href={SITE.chromeStore} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+        Add to Chrome
+      </a>
+      <a
+        href={SITE.firefoxAddons}
+        class="btn btn-secondary"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Add to Firefox
+      </a>
     </div>
   </div>
 </section>

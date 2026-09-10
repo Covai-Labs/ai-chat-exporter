@@ -9,8 +9,7 @@ import Callout from '../components/Callout.astro';
 const meta = {
   slug: 'chatgpt-to-markdown',
   title: 'ChatGPT to Markdown',
-  description:
-    'Save ChatGPT conversations as .md files',
+  description: 'Save ChatGPT conversations as .md files',
   heroTitle: 'ChatGPT to Markdown — Clean Exports, Every Time',
   heroSubtitle:
     'Convert ChatGPT conversations into clean, portable Markdown files. AI Chat Exporter preserves code blocks, LaTeX math, tables, and images — giving you files that work in Obsidian, Notion, GitHub, and any text editor.',
@@ -53,6 +52,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 This sets up a local SQLite database connection...</code></pre>`;
 ---
+
 <GuideLayout
   title={meta.title}
   description={meta.description}
@@ -137,8 +137,8 @@ This sets up a local SQLite database connection...</code></pre>`;
     </p>
     <Callout tone="info" title="Example">
       A quadratic formula from ChatGPT is exported as
-      <code>{'$$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$'}</code> rather than losing its formatting to
-      plain text.
+      <code>{'$$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$'}</code> rather than losing its
+      formatting to plain text.
     </Callout>
   </section>
 
@@ -192,8 +192,8 @@ This sets up a local SQLite database connection...</code></pre>`;
       </li>
     </ul>
     <p>
-      For long-term archival, embedded images are recommended. For lightweight sharing, linked images
-      are more practical.
+      For long-term archival, embedded images are recommended. For lightweight sharing, linked
+      images are more practical.
     </p>
   </section>
 
@@ -205,9 +205,7 @@ This sets up a local SQLite database connection...</code></pre>`;
       messages before exporting — useful when you only need a particular code snippet, answer, or
       exchange from a long thread.
     </p>
-    <p>
-      The extension also supports filename templates for automatic, consistent naming:
-    </p>
+    <p>The extension also supports filename templates for automatic, consistent naming:</p>
     <div class="table-wrapper">
       <table>
         <thead>
@@ -218,27 +216,35 @@ This sets up a local SQLite database connection...</code></pre>`;
         </thead>
         <tbody>
           <tr>
-            <td><code>{'{platform}'}</code></td>
+            <td>
+              <code>{'{platform}'}</code>
+            </td>
             <td>chatgpt</td>
           </tr>
           <tr>
-            <td><code>{'{title}'}</code></td>
+            <td>
+              <code>{'{title}'}</code>
+            </td>
             <td>The conversation title (sanitized for filenames)</td>
           </tr>
           <tr>
-            <td><code>{'{datetime}'}</code></td>
+            <td>
+              <code>{'{datetime}'}</code>
+            </td>
             <td>Current date and time (ISO 8601 format)</td>
           </tr>
           <tr>
-            <td><code>{'{uuid}'}</code></td>
+            <td>
+              <code>{'{uuid}'}</code>
+            </td>
             <td>A unique identifier for the conversation</td>
           </tr>
         </tbody>
       </table>
     </div>
     <p>
-      The default template is <code>{'{platform} - {title} - {datetime}'}</code>, producing filenames
-      like <code>chatgpt - Building a REST API - 2026-09-09_14-30.md</code>.
+      The default template is <code>{'{platform} - {title} - {datetime}'}</code>, producing
+      filenames like <code>chatgpt - Building a REST API - 2026-09-09_14-30.md</code>.
     </p>
   </section>
 

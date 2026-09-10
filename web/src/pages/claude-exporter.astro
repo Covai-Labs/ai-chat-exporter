@@ -9,13 +9,13 @@ import Callout from '../components/Callout.astro';
 const meta = {
   slug: 'claude-exporter',
   title: 'Claude Exporter',
-  description:
-    'Export Claude conversations & artifacts',
+  description: 'Export Claude conversations & artifacts',
   heroTitle: 'Claude Exporter — Save Every Claude Conversation',
   heroSubtitle:
     'Export your Anthropic Claude conversations to Markdown, PDF, JSON, HTML, Word, and PNG. Artifacts, Thinking Process, and Tool Use all captured from the page in one click.',
 };
 ---
+
 <GuideLayout
   title={meta.title}
   description={meta.description}
@@ -65,8 +65,8 @@ const meta = {
         <h3>Tool Use Steps</h3>
         <p>
           When Claude calls tools or runs computation (widgets, data analysis, or Model Context
-          Protocol tools), each invocation is captured with clear formatting so you can trace exactly
-          what actions were performed during a conversation.
+          Protocol tools), each invocation is captured with clear formatting so you can trace
+          exactly what actions were performed during a conversation.
         </p>
       </div>
       <div class="feature-card">
@@ -100,7 +100,9 @@ const meta = {
         </thead>
         <tbody>
           <tr>
-            <td><strong>Markdown (.md)</strong></td>
+            <td>
+              <strong>Markdown (.md)</strong>
+            </td>
             <td>Inline sections</td>
             <td>PrismJS highlighted</td>
             <td>Embedded as data URIs</td>
@@ -108,7 +110,9 @@ const meta = {
             <td>Note-taking, Obsidian</td>
           </tr>
           <tr>
-            <td><strong>PDF (.pdf)</strong></td>
+            <td>
+              <strong>PDF (.pdf)</strong>
+            </td>
             <td>Formatted blocks</td>
             <td>Syntax colored</td>
             <td>Inline images</td>
@@ -116,7 +120,9 @@ const meta = {
             <td>Printing, archival</td>
           </tr>
           <tr>
-            <td><strong>JSON (.json)</strong></td>
+            <td>
+              <strong>JSON (.json)</strong>
+            </td>
             <td>Structured objects</td>
             <td>Plain text in fields</td>
             <td>Base64 encoded</td>
@@ -124,7 +130,9 @@ const meta = {
             <td>Developers, pipelines</td>
           </tr>
           <tr>
-            <td><strong>HTML (.html)</strong></td>
+            <td>
+              <strong>HTML (.html)</strong>
+            </td>
             <td>Rendered preview</td>
             <td>Syntax highlighted</td>
             <td>Inline &lt;img&gt;</td>
@@ -132,7 +140,9 @@ const meta = {
             <td>Web archival, sharing</td>
           </tr>
           <tr>
-            <td><strong>Word (.doc)</strong></td>
+            <td>
+              <strong>Word (.doc)</strong>
+            </td>
             <td>Formatted text</td>
             <td>Monospace blocks</td>
             <td>Embedded images</td>
@@ -140,7 +150,9 @@ const meta = {
             <td>Documents, collaboration</td>
           </tr>
           <tr>
-            <td><strong>PNG (.png)</strong></td>
+            <td>
+              <strong>PNG (.png)</strong>
+            </td>
             <td>Visual render</td>
             <td>Highlighted</td>
             <td>Captured inline</td>
@@ -206,9 +218,9 @@ const meta = {
       </li>
     </ul>
     <p>
-      For users who rely on Claude as a primary AI tool, having a dedicated exporter that understands
-      Claude's unique features like Artifacts, Thinking Process, and Tool Use is essential for
-      maintaining a complete knowledge archive.
+      For users who rely on Claude as a primary AI tool, having a dedicated exporter that
+      understands Claude's unique features like Artifacts, Thinking Process, and Tool Use is
+      essential for maintaining a complete knowledge archive.
     </p>
   </section>
 
@@ -228,14 +240,14 @@ const meta = {
       items={[
         {
           q: 'Does the exporter capture Claude Artifacts with version history?',
-          a: 'Yes. When you export a conversation that contains Artifacts, the exporter extracts each artifact\'s content, title, and version number. In Markdown and HTML exports, artifacts appear as labeled sections. In JSON exports, they are stored as structured objects with version arrays.',
+          a: "Yes. When you export a conversation that contains Artifacts, the exporter extracts each artifact's content, title, and version number. In Markdown and HTML exports, artifacts appear as labeled sections. In JSON exports, they are stored as structured objects with version arrays.",
         },
         {
           q: 'Can I export only specific parts of a Claude conversation?',
           a: 'Yes. The selective turn export feature lets you choose which message turns to include. After clicking the export button, you can select individual turns by their position in the conversation. This is useful when you want to save a particular exchange without exporting hundreds of preceding messages.',
         },
         {
-          q: 'How are Claude\'s Thinking Process blocks handled?',
+          q: "How are Claude's Thinking Process blocks handled?",
           a: 'Claude\'s extended thinking content is captured as a separate section in the export. In Markdown exports, thinking content appears within a collapsible blockquote labeled "Thinking Process." In JSON, it is stored in a dedicated "thinking" field separate from the response content. Because the parser recognizes Claude\'s thinking blocks at the DOM level, the full reasoning chain is included whenever it is visible in the conversation.',
         },
         {
@@ -244,7 +256,7 @@ const meta = {
         },
         {
           q: 'Is my conversation data sent to any server?',
-          a: 'No. All extraction and formatting happens locally within your browser extension. The extension never contacts Anthropic\'s servers, our servers, or any third-party API. The only network requests the extension makes are to fetch its own CSS and font resources. You can verify this by inspecting the extension\'s source code on GitHub.',
+          a: "No. All extraction and formatting happens locally within your browser extension. The extension never contacts Anthropic's servers, our servers, or any third-party API. The only network requests the extension makes are to fetch its own CSS and font resources. You can verify this by inspecting the extension's source code on GitHub.",
         },
       ]}
     />

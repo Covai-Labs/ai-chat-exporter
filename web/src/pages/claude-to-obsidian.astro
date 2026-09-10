@@ -9,13 +9,13 @@ import Callout from '../components/Callout.astro';
 const meta = {
   slug: 'claude-to-obsidian',
   title: 'Claude to Obsidian',
-  description:
-    'Sync Claude chats into your Obsidian vault',
+  description: 'Sync Claude chats into your Obsidian vault',
   heroTitle: 'Claude to Obsidian — One-Click Vault Transfer',
   heroSubtitle:
     'Send Claude conversations directly into your Obsidian vault as properly formatted Markdown notes. No copy-paste, no file management. Just one click.',
 };
 ---
+
 <GuideLayout
   title={meta.title}
   description={meta.description}
@@ -28,10 +28,10 @@ const meta = {
   <section class="content-section">
     <h2>How Obsidian Integration Works</h2>
     <p>
-      AI Chat Exporter uses Obsidian's native <code>obsidian://new</code> URI scheme to create
-      notes directly in your vault. When you click the Obsidian transfer button, the extension
-      constructs a URI with the conversation content, vault name, and target folder, then opens it
-      in a new tab. Obsidian intercepts the URI and creates the note instantly.
+      AI Chat Exporter uses Obsidian's native <code>obsidian://new</code> URI scheme to create notes
+      directly in your vault. When you click the Obsidian transfer button, the extension constructs
+      a URI with the conversation content, vault name, and target folder, then opens it in a new
+      tab. Obsidian intercepts the URI and creates the note instantly.
     </p>
     <p>
       This approach has several advantages over file-based imports. There is no need to locate your
@@ -51,19 +51,19 @@ const meta = {
     <h2>Vault Name Configuration</h2>
     <p>
       To use the Obsidian transfer feature, you need to tell the extension the name of your target
-      vault. This is the display name of the vault as it appears in Obsidian&rsquo;s vault
-      switcher, not the folder name on disk.
+      vault. This is the display name of the vault as it appears in Obsidian&rsquo;s vault switcher,
+      not the folder name on disk.
     </p>
     <p>
-      Open the extension settings and enter your vault name in the Obsidian vault field. If you
-      have multiple vaults, you can configure different target folders for each. The extension
-      stores this configuration in your browser's local extension storage&mdash;it is never shared
-      with any external service.
+      Open the extension settings and enter your vault name in the Obsidian vault field. If you have
+      multiple vaults, you can configure different target folders for each. The extension stores
+      this configuration in your browser's local extension storage&mdash;it is never shared with any
+      external service.
     </p>
     <Callout tone="info" title="Tip">
-      Your vault name is the name you see in Obsidian's top-left corner or in the vault switcher.
-      It is not the folder path. For example, if your vault is called "Personal Knowledge Base",
-      enter that exact name in the settings field.
+      Your vault name is the name you see in Obsidian's top-left corner or in the vault switcher. It
+      is not the folder path. For example, if your vault is called "Personal Knowledge Base", enter
+      that exact name in the settings field.
     </Callout>
   </section>
 
@@ -74,8 +74,8 @@ const meta = {
       <div class="feature-card">
         <h3>Full Conversation Messages</h3>
         <p>
-          All user and assistant messages are included in the note. Messages are formatted as a clean
-          Markdown document with clear speaker labels and timestamp markers where available.
+          All user and assistant messages are included in the note. Messages are formatted as a
+          clean Markdown document with clear speaker labels and timestamp markers where available.
         </p>
       </div>
       <div class="feature-card">
@@ -113,8 +113,12 @@ const meta = {
     </p>
     <p>The default folder structure follows a date-based organization:</p>
     <ul>
-      <li><strong>Folder:</strong> <code>Claude/2026/03/</code></li>
-      <li><strong>Filename:</strong> <code>Claude-Refactor-React-Component.md</code></li>
+      <li>
+        <strong>Folder:</strong> <code>Claude/2026/03/</code>
+      </li>
+      <li>
+        <strong>Filename:</strong> <code>Claude-Refactor-React-Component.md</code>
+      </li>
       <li>
         <strong>Full path:</strong>
         <code>Claude/2026/03/Claude-Refactor-React-Component.md</code>
@@ -166,7 +170,7 @@ const meta = {
       items={[
         {
           q: 'How do I find my Obsidian vault name?',
-          a: 'Open Obsidian and look at the top-left corner of the window. The vault name is displayed there. Alternatively, use the vault switcher (click the vault name or the icon next to it) to see all your vaults and their names. Enter the exact name in the extension\'s settings field.',
+          a: "Open Obsidian and look at the top-left corner of the window. The vault name is displayed there. Alternatively, use the vault switcher (click the vault name or the icon next to it) to see all your vaults and their names. Enter the exact name in the extension's settings field.",
         },
         {
           q: 'Will images from Claude conversations appear in Obsidian?',

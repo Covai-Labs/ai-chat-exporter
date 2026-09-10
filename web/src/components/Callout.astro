@@ -7,6 +7,7 @@ interface Props {
 const { tone = 'info' } = Astro.props;
 const { title } = Astro.props;
 ---
+
 <div class={`callout callout-${tone}`}>
   {title && <strong>{title}: </strong>}
   <slot />

@@ -15,6 +15,7 @@ const meta = {
     'Take a conversation from ChatGPT and continue it on Claude. Move a Claude thread to Gemini. Transfer any AI chat to any other AI. No other tool does this.',
 };
 ---
+
 <GuideLayout
   title={meta.title}
   description={meta.description}
@@ -61,10 +62,10 @@ const meta = {
         <tbody>
           <tr>
             <td>All 17 supported platforms</td>
-            <td
-              >ChatGPT, Claude, Gemini, DeepSeek, Perplexity, Qwen, Mistral, NotebookLM, Copilot,
-              Meta AI, Z.AI, AI Studio, Lumo, Joyland, Chub</td
-            >
+            <td>
+              ChatGPT, Claude, Gemini, DeepSeek, Perplexity, Qwen, Mistral, NotebookLM, Copilot,
+              Meta AI, Z.AI, AI Studio, Lumo, Joyland, Chub
+            </td>
           </tr>
         </tbody>
       </table>
@@ -148,8 +149,8 @@ const meta = {
       <div class="feature-card">
         <h3>Team Collaboration</h3>
         <p>
-          Your teammate uses Claude but you prefer ChatGPT. Transfer a conversation between platforms
-          so both of you can work on the same thread using your preferred AI tool.
+          Your teammate uses Claude but you prefer ChatGPT. Transfer a conversation between
+          platforms so both of you can work on the same thread using your preferred AI tool.
         </p>
       </div>
     </div>
@@ -158,30 +159,28 @@ const meta = {
   <!-- Transfer Workflow: ChatGPT to Claude -->
   <section class="content-section">
     <h2>Transfer Workflow: ChatGPT to Claude</h2>
-    <p>
-      Here is a concrete example of transferring a coding conversation from ChatGPT to Claude:
-    </p>
+    <p>Here is a concrete example of transferring a coding conversation from ChatGPT to Claude:</p>
     <ol>
-      <li
-        >You have been debugging a React component in ChatGPT. The conversation is 30 messages deep
-        with code snippets, error logs, and solutions.</li
-      >
+      <li>
+        You have been debugging a React component in ChatGPT. The conversation is 30 messages deep
+        with code snippets, error logs, and solutions.
+      </li>
       <li>ChatGPT starts giving shorter responses as it approaches its context limit.</li>
-      <li
-        >Click the AI Chat Exporter icon while on the ChatGPT tab. Select "Continue on Claude" from
-        the cross-AI transfer menu.</li
-      >
-      <li
-        >The extension extracts the conversation, strips the screenshots you pasted earlier, formats
+      <li>
+        Click the AI Chat Exporter icon while on the ChatGPT tab. Select "Continue on Claude" from
+        the cross-AI transfer menu.
+      </li>
+      <li>
+        The extension extracts the conversation, strips the screenshots you pasted earlier, formats
         the remaining text and code with clear role markers, and stores it as a pending
-        continuation.</li
-      >
-      <li
-        >A new tab opens to claude.ai. The extension auto-injects the 30-message history into the
+        continuation.
+      </li>
+      <li>
+        A new tab opens to claude.ai. The extension auto-injects the 30-message history into the
         chat input with proper formatting. Review the pre-filled prompt and press send. Claude picks
         up the debugging session seamlessly. If the prompt is not auto-inserted (e.g. the page
-        layout changed), paste it into the input manually.</li
-      >
+        layout changed), paste it into the input manually.
+      </li>
     </ol>
     <p>
       The same workflow works in reverse. Start on Claude, transfer to ChatGPT. Or start on
@@ -192,13 +191,11 @@ const meta = {
   <!-- Limitations and Trade-offs -->
   <section class="content-section">
     <h2>Limitations and Trade-offs</h2>
-    <p>
-      Cross-AI Transfer is powerful but not magic. Here is what you should expect:
-    </p>
+    <p>Cross-AI Transfer is powerful but not magic. Here is what you should expect:</p>
     <Callout tone="info" title="Images are stripped">
-      Screenshots, uploaded files, and generated images cannot be transferred between platforms. Each
-      AI platform handles images differently, and there is no standard format for transferring visual
-      content in conversation context. Text descriptions of images are preserved where the AI
+      Screenshots, uploaded files, and generated images cannot be transferred between platforms.
+      Each AI platform handles images differently, and there is no standard format for transferring
+      visual content in conversation context. Text descriptions of images are preserved where the AI
       included them in its response.
     </Callout>
     <Callout tone="info" title="Formatting is simplified">
@@ -245,7 +242,8 @@ const meta = {
         <strong>Size limits:</strong> The transfer format is plain text, so extremely long
         conversations may exceed the target platform's input limits. The extension includes the full
         conversation as-is; if a chat exceeds the platform's limit, the target AI will typically
-        accept only the recent portion. For typical conversations the full history transfers cleanly.
+        accept only the recent portion. For typical conversations the full history transfers
+        cleanly.
       </li>
     </ul>
   </section>

@@ -1,4 +1,29 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>JSON Export</title><meta name="description" content="Structured JSON with a strict schema"><link rel="canonical" href="https://ai-chat-exporter.covai.org/json-exporter.html"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:url" content="https://ai-chat-exporter.covai.org/json-exporter.html"><meta property="og:title" content="JSON Export"><meta property="og:description" content="Structured JSON with a strict schema"><meta property="og:image" content="https://ai-chat-exporter.covai.org/og-image.png"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="640"><meta property="og:site_name" content="AI Chat Exporter"><meta property="og:locale" content="en_US"><!-- Twitter / X --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://ai-chat-exporter.covai.org/json-exporter.html"><meta name="twitter:title" content="JSON Export"><meta name="twitter:description" content="Structured JSON with a strict schema"><meta name="twitter:image" content="https://ai-chat-exporter.covai.org/og-image.png"><!-- Theme bootstrap (pre-paint — prevents flash) --><script>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON Export</title>
+    <meta name="description" content="Structured JSON with a strict schema" />
+    <link rel="canonical" href="https://ai-chat-exporter.covai.org/json-exporter.html" />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ai-chat-exporter.covai.org/json-exporter.html" />
+    <meta property="og:title" content="JSON Export" />
+    <meta property="og:description" content="Structured JSON with a strict schema" />
+    <meta property="og:image" content="https://ai-chat-exporter.covai.org/og-image.png" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="640" />
+    <meta property="og:site_name" content="AI Chat Exporter" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://ai-chat-exporter.covai.org/json-exporter.html" />
+    <meta name="twitter:title" content="JSON Export" />
+    <meta name="twitter:description" content="Structured JSON with a strict schema" />
+    <meta name="twitter:image" content="https://ai-chat-exporter.covai.org/og-image.png" />
+    <!-- Theme bootstrap (pre-paint — prevents flash) -->
+    <script>
       (function () {
         try {
           var t = localStorage.getItem('ace-theme');
@@ -9,37 +34,346 @@
           /* ignore */
         }
       })();
-    </script><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><!-- Favicons --><link rel="icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="/icons/android-chrome-192x192.png"><link rel="icon" type="image/png" sizes="512x512" href="/icons/android-chrome-512x512.png"><link rel="manifest" href="/site.webmanifest"><!-- Styles --><link rel="stylesheet" href="/css/global.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"AI Chat Exporter","operatingSystem":"Chrome, Firefox, Edge","applicationCategory":"UtilitiesApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://ai-chat-exporter.covai.org","downloadUrl":"https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"}</script><script defer src="https://covai.org/analytics.js"></script></head><body><header><a href="/index.html" class="logo-container"><img src="/icons/icon48.png" alt="AI Chat Exporter Logo" class="logo-img" width="32" height="32"><span class="logo-text">AI Chat Exporter</span></a><div class="header-nav"><nav class="nav-links" aria-label="Main navigation"><a href="/index.html" class="nav-link">Home</a><a href="/guides.html" class="nav-link">Guides</a><a href="https://github.com/Covai-Labs/ai-chat-exporter" class="nav-link" target="_blank" rel="noopener noreferrer"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg><span>GitHub</span></a></nav><div class="theme-toggle" role="group" aria-label="Theme switcher"><button type="button" data-theme="light" aria-label="Light theme" title="Light" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg></button><button type="button" data-theme="dark" aria-label="Dark theme" title="Dark" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button><button type="button" data-theme="system" aria-label="System theme (follow OS)" title="System" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></button></div><script>
-  (function () {
-    const root = document.documentElement;
-    const buttons = Array.from(document.querySelectorAll('.theme-toggle button[data-theme]'));
-    if (!buttons.length) return;
-
-    function getStored() {
-      const t = localStorage.getItem('ace-theme');
-      return t === 'dark' || t === 'light' ? t : 'system';
-    }
-
-    function apply(theme) {
-      root.classList.remove('light', 'dark');
-      if (theme === 'light' || theme === 'dark') root.classList.add(theme);
-      try {
-        localStorage.setItem('ace-theme', theme);
-      } catch (e) {
-        /* private mode */
+    </script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icons/android-chrome-512x512.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/global.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "AI Chat Exporter",
+        "operatingSystem": "Chrome, Firefox, Edge",
+        "applicationCategory": "UtilitiesApplication",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "url": "https://ai-chat-exporter.covai.org",
+        "downloadUrl": "https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
       }
-      buttons.forEach((b) => {
-        b.setAttribute('aria-pressed', String(b.dataset.theme === theme));
-      });
-    }
+    </script>
+    <script defer src="https://covai.org/analytics.js"></script>
+  </head>
+  <body>
+    <header>
+      <a href="/index.html" class="logo-container"
+        ><img
+          src="/icons/icon48.png"
+          alt="AI Chat Exporter Logo"
+          class="logo-img"
+          width="32"
+          height="32"
+        /><span class="logo-text">AI Chat Exporter</span></a
+      >
+      <div class="header-nav">
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="/index.html" class="nav-link">Home</a
+          ><a href="/guides.html" class="nav-link">Guides</a
+          ><a
+            href="https://github.com/Covai-Labs/ai-chat-exporter"
+            class="nav-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+              ></path></svg
+            ><span>GitHub</span></a
+          >
+        </nav>
+        <div class="theme-toggle" role="group" aria-label="Theme switcher">
+          <button
+            type="button"
+            data-theme="light"
+            aria-label="Light theme"
+            title="Light"
+            aria-pressed="false"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="5"></circle>
+              <path
+                d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+              ></path>
+            </svg></button
+          ><button
+            type="button"
+            data-theme="dark"
+            aria-label="Dark theme"
+            title="Dark"
+            aria-pressed="false"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg></button
+          ><button
+            type="button"
+            data-theme="system"
+            aria-label="System theme (follow OS)"
+            title="System"
+            aria-pressed="false"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </button>
+        </div>
+        <script>
+          (function () {
+            const root = document.documentElement;
+            const buttons = Array.from(
+              document.querySelectorAll('.theme-toggle button[data-theme]'),
+            );
+            if (!buttons.length) return;
 
-    apply(getStored());
+            function getStored() {
+              const t = localStorage.getItem('ace-theme');
+              return t === 'dark' || t === 'light' ? t : 'system';
+            }
 
-    buttons.forEach((b) => {
-      b.addEventListener('click', () => apply(b.dataset.theme));
-    });
-  })();
-</script></div></header><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ai-chat-exporter.covai.org/index.html"},{"@type":"ListItem","position":2,"name":"JSON Export"}]}</script><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span aria-hidden="true">&#8250;</span><span>JSON Export</span></nav><main><div class="hero"><span class="badge">Developer Friendly</span><h1>AI Chat to JSON — Structured Data Export</h1><p class="hero-subtitle">Export AI conversations as structured JSON with a normalized schema. Machine-readable output for developers, researchers, and automation workflows.</p><div class="cta-group"><a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-testid="cta-chrome">Add to Chrome</a><a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" data-testid="cta-firefox">Add to Firefox</a></div></div><section class="content-section"><div class="features-grid"><div class="feature-card"><h3>Normalized Schema</h3><p>Every export follows a consistent JSON Schema v1 structure regardless of which AI platform produced the conversation. Parse it once, process conversations from any source.</p></div><div class="feature-card"><h3>Full Metadata</h3><p>Model name, platform, conversation ID, timestamp, and message roles are all preserved in structured fields. Build analytics dashboards or filter conversations programmatically.</p></div><div class="feature-card"><h3>Role Classification</h3><p>Every message is tagged with its role: user, assistant, system, tool, artifact, or unknown. This makes it straightforward to separate inputs from outputs in downstream processing.</p></div><div class="feature-card"><h3>Machine-Readable</h3><p>Valid JSON that parses with no errors in any language. Import directly into databases, dataframes, search indexes, or custom pipelines without cleanup or transformation.</p></div><div class="feature-card"><h3>Backup and Restore</h3><p>JSON is the ideal format for programmatic backup and restore. Re-import your conversation archive into tools that accept JSON, or build your own backup system on top of the export files.</p></div><div class="feature-card"><h3>Platform Agnostic</h3><p>Whether the conversation came from ChatGPT, Claude, Gemini, or DeepSeek, the output structure is identical. Your code does not need platform-specific parsers.</p></div></div></section><section class="content-section"><h2>JSON Schema v1 Structure</h2><p>Every JSON export from AI Chat Exporter follows the v1 schema definition. The structure is designed to be both human-inspectable and machine-processable. Here is an overview of the top-level fields:</p><div class="table-wrapper"><table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>schema_version</code></td><td>string</td><td>Schema version identifier (currently "v1")</td></tr><tr><td><code>source</code></td><td>object</td><td>Source metadata: platform name, URL, and extension version</td></tr><tr><td><code>metadata</code></td><td>object</td><td>Conversation metadata: title, model, timestamp, conversation ID</td></tr><tr><td><code>messages</code></td><td>array</td><td>Ordered array of message objects</td></tr></tbody></table></div><p>Each message object in the <code>messages</code> array contains:</p><div class="table-wrapper"><table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>role</code></td><td>string</td><td>One of: user, assistant, system, tool, artifact, unknown</td></tr><tr><td><code>content</code></td><td>string</td><td>The message text content in Markdown format</td></tr><tr><td><code>timestamp</code></td><td>string (ISO 8601)</td><td>When the message was sent, if available</td></tr><tr><td><code>thinking</code></td><td>string or null</td><td>Extended thinking / chain-of-thought content, if present</td></tr></tbody></table></div><p>The full schema definition is available in the repository at <code>schemas/export-v1.schema.json</code>. You can use it with JSON Schema validators to enforce structure in your own pipelines.</p></section><section class="content-section"><h2>What the Raw JSON Looks Like</h2><p>Here is a simplified example of a JSON export with two messages:</p><div class="callout callout-info"><strong>Example: </strong><pre>{
+            function apply(theme) {
+              root.classList.remove('light', 'dark');
+              if (theme === 'light' || theme === 'dark') root.classList.add(theme);
+              try {
+                localStorage.setItem('ace-theme', theme);
+              } catch (e) {
+                /* private mode */
+              }
+              buttons.forEach((b) => {
+                b.setAttribute('aria-pressed', String(b.dataset.theme === theme));
+              });
+            }
+
+            apply(getStored());
+
+            buttons.forEach((b) => {
+              b.addEventListener('click', () => apply(b.dataset.theme));
+            });
+          })();
+        </script>
+      </div>
+    </header>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ai-chat-exporter.covai.org/index.html"
+          },
+          { "@type": "ListItem", "position": 2, "name": "JSON Export" }
+        ]
+      }
+    </script>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/index.html">Home</a><span aria-hidden="true">&#8250;</span><span>JSON Export</span>
+    </nav>
+    <main>
+      <div class="hero">
+        <span class="badge">Developer Friendly</span>
+        <h1>AI Chat to JSON — Structured Data Export</h1>
+        <p class="hero-subtitle">
+          Export AI conversations as structured JSON with a normalized schema. Machine-readable
+          output for developers, researchers, and automation workflows.
+        </p>
+        <div class="cta-group">
+          <a
+            href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="cta-chrome"
+            >Add to Chrome</a
+          ><a
+            href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/"
+            class="btn btn-secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="cta-firefox"
+            >Add to Firefox</a
+          >
+        </div>
+      </div>
+      <section class="content-section">
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3>Normalized Schema</h3>
+            <p>
+              Every export follows a consistent JSON Schema v1 structure regardless of which AI
+              platform produced the conversation. Parse it once, process conversations from any
+              source.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>Full Metadata</h3>
+            <p>
+              Model name, platform, conversation ID, timestamp, and message roles are all preserved
+              in structured fields. Build analytics dashboards or filter conversations
+              programmatically.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>Role Classification</h3>
+            <p>
+              Every message is tagged with its role: user, assistant, system, tool, artifact, or
+              unknown. This makes it straightforward to separate inputs from outputs in downstream
+              processing.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>Machine-Readable</h3>
+            <p>
+              Valid JSON that parses with no errors in any language. Import directly into databases,
+              dataframes, search indexes, or custom pipelines without cleanup or transformation.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>Backup and Restore</h3>
+            <p>
+              JSON is the ideal format for programmatic backup and restore. Re-import your
+              conversation archive into tools that accept JSON, or build your own backup system on
+              top of the export files.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>Platform Agnostic</h3>
+            <p>
+              Whether the conversation came from ChatGPT, Claude, Gemini, or DeepSeek, the output
+              structure is identical. Your code does not need platform-specific parsers.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="content-section">
+        <h2>JSON Schema v1 Structure</h2>
+        <p>
+          Every JSON export from AI Chat Exporter follows the v1 schema definition. The structure is
+          designed to be both human-inspectable and machine-processable. Here is an overview of the
+          top-level fields:
+        </p>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>schema_version</code></td>
+                <td>string</td>
+                <td>Schema version identifier (currently "v1")</td>
+              </tr>
+              <tr>
+                <td><code>source</code></td>
+                <td>object</td>
+                <td>Source metadata: platform name, URL, and extension version</td>
+              </tr>
+              <tr>
+                <td><code>metadata</code></td>
+                <td>object</td>
+                <td>Conversation metadata: title, model, timestamp, conversation ID</td>
+              </tr>
+              <tr>
+                <td><code>messages</code></td>
+                <td>array</td>
+                <td>Ordered array of message objects</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Each message object in the <code>messages</code> array contains:</p>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>role</code></td>
+                <td>string</td>
+                <td>One of: user, assistant, system, tool, artifact, unknown</td>
+              </tr>
+              <tr>
+                <td><code>content</code></td>
+                <td>string</td>
+                <td>The message text content in Markdown format</td>
+              </tr>
+              <tr>
+                <td><code>timestamp</code></td>
+                <td>string (ISO 8601)</td>
+                <td>When the message was sent, if available</td>
+              </tr>
+              <tr>
+                <td><code>thinking</code></td>
+                <td>string or null</td>
+                <td>Extended thinking / chain-of-thought content, if present</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          The full schema definition is available in the repository at
+          <code>schemas/export-v1.schema.json</code>. You can use it with JSON Schema validators to
+          enforce structure in your own pipelines.
+        </p>
+      </section>
+      <section class="content-section">
+        <h2>What the Raw JSON Looks Like</h2>
+        <p>Here is a simplified example of a JSON export with two messages:</p>
+        <div class="callout callout-info">
+          <strong>Example: </strong>
+          <pre>
+{
   "schema_version": "v1",
   "source": {
     "platform": "chatgpt",
@@ -66,27 +400,332 @@
       "thinking": null
     }
   ]
-}</pre></div><p>This structure is consistent whether the conversation came from ChatGPT, Claude, Gemini, or any other supported platform. The <code>source.platform</code> field tells you where it came from, and the <code>messages</code> array is always a flat, ordered list.</p></section><section class="content-section"><h2>Use Cases for JSON Export</h2><p><strong>Programmatic Processing</strong> \u2014 Load the JSON into Python, JavaScript, Go, or any language with native JSON support. Filter messages by role, extract code blocks, build summaries, or perform analytics on conversation patterns.</p><div class="callout callout-info"><strong>Python Example: </strong><pre>import json
+}</pre>
+        </div>
+        <p>
+          This structure is consistent whether the conversation came from ChatGPT, Claude, Gemini,
+          or any other supported platform. The <code>source.platform</code> field tells you where it
+          came from, and the <code>messages</code> array is always a flat, ordered list.
+        </p>
+      </section>
+      <section class="content-section">
+        <h2>Use Cases for JSON Export</h2>
+        <p>
+          <strong>Programmatic Processing</strong> \u2014 Load the JSON into Python, JavaScript, Go,
+          or any language with native JSON support. Filter messages by role, extract code blocks,
+          build summaries, or perform analytics on conversation patterns.
+        </p>
+        <div class="callout callout-info">
+          <strong>Python Example: </strong>
+          <pre>
+import json
 
 with open("conversation.json") as f:
     data = json.load(f)
 
 for msg in data["messages"]:
     if msg["role"] == "assistant":
-        print(msg["content"][:200])</pre></div><p><strong>Backup and Restore</strong> \u2014 Build an automated backup pipeline that exports your AI conversations daily. The normalized schema means a single restore script works for conversations from every platform.</p><p><strong>Training Data Preparation</strong> \u2014 Researchers and ML engineers can use JSON exports as structured input for fine-tuning datasets. The role field cleanly separates prompts from completions without regex or heuristics.</p><p><strong>Analytics and Dashboards</strong> \u2014 Import JSON exports into databases like PostgreSQL (via JSONB), Elasticsearch, or MongoDB. Build dashboards showing conversation volume, platform usage, model distribution, and response patterns.</p><p><strong>Migration Between Platforms</strong> \u2014 Moving from ChatGPT to Claude or vice versa? Export your conversations as JSON and write a simple script to reconstruct them in the target platform's format, or simply archive them for reference.</p><p><strong>Custom Tooling</strong> \u2014 Build your own chat interface, search engine, or knowledge base on top of exported JSON data. The structured format makes indexing, full-text search, and retrieval straightforward.</p></section><section class="content-section"><h2>JSON Export vs. ChatGPT's Official Export</h2><p>OpenAI offers a data export feature in ChatGPT settings, but the output is a ZIP file containing unstructured conversation dumps in a custom format that changes between versions. Here is how AI Chat Exporter's JSON export compares:</p><div class="table-wrapper"><table><thead><tr><th>Feature</th><th>ChatGPT Official Export</th><th>AI Chat Exporter JSON</th></tr></thead><tbody><tr><td>Format</td><td>Proprietary, undocumented</td><td>JSON Schema v1, documented</td></tr><tr><td>Platform coverage</td><td>ChatGPT only</td><td>17 platforms</td></tr><tr><td>Role labels</td><td>Inconsistent</td><td>Normalized (user, assistant, tool, etc.)</td></tr><tr><td>Model metadata</td><td>Not always present</td><td>Captured when available</td></tr><tr><td>Thinking traces</td><td>Not included</td><td>Preserved in thinking field</td></tr><tr><td>Export trigger</td><td>Full account export (all conversations)</td><td>Per-conversation, on demand</td></tr><tr><td>Availability</td><td>Request and wait for email</td><td>Instant download</td></tr></tbody></table></div></section><section class="content-section"><h2>Supported Platforms</h2><p>JSON export is available for all 17 platforms: ChatGPT, Claude, Gemini, DeepSeek, Perplexity, Copilot, Qwen, Mistral, Meta AI, NotebookLM, Google AI Studio, Google Cloud Assist, Google Search AI, Z.AI, Proton Lumo, Joyland, and Chub. The output schema is identical across all platforms.</p></section><section class="content-section"><h2>How to Export AI Chats to JSON</h2><div class="steps"><div class="step"><div class="step-content"><h3>Install the Extension</h3><p>Add AI Chat Exporter from the Chrome Web Store or Firefox Add-ons. Free, no account required, no configuration needed.</p></div></div><div class="step"><div class="step-content"><h3>Open Any Supported AI Chat</h3><p>Navigate to a conversation on any of the 17 supported platforms. The extension detects the active chat and parses the DOM.</p></div></div><div class="step"><div class="step-content"><h3>Click Export and Select JSON</h3><p>Click the toolbar icon and choose JSON. The file downloads immediately as a &lt;code&gt;.json&lt;/code&gt; file named after the conversation title.</p></div></div></div></section><section class="content-section"><h2>Frequently Asked Questions</h2><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What does the JSON look like?","acceptedAnswer":{"@type":"Answer","text":"The JSON has a top-level structure with schema_version, source, metadata, and messages fields. Each message has a role (user, assistant, system, tool, artifact, or unknown) and content in Markdown. The full schema definition is available at schemas/export-v1.schema.json in the GitHub repository."}},{"@type":"Question","name":"Can I import into databases?","acceptedAnswer":{"@type":"Answer","text":"Yes. The JSON is valid and well-structured for direct import into PostgreSQL (JSONB columns), MongoDB documents, Elasticsearch indices, or any data store that accepts JSON. The consistent schema means you can write a single import script that works for all platforms."}},{"@type":"Question","name":"What metadata is included?","acceptedAnswer":{"@type":"Answer","text":"Each export includes the source platform, the source URL, the extension version, the conversation title, the AI model name (when available), the conversation ID, the export timestamp, and the timestamp of each individual message. This metadata enables filtering, sorting, and analytics."}},{"@type":"Question","name":"Is there a schema definition?","acceptedAnswer":{"@type":"Answer","text":"Yes. The JSON Schema v1 definition is published in the GitHub repository at schemas/export-v1.schema.json. You can use this file with JSON Schema validators in any language to enforce structure and catch anomalies in your data pipeline."}},{"@type":"Question","name":"How do I parse it in Python?","acceptedAnswer":{"@type":"Answer","text":"Use Python's built-in json module: import json; data = json.load(open(\"export.json\")). The data[\"messages\"] array contains all messages, each with a role and content field. You can filter by role, iterate over messages, or load the entire structure into a pandas DataFrame for analysis."}}]}</script><div class="faq"><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">What does the JSON look like?</button><div class="faq-answer" role="region" aria-hidden="true">The JSON has a top-level structure with schema_version, source, metadata, and messages fields. Each message has a role (user, assistant, system, tool, artifact, or unknown) and content in Markdown. The full schema definition is available at schemas/export-v1.schema.json in the GitHub repository.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Can I import into databases?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. The JSON is valid and well-structured for direct import into PostgreSQL (JSONB columns), MongoDB documents, Elasticsearch indices, or any data store that accepts JSON. The consistent schema means you can write a single import script that works for all platforms.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">What metadata is included?</button><div class="faq-answer" role="region" aria-hidden="true">Each export includes the source platform, the source URL, the extension version, the conversation title, the AI model name (when available), the conversation ID, the export timestamp, and the timestamp of each individual message. This metadata enables filtering, sorting, and analytics.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Is there a schema definition?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. The JSON Schema v1 definition is published in the GitHub repository at schemas/export-v1.schema.json. You can use this file with JSON Schema validators in any language to enforce structure and catch anomalies in your data pipeline.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">How do I parse it in Python?</button><div class="faq-answer" role="region" aria-hidden="true">Use Python's built-in json module: <code>import json; data = json.load(open("export.json"))</code>. The data["messages"] array contains all messages, each with a role and content field. You can filter by role, iterate over messages, or load the entire structure into a pandas DataFrame for analysis.</div></div></div><script>
-  document.querySelectorAll('.faq-item').forEach((item, i) => {
-    const btn = item.querySelector('.faq-question');
-    const answer = item.querySelector('.faq-answer');
-    if (!btn || !answer) return;
-    const id = 'faq-' + (i + 1);
-    btn.id = 'q-' + id;
-    btn.setAttribute('aria-controls', id);
-    answer.id = id;
-    answer.setAttribute('aria-labelledby', 'q-' + id);
-    btn.addEventListener('click', () => {
-      const open = item.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      answer.setAttribute('aria-hidden', open ? 'false' : 'true');
-    });
-  });
-</script></section><section class="content-section"><section class="related-pages"><h2>Related Pages</h2><div class="related-grid"><a href="/markdown-exporter.html" class="related-link"><h3>Markdown Export</h3><p>Export conversations to portable Markdown files for note-taking workflows.</p></a><a href="/ai-chat-backup.html" class="related-link"><h3>AI Chat Backup</h3><p>Build automated backup pipelines for your AI conversation archives.</p></a></div></section></section><section class="content-section"><div class="callout callout-success"><p><strong>Ready to export your AI chats to JSON?</strong></p><div class="cta-group compact"><a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Add to Chrome</a><a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Add to Firefox</a></div></div></section></main><footer><div class="footer-links"><a href="/privacy.html">Privacy Policy</a><span class="footer-sep" aria-hidden="true">|</span><a href="/license.html">License (MPL 2.0)</a><span class="footer-sep" aria-hidden="true">|</span><a href="/feedback.html">Feedback &amp; Issues</a><span class="footer-sep" aria-hidden="true">|</span><a href="https://github.com/Covai-Labs/ai-chat-exporter" target="_blank" rel="noopener noreferrer">GitHub Repository</a></div><p>&copy; 2026 AI Chat Exporter. Released under the Mozilla Public License 2.0.</p></footer></body></html>
+        print(msg["content"][:200])</pre>
+        </div>
+        <p>
+          <strong>Backup and Restore</strong> \u2014 Build an automated backup pipeline that exports
+          your AI conversations daily. The normalized schema means a single restore script works for
+          conversations from every platform.
+        </p>
+        <p>
+          <strong>Training Data Preparation</strong> \u2014 Researchers and ML engineers can use
+          JSON exports as structured input for fine-tuning datasets. The role field cleanly
+          separates prompts from completions without regex or heuristics.
+        </p>
+        <p>
+          <strong>Analytics and Dashboards</strong> \u2014 Import JSON exports into databases like
+          PostgreSQL (via JSONB), Elasticsearch, or MongoDB. Build dashboards showing conversation
+          volume, platform usage, model distribution, and response patterns.
+        </p>
+        <p>
+          <strong>Migration Between Platforms</strong> \u2014 Moving from ChatGPT to Claude or vice
+          versa? Export your conversations as JSON and write a simple script to reconstruct them in
+          the target platform's format, or simply archive them for reference.
+        </p>
+        <p>
+          <strong>Custom Tooling</strong> \u2014 Build your own chat interface, search engine, or
+          knowledge base on top of exported JSON data. The structured format makes indexing,
+          full-text search, and retrieval straightforward.
+        </p>
+      </section>
+      <section class="content-section">
+        <h2>JSON Export vs. ChatGPT's Official Export</h2>
+        <p>
+          OpenAI offers a data export feature in ChatGPT settings, but the output is a ZIP file
+          containing unstructured conversation dumps in a custom format that changes between
+          versions. Here is how AI Chat Exporter's JSON export compares:
+        </p>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>ChatGPT Official Export</th>
+                <th>AI Chat Exporter JSON</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Format</td>
+                <td>Proprietary, undocumented</td>
+                <td>JSON Schema v1, documented</td>
+              </tr>
+              <tr>
+                <td>Platform coverage</td>
+                <td>ChatGPT only</td>
+                <td>17 platforms</td>
+              </tr>
+              <tr>
+                <td>Role labels</td>
+                <td>Inconsistent</td>
+                <td>Normalized (user, assistant, tool, etc.)</td>
+              </tr>
+              <tr>
+                <td>Model metadata</td>
+                <td>Not always present</td>
+                <td>Captured when available</td>
+              </tr>
+              <tr>
+                <td>Thinking traces</td>
+                <td>Not included</td>
+                <td>Preserved in thinking field</td>
+              </tr>
+              <tr>
+                <td>Export trigger</td>
+                <td>Full account export (all conversations)</td>
+                <td>Per-conversation, on demand</td>
+              </tr>
+              <tr>
+                <td>Availability</td>
+                <td>Request and wait for email</td>
+                <td>Instant download</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="content-section">
+        <h2>Supported Platforms</h2>
+        <p>
+          JSON export is available for all 17 platforms: ChatGPT, Claude, Gemini, DeepSeek,
+          Perplexity, Copilot, Qwen, Mistral, Meta AI, NotebookLM, Google AI Studio, Google Cloud
+          Assist, Google Search AI, Z.AI, Proton Lumo, Joyland, and Chub. The output schema is
+          identical across all platforms.
+        </p>
+      </section>
+      <section class="content-section">
+        <h2>How to Export AI Chats to JSON</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h3>Install the Extension</h3>
+              <p>
+                Add AI Chat Exporter from the Chrome Web Store or Firefox Add-ons. Free, no account
+                required, no configuration needed.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h3>Open Any Supported AI Chat</h3>
+              <p>
+                Navigate to a conversation on any of the 17 supported platforms. The extension
+                detects the active chat and parses the DOM.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h3>Click Export and Select JSON</h3>
+              <p>
+                Click the toolbar icon and choose JSON. The file downloads immediately as a
+                &lt;code&gt;.json&lt;/code&gt; file named after the conversation title.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="content-section">
+        <h2>Frequently Asked Questions</h2>
+        <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What does the JSON look like?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "The JSON has a top-level structure with schema_version, source, metadata, and messages fields. Each message has a role (user, assistant, system, tool, artifact, or unknown) and content in Markdown. The full schema definition is available at schemas/export-v1.schema.json in the GitHub repository."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I import into databases?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. The JSON is valid and well-structured for direct import into PostgreSQL (JSONB columns), MongoDB documents, Elasticsearch indices, or any data store that accepts JSON. The consistent schema means you can write a single import script that works for all platforms."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What metadata is included?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Each export includes the source platform, the source URL, the extension version, the conversation title, the AI model name (when available), the conversation ID, the export timestamp, and the timestamp of each individual message. This metadata enables filtering, sorting, and analytics."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is there a schema definition?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. The JSON Schema v1 definition is published in the GitHub repository at schemas/export-v1.schema.json. You can use this file with JSON Schema validators in any language to enforce structure and catch anomalies in your data pipeline."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How do I parse it in Python?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Use Python's built-in json module: import json; data = json.load(open(\"export.json\")). The data[\"messages\"] array contains all messages, each with a role and content field. You can filter by role, iterate over messages, or load the entire structure into a pandas DataFrame for analysis."
+                }
+              }
+            ]
+          }
+        </script>
+        <div class="faq">
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
+              What does the JSON look like?
+            </button>
+            <div class="faq-answer" role="region" aria-hidden="true">
+              The JSON has a top-level structure with schema_version, source, metadata, and messages
+              fields. Each message has a role (user, assistant, system, tool, artifact, or unknown)
+              and content in Markdown. The full schema definition is available at
+              schemas/export-v1.schema.json in the GitHub repository.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
+              Can I import into databases?
+            </button>
+            <div class="faq-answer" role="region" aria-hidden="true">
+              Yes. The JSON is valid and well-structured for direct import into PostgreSQL (JSONB
+              columns), MongoDB documents, Elasticsearch indices, or any data store that accepts
+              JSON. The consistent schema means you can write a single import script that works for
+              all platforms.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
+              What metadata is included?
+            </button>
+            <div class="faq-answer" role="region" aria-hidden="true">
+              Each export includes the source platform, the source URL, the extension version, the
+              conversation title, the AI model name (when available), the conversation ID, the
+              export timestamp, and the timestamp of each individual message. This metadata enables
+              filtering, sorting, and analytics.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
+              Is there a schema definition?
+            </button>
+            <div class="faq-answer" role="region" aria-hidden="true">
+              Yes. The JSON Schema v1 definition is published in the GitHub repository at
+              schemas/export-v1.schema.json. You can use this file with JSON Schema validators in
+              any language to enforce structure and catch anomalies in your data pipeline.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
+              How do I parse it in Python?
+            </button>
+            <div class="faq-answer" role="region" aria-hidden="true">
+              Use Python's built-in json module:
+              <code>import json; data = json.load(open("export.json"))</code>. The data["messages"]
+              array contains all messages, each with a role and content field. You can filter by
+              role, iterate over messages, or load the entire structure into a pandas DataFrame for
+              analysis.
+            </div>
+          </div>
+        </div>
+        <script>
+          document.querySelectorAll('.faq-item').forEach((item, i) => {
+            const btn = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            if (!btn || !answer) return;
+            const id = 'faq-' + (i + 1);
+            btn.id = 'q-' + id;
+            btn.setAttribute('aria-controls', id);
+            answer.id = id;
+            answer.setAttribute('aria-labelledby', 'q-' + id);
+            btn.addEventListener('click', () => {
+              const open = item.classList.toggle('open');
+              btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+              answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+            });
+          });
+        </script>
+      </section>
+      <section class="content-section">
+        <section class="related-pages">
+          <h2>Related Pages</h2>
+          <div class="related-grid">
+            <a href="/markdown-exporter.html" class="related-link"
+              ><h3>Markdown Export</h3>
+              <p>Export conversations to portable Markdown files for note-taking workflows.</p></a
+            ><a href="/ai-chat-backup.html" class="related-link"
+              ><h3>AI Chat Backup</h3>
+              <p>Build automated backup pipelines for your AI conversation archives.</p></a
+            >
+          </div>
+        </section>
+      </section>
+      <section class="content-section">
+        <div class="callout callout-success">
+          <p><strong>Ready to export your AI chats to JSON?</strong></p>
+          <div class="cta-group compact">
+            <a
+              href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Add to Chrome</a
+            ><a
+              href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/"
+              class="btn btn-secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Add to Firefox</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-links">
+        <a href="/privacy.html">Privacy Policy</a
+        ><span class="footer-sep" aria-hidden="true">|</span
+        ><a href="/license.html">License (MPL 2.0)</a
+        ><span class="footer-sep" aria-hidden="true">|</span
+        ><a href="/feedback.html">Feedback &amp; Issues</a
+        ><span class="footer-sep" aria-hidden="true">|</span
+        ><a
+          href="https://github.com/Covai-Labs/ai-chat-exporter"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub Repository</a
+        >
+      </div>
+      <p>&copy; 2026 AI Chat Exporter. Released under the Mozilla Public License 2.0.</p>
+    </footer>
+  </body>
+</html>

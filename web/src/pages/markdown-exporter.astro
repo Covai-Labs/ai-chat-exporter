@@ -15,6 +15,7 @@ const meta = {
     'Export conversations from any AI platform to clean, portable Markdown files in one click. Code blocks, math, tables, and thinking traces all preserved.',
 };
 ---
+
 <GuideLayout
   title={meta.title}
   description={meta.description}
@@ -28,27 +29,46 @@ const meta = {
     <div class="features-grid">
       <div class="feature-card">
         <h3>Code Blocks Preserved</h3>
-        <p>Fenced code blocks with language tags stay intact. Syntax-highlighted snippets copy exactly as they appeared in the AI response, ready for pasting into your editor.</p>
+        <p>
+          Fenced code blocks with language tags stay intact. Syntax-highlighted snippets copy
+          exactly as they appeared in the AI response, ready for pasting into your editor.
+        </p>
       </div>
       <div class="feature-card">
         <h3>LaTeX Math Rendering</h3>
-        <p>Both inline ($...$) and display ($$...$$) LaTeX notation are exported verbatim. Paste into Obsidian, Typora, or any MathJax-compatible renderer and the math just works.</p>
+        <p>
+          Both inline ($...$) and display ($$...$$) LaTeX notation are exported verbatim. Paste into
+          Obsidian, Typora, or any MathJax-compatible renderer and the math just works.
+        </p>
       </div>
       <div class="feature-card">
         <h3>Tables and Lists</h3>
-        <p>Markdown tables, ordered lists, unordered lists, and nested structures all come through with their original formatting. No more re-creating tables by hand.</p>
+        <p>
+          Markdown tables, ordered lists, unordered lists, and nested structures all come through
+          with their original formatting. No more re-creating tables by hand.
+        </p>
       </div>
       <div class="feature-card">
         <h3>Thinking Blocks</h3>
-        <p>Claude extended thinking, DeepSeek reasoning traces, and other chain-of-thought blocks are captured inside collapsible details elements so you can review the AI's process.</p>
+        <p>
+          Claude extended thinking, DeepSeek reasoning traces, and other chain-of-thought blocks are
+          captured inside collapsible details elements so you can review the AI's process.
+        </p>
       </div>
       <div class="feature-card">
         <h3>Images and Links</h3>
-        <p>Image URLs and hyperlinks are preserved as Markdown image and link syntax. External references remain clickable and inline images render wherever Markdown is supported.</p>
+        <p>
+          Image URLs and hyperlinks are preserved as Markdown image and link syntax. External
+          references remain clickable and inline images render wherever Markdown is supported.
+        </p>
       </div>
       <div class="feature-card">
         <h3>100% Local</h3>
-        <p>Export runs entirely in your browser. Nothing is sent to any server. Your conversations never leave your machine \u2014 the extension parses the DOM and generates the file locally.</p>
+        <p>
+          Export runs entirely in your browser. Nothing is sent to any server. Your conversations
+          never leave your machine \u2014 the extension parses the DOM and generates the file
+          locally.
+        </p>
       </div>
     </div>
   </section>
@@ -56,31 +76,111 @@ const meta = {
   <!-- Why Markdown -->
   <section class="content-section">
     <h2>Why Markdown Is the Universal Format for AI Chat Exports</h2>
-    <p>When you select and copy text from an AI chat interface, you lose all structure. Code blocks become plain text, tables collapse into spaces, math vanishes, and images disappear. Markdown solves this because it is both human-readable and machine-parseable.</p>
-    <p>Markdown is supported natively by thousands of tools \u2014 note-taking apps, documentation generators, static site hosts, wikis, and databases. A Markdown file from AI Chat Exporter works today in Obsidian, Notion, Logseq, Bear, Joplin, GitBook, Docusaurus, Hugo, Jekyll, and virtually any text editor.</p>
-    <p>Because the format is plain text, your exports are future-proof. They will open in any editor fifty years from now without proprietary software. This is the single biggest advantage over PDF or Word exports, which require specific applications to view and edit.</p>
+    <p>
+      When you select and copy text from an AI chat interface, you lose all structure. Code blocks
+      become plain text, tables collapse into spaces, math vanishes, and images disappear. Markdown
+      solves this because it is both human-readable and machine-parseable.
+    </p>
+    <p>
+      Markdown is supported natively by thousands of tools \u2014 note-taking apps, documentation
+      generators, static site hosts, wikis, and databases. A Markdown file from AI Chat Exporter
+      works today in Obsidian, Notion, Logseq, Bear, Joplin, GitBook, Docusaurus, Hugo, Jekyll, and
+      virtually any text editor.
+    </p>
+    <p>
+      Because the format is plain text, your exports are future-proof. They will open in any editor
+      fifty years from now without proprietary software. This is the single biggest advantage over
+      PDF or Word exports, which require specific applications to view and edit.
+    </p>
   </section>
 
   <!-- What Gets Preserved -->
   <section class="content-section">
     <h2>What Gets Preserved in a Markdown Export</h2>
-    <p>The extension does a deep traversal of the AI chat DOM and reconstructs the conversation structure in Markdown. Here is what comes through:</p>
+    <p>
+      The extension does a deep traversal of the AI chat DOM and reconstructs the conversation
+      structure in Markdown. Here is what comes through:
+    </p>
     <div class="table-wrapper">
       <table>
         <thead>
-          <tr><th>Element</th><th>How It Is Exported</th><th>Example</th></tr>
+          <tr>
+            <th>Element</th>
+            <th>How It Is Exported</th>
+            <th>Example</th>
+          </tr>
         </thead>
         <tbody>
-          <tr><td>Code blocks</td><td>Fenced with triple backticks and language tag</td><td><code>```python ... ```</code></td></tr>
-          <tr><td>Inline code</td><td>Single backtick wrapping</td><td><code>`variable`</code></td></tr>
-          <tr><td>LaTeX (display)</td><td>Double dollar signs</td><td><code>$$E = mc^2$$</code></td></tr>
-          <tr><td>LaTeX (inline)</td><td>Single dollar signs</td><td><code>$x^2$</code></td></tr>
-          <tr><td>Tables</td><td>Standard Markdown pipe tables</td><td><code>| Col | Col |</code></td></tr>
-          <tr><td>Ordered lists</td><td>Numbered Markdown lists</td><td><code>1. First</code></td></tr>
-          <tr><td>Unordered lists</td><td>Bullet-point Markdown lists</td><td><code>- Item</code></td></tr>
-          <tr><td>Links</td><td>Inline Markdown links</td><td><code>[text](url)</code></td></tr>
-          <tr><td>Images</td><td>Markdown image syntax</td><td><code>![alt](url)</code></td></tr>
-          <tr><td>Thinking traces</td><td>Collapse block with details/summary</td><td><code>&lt;details&gt;</code></td></tr>
+          <tr>
+            <td>Code blocks</td>
+            <td>Fenced with triple backticks and language tag</td>
+            <td>
+              <code>```python ... ```</code>
+            </td>
+          </tr>
+          <tr>
+            <td>Inline code</td>
+            <td>Single backtick wrapping</td>
+            <td>
+              <code>`variable`</code>
+            </td>
+          </tr>
+          <tr>
+            <td>LaTeX (display)</td>
+            <td>Double dollar signs</td>
+            <td>
+              <code>$$E = mc^2$$</code>
+            </td>
+          </tr>
+          <tr>
+            <td>LaTeX (inline)</td>
+            <td>Single dollar signs</td>
+            <td>
+              <code>$x^2$</code>
+            </td>
+          </tr>
+          <tr>
+            <td>Tables</td>
+            <td>Standard Markdown pipe tables</td>
+            <td>
+              <code>| Col | Col |</code>
+            </td>
+          </tr>
+          <tr>
+            <td>Ordered lists</td>
+            <td>Numbered Markdown lists</td>
+            <td>
+              <code>1. First</code>
+            </td>
+          </tr>
+          <tr>
+            <td>Unordered lists</td>
+            <td>Bullet-point Markdown lists</td>
+            <td>
+              <code>- Item</code>
+            </td>
+          </tr>
+          <tr>
+            <td>Links</td>
+            <td>Inline Markdown links</td>
+            <td>
+              <code>[text](url)</code>
+            </td>
+          </tr>
+          <tr>
+            <td>Images</td>
+            <td>Markdown image syntax</td>
+            <td>
+              <code>![alt](url)</code>
+            </td>
+          </tr>
+          <tr>
+            <td>Thinking traces</td>
+            <td>Collapse block with details/summary</td>
+            <td>
+              <code>&lt;details&gt;</code>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -89,30 +189,105 @@ const meta = {
   <!-- Supported Platforms -->
   <section class="content-section">
     <h2>Supported Platforms</h2>
-    <p>AI Chat Exporter works with 17 AI platforms and counting. Every platform produces clean Markdown output from the same one-click workflow.</p>
+    <p>
+      AI Chat Exporter works with 17 AI platforms and counting. Every platform produces clean
+      Markdown output from the same one-click workflow.
+    </p>
     <div class="table-wrapper">
       <table>
         <thead>
-          <tr><th>Platform</th><th>Markdown Support</th><th>Thinking Traces</th></tr>
+          <tr>
+            <th>Platform</th>
+            <th>Markdown Support</th>
+            <th>Thinking Traces</th>
+          </tr>
         </thead>
         <tbody>
-          <tr><td>ChatGPT</td><td>Full</td><td>Yes</td></tr>
-          <tr><td>Claude</td><td>Full</td><td>Yes</td></tr>
-          <tr><td>Gemini</td><td>Full</td><td>Yes</td></tr>
-          <tr><td>DeepSeek</td><td>Full</td><td>Yes</td></tr>
-          <tr><td>Perplexity</td><td>Full</td><td>No</td></tr>
-          <tr><td>Copilot</td><td>Full</td><td>No</td></tr>
-          <tr><td>Qwen</td><td>Full</td><td>No</td></tr>
-          <tr><td>Mistral</td><td>Full</td><td>No</td></tr>
-          <tr><td>Meta AI</td><td>Full</td><td>No</td></tr>
-          <tr><td>NotebookLM</td><td>Full</td><td>No</td></tr>
-          <tr><td>Google AI Studio</td><td>Full</td><td>No</td></tr>
-          <tr><td>Google Cloud Assist</td><td>Full</td><td>No</td></tr>
-          <tr><td>Google Search AI</td><td>Full</td><td>No</td></tr>
-          <tr><td>Z.AI</td><td>Full</td><td>No</td></tr>
-          <tr><td>Proton Lumo</td><td>Full</td><td>No</td></tr>
-          <tr><td>Joyland</td><td>Full</td><td>No</td></tr>
-          <tr><td>Chub</td><td>Full</td><td>No</td></tr>
+          <tr>
+            <td>ChatGPT</td>
+            <td>Full</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Claude</td>
+            <td>Full</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Gemini</td>
+            <td>Full</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>DeepSeek</td>
+            <td>Full</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Perplexity</td>
+            <td>Full</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Copilot</td>
+            <td>Full</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Qwen</td>
+            <td>Full</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Mistral</td>
+            <td>Full</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Meta AI</td>
+            <td>Full</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>NotebookLM</td>
+            <td>Full</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Google AI Studio</td>
+            <td>Full</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Google Cloud Assist</td>
+            <td>Full</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Google Search AI</td>
+            <td>Full</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Z.AI</td>
+            <td>Full</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Proton Lumo</td>
+            <td>Full</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Joyland</td>
+            <td>Full</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Chub</td>
+            <td>Full</td>
+            <td>No</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -121,32 +296,93 @@ const meta = {
   <!-- Real-World Use Cases -->
   <section class="content-section">
     <h2>Real-World Use Cases</h2>
-    <p>Markdown export is the most versatile output format because it plugs into almost every knowledge-management and documentation workflow.</p>
-    <p><strong>Obsidian and Personal Knowledge Management</strong> \u2014 Drop exported files into your Obsidian vault and they are immediately searchable, linkable, and part of your graph. Use wikilinks to connect conversations to your other notes.</p>
-    <p><strong>Notion Import</strong> \u2014 Notion accepts Markdown natively via paste or file import. Each export becomes a full page in your workspace with code blocks, headings, and tables intact.</p>
-    <p><strong>GitHub Gists and Repos</strong> \u2014 Share code snippets from AI conversations by pasting the Markdown directly into a gist or repository README. Code fences render automatically on GitHub.</p>
-    <p><strong>Documentation</strong> \u2014 Teams using Docusaurus, MkDocs, Hugo, or Jekyll can drop AI conversation exports into their docs site. The Markdown renders with syntax highlighting and math support out of the box.</p>
-    <p><strong>Research Notes</strong> \u2014 Academics and researchers archive AI-assisted brainstorming sessions as Markdown files, preserving the mathematical notation and structured reasoning for later review.</p>
+    <p>
+      Markdown export is the most versatile output format because it plugs into almost every
+      knowledge-management and documentation workflow.
+    </p>
+    <p>
+      <strong>Obsidian and Personal Knowledge Management</strong> \u2014 Drop exported files into
+      your Obsidian vault and they are immediately searchable, linkable, and part of your graph. Use
+      wikilinks to connect conversations to your other notes.
+    </p>
+    <p>
+      <strong>Notion Import</strong> \u2014 Notion accepts Markdown natively via paste or file
+      import. Each export becomes a full page in your workspace with code blocks, headings, and
+      tables intact.
+    </p>
+    <p>
+      <strong>GitHub Gists and Repos</strong> \u2014 Share code snippets from AI conversations by
+      pasting the Markdown directly into a gist or repository README. Code fences render
+      automatically on GitHub.
+    </p>
+    <p>
+      <strong>Documentation</strong> \u2014 Teams using Docusaurus, MkDocs, Hugo, or Jekyll can drop
+      AI conversation exports into their docs site. The Markdown renders with syntax highlighting
+      and math support out of the box.
+    </p>
+    <p>
+      <strong>Research Notes</strong> \u2014 Academics and researchers archive AI-assisted
+      brainstorming sessions as Markdown files, preserving the mathematical notation and structured
+      reasoning for later review.
+    </p>
   </section>
 
   <!-- Markdown vs Plain Text Copy -->
   <section class="content-section">
     <h2>Markdown vs. Plain Text Copy</h2>
-    <p>When you select all text in a ChatGPT response and paste it elsewhere, here is what you lose:</p>
+    <p>
+      When you select all text in a ChatGPT response and paste it elsewhere, here is what you lose:
+    </p>
     <div class="table-wrapper">
       <table>
         <thead>
-          <tr><th>What You Lose</th><th>Plain Text Copy</th><th>AI Chat Exporter Markdown</th></tr>
+          <tr>
+            <th>What You Lose</th>
+            <th>Plain Text Copy</th>
+            <th>AI Chat Exporter Markdown</th>
+          </tr>
         </thead>
         <tbody>
-          <tr><td>Code language tags</td><td>Lost</td><td>Preserved</td></tr>
-          <tr><td>Table structure</td><td>Collapsed to spaces</td><td>Full pipe-table syntax</td></tr>
-          <tr><td>Math notation</td><td>Rendered as images or lost</td><td>Raw LaTeX preserved</td></tr>
-          <tr><td>Heading hierarchy</td><td>Flattened</td><td>H1 through H6</td></tr>
-          <tr><td>Image URLs</td><td>Lost</td><td>Markdown image syntax</td></tr>
-          <tr><td>Nested lists</td><td>Collapsed</td><td>Proper indentation</td></tr>
-          <tr><td>Thinking traces</td><td>Lost</td><td>Captured in details blocks</td></tr>
-          <tr><td>Metadata (model, date)</td><td>Lost</td><td>Emitted as Source, Date, and Model fields</td></tr>
+          <tr>
+            <td>Code language tags</td>
+            <td>Lost</td>
+            <td>Preserved</td>
+          </tr>
+          <tr>
+            <td>Table structure</td>
+            <td>Collapsed to spaces</td>
+            <td>Full pipe-table syntax</td>
+          </tr>
+          <tr>
+            <td>Math notation</td>
+            <td>Rendered as images or lost</td>
+            <td>Raw LaTeX preserved</td>
+          </tr>
+          <tr>
+            <td>Heading hierarchy</td>
+            <td>Flattened</td>
+            <td>H1 through H6</td>
+          </tr>
+          <tr>
+            <td>Image URLs</td>
+            <td>Lost</td>
+            <td>Markdown image syntax</td>
+          </tr>
+          <tr>
+            <td>Nested lists</td>
+            <td>Collapsed</td>
+            <td>Proper indentation</td>
+          </tr>
+          <tr>
+            <td>Thinking traces</td>
+            <td>Lost</td>
+            <td>Captured in details blocks</td>
+          </tr>
+          <tr>
+            <td>Metadata (model, date)</td>
+            <td>Lost</td>
+            <td>Emitted as Source, Date, and Model fields</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -196,7 +432,7 @@ const meta = {
         },
         {
           q: 'How do I import into Notion?',
-          a: 'Open Notion, create a new page or navigate to an existing one, and paste the Markdown content directly. Notion automatically detects Markdown formatting and converts it to native Notion blocks. Alternatively, use Notion\'s import feature to upload the .md file.',
+          a: "Open Notion, create a new page or navigate to an existing one, and paste the Markdown content directly. Notion automatically detects Markdown formatting and converts it to native Notion blocks. Alternatively, use Notion's import feature to upload the .md file.",
         },
         {
           q: 'Is it free?',

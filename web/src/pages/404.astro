@@ -6,6 +6,7 @@ const meta = {
   description: "This will-o'-the-wisp has wandered off with the page. Covai Labs 404 Page.",
 };
 ---
+
 <BaseLayout title={meta.title} description={meta.description} noindex canonicalPath="/404.html">
   <div class="nf-wrap">
     <header class="nf-header">
@@ -25,7 +26,14 @@ const meta = {
 
     <main class="nf-main">
       <div class="ghost-glow">
-        <svg class="ghost" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <svg
+          class="ghost"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -44,7 +52,9 @@ const meta = {
         <button type="button" class="nf-btn nf-btn-ghost" data-go-back>
           ← Go Back
         </button>
-        <a href="/index.html" class="nf-btn nf-btn-primary">Return Home</a>
+        <a href="/index.html" class="nf-btn nf-btn-primary">
+          Return Home
+        </a>
       </div>
 
       <div class="nf-links">

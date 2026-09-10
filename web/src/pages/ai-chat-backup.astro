@@ -15,6 +15,7 @@ const meta = {
     'Back up conversations from ChatGPT, Claude, Gemini and 14 other AI platforms. Structured Markdown, JSON, or PDF. Everything stays on your machine.',
 };
 ---
+
 <GuideLayout
   title={meta.title}
   description={meta.description}
@@ -27,9 +28,9 @@ const meta = {
   <section class="content-section">
     <h2>Why Backup AI Conversations?</h2>
     <p>
-      You use AI platforms every day for work, study, and creative projects. You generate code, draft
-      documents, research topics, brainstorm ideas, and solve problems in conversations that span
-      hours or days. But none of these conversations are truly yours.
+      You use AI platforms every day for work, study, and creative projects. You generate code,
+      draft documents, research topics, brainstorm ideas, and solve problems in conversations that
+      span hours or days. But none of these conversations are truly yours.
     </p>
     <p>
       AI platforms store your data on their servers, and you have limited control over what happens
@@ -60,37 +61,49 @@ const meta = {
         </thead>
         <tbody>
           <tr>
-            <td><strong>ChatGPT</strong></td>
+            <td>
+              <strong>ChatGPT</strong>
+            </td>
             <td>Settings &gt; Data Export (all conversations)</td>
             <td>Raw JSON archive, URLs expire</td>
             <td>Nearly unusable without scripting</td>
           </tr>
           <tr>
-            <td><strong>Claude</strong></td>
+            <td>
+              <strong>Claude</strong>
+            </td>
             <td>Limited export feature</td>
             <td>Basic JSON</td>
             <td>No formatting, no Artifacts</td>
           </tr>
           <tr>
-            <td><strong>Gemini</strong></td>
+            <td>
+              <strong>Gemini</strong>
+            </td>
             <td>Google Takeout</td>
             <td>JSON with nested structure</td>
             <td>Requires Google account data request</td>
           </tr>
           <tr>
-            <td><strong>DeepSeek</strong></td>
+            <td>
+              <strong>DeepSeek</strong>
+            </td>
             <td>None</td>
             <td>N/A</td>
             <td>N/A</td>
           </tr>
           <tr>
-            <td><strong>Perplexity</strong></td>
+            <td>
+              <strong>Perplexity</strong>
+            </td>
             <td>None</td>
             <td>N/A</td>
             <td>N/A</td>
           </tr>
           <tr>
-            <td><strong>Most Others</strong></td>
+            <td>
+              <strong>Most Others</strong>
+            </td>
             <td>None</td>
             <td>N/A</td>
             <td>N/A</td>
@@ -117,9 +130,9 @@ const meta = {
         <h3>Markdown (.md)</h3>
         <p>
           <strong>Best for:</strong> Human-readable archives, Obsidian vaults, searchable backup
-          folders. Markdown is lightweight, universal, and works with virtually every text editor and
-          knowledge management tool. Code blocks preserve syntax, tables stay structured, and math
-          equations render in compatible editors.
+          folders. Markdown is lightweight, universal, and works with virtually every text editor
+          and knowledge management tool. Code blocks preserve syntax, tables stay structured, and
+          math equations render in compatible editors.
         </p>
       </div>
       <div class="feature-card">
@@ -190,47 +203,63 @@ const meta = {
         </thead>
         <tbody>
           <tr>
-            <td><code>source</code></td>
+            <td>
+              <code>source</code>
+            </td>
             <td>string</td>
             <td>Platform name (e.g., "ChatGPT", "Claude")</td>
           </tr>
           <tr>
-            <td><code>title</code></td>
+            <td>
+              <code>title</code>
+            </td>
             <td>string</td>
             <td>Conversation title as shown on the platform</td>
           </tr>
           <tr>
-            <td><code>exportDate</code></td>
+            <td>
+              <code>exportDate</code>
+            </td>
             <td>ISO 8601</td>
             <td>Timestamp of the export operation</td>
           </tr>
           <tr>
-            <td><code>messages</code></td>
+            <td>
+              <code>messages</code>
+            </td>
             <td>array</td>
             <td>Array of message objects with role, content, and optional metadata</td>
           </tr>
           <tr>
-            <td><code>messages[].role</code></td>
+            <td>
+              <code>messages[].role</code>
+            </td>
             <td>string</td>
             <td>"user" or "assistant" (or "system" where applicable)</td>
           </tr>
           <tr>
-            <td><code>messages[].content</code></td>
+            <td>
+              <code>messages[].content</code>
+            </td>
             <td>string</td>
             <td>Message text content with Markdown formatting</td>
           </tr>
           <tr>
-            <td><code>messages[].timestamp</code></td>
+            <td>
+              <code>messages[].timestamp</code>
+            </td>
             <td>ISO 8601</td>
             <td>Message timestamp (when the platform provides it)</td>
           </tr>
           <tr>
-            <td><code>metadata</code></td>
+            <td>
+              <code>metadata</code>
+            </td>
             <td>object</td>
-            <td
-              >Platform-specific metadata preserved from the parser (model name, reasoning type, etc.
-              where available)</td
-            >
+            <td>
+              Platform-specific metadata preserved from the parser (model name, reasoning type, etc.
+              where available)
+            </td>
           </tr>
         </tbody>
       </table>
@@ -259,32 +288,44 @@ const meta = {
         </thead>
         <tbody>
           <tr>
-            <td><code>{'{platform}'}</code></td>
+            <td>
+              <code>{'{platform}'}</code>
+            </td>
             <td>AI platform name</td>
             <td>ChatGPT</td>
           </tr>
           <tr>
-            <td><code>{'{title}'}</code></td>
+            <td>
+              <code>{'{title}'}</code>
+            </td>
             <td>Conversation title (sanitized)</td>
             <td>React Hooks Debugging</td>
           </tr>
           <tr>
-            <td><code>{'{datetime}'}</code></td>
+            <td>
+              <code>{'{datetime}'}</code>
+            </td>
             <td>Export timestamp</td>
             <td>2026-09-08_14-30</td>
           </tr>
           <tr>
-            <td><code>{'{date}'}</code></td>
+            <td>
+              <code>{'{date}'}</code>
+            </td>
             <td>Date only</td>
             <td>2026-09-08</td>
           </tr>
           <tr>
-            <td><code>{'{time}'}</code></td>
+            <td>
+              <code>{'{time}'}</code>
+            </td>
             <td>Time only</td>
             <td>14-30</td>
           </tr>
           <tr>
-            <td><code>{'{timestamp}'}</code></td>
+            <td>
+              <code>{'{timestamp}'}</code>
+            </td>
             <td>Date + time</td>
             <td>2026-09-08_14-30</td>
           </tr>
@@ -294,7 +335,8 @@ const meta = {
     <p>
       Since filename separators like <code>/</code> are stripped for filesystem safety, all exports
       land as flat files. Use the <code>{'{platform} - {title} - {datetime}'}</code> template to
-      produce unique, sortable filenames that make it easy to browse and find specific conversations.
+      produce unique, sortable filenames that make it easy to browse and find specific
+      conversations.
     </p>
   </section>
 
@@ -367,15 +409,15 @@ const meta = {
         },
         {
           q: 'Can I automate backups?',
-          a: 'AI Chat Exporter is a browser extension and requires user interaction to initiate exports. There is no built-in scheduled backup feature. However, you can combine the extension with your operating system\'s file sync tools (Syncthing, iCloud, Google Drive) to automatically sync exported files to other devices once they are saved locally. The extension also supports keyboard shortcuts for faster manual exports.',
+          a: "AI Chat Exporter is a browser extension and requires user interaction to initiate exports. There is no built-in scheduled backup feature. However, you can combine the extension with your operating system's file sync tools (Syncthing, iCloud, Google Drive) to automatically sync exported files to other devices once they are saved locally. The extension also supports keyboard shortcuts for faster manual exports.",
         },
         {
           q: 'How do I restore from a backup?',
-          a: 'Markdown backups can be opened in any text editor, Obsidian, or knowledge management tool. JSON backups can be read by scripts or imported into databases. PDF backups can be opened in any PDF reader. To continue a conversation on an AI platform, use the cross-AI transfer feature to send the conversation content to the platform\'s chat input. AI Chat Exporter cannot directly import files back into platform-specific conversation formats.',
+          a: "Markdown backups can be opened in any text editor, Obsidian, or knowledge management tool. JSON backups can be read by scripts or imported into databases. PDF backups can be opened in any PDF reader. To continue a conversation on an AI platform, use the cross-AI transfer feature to send the conversation content to the platform's chat input. AI Chat Exporter cannot directly import files back into platform-specific conversation formats.",
         },
         {
           q: 'Is my data sent to any server during export?',
-          a: 'No. All processing happens locally within your browser extension. The extension reads the conversation from the page DOM, formats it, and saves the file directly to your filesystem. No data is transmitted to any external server, including our own. The extension\'s source code is open and auditable on GitHub.',
+          a: "No. All processing happens locally within your browser extension. The extension reads the conversation from the page DOM, formats it, and saves the file directly to your filesystem. No data is transmitted to any external server, including our own. The extension's source code is open and auditable on GitHub.",
         },
         {
           q: 'How large are the backup files?',

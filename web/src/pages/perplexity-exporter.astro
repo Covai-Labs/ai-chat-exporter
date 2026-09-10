@@ -15,6 +15,7 @@ const meta = {
     'Export Perplexity AI conversations with sources, citations, and search results intact. Save research threads as Markdown, JSON, HTML, PDF, Word, or PNG.',
 };
 ---
+
 <GuideLayout
   title={meta.title}
   description={meta.description}
@@ -26,30 +27,57 @@ const meta = {
   <!-- Why Perplexity Conversations Need Special Handling -->
   <section class="content-section">
     <h2>Why Perplexity Conversations Need Special Handling</h2>
-    <p>Perplexity AI is fundamentally different from other chatbots. Every answer includes inline citations that reference specific web sources. These citations are what make Perplexity useful for research, but they are also the first thing lost when you try to save a conversation manually. Copying and pasting a Perplexity answer gives you the text, but the superscript citation numbers become orphaned and the linked source URLs disappear entirely.</p>
-    <p>Researchers, journalists, students, and professionals use Perplexity daily for literature reviews, fact-checking, market research, and technical documentation. These users need the full context of where information came from, not just the synthesized answer. Losing citations means losing the ability to verify claims or follow up on sources.</p>
+    <p>
+      Perplexity AI is fundamentally different from other chatbots. Every answer includes inline
+      citations that reference specific web sources. These citations are what make Perplexity useful
+      for research, but they are also the first thing lost when you try to save a conversation
+      manually. Copying and pasting a Perplexity answer gives you the text, but the superscript
+      citation numbers become orphaned and the linked source URLs disappear entirely.
+    </p>
+    <p>
+      Researchers, journalists, students, and professionals use Perplexity daily for literature
+      reviews, fact-checking, market research, and technical documentation. These users need the
+      full context of where information came from, not just the synthesized answer. Losing citations
+      means losing the ability to verify claims or follow up on sources.
+    </p>
   </section>
 
   <!-- How the Parser Preserves Citations -->
   <section class="content-section">
     <h2>How the Parser Preserves Citations</h2>
-    <p>AI Chat Exporter's Perplexity parser understands the specific DOM structure that Perplexity uses to render citations. Rather than scraping raw text, the parser walks the DOM tree and extracts each citation as a structured element.</p>
+    <p>
+      AI Chat Exporter's Perplexity parser understands the specific DOM structure that Perplexity
+      uses to render citations. Rather than scraping raw text, the parser walks the DOM tree and
+      extracts each citation as a structured element.
+    </p>
     <div class="features-grid">
       <div class="feature-card">
         <h3>Inline Citation Links</h3>
-        <p>Citation numbers in the text are converted to clickable hyperlinks in HTML and Markdown exports. Each link points to the original source URL that Perplexity referenced.</p>
+        <p>
+          Citation numbers in the text are converted to clickable hyperlinks in HTML and Markdown
+          exports. Each link points to the original source URL that Perplexity referenced.
+        </p>
       </div>
       <div class="feature-card">
         <h3>Source Blocks</h3>
-        <p>The source panels that Perplexity displays alongside answers are captured as a structured list at the end of each response. Titles, URLs, and domain names are preserved.</p>
+        <p>
+          The source panels that Perplexity displays alongside answers are captured as a structured
+          list at the end of each response. Titles, URLs, and domain names are preserved.
+        </p>
       </div>
       <div class="feature-card">
         <h3>Search Queries</h3>
-        <p>Perplexity's internal search queries and the number of sources consulted are captured when visible in the UI, giving you a record of the research methodology.</p>
+        <p>
+          Perplexity's internal search queries and the number of sources consulted are captured when
+          visible in the UI, giving you a record of the research methodology.
+        </p>
       </div>
       <div class="feature-card">
         <h3>Thread Structure</h3>
-        <p>Multi-turn follow-up questions maintain their context. Each exchange is labeled with the question you asked and the full answer with all citations intact.</p>
+        <p>
+          Multi-turn follow-up questions maintain their context. Each exchange is labeled with the
+          question you asked and the full answer with all citations intact.
+        </p>
       </div>
     </div>
   </section>
@@ -57,13 +85,31 @@ const meta = {
   <!-- Use Cases for Perplexity Export -->
   <section class="content-section">
     <h2>Use Cases for Perplexity Export</h2>
-    <p>Exporting Perplexity conversations serves several practical purposes beyond simple backup.</p>
+    <p>
+      Exporting Perplexity conversations serves several practical purposes beyond simple backup.
+    </p>
     <ul>
-      <li><strong>Research documentation:</strong> Keep a permanent record of research threads with all source URLs preserved. Useful for academic papers, reports, and internal documentation.</li>
-      <li><strong>Academic reference:</strong> Students and researchers can archive literature reviews and fact-finding sessions with full citation trails for later verification.</li>
-      <li><strong>Source sharing:</strong> Send a well-researched Perplexity conversation to colleagues as a Markdown or PDF file with all sources clickable and verifiable.</li>
-      <li><strong>Audit trail:</strong> Document the sources that informed a decision or recommendation. Useful for compliance-sensitive industries where you need to show where information came from.</li>
-      <li><strong>Offline access:</strong> Save research threads before Perplexity's free tier limits or conversation cleanup removes them.</li>
+      <li>
+        <strong>Research documentation:</strong> Keep a permanent record of research threads with
+        all source URLs preserved. Useful for academic papers, reports, and internal documentation.
+      </li>
+      <li>
+        <strong>Academic reference:</strong> Students and researchers can archive literature reviews
+        and fact-finding sessions with full citation trails for later verification.
+      </li>
+      <li>
+        <strong>Source sharing:</strong> Send a well-researched Perplexity conversation to
+        colleagues as a Markdown or PDF file with all sources clickable and verifiable.
+      </li>
+      <li>
+        <strong>Audit trail:</strong> Document the sources that informed a decision or
+        recommendation. Useful for compliance-sensitive industries where you need to show where
+        information came from.
+      </li>
+      <li>
+        <strong>Offline access:</strong> Save research threads before Perplexity's free tier limits
+        or conversation cleanup removes them.
+      </li>
     </ul>
   </section>
 
@@ -81,32 +127,44 @@ const meta = {
         </thead>
         <tbody>
           <tr>
-            <td><strong>Markdown</strong></td>
+            <td>
+              <strong>Markdown</strong>
+            </td>
             <td>Inline links with source list</td>
             <td>Note-taking, Obsidian, documentation</td>
           </tr>
           <tr>
-            <td><strong>JSON</strong></td>
+            <td>
+              <strong>JSON</strong>
+            </td>
             <td>Structured citation objects with URLs</td>
             <td>Data processing, API integration</td>
           </tr>
           <tr>
-            <td><strong>HTML</strong></td>
+            <td>
+              <strong>HTML</strong>
+            </td>
             <td>Clickable superscript links</td>
             <td>Web archives, readable backups</td>
           </tr>
           <tr>
-            <td><strong>PDF</strong></td>
+            <td>
+              <strong>PDF</strong>
+            </td>
             <td>Numbered references with URLs</td>
             <td>Printed records, formal reports</td>
           </tr>
           <tr>
-            <td><strong>Word (.doc)</strong></td>
+            <td>
+              <strong>Word (.doc)</strong>
+            </td>
             <td>Hyperlinked footnotes</td>
             <td>Collaboration, editing</td>
           </tr>
           <tr>
-            <td><strong>PNG Image</strong></td>
+            <td>
+              <strong>PNG Image</strong>
+            </td>
             <td>Rendered as visual</td>
             <td>Social sharing, screenshots</td>
           </tr>
@@ -143,7 +201,9 @@ const meta = {
   <!-- Tip Callout -->
   <section class="content-section">
     <Callout tone="success" title="Tip">
-      For the cleanest Markdown output, export right after Perplexity finishes loading all source panels. If the sources panel is still loading when you export, some citations may be incomplete.
+      For the cleanest Markdown output, export right after Perplexity finishes loading all source
+      panels. If the sources panel is still loading when you export, some citations may be
+      incomplete.
     </Callout>
   </section>
 

@@ -15,6 +15,7 @@ const meta = {
     'Export DeepSeek conversations with reasoning blocks, code, and formatting intact. Choose from seven output formats. Everything runs locally in your browser.',
 };
 ---
+
 <GuideLayout
   title={meta.title}
   description={meta.description}
@@ -26,30 +27,60 @@ const meta = {
   <!-- Why Export DeepSeek Conversations -->
   <section class="content-section">
     <h2>Why Export DeepSeek Conversations</h2>
-    <p>DeepSeek does not offer a built-in export feature for conversations. Once you close a chat or clear your history, the content is gone. Researchers, developers, and prompt engineers use DeepSeek daily for complex reasoning tasks, code generation, and multi-turn analysis. Losing those conversations means losing work.</p>
-    <p>DeepSeek is also distinct from other AI platforms because of its reasoning model. DeepSeek-R1 produces visible thinking blocks that show the model's step-by-step reasoning process. These blocks are valuable for understanding how the model arrived at an answer, debugging chain-of-thought prompts, and documenting research methodology. Most generic chat exporters strip or mangle these blocks entirely.</p>
+    <p>
+      DeepSeek does not offer a built-in export feature for conversations. Once you close a chat or
+      clear your history, the content is gone. Researchers, developers, and prompt engineers use
+      DeepSeek daily for complex reasoning tasks, code generation, and multi-turn analysis. Losing
+      those conversations means losing work.
+    </p>
+    <p>
+      DeepSeek is also distinct from other AI platforms because of its reasoning model. DeepSeek-R1
+      produces visible thinking blocks that show the model's step-by-step reasoning process. These
+      blocks are valuable for understanding how the model arrived at an answer, debugging
+      chain-of-thought prompts, and documenting research methodology. Most generic chat exporters
+      strip or mangle these blocks entirely.
+    </p>
   </section>
 
   <!-- DeepSeek-Specific Parsing -->
   <section class="content-section">
     <h2>DeepSeek-Specific Parsing</h2>
-    <p>AI Chat Exporter includes a dedicated parser built specifically for DeepSeek's DOM structure. The parser understands the difference between regular assistant messages and the reasoning blocks that DeepSeek-R1 displays in its collapsible thinking sections.</p>
+    <p>
+      AI Chat Exporter includes a dedicated parser built specifically for DeepSeek's DOM structure.
+      The parser understands the difference between regular assistant messages and the reasoning
+      blocks that DeepSeek-R1 displays in its collapsible thinking sections.
+    </p>
     <div class="features-grid">
       <div class="feature-card">
         <h3>Thinking Block Extraction</h3>
-        <p>Reasoning blocks are extracted with clear labels and preserved in the output. In Markdown, they appear as blockquotes with a "Thinking" prefix. In JSON, they are tagged with a dedicated <code>type: "thinking"</code> field.</p>
+        <p>
+          Reasoning blocks are extracted with clear labels and preserved in the output. In Markdown,
+          they appear as blockquotes with a "Thinking" prefix. In JSON, they are tagged with a
+          dedicated <code>type: "thinking"</code> field.
+        </p>
       </div>
       <div class="feature-card">
         <h3>Code Block Preservation</h3>
-        <p>DeepSeek's code blocks retain their language tags and syntax structure. Exported code fences include the correct language identifier for syntax highlighting in editors and documentation tools.</p>
+        <p>
+          DeepSeek's code blocks retain their language tags and syntax structure. Exported code
+          fences include the correct language identifier for syntax highlighting in editors and
+          documentation tools.
+        </p>
       </div>
       <div class="feature-card">
         <h3>Multi-Turn Context</h3>
-        <p>Full conversation threads are captured in order, including user messages, assistant responses, and all thinking blocks. No messages are skipped regardless of conversation length.</p>
+        <p>
+          Full conversation threads are captured in order, including user messages, assistant
+          responses, and all thinking blocks. No messages are skipped regardless of conversation
+          length.
+        </p>
       </div>
       <div class="feature-card">
         <h3>Math Rendering</h3>
-        <p>LaTeX expressions embedded in DeepSeek responses are preserved as-is, making exported files compatible with tools that render math notation like Obsidian, Jupyter, or Overleaf.</p>
+        <p>
+          LaTeX expressions embedded in DeepSeek responses are preserved as-is, making exported
+          files compatible with tools that render math notation like Obsidian, Jupyter, or Overleaf.
+        </p>
       </div>
     </div>
   </section>
@@ -57,7 +88,10 @@ const meta = {
   <!-- Seven Export Formats -->
   <section class="content-section">
     <h2>Seven Export Formats</h2>
-    <p>Every DeepSeek conversation can be exported in any of the following formats. Choose the one that fits your workflow.</p>
+    <p>
+      Every DeepSeek conversation can be exported in any of the following formats. Choose the one
+      that fits your workflow.
+    </p>
     <div class="table-wrapper">
       <table>
         <thead>
@@ -69,37 +103,51 @@ const meta = {
         </thead>
         <tbody>
           <tr>
-            <td><strong>Markdown</strong></td>
+            <td>
+              <strong>Markdown</strong>
+            </td>
             <td>Documentation, Obsidian, GitHub wikis</td>
             <td>Blockquoted with label</td>
           </tr>
           <tr>
-            <td><strong>JSON</strong></td>
+            <td>
+              <strong>JSON</strong>
+            </td>
             <td>Programmatic processing, APIs, data pipelines</td>
             <td>Tagged type field</td>
           </tr>
           <tr>
-            <td><strong>HTML</strong></td>
+            <td>
+              <strong>HTML</strong>
+            </td>
             <td>Web archives, sharing, readable backups</td>
             <td>Collapsible details element</td>
           </tr>
           <tr>
-            <td><strong>PDF</strong></td>
+            <td>
+              <strong>PDF</strong>
+            </td>
             <td>Printed records, formal documentation</td>
             <td>Preserved with formatting</td>
           </tr>
           <tr>
-            <td><strong>Word (.doc)</strong></td>
+            <td>
+              <strong>Word (.doc)</strong>
+            </td>
             <td>Collaboration, editing in Microsoft Word</td>
             <td>Preserved with styling</td>
           </tr>
           <tr>
-            <td><strong>PNG Image</strong></td>
+            <td>
+              <strong>PNG Image</strong>
+            </td>
             <td>Social media, quick screenshots, sharing</td>
             <td>Rendered in image</td>
           </tr>
           <tr>
-            <td><strong>Continuation</strong></td>
+            <td>
+              <strong>Continuation</strong>
+            </td>
             <td>Transfer to another AI platform or PKM app</td>
             <td>Included as text</td>
           </tr>
@@ -111,7 +159,10 @@ const meta = {
   <!-- DeepSeek Exporter vs Manual Copy-Paste -->
   <section class="content-section">
     <h2>DeepSeek Exporter vs Manual Copy-Paste</h2>
-    <p>Copying and pasting a DeepSeek conversation manually loses critical structure. Here is what you miss without a proper exporter.</p>
+    <p>
+      Copying and pasting a DeepSeek conversation manually loses critical structure. Here is what
+      you miss without a proper exporter.
+    </p>
     <div class="table-wrapper">
       <table>
         <thead>
@@ -168,7 +219,7 @@ const meta = {
         },
         {
           title: 'Open Your DeepSeek Chat',
-          body: 'Navigate to chat.deepseek.com and open the conversation you want to export. The extension detects DeepSeek\'s DOM automatically.',
+          body: "Navigate to chat.deepseek.com and open the conversation you want to export. The extension detects DeepSeek's DOM automatically.",
         },
         {
           title: 'Click the Extension Icon',
@@ -185,7 +236,9 @@ const meta = {
   <!-- Privacy -->
   <section class="content-section">
     <Callout tone="info" title="Privacy note">
-      AI Chat Exporter runs entirely in your browser. No conversation data is sent to any server. The extension has no analytics, no telemetry, and no backend. Your DeepSeek conversations never leave your device.
+      AI Chat Exporter runs entirely in your browser. No conversation data is sent to any server.
+      The extension has no analytics, no telemetry, and no backend. Your DeepSeek conversations
+      never leave your device.
     </Callout>
   </section>
 

@@ -1,4 +1,29 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>LaTeX Export</title><meta name="description" content="Export math-heavy chats for LaTeX"><link rel="canonical" href="https://ai-chat-exporter.covai.org/latex-export.html"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:url" content="https://ai-chat-exporter.covai.org/latex-export.html"><meta property="og:title" content="LaTeX Export"><meta property="og:description" content="Export math-heavy chats for LaTeX"><meta property="og:image" content="https://ai-chat-exporter.covai.org/og-image.png"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="640"><meta property="og:site_name" content="AI Chat Exporter"><meta property="og:locale" content="en_US"><!-- Twitter / X --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://ai-chat-exporter.covai.org/latex-export.html"><meta name="twitter:title" content="LaTeX Export"><meta name="twitter:description" content="Export math-heavy chats for LaTeX"><meta name="twitter:image" content="https://ai-chat-exporter.covai.org/og-image.png"><!-- Theme bootstrap (pre-paint — prevents flash) --><script>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LaTeX Export</title>
+    <meta name="description" content="Export math-heavy chats for LaTeX" />
+    <link rel="canonical" href="https://ai-chat-exporter.covai.org/latex-export.html" />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ai-chat-exporter.covai.org/latex-export.html" />
+    <meta property="og:title" content="LaTeX Export" />
+    <meta property="og:description" content="Export math-heavy chats for LaTeX" />
+    <meta property="og:image" content="https://ai-chat-exporter.covai.org/og-image.png" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="640" />
+    <meta property="og:site_name" content="AI Chat Exporter" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://ai-chat-exporter.covai.org/latex-export.html" />
+    <meta name="twitter:title" content="LaTeX Export" />
+    <meta name="twitter:description" content="Export math-heavy chats for LaTeX" />
+    <meta name="twitter:image" content="https://ai-chat-exporter.covai.org/og-image.png" />
+    <!-- Theme bootstrap (pre-paint — prevents flash) -->
+    <script>
       (function () {
         try {
           var t = localStorage.getItem('ace-theme');
@@ -9,50 +34,756 @@
           /* ignore */
         }
       })();
-    </script><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><!-- Favicons --><link rel="icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="/icons/android-chrome-192x192.png"><link rel="icon" type="image/png" sizes="512x512" href="/icons/android-chrome-512x512.png"><link rel="manifest" href="/site.webmanifest"><!-- Styles --><link rel="stylesheet" href="/css/global.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"AI Chat Exporter","operatingSystem":"Chrome, Firefox, Edge","applicationCategory":"UtilitiesApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://ai-chat-exporter.covai.org","downloadUrl":"https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"}</script><script defer src="https://covai.org/analytics.js"></script></head><body><header><a href="/index.html" class="logo-container"><img src="/icons/icon48.png" alt="AI Chat Exporter Logo" class="logo-img" width="32" height="32"><span class="logo-text">AI Chat Exporter</span></a><div class="header-nav"><nav class="nav-links" aria-label="Main navigation"><a href="/index.html" class="nav-link">Home</a><a href="/guides.html" class="nav-link">Guides</a><a href="https://github.com/Covai-Labs/ai-chat-exporter" class="nav-link" target="_blank" rel="noopener noreferrer"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg><span>GitHub</span></a></nav><div class="theme-toggle" role="group" aria-label="Theme switcher"><button type="button" data-theme="light" aria-label="Light theme" title="Light" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg></button><button type="button" data-theme="dark" aria-label="Dark theme" title="Dark" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button><button type="button" data-theme="system" aria-label="System theme (follow OS)" title="System" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></button></div><script>
-  (function () {
-    const root = document.documentElement;
-    const buttons = Array.from(document.querySelectorAll('.theme-toggle button[data-theme]'));
-    if (!buttons.length) return;
-
-    function getStored() {
-      const t = localStorage.getItem('ace-theme');
-      return t === 'dark' || t === 'light' ? t : 'system';
-    }
-
-    function apply(theme) {
-      root.classList.remove('light', 'dark');
-      if (theme === 'light' || theme === 'dark') root.classList.add(theme);
-      try {
-        localStorage.setItem('ace-theme', theme);
-      } catch (e) {
-        /* private mode */
+    </script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icons/android-chrome-512x512.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/global.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "AI Chat Exporter",
+        "operatingSystem": "Chrome, Firefox, Edge",
+        "applicationCategory": "UtilitiesApplication",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "url": "https://ai-chat-exporter.covai.org",
+        "downloadUrl": "https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
       }
-      buttons.forEach((b) => {
-        b.setAttribute('aria-pressed', String(b.dataset.theme === theme));
-      });
-    }
+    </script>
+    <script defer src="https://covai.org/analytics.js"></script>
+  </head>
+  <body>
+    <header>
+      <a href="/index.html" class="logo-container"
+        ><img
+          src="/icons/icon48.png"
+          alt="AI Chat Exporter Logo"
+          class="logo-img"
+          width="32"
+          height="32"
+        /><span class="logo-text">AI Chat Exporter</span></a
+      >
+      <div class="header-nav">
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="/index.html" class="nav-link">Home</a
+          ><a href="/guides.html" class="nav-link">Guides</a
+          ><a
+            href="https://github.com/Covai-Labs/ai-chat-exporter"
+            class="nav-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+              ></path></svg
+            ><span>GitHub</span></a
+          >
+        </nav>
+        <div class="theme-toggle" role="group" aria-label="Theme switcher">
+          <button
+            type="button"
+            data-theme="light"
+            aria-label="Light theme"
+            title="Light"
+            aria-pressed="false"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="5"></circle>
+              <path
+                d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+              ></path>
+            </svg></button
+          ><button
+            type="button"
+            data-theme="dark"
+            aria-label="Dark theme"
+            title="Dark"
+            aria-pressed="false"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg></button
+          ><button
+            type="button"
+            data-theme="system"
+            aria-label="System theme (follow OS)"
+            title="System"
+            aria-pressed="false"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </button>
+        </div>
+        <script>
+          (function () {
+            const root = document.documentElement;
+            const buttons = Array.from(
+              document.querySelectorAll('.theme-toggle button[data-theme]'),
+            );
+            if (!buttons.length) return;
 
-    apply(getStored());
+            function getStored() {
+              const t = localStorage.getItem('ace-theme');
+              return t === 'dark' || t === 'light' ? t : 'system';
+            }
 
-    buttons.forEach((b) => {
-      b.addEventListener('click', () => apply(b.dataset.theme));
-    });
-  })();
-</script></div></header><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ai-chat-exporter.covai.org/index.html"},{"@type":"ListItem","position":2,"name":"LaTeX Export"}]}</script><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span aria-hidden="true">&#8250;</span><span>LaTeX Export</span></nav><main><div class="hero"><span class="badge">KaTeX Powered</span><h1>Export LaTeX Math — Preserved Equations from Any AI</h1><p class="hero-subtitle">Export AI conversations with properly formatted LaTeX math equations. Block and inline math preserved with correct delimiters. Renders in Obsidian, HTML, and PDF.</p><div class="cta-group"><a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-testid="cta-chrome">Add to Chrome</a><a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" data-testid="cta-firefox">Add to Firefox</a></div></div><section class="content-section"><h2>The Problem: Broken Math in Exported Conversations</h2><p>If you have ever exported a conversation containing math equations from an AI platform using a generic tool or manual copy-paste, you have seen the result: backslashes stripped, dollar signs mangled, inline math merged into the surrounding text, and block equations rendered as unreadable garbled text.</p><p>This happens because most export tools treat AI output as plain text. They do not distinguish between a dollar sign used as currency and a dollar sign used as a LaTeX delimiter. They strip backslashes as escape characters rather than recognizing them as part of LaTeX commands. The result is that a beautifully formatted equation like:</p><p><code>$$\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$$</code></p><p>becomes a broken mess in the exported file.</p><p>AI Chat Exporter handles LaTeX math as a first-class feature. The extension identifies math delimiters in the AI's response, protects them through the export pipeline, and outputs them with correct formatting in every export format.</p></section><section class="content-section"><h2>How AI Chat Exporter Handles LaTeX</h2><div class="features-grid"><div class="feature-card"><h3>Delimiter Normalization</h3><p>AI platforms use different math delimiter conventions. ChatGPT and Claude typically use<code>$$...$$</code> for block math and <code>$...$</code> for inline math. Some responses use <code>\[...\]</code> and <code>\(...\)</code> instead. The extension normalizes all variants to the standard <code>$$...$$</code> and <code>$...$</code> delimiters that most renderers expect.</p></div><div class="feature-card"><h3>Backslash Protection</h3><p>LaTeX commands begin with backslashes: <code>\frac</code>, <code>\sum</code>,<code>\int</code>, <code>\alpha</code>. During Markdown conversion, naive processors strip these as escape characters. AI Chat Exporter identifies LaTeX content blocks and protects all backslash sequences, ensuring every command survives the export pipeline intact.</p></div><div class="feature-card"><h3>Bracket Syntax Preservation</h3><p>The <code>\[...\]</code> and <code>\(...\)</code> bracket syntaxes are preserved when used. The extension detects these patterns and maintains them alongside the<code>$$</code> and <code>$</code> delimiters, giving you flexibility in how your math renders in the target application.</p></div><div class="feature-card"><h3>HTML KaTeX Auto-Render</h3><p>When exporting to HTML, the extension includes KaTeX JavaScript and CSS. Math equations in the HTML output are auto-rendered when you open the file in a browser. Block math displays centered, inline math flows with the text, and the full KaTeX symbol set is available.</p></div><div class="feature-card"><h3>PrismJS LaTeX Highlighting</h3><p>When math appears inside fenced code blocks (for example, when showing raw LaTeX source), PrismJS syntax highlighting applies. Keywords, commands, braces, and delimiters are color-coded for readability in code blocks and HTML exports.</p></div><div class="feature-card"><h3>PNG KaTeX Rendering</h3><p>When exporting as PNG, equations are rendered through KaTeX before the final image is captured. The result is a pixel-perfect image of your equations with proper typography, spacing, and formatting. Share equations on social media or in documents without worrying about renderer compatibility.</p></div></div></section><section class="content-section"><h2>Supported Math Syntax</h2><div class="table-wrapper"><table><thead><tr><th>Syntax</th><th>Type</th><th>Example</th><th>Handling</th></tr></thead><tbody><tr><td><code>$$...$$</code></td><td>Block math</td><td><code>$$\sum_{i=1}^{n} x_i$$</code></td><td>Preserved as-is, rendered in HTML/PNG exports</td></tr><tr><td><code>$...$</code></td><td>Inline math</td><td>The equation <code>$E = mc^2$</code> is famous</td><td>Preserved, rendered inline in HTML and PNG</td></tr><tr><td><code>\[...\]</code></td><td>Block math (alternate)</td><td><code>\[\frac{a}{b}\]</code></td><td>Normalized to <code>$$...$$</code> or preserved</td></tr><tr><td><code>\(...\)</code></td><td>Inline math (alternate)</td><td><code>\(x^2\)</code></td><td>Normalized to <code>$...$</code> or preserved</td></tr><tr><td><code>```latex</code></td><td>Code block</td><td>Raw LaTeX source in fenced block</td><td>Preserved with PrismJS syntax highlighting</td></tr></tbody></table></div></section><section class="content-section"><h2>Supported Platforms for Math</h2><p>Not all AI platforms render math the same way. AI Chat Exporter handles math extraction from platforms where equations are commonly used:</p><div class="table-wrapper"><table><thead><tr><th>Platform</th><th>Math Rendering</th><th>Common Use Cases</th></tr></thead><tbody><tr><td><strong>ChatGPT (GPT-4)</strong></td><td>Uses <code>$$</code> and <code>$</code> delimiters natively</td><td>Calculus, linear algebra, statistics, physics</td></tr><tr><td><strong>Claude</strong></td><td>Uses <code>$$</code> and <code>$</code> delimiters</td><td>Mathematical proofs, formal logic, probability</td></tr><tr><td><strong>Gemini</strong></td><td>Renders math in response UI, exports with delimiters</td><td>STEM coursework, research derivations</td></tr><tr><td><strong>DeepSeek</strong></td><td>Uses LaTeX delimiters, especially for DeepThink</td><td>Mathematical reasoning, proof verification</td></tr><tr><td><strong>Other Platforms</strong></td><td>Varies; extension normalizes what it finds</td><td>Any math content in supported platforms</td></tr></tbody></table></div></section><section class="content-section"><h2>Output Formats with Math Support</h2><div class="steps"><div class="step"><div class="step-content"><h3>Markdown (.md)</h3><p>Equations are exported with &lt;code&gt;$$&lt;/code&gt; and &lt;code&gt;$&lt;/code&gt; delimiters. This format is KaTeX-ready and works directly with Obsidian (with MathJax or KaTeX plugin), Logseq, Typora, HackMD, and any editor that supports KaTeX or MathJax rendering.</p></div></div><div class="step"><div class="step-content"><h3>HTML (.html)</h3><p>The HTML export bundles KaTeX JavaScript and CSS. Open the file in any modern browser and equations render automatically. Block math is centered, inline math flows with the text, and the full KaTeX symbol library is available. No additional setup required.</p></div></div><div class="step"><div class="step-content"><h3>PDF (.pdf)</h3><p>Equations are rendered through KaTeX before PDF generation. The result is a print-ready document with properly typeset mathematics. Supports multi-page documents with page breaks, table of contents, and both dark and light themes.</p></div></div><div class="step"><div class="step-content"><h3>PNG (.png)</h3><p>Full conversation is rendered to a scrollable image with KaTeX-rendered equations. Equations appear with professional typography and correct spacing. Ideal for sharing math-heavy conversations on social media or in presentations.</p></div></div></div></section><section class="content-section"><h2>Use Cases</h2><div class="features-grid"><div class="feature-card"><h3>Academic Notes</h3><p>Export conversations where you worked through mathematical problems. The preserved equations become study notes you can reference during exams or research. Import into Obsidian and link to your course notes.</p></div><div class="feature-card"><h3>Research Documentation</h3><p>Keep a record of AI-assisted derivations, proofs, and calculations. The structured JSON export preserves equation metadata alongside the conversation context for future reference.</p></div><div class="feature-card"><h3>Paper Drafting</h3><p>Export math-heavy brainstorming sessions and import the LaTeX content directly into your paper. The extension preserves LaTeX syntax so you can copy equations from the exported file into your LaTeX document without reformatting.</p></div><div class="feature-card"><h3>Teaching Materials</h3><p>Create PDF handouts from conversations about mathematical topics. The rendered equations in the PDF export look professional and are ready to distribute to students or colleagues.</p></div><div class="feature-card"><h3>LaTeX Snippet Library</h3><p>Build a searchable library of LaTeX code snippets by exporting conversations that contain formatted equations. The PrismJS-highlighted code blocks in Markdown and HTML exports make it easy to find and reuse specific LaTeX constructions.</p></div><div class="feature-card"><h3>Cross-Platform Math Transfer</h3><p>Export a math conversation from ChatGPT and continue it on Claude using cross-AI transfer. Equations are preserved in the transfer, so the target AI receives the full mathematical context.</p></div></div></section><section class="content-section"><h2>Using Exported Math in Obsidian</h2><p>Obsidian supports math rendering through its built-in MathJax engine and through community plugins like KaTeX. When you export a conversation with equations using AI Chat Exporter's Markdown format, the resulting file works directly in Obsidian:</p><ul><li>Block equations (<code>$$...$$</code>) render as centered, display-style math.</li><li>Inline equations (<code>$...$</code>) render within the text flow.</li><li>No plugin configuration is required for basic math rendering.</li><li>Equations are searchable as text when you search your vault.</li><li>You can link to exported math notes from other notes and build a connected knowledge base of mathematical content.</li></ul><div class="callout callout-info"><strong>Obsidian tip: </strong>Combine the Obsidian export feature with LaTeX export to send math-heavy conversations directly to your vault. Configure your vault name in the extension options, click the Obsidian transfer button, and equations are ready to render.</div></section><section class="content-section"><h2>Comparison with Other Export Approaches</h2><div class="table-wrapper"><table><thead><tr><th>Approach</th><th>Math Handling</th><th>Result</th></tr></thead><tbody><tr><td>Manual copy-paste</td><td>Strips delimiters, backslashes become escape characters</td><td>Equations broken, unreadable</td></tr><tr><td>Generic web clipper</td><td>Captures rendered HTML, loses LaTeX source</td><td>Visual only, not editable as LaTeX</td></tr><tr><td>ChatGPT data export</td><td>Includes raw LaTeX in JSON but no formatting</td><td>Usable but requires parsing</td></tr><tr><td><strong>AI Chat Exporter</strong></td><td>Normalizes delimiters, protects backslashes, renders in HTML/PNG</td><td>Clean, portable, render-ready math in every format</td></tr></tbody></table></div></section><section class="content-section"><h2>Frequently Asked Questions</h2><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Will equations render in Obsidian?","acceptedAnswer":{"@type":"Answer","text":"Yes. Obsidian has built-in MathJax support. Block equations enclosed in $$...$$ render as display math, and inline equations enclosed in $...$ render within the text. No additional plugins are required for basic math rendering. For advanced KaTeX features, the Obsidian community offers KaTeX and MathJax plugins."}},{"@type":"Question","name":"Does it handle both inline and block math?","acceptedAnswer":{"@type":"Answer","text":"Yes. The extension recognizes and preserves both inline math (single dollar signs: $equation$) and block math (double dollar signs: $$equation$$). It also handles the alternate bracket syntaxes ([...] and (...)) and normalizes them to the standard delimiter format."}},{"@type":"Question","name":"What about specialized packages like Chemfig or TikZ?","acceptedAnswer":{"@type":"Answer","text":"The extension preserves the LaTeX source code for any equation, including those that use specialized packages. However, rendering depends on the target application. KaTeX (used in HTML and PNG exports) supports a subset of LaTeX math commands. Full LaTeX packages like Chemfig, TikZ, and PSTricks require a full LaTeX compiler and cannot be rendered by KaTeX. The raw LaTeX source is preserved in Markdown and JSON exports for use with a full LaTeX toolchain."}},{"@type":"Question","name":"Can I get a rendered PNG of math equations?","acceptedAnswer":{"@type":"Answer","text":"Yes. The PNG export renders equations through KaTeX before capturing the final image. Block equations appear centered with professional typography. Inline equations render within the text. The resulting image can be shared directly in documents, presentations, or on social media."}},{"@type":"Question","name":"How do I use exported LaTeX in a paper?","acceptedAnswer":{"@type":"Answer","text":"Export the conversation as Markdown. The LaTeX equations in the file use standard $$ and $ delimiters that are directly compatible with LaTeX document classes. Copy the equation blocks from the exported file into your .tex document. If your paper uses [...] delimiters, a simple find-and-replace from $$ to [ and ] converts the format."}},{"@type":"Question","name":"Does math export work with all platforms?","acceptedAnswer":{"@type":"Answer","text":"Math preservation works on any platform where the AI outputs LaTeX equations. ChatGPT, Claude, Gemini, and DeepSeek consistently use LaTeX delimiters. Other platforms may or may not include math notation. The extension preserves whatever math syntax it finds in the conversation, normalizing delimiters where possible."}}]}</script><div class="faq"><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Will equations render in Obsidian?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. Obsidian has built-in MathJax support. Block equations enclosed in <code>$$...$$</code> render as display math, and inline equations enclosed in <code>$...$</code> render within the text. No additional plugins are required for basic math rendering. For advanced KaTeX features, the Obsidian community offers KaTeX and MathJax plugins.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Does it handle both inline and block math?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. The extension recognizes and preserves both inline math (single dollar signs: <code>$equation$</code>) and block math (double dollar signs: <code>$$equation$$</code>). It also handles the alternate bracket syntaxes (<code>[...]</code> and <code>(...)</code>) and normalizes them to the standard delimiter format.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">What about specialized packages like Chemfig or TikZ?</button><div class="faq-answer" role="region" aria-hidden="true">The extension preserves the LaTeX source code for any equation, including those that use specialized packages. However, rendering depends on the target application. KaTeX (used in HTML and PNG exports) supports a subset of LaTeX math commands. Full LaTeX packages like Chemfig, TikZ, and PSTricks require a full LaTeX compiler and cannot be rendered by KaTeX. The raw LaTeX source is preserved in Markdown and JSON exports for use with a full LaTeX toolchain.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Can I get a rendered PNG of math equations?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. The PNG export renders equations through KaTeX before capturing the final image. Block equations appear centered with professional typography. Inline equations render within the text. The resulting image can be shared directly in documents, presentations, or on social media.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">How do I use exported LaTeX in a paper?</button><div class="faq-answer" role="region" aria-hidden="true">Export the conversation as Markdown. The LaTeX equations in the file use standard <code>$$</code> and <code>$</code> delimiters that are directly compatible with LaTeX document classes. Copy the equation blocks from the exported file into your .tex document. If your paper uses <code>[...]</code> delimiters, a simple find-and-replace from <code>$$</code> to <code>[</code> and <code>]</code> converts the format.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Does math export work with all platforms?</button><div class="faq-answer" role="region" aria-hidden="true">Math preservation works on any platform where the AI outputs LaTeX equations. ChatGPT, Claude, Gemini, and DeepSeek consistently use LaTeX delimiters. Other platforms may or may not include math notation. The extension preserves whatever math syntax it finds in the conversation, normalizing delimiters where possible.</div></div></div><script>
-  document.querySelectorAll('.faq-item').forEach((item, i) => {
-    const btn = item.querySelector('.faq-question');
-    const answer = item.querySelector('.faq-answer');
-    if (!btn || !answer) return;
-    const id = 'faq-' + (i + 1);
-    btn.id = 'q-' + id;
-    btn.setAttribute('aria-controls', id);
-    answer.id = id;
-    answer.setAttribute('aria-labelledby', 'q-' + id);
-    btn.addEventListener('click', () => {
-      const open = item.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      answer.setAttribute('aria-hidden', open ? 'false' : 'true');
-    });
-  });
-</script></section><section class="content-section"><section class="related-pages"><h2>Related Pages</h2><div class="related-grid"><a href="/markdown-exporter.html" class="related-link"><h3>Markdown Exporter</h3><p>Full guide to Markdown export with code highlighting, formatting, and math preservation.</p></a><a href="/obsidian-export.html" class="related-link"><h3>Obsidian Export</h3><p>Send math-heavy conversations directly to your Obsidian vault with one click.</p></a><a href="/chatgpt-exporter.html" class="related-link"><h3>ChatGPT Exporter</h3><p>Export ChatGPT conversations with preserved math, code, and formatting.</p></a><a href="/ai-chat-backup.html" class="related-link"><h3>AI Chat Backup</h3><p>Archive your math and research conversations for permanent reference.</p></a></div></section></section><section class="content-section"><div class="callout callout-success"><p><strong>Stop losing your math to broken exports.</strong></p><div class="cta-group compact"><a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Add to Chrome</a><a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Add to Firefox</a></div></div></section></main><footer><div class="footer-links"><a href="/privacy.html">Privacy Policy</a><span class="footer-sep" aria-hidden="true">|</span><a href="/license.html">License (MPL 2.0)</a><span class="footer-sep" aria-hidden="true">|</span><a href="/feedback.html">Feedback &amp; Issues</a><span class="footer-sep" aria-hidden="true">|</span><a href="https://github.com/Covai-Labs/ai-chat-exporter" target="_blank" rel="noopener noreferrer">GitHub Repository</a></div><p>&copy; 2026 AI Chat Exporter. Released under the Mozilla Public License 2.0.</p></footer></body></html>
+            function apply(theme) {
+              root.classList.remove('light', 'dark');
+              if (theme === 'light' || theme === 'dark') root.classList.add(theme);
+              try {
+                localStorage.setItem('ace-theme', theme);
+              } catch (e) {
+                /* private mode */
+              }
+              buttons.forEach((b) => {
+                b.setAttribute('aria-pressed', String(b.dataset.theme === theme));
+              });
+            }
+
+            apply(getStored());
+
+            buttons.forEach((b) => {
+              b.addEventListener('click', () => apply(b.dataset.theme));
+            });
+          })();
+        </script>
+      </div>
+    </header>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ai-chat-exporter.covai.org/index.html"
+          },
+          { "@type": "ListItem", "position": 2, "name": "LaTeX Export" }
+        ]
+      }
+    </script>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/index.html">Home</a><span aria-hidden="true">&#8250;</span><span>LaTeX Export</span>
+    </nav>
+    <main>
+      <div class="hero">
+        <span class="badge">KaTeX Powered</span>
+        <h1>Export LaTeX Math — Preserved Equations from Any AI</h1>
+        <p class="hero-subtitle">
+          Export AI conversations with properly formatted LaTeX math equations. Block and inline
+          math preserved with correct delimiters. Renders in Obsidian, HTML, and PDF.
+        </p>
+        <div class="cta-group">
+          <a
+            href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="cta-chrome"
+            >Add to Chrome</a
+          ><a
+            href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/"
+            class="btn btn-secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="cta-firefox"
+            >Add to Firefox</a
+          >
+        </div>
+      </div>
+      <section class="content-section">
+        <h2>The Problem: Broken Math in Exported Conversations</h2>
+        <p>
+          If you have ever exported a conversation containing math equations from an AI platform
+          using a generic tool or manual copy-paste, you have seen the result: backslashes stripped,
+          dollar signs mangled, inline math merged into the surrounding text, and block equations
+          rendered as unreadable garbled text.
+        </p>
+        <p>
+          This happens because most export tools treat AI output as plain text. They do not
+          distinguish between a dollar sign used as currency and a dollar sign used as a LaTeX
+          delimiter. They strip backslashes as escape characters rather than recognizing them as
+          part of LaTeX commands. The result is that a beautifully formatted equation like:
+        </p>
+        <p><code>$$\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$$</code></p>
+        <p>becomes a broken mess in the exported file.</p>
+        <p>
+          AI Chat Exporter handles LaTeX math as a first-class feature. The extension identifies
+          math delimiters in the AI's response, protects them through the export pipeline, and
+          outputs them with correct formatting in every export format.
+        </p>
+      </section>
+      <section class="content-section">
+        <h2>How AI Chat Exporter Handles LaTeX</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3>Delimiter Normalization</h3>
+            <p>
+              AI platforms use different math delimiter conventions. ChatGPT and Claude typically
+              use<code>$$...$$</code> for block math and <code>$...$</code> for inline math. Some
+              responses use <code>\[...\]</code> and <code>\(...\)</code> instead. The extension
+              normalizes all variants to the standard <code>$$...$$</code> and
+              <code>$...$</code> delimiters that most renderers expect.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>Backslash Protection</h3>
+            <p>
+              LaTeX commands begin with backslashes: <code>\frac</code>,
+              <code>\sum</code>,<code>\int</code>, <code>\alpha</code>. During Markdown conversion,
+              naive processors strip these as escape characters. AI Chat Exporter identifies LaTeX
+              content blocks and protects all backslash sequences, ensuring every command survives
+              the export pipeline intact.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>Bracket Syntax Preservation</h3>
+            <p>
+              The <code>\[...\]</code> and <code>\(...\)</code> bracket syntaxes are preserved when
+              used. The extension detects these patterns and maintains them alongside the<code
+                >$$</code
+              >
+              and <code>$</code> delimiters, giving you flexibility in how your math renders in the
+              target application.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>HTML KaTeX Auto-Render</h3>
+            <p>
+              When exporting to HTML, the extension includes KaTeX JavaScript and CSS. Math
+              equations in the HTML output are auto-rendered when you open the file in a browser.
+              Block math displays centered, inline math flows with the text, and the full KaTeX
+              symbol set is available.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>PrismJS LaTeX Highlighting</h3>
+            <p>
+              When math appears inside fenced code blocks (for example, when showing raw LaTeX
+              source), PrismJS syntax highlighting applies. Keywords, commands, braces, and
+              delimiters are color-coded for readability in code blocks and HTML exports.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>PNG KaTeX Rendering</h3>
+            <p>
+              When exporting as PNG, equations are rendered through KaTeX before the final image is
+              captured. The result is a pixel-perfect image of your equations with proper
+              typography, spacing, and formatting. Share equations on social media or in documents
+              without worrying about renderer compatibility.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="content-section">
+        <h2>Supported Math Syntax</h2>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Syntax</th>
+                <th>Type</th>
+                <th>Example</th>
+                <th>Handling</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>$$...$$</code></td>
+                <td>Block math</td>
+                <td><code>$$\sum_{i=1}^{n} x_i$$</code></td>
+                <td>Preserved as-is, rendered in HTML/PNG exports</td>
+              </tr>
+              <tr>
+                <td><code>$...$</code></td>
+                <td>Inline math</td>
+                <td>The equation <code>$E = mc^2$</code> is famous</td>
+                <td>Preserved, rendered inline in HTML and PNG</td>
+              </tr>
+              <tr>
+                <td><code>\[...\]</code></td>
+                <td>Block math (alternate)</td>
+                <td><code>\[\frac{a}{b}\]</code></td>
+                <td>Normalized to <code>$$...$$</code> or preserved</td>
+              </tr>
+              <tr>
+                <td><code>\(...\)</code></td>
+                <td>Inline math (alternate)</td>
+                <td><code>\(x^2\)</code></td>
+                <td>Normalized to <code>$...$</code> or preserved</td>
+              </tr>
+              <tr>
+                <td><code>```latex</code></td>
+                <td>Code block</td>
+                <td>Raw LaTeX source in fenced block</td>
+                <td>Preserved with PrismJS syntax highlighting</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="content-section">
+        <h2>Supported Platforms for Math</h2>
+        <p>
+          Not all AI platforms render math the same way. AI Chat Exporter handles math extraction
+          from platforms where equations are commonly used:
+        </p>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Platform</th>
+                <th>Math Rendering</th>
+                <th>Common Use Cases</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>ChatGPT (GPT-4)</strong></td>
+                <td>Uses <code>$$</code> and <code>$</code> delimiters natively</td>
+                <td>Calculus, linear algebra, statistics, physics</td>
+              </tr>
+              <tr>
+                <td><strong>Claude</strong></td>
+                <td>Uses <code>$$</code> and <code>$</code> delimiters</td>
+                <td>Mathematical proofs, formal logic, probability</td>
+              </tr>
+              <tr>
+                <td><strong>Gemini</strong></td>
+                <td>Renders math in response UI, exports with delimiters</td>
+                <td>STEM coursework, research derivations</td>
+              </tr>
+              <tr>
+                <td><strong>DeepSeek</strong></td>
+                <td>Uses LaTeX delimiters, especially for DeepThink</td>
+                <td>Mathematical reasoning, proof verification</td>
+              </tr>
+              <tr>
+                <td><strong>Other Platforms</strong></td>
+                <td>Varies; extension normalizes what it finds</td>
+                <td>Any math content in supported platforms</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="content-section">
+        <h2>Output Formats with Math Support</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h3>Markdown (.md)</h3>
+              <p>
+                Equations are exported with &lt;code&gt;$$&lt;/code&gt; and
+                &lt;code&gt;$&lt;/code&gt; delimiters. This format is KaTeX-ready and works directly
+                with Obsidian (with MathJax or KaTeX plugin), Logseq, Typora, HackMD, and any editor
+                that supports KaTeX or MathJax rendering.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h3>HTML (.html)</h3>
+              <p>
+                The HTML export bundles KaTeX JavaScript and CSS. Open the file in any modern
+                browser and equations render automatically. Block math is centered, inline math
+                flows with the text, and the full KaTeX symbol library is available. No additional
+                setup required.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h3>PDF (.pdf)</h3>
+              <p>
+                Equations are rendered through KaTeX before PDF generation. The result is a
+                print-ready document with properly typeset mathematics. Supports multi-page
+                documents with page breaks, table of contents, and both dark and light themes.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h3>PNG (.png)</h3>
+              <p>
+                Full conversation is rendered to a scrollable image with KaTeX-rendered equations.
+                Equations appear with professional typography and correct spacing. Ideal for sharing
+                math-heavy conversations on social media or in presentations.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="content-section">
+        <h2>Use Cases</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3>Academic Notes</h3>
+            <p>
+              Export conversations where you worked through mathematical problems. The preserved
+              equations become study notes you can reference during exams or research. Import into
+              Obsidian and link to your course notes.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>Research Documentation</h3>
+            <p>
+              Keep a record of AI-assisted derivations, proofs, and calculations. The structured
+              JSON export preserves equation metadata alongside the conversation context for future
+              reference.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>Paper Drafting</h3>
+            <p>
+              Export math-heavy brainstorming sessions and import the LaTeX content directly into
+              your paper. The extension preserves LaTeX syntax so you can copy equations from the
+              exported file into your LaTeX document without reformatting.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>Teaching Materials</h3>
+            <p>
+              Create PDF handouts from conversations about mathematical topics. The rendered
+              equations in the PDF export look professional and are ready to distribute to students
+              or colleagues.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>LaTeX Snippet Library</h3>
+            <p>
+              Build a searchable library of LaTeX code snippets by exporting conversations that
+              contain formatted equations. The PrismJS-highlighted code blocks in Markdown and HTML
+              exports make it easy to find and reuse specific LaTeX constructions.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>Cross-Platform Math Transfer</h3>
+            <p>
+              Export a math conversation from ChatGPT and continue it on Claude using cross-AI
+              transfer. Equations are preserved in the transfer, so the target AI receives the full
+              mathematical context.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="content-section">
+        <h2>Using Exported Math in Obsidian</h2>
+        <p>
+          Obsidian supports math rendering through its built-in MathJax engine and through community
+          plugins like KaTeX. When you export a conversation with equations using AI Chat Exporter's
+          Markdown format, the resulting file works directly in Obsidian:
+        </p>
+        <ul>
+          <li>Block equations (<code>$$...$$</code>) render as centered, display-style math.</li>
+          <li>Inline equations (<code>$...$</code>) render within the text flow.</li>
+          <li>No plugin configuration is required for basic math rendering.</li>
+          <li>Equations are searchable as text when you search your vault.</li>
+          <li>
+            You can link to exported math notes from other notes and build a connected knowledge
+            base of mathematical content.
+          </li>
+        </ul>
+        <div class="callout callout-info">
+          <strong>Obsidian tip: </strong>Combine the Obsidian export feature with LaTeX export to
+          send math-heavy conversations directly to your vault. Configure your vault name in the
+          extension options, click the Obsidian transfer button, and equations are ready to render.
+        </div>
+      </section>
+      <section class="content-section">
+        <h2>Comparison with Other Export Approaches</h2>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Approach</th>
+                <th>Math Handling</th>
+                <th>Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Manual copy-paste</td>
+                <td>Strips delimiters, backslashes become escape characters</td>
+                <td>Equations broken, unreadable</td>
+              </tr>
+              <tr>
+                <td>Generic web clipper</td>
+                <td>Captures rendered HTML, loses LaTeX source</td>
+                <td>Visual only, not editable as LaTeX</td>
+              </tr>
+              <tr>
+                <td>ChatGPT data export</td>
+                <td>Includes raw LaTeX in JSON but no formatting</td>
+                <td>Usable but requires parsing</td>
+              </tr>
+              <tr>
+                <td><strong>AI Chat Exporter</strong></td>
+                <td>Normalizes delimiters, protects backslashes, renders in HTML/PNG</td>
+                <td>Clean, portable, render-ready math in every format</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="content-section">
+        <h2>Frequently Asked Questions</h2>
+        <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Will equations render in Obsidian?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Obsidian has built-in MathJax support. Block equations enclosed in $$...$$ render as display math, and inline equations enclosed in $...$ render within the text. No additional plugins are required for basic math rendering. For advanced KaTeX features, the Obsidian community offers KaTeX and MathJax plugins."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does it handle both inline and block math?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. The extension recognizes and preserves both inline math (single dollar signs: $equation$) and block math (double dollar signs: $$equation$$). It also handles the alternate bracket syntaxes ([...] and (...)) and normalizes them to the standard delimiter format."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What about specialized packages like Chemfig or TikZ?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "The extension preserves the LaTeX source code for any equation, including those that use specialized packages. However, rendering depends on the target application. KaTeX (used in HTML and PNG exports) supports a subset of LaTeX math commands. Full LaTeX packages like Chemfig, TikZ, and PSTricks require a full LaTeX compiler and cannot be rendered by KaTeX. The raw LaTeX source is preserved in Markdown and JSON exports for use with a full LaTeX toolchain."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I get a rendered PNG of math equations?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. The PNG export renders equations through KaTeX before capturing the final image. Block equations appear centered with professional typography. Inline equations render within the text. The resulting image can be shared directly in documents, presentations, or on social media."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How do I use exported LaTeX in a paper?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Export the conversation as Markdown. The LaTeX equations in the file use standard $$ and $ delimiters that are directly compatible with LaTeX document classes. Copy the equation blocks from the exported file into your .tex document. If your paper uses [...] delimiters, a simple find-and-replace from $$ to [ and ] converts the format."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does math export work with all platforms?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Math preservation works on any platform where the AI outputs LaTeX equations. ChatGPT, Claude, Gemini, and DeepSeek consistently use LaTeX delimiters. Other platforms may or may not include math notation. The extension preserves whatever math syntax it finds in the conversation, normalizing delimiters where possible."
+                }
+              }
+            ]
+          }
+        </script>
+        <div class="faq">
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
+              Will equations render in Obsidian?
+            </button>
+            <div class="faq-answer" role="region" aria-hidden="true">
+              Yes. Obsidian has built-in MathJax support. Block equations enclosed in
+              <code>$$...$$</code> render as display math, and inline equations enclosed in
+              <code>$...$</code> render within the text. No additional plugins are required for
+              basic math rendering. For advanced KaTeX features, the Obsidian community offers KaTeX
+              and MathJax plugins.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
+              Does it handle both inline and block math?
+            </button>
+            <div class="faq-answer" role="region" aria-hidden="true">
+              Yes. The extension recognizes and preserves both inline math (single dollar signs:
+              <code>$equation$</code>) and block math (double dollar signs:
+              <code>$$equation$$</code>). It also handles the alternate bracket syntaxes (<code
+                >[...]</code
+              >
+              and <code>(...)</code>) and normalizes them to the standard delimiter format.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
+              What about specialized packages like Chemfig or TikZ?
+            </button>
+            <div class="faq-answer" role="region" aria-hidden="true">
+              The extension preserves the LaTeX source code for any equation, including those that
+              use specialized packages. However, rendering depends on the target application. KaTeX
+              (used in HTML and PNG exports) supports a subset of LaTeX math commands. Full LaTeX
+              packages like Chemfig, TikZ, and PSTricks require a full LaTeX compiler and cannot be
+              rendered by KaTeX. The raw LaTeX source is preserved in Markdown and JSON exports for
+              use with a full LaTeX toolchain.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
+              Can I get a rendered PNG of math equations?
+            </button>
+            <div class="faq-answer" role="region" aria-hidden="true">
+              Yes. The PNG export renders equations through KaTeX before capturing the final image.
+              Block equations appear centered with professional typography. Inline equations render
+              within the text. The resulting image can be shared directly in documents,
+              presentations, or on social media.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
+              How do I use exported LaTeX in a paper?
+            </button>
+            <div class="faq-answer" role="region" aria-hidden="true">
+              Export the conversation as Markdown. The LaTeX equations in the file use standard
+              <code>$$</code> and <code>$</code> delimiters that are directly compatible with LaTeX
+              document classes. Copy the equation blocks from the exported file into your .tex
+              document. If your paper uses <code>[...]</code> delimiters, a simple find-and-replace
+              from <code>$$</code> to <code>[</code> and <code>]</code> converts the format.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
+              Does math export work with all platforms?
+            </button>
+            <div class="faq-answer" role="region" aria-hidden="true">
+              Math preservation works on any platform where the AI outputs LaTeX equations. ChatGPT,
+              Claude, Gemini, and DeepSeek consistently use LaTeX delimiters. Other platforms may or
+              may not include math notation. The extension preserves whatever math syntax it finds
+              in the conversation, normalizing delimiters where possible.
+            </div>
+          </div>
+        </div>
+        <script>
+          document.querySelectorAll('.faq-item').forEach((item, i) => {
+            const btn = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            if (!btn || !answer) return;
+            const id = 'faq-' + (i + 1);
+            btn.id = 'q-' + id;
+            btn.setAttribute('aria-controls', id);
+            answer.id = id;
+            answer.setAttribute('aria-labelledby', 'q-' + id);
+            btn.addEventListener('click', () => {
+              const open = item.classList.toggle('open');
+              btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+              answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+            });
+          });
+        </script>
+      </section>
+      <section class="content-section">
+        <section class="related-pages">
+          <h2>Related Pages</h2>
+          <div class="related-grid">
+            <a href="/markdown-exporter.html" class="related-link"
+              ><h3>Markdown Exporter</h3>
+              <p>
+                Full guide to Markdown export with code highlighting, formatting, and math
+                preservation.
+              </p></a
+            ><a href="/obsidian-export.html" class="related-link"
+              ><h3>Obsidian Export</h3>
+              <p>
+                Send math-heavy conversations directly to your Obsidian vault with one click.
+              </p></a
+            ><a href="/chatgpt-exporter.html" class="related-link"
+              ><h3>ChatGPT Exporter</h3>
+              <p>Export ChatGPT conversations with preserved math, code, and formatting.</p></a
+            ><a href="/ai-chat-backup.html" class="related-link"
+              ><h3>AI Chat Backup</h3>
+              <p>Archive your math and research conversations for permanent reference.</p></a
+            >
+          </div>
+        </section>
+      </section>
+      <section class="content-section">
+        <div class="callout callout-success">
+          <p><strong>Stop losing your math to broken exports.</strong></p>
+          <div class="cta-group compact">
+            <a
+              href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Add to Chrome</a
+            ><a
+              href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/"
+              class="btn btn-secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Add to Firefox</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-links">
+        <a href="/privacy.html">Privacy Policy</a
+        ><span class="footer-sep" aria-hidden="true">|</span
+        ><a href="/license.html">License (MPL 2.0)</a
+        ><span class="footer-sep" aria-hidden="true">|</span
+        ><a href="/feedback.html">Feedback &amp; Issues</a
+        ><span class="footer-sep" aria-hidden="true">|</span
+        ><a
+          href="https://github.com/Covai-Labs/ai-chat-exporter"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub Repository</a
+        >
+      </div>
+      <p>&copy; 2026 AI Chat Exporter. Released under the Mozilla Public License 2.0.</p>
+    </footer>
+  </body>
+</html>

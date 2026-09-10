@@ -86,6 +86,7 @@ const features = [
   },
 ];
 ---
+
 <BaseLayout
   title={meta.title}
   description={meta.description}
@@ -185,11 +186,7 @@ const features = [
               <Fragment set:html={f.desc} />
             </div>
           </div>
-          <div
-            class="zoomable-card"
-            data-lightbox-img={f.img}
-            data-lightbox-caption={f.caption}
-          >
+          <div class="zoomable-card" data-lightbox-img={f.img} data-lightbox-caption={f.caption}>
             <div class="card-header">
               <span>{f.card}</span>
               <span class="zoom-hint">🔍 Click to expand full image</span>
@@ -207,7 +204,9 @@ const features = [
 
       <div class="launch-grid">
         {platformLaunchers.map((p) => (
-          <a href={p.href} target="_blank" rel="noopener" class="launch-btn">{p.label}</a>
+          <a href={p.href} target="_blank" rel="noopener" class="launch-btn">
+            {p.label}
+          </a>
         ))}
       </div>
     </section>

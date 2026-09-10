@@ -18,6 +18,7 @@ const meta = {
     'Export your ChatGPT conversations to Markdown, PDF, JSON, HTML, Word, PNG and more. AI Chat Exporter is a free, open-source browser extension that runs entirely in your browser - no servers, no sign-up, no data leaves your machine.',
 };
 ---
+
 <GuideLayout
   title={meta.title}
   description={meta.description}
@@ -32,13 +33,13 @@ const meta = {
       ChatGPT stores your conversations in OpenAI's cloud, but you have no meaningful way to back
       them up, search them offline, or own a local copy. OpenAI's built-in data export bundles your
       entire account into an unusable JSON archive that requires technical effort to parse. AI Chat
-      Exporter solves this problem by giving you clean, readable exports of individual
-      conversations right from the ChatGPT interface.
+      Exporter solves this problem by giving you clean, readable exports of individual conversations
+      right from the ChatGPT interface.
     </p>
     <p>
       Whether you are a developer preserving code-generation sessions, a researcher archiving
-      literature reviews, or a professional keeping records of AI-assisted work, having a local
-      copy of your conversations protects your work against accidental deletion, account issues, or
+      literature reviews, or a professional keeping records of AI-assisted work, having a local copy
+      of your conversations protects your work against accidental deletion, account issues, or
       platform changes.
     </p>
     <p>Common reasons people export ChatGPT conversations:</p>
@@ -85,37 +86,54 @@ const meta = {
         </thead>
         <tbody>
           <tr>
-            <td><strong>Markdown</strong></td>
+            <td>
+              <strong>Markdown</strong>
+            </td>
             <td>Knowledge bases, documentation, Obsidian/Notion</td>
             <td>Preserves code blocks, LaTeX math, tables, and images. Clean and editable.</td>
           </tr>
           <tr>
-            <td><strong>JSON</strong></td>
+            <td>
+              <strong>JSON</strong>
+            </td>
             <td>Developers, automation pipelines, API integration</td>
-            <td>Structured data with source platform, timestamps, message roles, and a normalized schema.</td>
+            <td>
+              Structured data with source platform, timestamps, message roles, and a normalized
+              schema.
+            </td>
           </tr>
           <tr>
-            <td><strong>HTML</strong></td>
+            <td>
+              <strong>HTML</strong>
+            </td>
             <td>Web archives, visual fidelity, embedding</td>
             <td>Full visual representation with styled output that mirrors the chat interface.</td>
           </tr>
           <tr>
-            <td><strong>Word (.doc)</strong></td>
+            <td>
+              <strong>Word (.doc)</strong>
+            </td>
             <td>Sharing with non-technical audiences, reports</td>
             <td>Formatted document with headings, code blocks, and images. Editable in Word.</td>
           </tr>
           <tr>
-            <td><strong>PDF</strong></td>
+            <td>
+              <strong>PDF</strong>
+            </td>
             <td>Archiving, printing, legal/compliance</td>
             <td>Page breaks, table of contents, dark/light themes, custom fonts.</td>
           </tr>
           <tr>
-            <td><strong>PNG</strong></td>
+            <td>
+              <strong>PNG</strong>
+            </td>
             <td>Visual sharing, social media, quick screenshots</td>
             <td>Full conversation rendered as a scrollable image. Shareable anywhere.</td>
           </tr>
           <tr>
-            <td><strong>Continuation</strong></td>
+            <td>
+              <strong>Continuation</strong>
+            </td>
             <td>Resuming exported chats in Claude or other platforms</td>
             <td>Special format that preserves conversation structure for re-import.</td>
           </tr>
@@ -235,7 +253,7 @@ const meta = {
       steps={[
         {
           title: 'Install the Extension',
-          body: "Add AI Chat Exporter from the Chrome Web Store, Firefox Add-ons, or Edge Add-ons. The extension installs in seconds and requires no configuration to start exporting.",
+          body: 'Add AI Chat Exporter from the Chrome Web Store, Firefox Add-ons, or Edge Add-ons. The extension installs in seconds and requires no configuration to start exporting.',
         },
         {
           title: 'Open a ChatGPT Conversation',
@@ -253,9 +271,9 @@ const meta = {
   <section class="content-section">
     <h2>Your Data Never Leaves Your Browser</h2>
     <p>
-      AI Chat Exporter is built with privacy as a core principle. The extension runs entirely
-      within your browser's sandbox - there are no external servers, no analytics, no telemetry,
-      and no data collection of any kind.
+      AI Chat Exporter is built with privacy as a core principle. The extension runs entirely within
+      your browser's sandbox - there are no external servers, no analytics, no telemetry, and no
+      data collection of any kind.
     </p>
     <Callout tone="success" title="100% Local">
       All parsing, formatting, and file generation happen in your browser. The extension never
@@ -266,8 +284,11 @@ const meta = {
       <a
         href="https://github.com/Covai-Labs/ai-chat-exporter"
         target="_blank"
-        rel="noopener noreferrer">GitHub</a
-      >. If you have security concerns, you can download the source and load it as an unpacked
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>
+      . If you have security concerns, you can download the source and load it as an unpacked
       extension yourself.
     </p>
   </section>
@@ -299,7 +320,7 @@ const meta = {
         },
         {
           q: 'Does it work on mobile browsers?',
-          a: "AI Chat Exporter is a browser extension and works on desktop browsers (Chrome, Firefox, Edge). Mobile browsers like Chrome for Android and Safari for iOS do not support browser extensions. For mobile use, open ChatGPT on a desktop browser and export from there.",
+          a: 'AI Chat Exporter is a browser extension and works on desktop browsers (Chrome, Firefox, Edge). Mobile browsers like Chrome for Android and Safari for iOS do not support browser extensions. For mobile use, open ChatGPT on a desktop browser and export from there.',
         },
       ]}
     />

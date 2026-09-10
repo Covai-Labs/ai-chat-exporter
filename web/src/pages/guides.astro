@@ -11,15 +11,11 @@ const meta = {
     'Guides and how-to articles for exporting, backing up, and transferring AI conversations with AI Chat Exporter.',
 };
 ---
+
 <BaseLayout title={meta.title} description={meta.description} canonicalPath="/guides.html">
   <Header />
 
-  <Breadcrumbs
-    items={[
-      { label: 'Home', href: '/index.html' },
-      { label: "Guides & How-To's" },
-    ]}
-  />
+  <Breadcrumbs items={[{ label: 'Home', href: '/index.html' }, { label: "Guides & How-To's" }]} />
 
   <main>
     <div class="hero">
@@ -34,7 +30,9 @@ const meta = {
       <h2>By platform</h2>
       <div class="related-grid">
         {platformGuides.map((g) => (
-          <a class="related-link" href={guideHref(g.slug)}>{g.title}</a>
+          <a class="related-link" href={guideHref(g.slug)}>
+            {g.title}
+          </a>
         ))}
       </div>
     </section>
@@ -43,7 +41,9 @@ const meta = {
       <h2>By format or workflow</h2>
       <div class="related-grid">
         {formatGuides.map((g) => (
-          <a class="related-link" href={guideHref(g.slug)}>{g.title}</a>
+          <a class="related-link" href={guideHref(g.slug)}>
+            {g.title}
+          </a>
         ))}
       </div>
     </section>

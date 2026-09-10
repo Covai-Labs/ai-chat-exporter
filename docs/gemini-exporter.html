@@ -1,4 +1,29 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Gemini Exporter</title><meta name="description" content="Export Google Gemini conversations"><link rel="canonical" href="https://ai-chat-exporter.covai.org/gemini-exporter.html"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:url" content="https://ai-chat-exporter.covai.org/gemini-exporter.html"><meta property="og:title" content="Gemini Exporter"><meta property="og:description" content="Export Google Gemini conversations"><meta property="og:image" content="https://ai-chat-exporter.covai.org/og-image.png"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="640"><meta property="og:site_name" content="AI Chat Exporter"><meta property="og:locale" content="en_US"><!-- Twitter / X --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://ai-chat-exporter.covai.org/gemini-exporter.html"><meta name="twitter:title" content="Gemini Exporter"><meta name="twitter:description" content="Export Google Gemini conversations"><meta name="twitter:image" content="https://ai-chat-exporter.covai.org/og-image.png"><!-- Theme bootstrap (pre-paint — prevents flash) --><script>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gemini Exporter</title>
+    <meta name="description" content="Export Google Gemini conversations" />
+    <link rel="canonical" href="https://ai-chat-exporter.covai.org/gemini-exporter.html" />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ai-chat-exporter.covai.org/gemini-exporter.html" />
+    <meta property="og:title" content="Gemini Exporter" />
+    <meta property="og:description" content="Export Google Gemini conversations" />
+    <meta property="og:image" content="https://ai-chat-exporter.covai.org/og-image.png" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="640" />
+    <meta property="og:site_name" content="AI Chat Exporter" />
+    <meta property="og:locale" content="en_US" />
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://ai-chat-exporter.covai.org/gemini-exporter.html" />
+    <meta name="twitter:title" content="Gemini Exporter" />
+    <meta name="twitter:description" content="Export Google Gemini conversations" />
+    <meta name="twitter:image" content="https://ai-chat-exporter.covai.org/og-image.png" />
+    <!-- Theme bootstrap (pre-paint — prevents flash) -->
+    <script>
       (function () {
         try {
           var t = localStorage.getItem('ace-theme');
@@ -9,50 +34,636 @@
           /* ignore */
         }
       })();
-    </script><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><!-- Favicons --><link rel="icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="/icons/android-chrome-192x192.png"><link rel="icon" type="image/png" sizes="512x512" href="/icons/android-chrome-512x512.png"><link rel="manifest" href="/site.webmanifest"><!-- Styles --><link rel="stylesheet" href="/css/global.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"AI Chat Exporter","operatingSystem":"Chrome, Firefox, Edge","applicationCategory":"UtilitiesApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://ai-chat-exporter.covai.org","downloadUrl":"https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"}</script><script defer src="https://covai.org/analytics.js"></script></head><body><header><a href="/index.html" class="logo-container"><img src="/icons/icon48.png" alt="AI Chat Exporter Logo" class="logo-img" width="32" height="32"><span class="logo-text">AI Chat Exporter</span></a><div class="header-nav"><nav class="nav-links" aria-label="Main navigation"><a href="/index.html" class="nav-link">Home</a><a href="/guides.html" class="nav-link">Guides</a><a href="https://github.com/Covai-Labs/ai-chat-exporter" class="nav-link" target="_blank" rel="noopener noreferrer"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg><span>GitHub</span></a></nav><div class="theme-toggle" role="group" aria-label="Theme switcher"><button type="button" data-theme="light" aria-label="Light theme" title="Light" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg></button><button type="button" data-theme="dark" aria-label="Dark theme" title="Dark" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button><button type="button" data-theme="system" aria-label="System theme (follow OS)" title="System" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></button></div><script>
-  (function () {
-    const root = document.documentElement;
-    const buttons = Array.from(document.querySelectorAll('.theme-toggle button[data-theme]'));
-    if (!buttons.length) return;
-
-    function getStored() {
-      const t = localStorage.getItem('ace-theme');
-      return t === 'dark' || t === 'light' ? t : 'system';
-    }
-
-    function apply(theme) {
-      root.classList.remove('light', 'dark');
-      if (theme === 'light' || theme === 'dark') root.classList.add(theme);
-      try {
-        localStorage.setItem('ace-theme', theme);
-      } catch (e) {
-        /* private mode */
+    </script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icons/android-chrome-512x512.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/global.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "AI Chat Exporter",
+        "operatingSystem": "Chrome, Firefox, Edge",
+        "applicationCategory": "UtilitiesApplication",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "url": "https://ai-chat-exporter.covai.org",
+        "downloadUrl": "https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
       }
-      buttons.forEach((b) => {
-        b.setAttribute('aria-pressed', String(b.dataset.theme === theme));
-      });
-    }
+    </script>
+    <script defer src="https://covai.org/analytics.js"></script>
+  </head>
+  <body>
+    <header>
+      <a href="/index.html" class="logo-container"
+        ><img
+          src="/icons/icon48.png"
+          alt="AI Chat Exporter Logo"
+          class="logo-img"
+          width="32"
+          height="32"
+        /><span class="logo-text">AI Chat Exporter</span></a
+      >
+      <div class="header-nav">
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="/index.html" class="nav-link">Home</a
+          ><a href="/guides.html" class="nav-link">Guides</a
+          ><a
+            href="https://github.com/Covai-Labs/ai-chat-exporter"
+            class="nav-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+              ></path></svg
+            ><span>GitHub</span></a
+          >
+        </nav>
+        <div class="theme-toggle" role="group" aria-label="Theme switcher">
+          <button
+            type="button"
+            data-theme="light"
+            aria-label="Light theme"
+            title="Light"
+            aria-pressed="false"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="5"></circle>
+              <path
+                d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+              ></path>
+            </svg></button
+          ><button
+            type="button"
+            data-theme="dark"
+            aria-label="Dark theme"
+            title="Dark"
+            aria-pressed="false"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg></button
+          ><button
+            type="button"
+            data-theme="system"
+            aria-label="System theme (follow OS)"
+            title="System"
+            aria-pressed="false"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </button>
+        </div>
+        <script>
+          (function () {
+            const root = document.documentElement;
+            const buttons = Array.from(
+              document.querySelectorAll('.theme-toggle button[data-theme]'),
+            );
+            if (!buttons.length) return;
 
-    apply(getStored());
+            function getStored() {
+              const t = localStorage.getItem('ace-theme');
+              return t === 'dark' || t === 'light' ? t : 'system';
+            }
 
-    buttons.forEach((b) => {
-      b.addEventListener('click', () => apply(b.dataset.theme));
-    });
-  })();
-</script></div></header><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ai-chat-exporter.covai.org/index.html"},{"@type":"ListItem","position":2,"name":"Gemini Exporter"}]}</script><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span aria-hidden="true">&#8250;</span><span>Gemini Exporter</span></nav><main><div class="hero"><span class="badge">Supports Deep Research</span><h1>Gemini Exporter — Save Your Gemini Chats</h1><p class="hero-subtitle">Export your Google Gemini conversations to Markdown, PDF, JSON, HTML, Word, and PNG. Code blocks, tables, images, and long Deep Research sessions are all captured in one click.</p><div class="cta-group"><a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-testid="cta-chrome">Add to Chrome</a><a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" data-testid="cta-firefox">Add to Firefox</a></div></div><section class="content-section"><h2>Why Export Gemini Conversations?</h2><p>Google Gemini is an increasingly powerful AI assistant that integrates deeply with Google's ecosystem. It handles text, code, and images, and its Deep Research feature produces long, multi-source analyses. But Gemini does not offer a native export or download feature for conversations.</p><p>This means that valuable research threads, code generation sessions, and creative outputs are effectively trapped within Gemini's interface. If you need to reference a previous conversation, share findings with a colleague, or archive important exchanges, you are limited to screenshotting or manual copy-paste&mdash;both of which lose formatting, code highlighting, and structure.</p><p>The Gemini Exporter feature in AI Chat Exporter solves this by reading the Gemini DOM directly in your browser and converting conversations into properly formatted, portable files. Everything runs locally in the extension, with zero data transmission.</p></section><section class="content-section"><h2>Gemini-Specific Features</h2><div class="features-grid"><div class="feature-card"><h3>Deep Research Sessions</h3><p>Gemini's Deep Research feature produces long, multi-source analysis. The exporter handles these extended conversations without truncation, preserving the full research output with source references.</p></div><div class="feature-card"><h3>Code Block Preservation</h3><p>All code blocks are exported with their language tags intact. Syntax highlighting works in any Markdown editor that supports it, and multi-part code output is preserved as separate fenced blocks.</p></div><div class="feature-card"><h3>Image Handling</h3><p>Images uploaded by you or generated by Gemini are captured and embedded in the export as data URIs in Markdown and HTML, and inline in PDF and Word formats.</p></div><div class="feature-card"><h3>One-Click Export</h3><p>Click the extension popup or side panel and Gemini conversations convert to your chosen format instantly&mdash;no copying, no pasting, no cleanup.</p></div><div class="feature-card"><h3>Obsidian &amp; Logseq Ready</h3><p>Markdown output works directly in Obsidian, Logseq, Notion, Bear, and any Markdown editor. Math and code render correctly across all of them.</p></div><div class="feature-card"><h3>Six Export Formats</h3><p>Choose from Markdown, PDF, JSON, HTML, Word, or PNG. Each format is optimized for different use cases, from developer pipelines to visual sharing.</p></div></div></section><section class="content-section"><h2>Supported Export Formats</h2><p>AI Chat Exporter provides six output formats for Gemini conversations, each tailored to different needs:</p><div class="table-wrapper"><table><thead><tr><th>Format</th><th>Code</th><th>Tables</th><th>Images</th><th>Best For</th></tr></thead><tbody><tr><td><strong>Markdown (.md)</strong></td><td>Language-tagged fences</td><td>Preserved</td><td>Data URIs</td><td>Note-taking, Obsidian</td></tr><tr><td><strong>PDF (.pdf)</strong></td><td>Syntax colored</td><td>Preserved</td><td>Inline images</td><td>Printing, archival</td></tr><tr><td><strong>JSON (.json)</strong></td><td>Plain text</td><td>Structured</td><td>Base64</td><td>Developers, pipelines</td></tr><tr><td><strong>HTML (.html)</strong></td><td>Highlighted</td><td>Preserved</td><td>Inline &lt;img&gt;</td><td>Web archival</td></tr><tr><td><strong>Word (.doc)</strong></td><td>Monospace blocks</td><td>Preserved</td><td>Embedded</td><td>Documents, sharing</td></tr><tr><td><strong>PNG (.png)</strong></td><td>Highlighted</td><td>Rendered</td><td>Captured</td><td>Social, presentations</td></tr></tbody></table></div></section><section class="content-section"><h2>How Gemini DOM Extraction Works</h2><p>AI Chat Exporter reads Gemini conversations by inspecting the page's DOM structure. When you trigger an export, the extension traverses the conversation elements in the active Gemini tab, identifies user and assistant message boundaries, and extracts the content including formatted text, code blocks, and links.</p><p>For Deep Research sessions, the extension uses a dedicated immersive-panel extraction path that captures the full research output as structured messages rather than a block of raw text.</p><p>All extraction happens locally. The extension makes no requests to Google's servers, our servers, or any third-party API. The DOM parsing runs entirely within the browser's extension sandbox, ensuring your conversation data never leaves your machine.</p><div class="callout callout-warning"><strong>DOM-dependent updates: </strong>Since the exporter reads Gemini's DOM structure, major UI redesigns by Google may temporarily affect extraction. The extension is updated regularly to track DOM changes. If an export fails after a Gemini UI update, check for extension updates or report the issue on GitHub.</div></section><section class="content-section"><h2>No Official Gemini Export&mdash;Until Now</h2><p>Unlike ChatGPT, which offers a data export feature, Google Gemini currently has no built-in way to export or download individual conversation content. This means Gemini users have been limited to:</p><ul><li><strong>Manual copy-paste</strong> &mdash; tedious for long conversations, loses code formatting and images</li><li><strong>Screenshots</strong> &mdash; non-searchable, low resolution, cannot be linked or tagged</li><li><strong>Google Takeout</strong> &mdash; exports raw data in a bulk archive, not individual conversations in readable formats</li></ul><p>AI Chat Exporter provides what Google has not: a fast, one-click way to save Gemini conversations in formats you actually use. The extension bridges the gap between Gemini's powerful AI capabilities and the practical need to preserve and share conversation outputs.</p></section><section class="content-section"><h2>A Closer Look at Deep Research Exports</h2><p>Gemini's Deep Research mode generates detailed reports built from many sources. Exporting these sessions preserves the full analysis, including:</p><ul><li><strong>Comprehensive findings</strong> &mdash; The full research report is exported with its structure, headings, and reasoning intact.</li><li><strong>Source references</strong> &mdash; Citations and linked sources are preserved so you can trace claims.</li><li><strong>Reusable formats</strong> &mdash; Save as Markdown for note-taking, PDF for sharing, or JSON for programmatic use.</li></ul></section><section class="content-section"><h2>How to Export Gemini Conversations</h2><div class="steps"><div class="step"><div class="step-content"><h3>Install the Extension</h3><p>Add AI Chat Exporter from the Chrome Web Store or Firefox Add-ons. The extension requires minimal permissions&amp;mdash;only access to the AI platform tabs you want to export from.</p></div></div><div class="step"><div class="step-content"><h3>Open a Gemini Conversation</h3><p>Navigate to gemini.google.com and open any conversation you want to export. Works with regular chats and Deep Research outputs.</p></div></div><div class="step"><div class="step-content"><h3>Click the Export Button</h3><p>Open the extension popup or side panel and select your preferred format. The extension reads the conversation from the page and generates the output file.</p></div></div><div class="step"><div class="step-content"><h3>Save or Transfer</h3><p>The file downloads automatically. Use the Obsidian transfer for direct vault integration, or copy the content to your clipboard for pasting into another application.</p></div></div></div></section><section class="content-section"><h2>Frequently Asked Questions</h2><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does this work with Gemini's Deep Research feature?","acceptedAnswer":{"@type":"Answer","text":"Yes. Deep Research sessions produce long, multi-source analyses that the exporter handles without truncation, using a dedicated immersive-panel extraction path. The full research output, including source references and structured findings, is captured in the export."}},{"@type":"Question","name":"Are code blocks preserved in the export?","acceptedAnswer":{"@type":"Answer","text":"Yes. Code blocks are extracted with their language tags and exported as fenced code blocks in Markdown, highlighted blocks in HTML, monospace blocks in Word, and plain text in JSON. They also render correctly in PNG output."}},{"@type":"Question","name":"Are images from Gemini conversations preserved?","acceptedAnswer":{"@type":"Answer","text":"Yes. Both user-uploaded images and Gemini-generated images are captured and embedded in the export. In Markdown and HTML formats, images appear as base64 data URIs. In PDF and Word formats, they are inline embedded images."}},{"@type":"Question","name":"Can I export Gemini conversations to Obsidian?","acceptedAnswer":{"@type":"Answer","text":"Yes. Export in Markdown format and your Gemini conversations work directly in Obsidian, or use the extension's built-in Obsidian transfer to send them straight to your vault."}},{"@type":"Question","name":"Is my Gemini data sent to any external server?","acceptedAnswer":{"@type":"Answer","text":"No. All extraction and formatting happens locally within your browser extension. The extension never contacts Google's servers, our servers, or any third-party API. You can verify this by inspecting the source code on GitHub."}}]}</script><div class="faq"><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Does this work with Gemini&#39;s Deep Research feature?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. Deep Research sessions produce long, multi-source analyses that the exporter handles without truncation, using a dedicated immersive-panel extraction path. The full research output, including source references and structured findings, is captured in the export.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Are code blocks preserved in the export?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. Code blocks are extracted with their language tags and exported as fenced code blocks in Markdown, highlighted blocks in HTML, monospace blocks in Word, and plain text in JSON. They also render correctly in PNG output.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Are images from Gemini conversations preserved?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. Both user-uploaded images and Gemini-generated images are captured and embedded in the export. In Markdown and HTML formats, images appear as base64 data URIs. In PDF and Word formats, they are inline embedded images.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Can I export Gemini conversations to Obsidian?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. Export in Markdown format and your Gemini conversations work directly in Obsidian, or use the extension's built-in Obsidian transfer to send them straight to your vault.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Is my Gemini data sent to any external server?</button><div class="faq-answer" role="region" aria-hidden="true">No. All extraction and formatting happens locally within your browser extension. The extension never contacts Google's servers, our servers, or any third-party API. You can verify this by inspecting the source code on GitHub.</div></div></div><script>
-  document.querySelectorAll('.faq-item').forEach((item, i) => {
-    const btn = item.querySelector('.faq-question');
-    const answer = item.querySelector('.faq-answer');
-    if (!btn || !answer) return;
-    const id = 'faq-' + (i + 1);
-    btn.id = 'q-' + id;
-    btn.setAttribute('aria-controls', id);
-    answer.id = id;
-    answer.setAttribute('aria-labelledby', 'q-' + id);
-    btn.addEventListener('click', () => {
-      const open = item.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      answer.setAttribute('aria-hidden', open ? 'false' : 'true');
-    });
-  });
-</script></section><section class="content-section"><section class="related-pages"><h2>Related Pages</h2><div class="related-grid"><a href="/gemini-to-markdown.html" class="related-link"><h3>Gemini to Markdown</h3><p>Gemini chats as portable Markdown</p></a><a href="/chatgpt-exporter.html" class="related-link"><h3>ChatGPT Exporter</h3><p>Export ChatGPT conversations to Markdown, PDF, JSON &amp; more</p></a><a href="/claude-exporter.html" class="related-link"><h3>Claude Exporter</h3><p>Export Claude conversations &amp; artifacts</p></a></div></section></section><section class="content-section"><div class="callout callout-success"><p><strong>Ready to export your Gemini conversations?</strong></p><div class="cta-group compact"><a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Add to Chrome</a><a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Add to Firefox</a></div></div></section></main><footer><div class="footer-links"><a href="/privacy.html">Privacy Policy</a><span class="footer-sep" aria-hidden="true">|</span><a href="/license.html">License (MPL 2.0)</a><span class="footer-sep" aria-hidden="true">|</span><a href="/feedback.html">Feedback &amp; Issues</a><span class="footer-sep" aria-hidden="true">|</span><a href="https://github.com/Covai-Labs/ai-chat-exporter" target="_blank" rel="noopener noreferrer">GitHub Repository</a></div><p>&copy; 2026 AI Chat Exporter. Released under the Mozilla Public License 2.0.</p></footer></body></html>
+            function apply(theme) {
+              root.classList.remove('light', 'dark');
+              if (theme === 'light' || theme === 'dark') root.classList.add(theme);
+              try {
+                localStorage.setItem('ace-theme', theme);
+              } catch (e) {
+                /* private mode */
+              }
+              buttons.forEach((b) => {
+                b.setAttribute('aria-pressed', String(b.dataset.theme === theme));
+              });
+            }
+
+            apply(getStored());
+
+            buttons.forEach((b) => {
+              b.addEventListener('click', () => apply(b.dataset.theme));
+            });
+          })();
+        </script>
+      </div>
+    </header>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ai-chat-exporter.covai.org/index.html"
+          },
+          { "@type": "ListItem", "position": 2, "name": "Gemini Exporter" }
+        ]
+      }
+    </script>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/index.html">Home</a><span aria-hidden="true">&#8250;</span
+      ><span>Gemini Exporter</span>
+    </nav>
+    <main>
+      <div class="hero">
+        <span class="badge">Supports Deep Research</span>
+        <h1>Gemini Exporter — Save Your Gemini Chats</h1>
+        <p class="hero-subtitle">
+          Export your Google Gemini conversations to Markdown, PDF, JSON, HTML, Word, and PNG. Code
+          blocks, tables, images, and long Deep Research sessions are all captured in one click.
+        </p>
+        <div class="cta-group">
+          <a
+            href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="cta-chrome"
+            >Add to Chrome</a
+          ><a
+            href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/"
+            class="btn btn-secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="cta-firefox"
+            >Add to Firefox</a
+          >
+        </div>
+      </div>
+      <section class="content-section">
+        <h2>Why Export Gemini Conversations?</h2>
+        <p>
+          Google Gemini is an increasingly powerful AI assistant that integrates deeply with
+          Google's ecosystem. It handles text, code, and images, and its Deep Research feature
+          produces long, multi-source analyses. But Gemini does not offer a native export or
+          download feature for conversations.
+        </p>
+        <p>
+          This means that valuable research threads, code generation sessions, and creative outputs
+          are effectively trapped within Gemini's interface. If you need to reference a previous
+          conversation, share findings with a colleague, or archive important exchanges, you are
+          limited to screenshotting or manual copy-paste&mdash;both of which lose formatting, code
+          highlighting, and structure.
+        </p>
+        <p>
+          The Gemini Exporter feature in AI Chat Exporter solves this by reading the Gemini DOM
+          directly in your browser and converting conversations into properly formatted, portable
+          files. Everything runs locally in the extension, with zero data transmission.
+        </p>
+      </section>
+      <section class="content-section">
+        <h2>Gemini-Specific Features</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <h3>Deep Research Sessions</h3>
+            <p>
+              Gemini's Deep Research feature produces long, multi-source analysis. The exporter
+              handles these extended conversations without truncation, preserving the full research
+              output with source references.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>Code Block Preservation</h3>
+            <p>
+              All code blocks are exported with their language tags intact. Syntax highlighting
+              works in any Markdown editor that supports it, and multi-part code output is preserved
+              as separate fenced blocks.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>Image Handling</h3>
+            <p>
+              Images uploaded by you or generated by Gemini are captured and embedded in the export
+              as data URIs in Markdown and HTML, and inline in PDF and Word formats.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>One-Click Export</h3>
+            <p>
+              Click the extension popup or side panel and Gemini conversations convert to your
+              chosen format instantly&mdash;no copying, no pasting, no cleanup.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>Obsidian &amp; Logseq Ready</h3>
+            <p>
+              Markdown output works directly in Obsidian, Logseq, Notion, Bear, and any Markdown
+              editor. Math and code render correctly across all of them.
+            </p>
+          </div>
+          <div class="feature-card">
+            <h3>Six Export Formats</h3>
+            <p>
+              Choose from Markdown, PDF, JSON, HTML, Word, or PNG. Each format is optimized for
+              different use cases, from developer pipelines to visual sharing.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="content-section">
+        <h2>Supported Export Formats</h2>
+        <p>
+          AI Chat Exporter provides six output formats for Gemini conversations, each tailored to
+          different needs:
+        </p>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Format</th>
+                <th>Code</th>
+                <th>Tables</th>
+                <th>Images</th>
+                <th>Best For</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Markdown (.md)</strong></td>
+                <td>Language-tagged fences</td>
+                <td>Preserved</td>
+                <td>Data URIs</td>
+                <td>Note-taking, Obsidian</td>
+              </tr>
+              <tr>
+                <td><strong>PDF (.pdf)</strong></td>
+                <td>Syntax colored</td>
+                <td>Preserved</td>
+                <td>Inline images</td>
+                <td>Printing, archival</td>
+              </tr>
+              <tr>
+                <td><strong>JSON (.json)</strong></td>
+                <td>Plain text</td>
+                <td>Structured</td>
+                <td>Base64</td>
+                <td>Developers, pipelines</td>
+              </tr>
+              <tr>
+                <td><strong>HTML (.html)</strong></td>
+                <td>Highlighted</td>
+                <td>Preserved</td>
+                <td>Inline &lt;img&gt;</td>
+                <td>Web archival</td>
+              </tr>
+              <tr>
+                <td><strong>Word (.doc)</strong></td>
+                <td>Monospace blocks</td>
+                <td>Preserved</td>
+                <td>Embedded</td>
+                <td>Documents, sharing</td>
+              </tr>
+              <tr>
+                <td><strong>PNG (.png)</strong></td>
+                <td>Highlighted</td>
+                <td>Rendered</td>
+                <td>Captured</td>
+                <td>Social, presentations</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="content-section">
+        <h2>How Gemini DOM Extraction Works</h2>
+        <p>
+          AI Chat Exporter reads Gemini conversations by inspecting the page's DOM structure. When
+          you trigger an export, the extension traverses the conversation elements in the active
+          Gemini tab, identifies user and assistant message boundaries, and extracts the content
+          including formatted text, code blocks, and links.
+        </p>
+        <p>
+          For Deep Research sessions, the extension uses a dedicated immersive-panel extraction path
+          that captures the full research output as structured messages rather than a block of raw
+          text.
+        </p>
+        <p>
+          All extraction happens locally. The extension makes no requests to Google's servers, our
+          servers, or any third-party API. The DOM parsing runs entirely within the browser's
+          extension sandbox, ensuring your conversation data never leaves your machine.
+        </p>
+        <div class="callout callout-warning">
+          <strong>DOM-dependent updates: </strong>Since the exporter reads Gemini's DOM structure,
+          major UI redesigns by Google may temporarily affect extraction. The extension is updated
+          regularly to track DOM changes. If an export fails after a Gemini UI update, check for
+          extension updates or report the issue on GitHub.
+        </div>
+      </section>
+      <section class="content-section">
+        <h2>No Official Gemini Export&mdash;Until Now</h2>
+        <p>
+          Unlike ChatGPT, which offers a data export feature, Google Gemini currently has no
+          built-in way to export or download individual conversation content. This means Gemini
+          users have been limited to:
+        </p>
+        <ul>
+          <li>
+            <strong>Manual copy-paste</strong> &mdash; tedious for long conversations, loses code
+            formatting and images
+          </li>
+          <li>
+            <strong>Screenshots</strong> &mdash; non-searchable, low resolution, cannot be linked or
+            tagged
+          </li>
+          <li>
+            <strong>Google Takeout</strong> &mdash; exports raw data in a bulk archive, not
+            individual conversations in readable formats
+          </li>
+        </ul>
+        <p>
+          AI Chat Exporter provides what Google has not: a fast, one-click way to save Gemini
+          conversations in formats you actually use. The extension bridges the gap between Gemini's
+          powerful AI capabilities and the practical need to preserve and share conversation
+          outputs.
+        </p>
+      </section>
+      <section class="content-section">
+        <h2>A Closer Look at Deep Research Exports</h2>
+        <p>
+          Gemini's Deep Research mode generates detailed reports built from many sources. Exporting
+          these sessions preserves the full analysis, including:
+        </p>
+        <ul>
+          <li>
+            <strong>Comprehensive findings</strong> &mdash; The full research report is exported
+            with its structure, headings, and reasoning intact.
+          </li>
+          <li>
+            <strong>Source references</strong> &mdash; Citations and linked sources are preserved so
+            you can trace claims.
+          </li>
+          <li>
+            <strong>Reusable formats</strong> &mdash; Save as Markdown for note-taking, PDF for
+            sharing, or JSON for programmatic use.
+          </li>
+        </ul>
+      </section>
+      <section class="content-section">
+        <h2>How to Export Gemini Conversations</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-content">
+              <h3>Install the Extension</h3>
+              <p>
+                Add AI Chat Exporter from the Chrome Web Store or Firefox Add-ons. The extension
+                requires minimal permissions&amp;mdash;only access to the AI platform tabs you want
+                to export from.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h3>Open a Gemini Conversation</h3>
+              <p>
+                Navigate to gemini.google.com and open any conversation you want to export. Works
+                with regular chats and Deep Research outputs.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h3>Click the Export Button</h3>
+              <p>
+                Open the extension popup or side panel and select your preferred format. The
+                extension reads the conversation from the page and generates the output file.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-content">
+              <h3>Save or Transfer</h3>
+              <p>
+                The file downloads automatically. Use the Obsidian transfer for direct vault
+                integration, or copy the content to your clipboard for pasting into another
+                application.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="content-section">
+        <h2>Frequently Asked Questions</h2>
+        <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Does this work with Gemini's Deep Research feature?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Deep Research sessions produce long, multi-source analyses that the exporter handles without truncation, using a dedicated immersive-panel extraction path. The full research output, including source references and structured findings, is captured in the export."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Are code blocks preserved in the export?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Code blocks are extracted with their language tags and exported as fenced code blocks in Markdown, highlighted blocks in HTML, monospace blocks in Word, and plain text in JSON. They also render correctly in PNG output."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Are images from Gemini conversations preserved?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Both user-uploaded images and Gemini-generated images are captured and embedded in the export. In Markdown and HTML formats, images appear as base64 data URIs. In PDF and Word formats, they are inline embedded images."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I export Gemini conversations to Obsidian?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Export in Markdown format and your Gemini conversations work directly in Obsidian, or use the extension's built-in Obsidian transfer to send them straight to your vault."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is my Gemini data sent to any external server?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. All extraction and formatting happens locally within your browser extension. The extension never contacts Google's servers, our servers, or any third-party API. You can verify this by inspecting the source code on GitHub."
+                }
+              }
+            ]
+          }
+        </script>
+        <div class="faq">
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
+              Does this work with Gemini&#39;s Deep Research feature?
+            </button>
+            <div class="faq-answer" role="region" aria-hidden="true">
+              Yes. Deep Research sessions produce long, multi-source analyses that the exporter
+              handles without truncation, using a dedicated immersive-panel extraction path. The
+              full research output, including source references and structured findings, is captured
+              in the export.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
+              Are code blocks preserved in the export?
+            </button>
+            <div class="faq-answer" role="region" aria-hidden="true">
+              Yes. Code blocks are extracted with their language tags and exported as fenced code
+              blocks in Markdown, highlighted blocks in HTML, monospace blocks in Word, and plain
+              text in JSON. They also render correctly in PNG output.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
+              Are images from Gemini conversations preserved?
+            </button>
+            <div class="faq-answer" role="region" aria-hidden="true">
+              Yes. Both user-uploaded images and Gemini-generated images are captured and embedded
+              in the export. In Markdown and HTML formats, images appear as base64 data URIs. In PDF
+              and Word formats, they are inline embedded images.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
+              Can I export Gemini conversations to Obsidian?
+            </button>
+            <div class="faq-answer" role="region" aria-hidden="true">
+              Yes. Export in Markdown format and your Gemini conversations work directly in
+              Obsidian, or use the extension's built-in Obsidian transfer to send them straight to
+              your vault.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
+              Is my Gemini data sent to any external server?
+            </button>
+            <div class="faq-answer" role="region" aria-hidden="true">
+              No. All extraction and formatting happens locally within your browser extension. The
+              extension never contacts Google's servers, our servers, or any third-party API. You
+              can verify this by inspecting the source code on GitHub.
+            </div>
+          </div>
+        </div>
+        <script>
+          document.querySelectorAll('.faq-item').forEach((item, i) => {
+            const btn = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            if (!btn || !answer) return;
+            const id = 'faq-' + (i + 1);
+            btn.id = 'q-' + id;
+            btn.setAttribute('aria-controls', id);
+            answer.id = id;
+            answer.setAttribute('aria-labelledby', 'q-' + id);
+            btn.addEventListener('click', () => {
+              const open = item.classList.toggle('open');
+              btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+              answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+            });
+          });
+        </script>
+      </section>
+      <section class="content-section">
+        <section class="related-pages">
+          <h2>Related Pages</h2>
+          <div class="related-grid">
+            <a href="/gemini-to-markdown.html" class="related-link"
+              ><h3>Gemini to Markdown</h3>
+              <p>Gemini chats as portable Markdown</p></a
+            ><a href="/chatgpt-exporter.html" class="related-link"
+              ><h3>ChatGPT Exporter</h3>
+              <p>Export ChatGPT conversations to Markdown, PDF, JSON &amp; more</p></a
+            ><a href="/claude-exporter.html" class="related-link"
+              ><h3>Claude Exporter</h3>
+              <p>Export Claude conversations &amp; artifacts</p></a
+            >
+          </div>
+        </section>
+      </section>
+      <section class="content-section">
+        <div class="callout callout-success">
+          <p><strong>Ready to export your Gemini conversations?</strong></p>
+          <div class="cta-group compact">
+            <a
+              href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Add to Chrome</a
+            ><a
+              href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/"
+              class="btn btn-secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Add to Firefox</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-links">
+        <a href="/privacy.html">Privacy Policy</a
+        ><span class="footer-sep" aria-hidden="true">|</span
+        ><a href="/license.html">License (MPL 2.0)</a
+        ><span class="footer-sep" aria-hidden="true">|</span
+        ><a href="/feedback.html">Feedback &amp; Issues</a
+        ><span class="footer-sep" aria-hidden="true">|</span
+        ><a
+          href="https://github.com/Covai-Labs/ai-chat-exporter"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub Repository</a
+        >
+      </div>
+      <p>&copy; 2026 AI Chat Exporter. Released under the Mozilla Public License 2.0.</p>
+    </footer>
+  </body>
+</html>

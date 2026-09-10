@@ -24,6 +24,7 @@ const jsonLd = {
   })),
 };
 ---
+
 <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
 
 <div class="faq">
@@ -32,7 +33,7 @@ const jsonLd = {
       <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
         {item.q}
       </button>
-      <div class="faq-answer" role="region" aria-hidden="true" set:html={item.a}></div>
+      <div class="faq-answer" role="region" aria-hidden="true" set:html={item.a} />
     </div>
   ))}
 </div>

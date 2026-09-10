@@ -13,6 +13,7 @@ interface Props {
 
 const { title, description, tallySrc, iframeId, canonicalPath } = Astro.props;
 ---
+
 <BaseLayout
   title={title}
   description={description}
@@ -25,13 +26,15 @@ const { title, description, tallySrc, iframeId, canonicalPath } = Astro.props;
       <div class="banner-badge">100% Local &amp; Open Source</div>
       <div class="banner-text">
         <span>
-          AI Chat Exporter is fully local, free, and open source. All contributions and feedback
-          are warmly welcomed!
+          AI Chat Exporter is fully local, free, and open source. All contributions and feedback are
+          warmly welcomed!
         </span>
         <span class="banner-subtext">
           You can directly fix issues or contribute on
-          <a href={SITE.github} target="_blank" rel="noopener noreferrer">GitHub</a>, or submit
-          your thoughts below and I will surely look into them.
+          <a href={SITE.github} target="_blank" rel="noopener noreferrer">
+            GitHub
+          </a>
+          , or submit your thoughts below and I will surely look into them.
         </span>
       </div>
     </div>
@@ -58,8 +61,7 @@ const { title, description, tallySrc, iframeId, canonicalPath } = Astro.props;
   <script is:inline>
     (function () {
       const iframe =
-        document.getElementById('{iframeId}') ||
-        document.querySelector('iframe[data-tally-src]');
+        document.getElementById('{iframeId}') || document.querySelector('iframe[data-tally-src]');
       if (!iframe) return;
 
       const ua = navigator.userAgent || '';
@@ -143,7 +145,10 @@ const { title, description, tallySrc, iframeId, canonicalPath } = Astro.props;
           ? pageParams.get('browser')
           : browser,
       );
-      urlObj.searchParams.set('browser_version', pageParams.get('browser_version') || browserVersion);
+      urlObj.searchParams.set(
+        'browser_version',
+        pageParams.get('browser_version') || browserVersion,
+      );
       urlObj.searchParams.set('os', pageParams.get('os') || os);
       urlObj.searchParams.set('user_agent', ua);
 
@@ -161,7 +166,6 @@ const { title, description, tallySrc, iframeId, canonicalPath } = Astro.props;
       }
     })();
   </script>
-
   <style is:global>
     html,
     body {

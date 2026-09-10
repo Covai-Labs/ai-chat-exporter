@@ -15,6 +15,7 @@ const meta = {
     'Send conversations from ChatGPT, Claude, Gemini and 14 other AI platforms straight into your Obsidian vault as clean Markdown notes. One click, no API keys, no copy-paste.',
 };
 ---
+
 <GuideLayout
   title={meta.title}
   description={meta.description}
@@ -28,9 +29,9 @@ const meta = {
     <h2>Why Export AI Conversations to Obsidian?</h2>
     <p>
       Obsidian is the most popular personal knowledge management tool for researchers, developers,
-      and writers. It gives you full control over your notes with local Markdown files, bidirectional
-      linking, and a powerful plugin ecosystem. But Obsidian only works as well as the content you
-      put into it.
+      and writers. It gives you full control over your notes with local Markdown files,
+      bidirectional linking, and a powerful plugin ecosystem. But Obsidian only works as well as the
+      content you put into it.
     </p>
     <p>
       Every day you have valuable conversations with AI assistants&mdash;code reviews, research
@@ -109,9 +110,9 @@ const meta = {
       <div class="feature-card">
         <h3>Thinking and Reasoning Sections</h3>
         <p>
-          When Claude or ChatGPT shows its thinking process, the extension captures it and formats it
-          as a collapsible blockquote in the Markdown output. You keep the reasoning trail without
-          cluttering the main response.
+          When Claude or ChatGPT shows its thinking process, the extension captures it and formats
+          it as a collapsible blockquote in the Markdown output. You keep the reasoning trail
+          without cluttering the main response.
         </p>
       </div>
       <div class="feature-card">
@@ -147,40 +148,50 @@ const meta = {
         </thead>
         <tbody>
           <tr>
-            <td><strong>ChatGPT</strong></td>
-            <td
-              >Artifacts become labeled sections, Canvas captured as labeled placeholder, thinking
-              process captured</td
-            >
+            <td>
+              <strong>ChatGPT</strong>
+            </td>
+            <td>
+              Artifacts become labeled sections, Canvas captured as labeled placeholder, thinking
+              process captured
+            </td>
             <td>Group conversations with multiple models are preserved with model attribution</td>
           </tr>
           <tr>
-            <td><strong>Claude</strong></td>
-            <td
-              >Artifacts with version history, thinking blocks as collapsible callouts, tool use
-              steps</td
-            >
+            <td>
+              <strong>Claude</strong>
+            </td>
+            <td>
+              Artifacts with version history, thinking blocks as collapsible callouts, tool use
+              steps
+            </td>
             <td>Extended thinking is formatted as blockquotes for clean separation</td>
           </tr>
           <tr>
-            <td><strong>Gemini</strong></td>
-            <td
-              >Code execution outputs, multi-modal responses, Google Workspace integrations</td
-            >
+            <td>
+              <strong>Gemini</strong>
+            </td>
+            <td>Code execution outputs, multi-modal responses, Google Workspace integrations</td>
             <td>Large context windows mean long exports work well</td>
           </tr>
           <tr>
-            <td><strong>DeepSeek</strong></td>
+            <td>
+              <strong>DeepSeek</strong>
+            </td>
             <td>DeepThink reasoning sections, code generation with full context</td>
             <td>Math-heavy conversations transfer with equations intact</td>
           </tr>
           <tr>
-            <td><strong>Perplexity</strong></td>
+            <td>
+              <strong>Perplexity</strong>
+            </td>
             <td>Citations preserved as footnotes, source links maintained</td>
             <td>Research threads become well-documented notes</td>
           </tr>
           <tr>
-            <td><strong>Other Platforms</strong></td>
+            <td>
+              <strong>Other Platforms</strong>
+            </td>
             <td>Copilot, Qwen, Mistral, Meta AI, NotebookLM, Google AI Studio, and 8 more</td>
             <td>Core message structure preserved across all 17 supported platforms</td>
           </tr>
@@ -194,10 +205,10 @@ const meta = {
     <h2>Why This Beats Manual Copy-Paste</h2>
     <p>
       Manually copying a conversation into Obsidian sounds simple until you try it. You have to
-      select the entire conversation, paste it into a new note, then fix the
-      formatting&mdash;code blocks that lost their language tags, math that renders as raw text,
-      tables that collapsed, images that did not transfer. For long conversations, this process can
-      take 15-20 minutes per note.
+      select the entire conversation, paste it into a new note, then fix the formatting&mdash;code
+      blocks that lost their language tags, math that renders as raw text, tables that collapsed,
+      images that did not transfer. For long conversations, this process can take 15-20 minutes per
+      note.
     </p>
     <p>
       AI Chat Exporter reduces this to a single click. The extension handles all formatting, creates
@@ -247,9 +258,9 @@ const meta = {
           <tr>
             <td>Artifacts / Canvas</td>
             <td>Not supported</td>
-            <td
-              >Artifacts represented as labeled sections; Canvas captured as labeled placeholder</td
-            >
+            <td>
+              Artifacts represented as labeled sections; Canvas captured as labeled placeholder
+            </td>
           </tr>
           <tr>
             <td>Selective export</td>
@@ -316,24 +327,26 @@ const meta = {
     </p>
     <ol>
       <li>Open the ChatGPT conversation in Chrome or Firefox.</li>
-      <li
-        >Click the AI Chat Exporter extension icon. The side panel opens showing the parsed
-        conversation.</li
-      >
+      <li>
+        Click the AI Chat Exporter extension icon. The side panel opens showing the parsed
+        conversation.
+      </li>
       <li>Click the Obsidian icon in the export toolbar.</li>
-      <li
-        >The extension converts the conversation to Markdown. Code blocks retain their Python
-        language tags. Inline code and function names are preserved.</li
-      >
-      <li
-        >A new tab opens with <code
-          >obsidian://new?vault=Dev%20Notes&name=ChatGPT%20-%20Python%20Async%20Programming%20-%202026-09-08</code
-        >.</li
-      >
-      <li
-        >Obsidian creates the note in your "Dev Notes" vault. The note appears in your file explorer
-        with all code blocks, headers, and formatted content intact.</li
-      >
+      <li>
+        The extension converts the conversation to Markdown. Code blocks retain their Python
+        language tags. Inline code and function names are preserved.
+      </li>
+      <li>
+        A new tab opens with{' '}
+        <code>
+          obsidian://new?vault=Dev%20Notes&name=ChatGPT%20-%20Python%20Async%20Programming%20-%202026-09-08
+        </code>
+        .
+      </li>
+      <li>
+        Obsidian creates the note in your "Dev Notes" vault. The note appears in your file explorer
+        with all code blocks, headers, and formatted content intact.
+      </li>
     </ol>
     <p>
       The entire process takes less than 5 seconds. You can now link to this note from other notes,
@@ -346,12 +359,11 @@ const meta = {
   <section class="content-section">
     <h2>Organizing Monthly and Weekly Exports in Obsidian</h2>
     <p>
-      While each export is a single conversation, you can use the filename template settings to
-      give every export a consistent, sortable name. Setting the template to <code
-        >{'{platform} - {title} - {datetime}'}</code
-      > produces flat filenames like <code
-        >ChatGPT - React Hooks Debugging - 2026-09-09_14-30.md</code
-      >, letting you build a searchable archive one export at a time without manual renaming.
+      While each export is a single conversation, you can use the filename template settings to give
+      every export a consistent, sortable name. Setting the template to{' '}
+      <code>{'{platform} - {title} - {datetime}'}</code> produces flat filenames like{' '}
+      <code>ChatGPT - React Hooks Debugging - 2026-09-09_14-30.md</code>, letting you build a
+      searchable archive one export at a time without manual renaming.
     </p>
     <p>
       Because Obsidian indexes files on disk, saved exports land directly in your vault and become

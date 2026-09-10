@@ -9,13 +9,13 @@ import Callout from '../components/Callout.astro';
 const meta = {
   slug: 'claude-to-markdown',
   title: 'Claude to Markdown',
-  description:
-    'Claude conversations as clean .md files',
+  description: 'Claude conversations as clean .md files',
   heroTitle: 'Claude to Markdown — Clean, Structured Exports',
   heroSubtitle:
     'Convert your Claude conversations into clean, portable Markdown files. Code blocks, LaTeX equations, Artifacts, and images are all preserved with proper formatting.',
 };
 ---
+
 <GuideLayout
   title={meta.title}
   description={meta.description}
@@ -61,9 +61,7 @@ const meta = {
       note indicating version history was present. This approach keeps the Markdown file linear and
       readable while preserving the artifact context.
     </p>
-    <p>
-      For example, a React component artifact exported to Markdown would appear as:
-    </p>
+    <p>For example, a React component artifact exported to Markdown would appear as:</p>
     <Callout tone="info" title="Artifact Example">
       The artifact code is wrapped in a <code>```jsx</code> fence with the artifact title as a
       heading above it, making it easy to find and copy.
@@ -74,16 +72,16 @@ const meta = {
   <section class="content-section">
     <h2>Code Block Handling with Syntax Highlighting</h2>
     <p>
-      Claude frequently generates code in its responses, and the quality of code preservation matters
-      enormously for developers. The exporter uses PrismJS-compatible language detection to ensure
-      every code block is tagged with the correct language identifier.
+      Claude frequently generates code in its responses, and the quality of code preservation
+      matters enormously for developers. The exporter uses PrismJS-compatible language detection to
+      ensure every code block is tagged with the correct language identifier.
     </p>
     <p>
-      This means that when you open the exported Markdown file in any editor with syntax highlighting
-      support (VS Code, Obsidian, Typora, GitHub), the code renders with proper coloring. Language
-      tags like <code>python</code>, <code>javascript</code>, <code>typescript</code>,
-      <code>rust</code>, <code>go</code>, and dozens more are automatically detected based on
-      Claude's own language annotations and heuristics.
+      This means that when you open the exported Markdown file in any editor with syntax
+      highlighting support (VS Code, Obsidian, Typora, GitHub), the code renders with proper
+      coloring. Language tags like <code>python</code>, <code>javascript</code>,{' '}
+      <code>typescript</code>,<code>rust</code>, <code>go</code>, and dozens more are automatically
+      detected based on Claude's own language annotations and heuristics.
     </p>
     <p>
       Inline code (backtick-wrapped phrases) is preserved as-is, and nested code blocks within lists
@@ -96,8 +94,8 @@ const meta = {
     <h2>LaTeX Math Equations</h2>
     <p>
       When Claude produces mathematical content, it uses LaTeX notation with dollar-sign delimiters.
-      The exporter preserves these equations exactly as Claude outputs them. Both inline math
-      (<code>$...$</code>) and display math (<code>$$...$$</code>) are maintained.
+      The exporter preserves these equations exactly as Claude outputs them. Both inline math (
+      <code>$...$</code>) and display math (<code>$$...$$</code>) are maintained.
     </p>
     <p>
       This is particularly important for academic and scientific conversations where equations are
@@ -116,9 +114,9 @@ const meta = {
       .md file is fully self-contained&mdash;no external image links that could break over time.
     </p>
     <p>
-      For conversations where images were uploaded by the user (such as screenshots or documents sent
-      to Claude for analysis), those images are also captured and embedded. The result is a complete
-      record of the visual context alongside the textual conversation.
+      For conversations where images were uploaded by the user (such as screenshots or documents
+      sent to Claude for analysis), those images are also captured and embedded. The result is a
+      complete record of the visual context alongside the textual conversation.
     </p>
   </section>
 
@@ -126,10 +124,10 @@ const meta = {
   <section class="content-section">
     <h2>Selective Turn Export</h2>
     <p>
-      Sometimes you only need a specific exchange from a long Claude conversation. The selective turn
-      export lets you choose exactly which message turns to include in the Markdown output. After
-      clicking export, the extension presents the conversation turns and lets you select the range
-      you want.
+      Sometimes you only need a specific exchange from a long Claude conversation. The selective
+      turn export lets you choose exactly which message turns to include in the Markdown output.
+      After clicking export, the extension presents the conversation turns and lets you select the
+      range you want.
     </p>
     <p>
       This feature is especially useful for research conversations where Claude might have explored
@@ -146,8 +144,12 @@ const meta = {
       and a timestamp. The default template produces filenames like:
     </p>
     <ul>
-      <li><code>Claude-React-Refactor-2026-03-15.md</code></li>
-      <li><code>Claude-Math-Proof-Derivation-2026-03-15.md</code></li>
+      <li>
+        <code>Claude-React-Refactor-2026-03-15.md</code>
+      </li>
+      <li>
+        <code>Claude-Math-Proof-Derivation-2026-03-15.md</code>
+      </li>
     </ul>
     <p>
       You can customize the filename template in the extension settings to match your preferred
@@ -158,8 +160,8 @@ const meta = {
   <!-- Privacy -->
   <section class="content-section">
     <Callout tone="success" title="100% local processing">
-      The Markdown rendering happens entirely within the browser extension. Your conversation data is
-      never transmitted to any external server. The exported .md file is generated in memory and
+      The Markdown rendering happens entirely within the browser extension. Your conversation data
+      is never transmitted to any external server. The exported .md file is generated in memory and
       saved directly to your downloads folder.
     </Callout>
   </section>
@@ -175,7 +177,7 @@ const meta = {
         },
         {
           q: 'Does the exporter preserve code block language tags?',
-          a: 'Yes. Language detection uses Claude\'s own annotations combined with heuristic analysis. The exported code blocks include the language identifier (e.g., ```python, ```typescript, ```rust) so syntax highlighting works correctly in any Markdown renderer that supports it.',
+          a: "Yes. Language detection uses Claude's own annotations combined with heuristic analysis. The exported code blocks include the language identifier (e.g., ```python, ```typescript, ```rust) so syntax highlighting works correctly in any Markdown renderer that supports it.",
         },
         {
           q: 'Can I export LaTeX math equations properly?',

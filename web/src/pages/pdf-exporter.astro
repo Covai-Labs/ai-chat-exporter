@@ -15,6 +15,7 @@ const meta = {
     'Convert AI conversations from all 17 supported platforms into print-optimized PDF files with custom themes, page breaks, and a table of contents.',
 };
 ---
+
 <GuideLayout
   title={meta.title}
   description={meta.description}
@@ -28,27 +29,47 @@ const meta = {
     <div class="features-grid">
       <div class="feature-card">
         <h3>Print-Optimized Layout</h3>
-        <p>PDF export generates a print-ready HTML document and opens the browser's native print dialog. Margins, page breaks, and typography are tuned for clean A4 and Letter output.</p>
+        <p>
+          PDF export generates a print-ready HTML document and opens the browser's native print
+          dialog. Margins, page breaks, and typography are tuned for clean A4 and Letter output.
+        </p>
       </div>
       <div class="feature-card">
         <h3>Dark and Light Themes</h3>
-        <p>Choose between dark and light color themes for your PDF. The dark theme works well for screen viewing and projectors, while the light theme is optimized for ink-efficient printing.</p>
+        <p>
+          Choose between dark and light color themes for your PDF. The dark theme works well for
+          screen viewing and projectors, while the light theme is optimized for ink-efficient
+          printing.
+        </p>
       </div>
       <div class="feature-card">
         <h3>Page Breaks per Prompt</h3>
-        <p>Enable page breaks between conversation turns so each prompt-response pair starts on a new page. This makes long conversations easy to navigate when printed or reviewed as a document.</p>
+        <p>
+          Enable page breaks between conversation turns so each prompt-response pair starts on a new
+          page. This makes long conversations easy to navigate when printed or reviewed as a
+          document.
+        </p>
       </div>
       <div class="feature-card">
         <h3>Table of Contents</h3>
-        <p>Generate a table of contents at the top of the PDF with clickable page references. Each user prompt becomes a TOC entry, giving you a structured overview of the conversation.</p>
+        <p>
+          Generate a table of contents at the top of the PDF with clickable page references. Each
+          user prompt becomes a TOC entry, giving you a structured overview of the conversation.
+        </p>
       </div>
       <div class="feature-card">
         <h3>Math Renders Correctly</h3>
-        <p>LaTeX math is rendered into crisp vector graphics using KaTeX before PDF generation. Inline and display equations appear exactly as they do in the original AI interface.</p>
+        <p>
+          LaTeX math is rendered into crisp vector graphics using KaTeX before PDF generation.
+          Inline and display equations appear exactly as they do in the original AI interface.
+        </p>
       </div>
       <div class="feature-card">
         <h3>Highlighted Code Blocks</h3>
-        <p>Code blocks retain syntax highlighting in the PDF output. Language-specific coloring makes code readable and scannable, even in a printed document.</p>
+        <p>
+          Code blocks retain syntax highlighting in the PDF output. Language-specific coloring makes
+          code readable and scannable, even in a printed document.
+        </p>
       </div>
     </div>
   </section>
@@ -56,9 +77,22 @@ const meta = {
   <!-- How PDF Export Works -->
   <section class="content-section">
     <h2>How PDF Export Works</h2>
-    <p>AI Chat Exporter does not send your conversation to a server to generate a PDF. Instead, it constructs a self-contained HTML document from the conversation data, applies print-optimized CSS, and then invokes the browser's built-in print dialog. From the print dialog, you choose "Save as PDF" to produce the final file.</p>
-    <p>This approach has several advantages. First, your data never leaves your browser. Second, the PDF quality is identical to what you see on screen because it uses the same rendering engine. Third, there is no file-size limit \u2014 the PDF scales to conversations of any length.</p>
-    <p>The generated HTML is self-contained. Fonts, styles, math rendering, and images are all embedded. When you save the PDF, it is a single portable file that looks the same on any device.</p>
+    <p>
+      AI Chat Exporter does not send your conversation to a server to generate a PDF. Instead, it
+      constructs a self-contained HTML document from the conversation data, applies print-optimized
+      CSS, and then invokes the browser's built-in print dialog. From the print dialog, you choose
+      "Save as PDF" to produce the final file.
+    </p>
+    <p>
+      This approach has several advantages. First, your data never leaves your browser. Second, the
+      PDF quality is identical to what you see on screen because it uses the same rendering engine.
+      Third, there is no file-size limit \u2014 the PDF scales to conversations of any length.
+    </p>
+    <p>
+      The generated HTML is self-contained. Fonts, styles, math rendering, and images are all
+      embedded. When you save the PDF, it is a single portable file that looks the same on any
+      device.
+    </p>
   </section>
 
   <!-- Customization Options -->
@@ -67,43 +101,112 @@ const meta = {
     <div class="table-wrapper">
       <table>
         <thead>
-          <tr><th>Option</th><th>Description</th><th>Default</th></tr>
+          <tr>
+            <th>Option</th>
+            <th>Description</th>
+            <th>Default</th>
+          </tr>
         </thead>
         <tbody>
-          <tr><td>Color Theme</td><td>Light or dark background for the PDF</td><td>Light</td></tr>
-          <tr><td>Page Breaks</td><td>Insert a page break before each new prompt</td><td>Off</td></tr>
-          <tr><td>Table of Contents</td><td>Generate a clickable TOC at the top of the document</td><td>Off</td></tr>
-          <tr><td>Page Size</td><td>A4 or Letter \u2014 controlled through the print dialog</td><td>A4</td></tr>
-          <tr><td>Margins</td><td>Adjustable through the browser print dialog (normal, narrow, wide)</td><td>Normal</td></tr>
-          <tr><td>Header/Footer</td><td>Browser print options for page numbers, dates, and URLs</td><td>Varies</td></tr>
+          <tr>
+            <td>Color Theme</td>
+            <td>Light or dark background for the PDF</td>
+            <td>Light</td>
+          </tr>
+          <tr>
+            <td>Page Breaks</td>
+            <td>Insert a page break before each new prompt</td>
+            <td>Off</td>
+          </tr>
+          <tr>
+            <td>Table of Contents</td>
+            <td>Generate a clickable TOC at the top of the document</td>
+            <td>Off</td>
+          </tr>
+          <tr>
+            <td>Page Size</td>
+            <td>A4 or Letter \u2014 controlled through the print dialog</td>
+            <td>A4</td>
+          </tr>
+          <tr>
+            <td>Margins</td>
+            <td>Adjustable through the browser print dialog (normal, narrow, wide)</td>
+            <td>Normal</td>
+          </tr>
+          <tr>
+            <td>Header/Footer</td>
+            <td>Browser print options for page numbers, dates, and URLs</td>
+            <td>Varies</td>
+          </tr>
         </tbody>
       </table>
     </div>
-    <p>To access these options, click the AI Chat Exporter icon while on a supported chat page and select the PDF export option. The settings panel appears before the print dialog opens, so you can preview the layout and adjust as needed.</p>
+    <p>
+      To access these options, click the AI Chat Exporter icon while on a supported chat page and
+      select the PDF export option. The settings panel appears before the print dialog opens, so you
+      can preview the layout and adjust as needed.
+    </p>
   </section>
 
   <!-- Use Cases -->
   <section class="content-section">
     <h2>Use Cases for PDF Export</h2>
-    <p><strong>Archiving and Compliance</strong> \u2014 Many organizations require conversations with AI tools to be archived in a non-editable, universally readable format. PDF is the standard for long-term document preservation and meets most compliance requirements.</p>
-    <p><strong>Sharing with Non-Technical Colleagues</strong> \u2014 Not everyone has Markdown editors or Obsidian installed. A PDF file opens on any device with a browser. Share AI-generated research, brainstorming sessions, or technical explanations as attachments without worrying about compatibility.</p>
-    <p><strong>Presentations and Reports</strong> \u2014 Embed PDF pages from AI conversations into slide decks, reports, and proposals. The print-optimized layout ensures the content looks professional when included in formal documents.</p>
-    <p><strong>Printing</strong> \u2014 Sometimes you need a physical copy. The light theme is optimized for ink-efficient printing, and page breaks per prompt keep each exchange on its own page for easy annotation with a pen.</p>
-    <p><strong>Client Deliverables</strong> \u2014 If you use AI tools as part of client work, a PDF export provides a clean, branded-looking document you can deliver alongside your work products.</p>
+    <p>
+      <strong>Archiving and Compliance</strong> \u2014 Many organizations require conversations with
+      AI tools to be archived in a non-editable, universally readable format. PDF is the standard
+      for long-term document preservation and meets most compliance requirements.
+    </p>
+    <p>
+      <strong>Sharing with Non-Technical Colleagues</strong> \u2014 Not everyone has Markdown
+      editors or Obsidian installed. A PDF file opens on any device with a browser. Share
+      AI-generated research, brainstorming sessions, or technical explanations as attachments
+      without worrying about compatibility.
+    </p>
+    <p>
+      <strong>Presentations and Reports</strong> \u2014 Embed PDF pages from AI conversations into
+      slide decks, reports, and proposals. The print-optimized layout ensures the content looks
+      professional when included in formal documents.
+    </p>
+    <p>
+      <strong>Printing</strong> \u2014 Sometimes you need a physical copy. The light theme is
+      optimized for ink-efficient printing, and page breaks per prompt keep each exchange on its own
+      page for easy annotation with a pen.
+    </p>
+    <p>
+      <strong>Client Deliverables</strong> \u2014 If you use AI tools as part of client work, a PDF
+      export provides a clean, branded-looking document you can deliver alongside your work
+      products.
+    </p>
   </section>
 
   <!-- Quality You Can Trust -->
   <section class="content-section">
     <h2>Quality You Can Trust</h2>
-    <p>The PDF export preserves visual fidelity from the original conversation. Here is what that means in practice:</p>
-    <p>Mathematical equations render through KaTeX before the print dialog opens, so they appear as sharp vector graphics rather than pixelated screenshots. Code blocks use monospace fonts with proper indentation and syntax highlighting colors that remain readable in print. Tables retain their grid structure with clear column alignment.</p>
-    <p>Images from AI conversations \u2014 diagrams, charts, and generated visuals \u2014 are embedded in the PDF at their original resolution. The PDF does not compress or downsample these images.</p>
+    <p>
+      The PDF export preserves visual fidelity from the original conversation. Here is what that
+      means in practice:
+    </p>
+    <p>
+      Mathematical equations render through KaTeX before the print dialog opens, so they appear as
+      sharp vector graphics rather than pixelated screenshots. Code blocks use monospace fonts with
+      proper indentation and syntax highlighting colors that remain readable in print. Tables retain
+      their grid structure with clear column alignment.
+    </p>
+    <p>
+      Images from AI conversations \u2014 diagrams, charts, and generated visuals \u2014 are
+      embedded in the PDF at their original resolution. The PDF does not compress or downsample
+      these images.
+    </p>
   </section>
 
   <!-- Supported Platforms -->
   <section class="content-section">
     <h2>Supported Platforms</h2>
-    <p>PDF export works with all 17 platforms supported by AI Chat Exporter, including ChatGPT, Claude, Gemini, DeepSeek, Perplexity, Copilot, Qwen, Mistral, Meta AI, NotebookLM, Google AI Studio, Google Cloud Assist, Google Search AI, Z.AI, Proton Lumo, Joyland, and Chub.</p>
+    <p>
+      PDF export works with all 17 platforms supported by AI Chat Exporter, including ChatGPT,
+      Claude, Gemini, DeepSeek, Perplexity, Copilot, Qwen, Mistral, Meta AI, NotebookLM, Google AI
+      Studio, Google Cloud Assist, Google Search AI, Z.AI, Proton Lumo, Joyland, and Chub.
+    </p>
   </section>
 
   <!-- How It Works -->
@@ -138,7 +241,7 @@ const meta = {
         },
         {
           q: 'Can I customize the layout?',
-          a: 'Yes. Before the print dialog opens, the extension provides options for color theme (light or dark), page breaks between prompts, and a table of contents. Additional layout controls like margins and page size are available through the browser\'s print dialog settings.',
+          a: "Yes. Before the print dialog opens, the extension provides options for color theme (light or dark), page breaks between prompts, and a table of contents. Additional layout controls like margins and page size are available through the browser's print dialog settings.",
         },
         {
           q: 'Does math render in the PDF?',
@@ -146,7 +249,7 @@ const meta = {
         },
         {
           q: 'Is there a page limit?',
-          a: 'No. The PDF export scales to conversations of any length. Very long conversations may take slightly longer to render before the print dialog appears, but there is no artificial limit. The browser\'s print engine handles multi-page documents natively.',
+          a: "No. The PDF export scales to conversations of any length. Very long conversations may take slightly longer to render before the print dialog appears, but there is no artificial limit. The browser's print engine handles multi-page documents natively.",
         },
         {
           q: 'How do I get dark mode PDFs?',

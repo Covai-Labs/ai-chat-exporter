@@ -15,6 +15,7 @@ const meta = {
     'Export AI conversations with properly formatted LaTeX math equations. Block and inline math preserved with correct delimiters. Renders in Obsidian, HTML, and PDF.',
 };
 ---
+
 <GuideLayout
   title={meta.title}
   description={meta.description}
@@ -28,8 +29,8 @@ const meta = {
     <h2>The Problem: Broken Math in Exported Conversations</h2>
     <p>
       If you have ever exported a conversation containing math equations from an AI platform using a
-      generic tool or manual copy-paste, you have seen the result: backslashes stripped, dollar signs
-      mangled, inline math merged into the surrounding text, and block equations rendered as
+      generic tool or manual copy-paste, you have seen the result: backslashes stripped, dollar
+      signs mangled, inline math merged into the surrounding text, and block equations rendered as
       unreadable garbled text.
     </p>
     <p>
@@ -38,7 +39,9 @@ const meta = {
       backslashes as escape characters rather than recognizing them as part of LaTeX commands. The
       result is that a beautifully formatted equation like:
     </p>
-    <p><code>{'$$\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}$$'}</code></p>
+    <p>
+      <code>{'$$\\int_{-\\infty}^{\\infty} e^{-x^2} dx = \\sqrt{\\pi}$$'}</code>
+    </p>
     <p>becomes a broken mess in the exported file.</p>
     <p>
       AI Chat Exporter handles LaTeX math as a first-class feature. The extension identifies math
@@ -122,31 +125,53 @@ const meta = {
         </thead>
         <tbody>
           <tr>
-            <td><code>$$...$$</code></td>
+            <td>
+              <code>$$...$$</code>
+            </td>
             <td>Block math</td>
-            <td><code>{'$$\\sum_{i=1}^{n} x_i$$'}</code></td>
+            <td>
+              <code>{'$$\\sum_{i=1}^{n} x_i$$'}</code>
+            </td>
             <td>Preserved as-is, rendered in HTML/PNG exports</td>
           </tr>
           <tr>
-            <td><code>$...$</code></td>
+            <td>
+              <code>$...$</code>
+            </td>
             <td>Inline math</td>
-            <td>The equation <code>$E = mc^2$</code> is famous</td>
+            <td>
+              The equation <code>$E = mc^2$</code> is famous
+            </td>
             <td>Preserved, rendered inline in HTML and PNG</td>
           </tr>
           <tr>
-            <td><code>\[...\]</code></td>
+            <td>
+              <code>\[...\]</code>
+            </td>
             <td>Block math (alternate)</td>
-            <td><code>{'\\[\\frac{a}{b}\\]'}</code></td>
-            <td>Normalized to <code>$$...$$</code> or preserved</td>
+            <td>
+              <code>{'\\[\\frac{a}{b}\\]'}</code>
+            </td>
+            <td>
+              Normalized to <code>$$...$$</code> or preserved
+            </td>
           </tr>
           <tr>
-            <td><code>\(...\)</code></td>
+            <td>
+              <code>\(...\)</code>
+            </td>
             <td>Inline math (alternate)</td>
-            <td><code>\(x^2\)</code></td>
-            <td>Normalized to <code>$...$</code> or preserved</td>
+            <td>
+              <code>\(x^2\)</code>
+            </td>
+            <td>
+              Normalized to <code>$...$</code> or preserved
+            </td>
           </tr>
           <tr>
-            <td><code>```latex</code></td>
+            <td>
+              <code>```latex</code>
+            </td>
             <td>Code block</td>
             <td>Raw LaTeX source in fenced block</td>
             <td>Preserved with PrismJS syntax highlighting</td>
@@ -174,27 +199,41 @@ const meta = {
         </thead>
         <tbody>
           <tr>
-            <td><strong>ChatGPT (GPT-4)</strong></td>
-            <td>Uses <code>$$</code> and <code>$</code> delimiters natively</td>
+            <td>
+              <strong>ChatGPT (GPT-4)</strong>
+            </td>
+            <td>
+              Uses <code>$$</code> and <code>$</code> delimiters natively
+            </td>
             <td>Calculus, linear algebra, statistics, physics</td>
           </tr>
           <tr>
-            <td><strong>Claude</strong></td>
-            <td>Uses <code>$$</code> and <code>$</code> delimiters</td>
+            <td>
+              <strong>Claude</strong>
+            </td>
+            <td>
+              Uses <code>$$</code> and <code>$</code> delimiters
+            </td>
             <td>Mathematical proofs, formal logic, probability</td>
           </tr>
           <tr>
-            <td><strong>Gemini</strong></td>
+            <td>
+              <strong>Gemini</strong>
+            </td>
             <td>Renders math in response UI, exports with delimiters</td>
             <td>STEM coursework, research derivations</td>
           </tr>
           <tr>
-            <td><strong>DeepSeek</strong></td>
+            <td>
+              <strong>DeepSeek</strong>
+            </td>
             <td>Uses LaTeX delimiters, especially for DeepThink</td>
             <td>Mathematical reasoning, proof verification</td>
           </tr>
           <tr>
-            <td><strong>Other Platforms</strong></td>
+            <td>
+              <strong>Other Platforms</strong>
+            </td>
             <td>Varies; extension normalizes what it finds</td>
             <td>Any math content in supported platforms</td>
           </tr>
@@ -235,16 +274,17 @@ const meta = {
       <div class="feature-card">
         <h3>Academic Notes</h3>
         <p>
-          Export conversations where you worked through mathematical problems. The preserved equations
-          become study notes you can reference during exams or research. Import into Obsidian and
-          link to your course notes.
+          Export conversations where you worked through mathematical problems. The preserved
+          equations become study notes you can reference during exams or research. Import into
+          Obsidian and link to your course notes.
         </p>
       </div>
       <div class="feature-card">
         <h3>Research Documentation</h3>
         <p>
           Keep a record of AI-assisted derivations, proofs, and calculations. The structured JSON
-          export preserves equation metadata alongside the conversation context for future reference.
+          export preserves equation metadata alongside the conversation context for future
+          reference.
         </p>
       </div>
       <div class="feature-card">
@@ -258,8 +298,8 @@ const meta = {
       <div class="feature-card">
         <h3>Teaching Materials</h3>
         <p>
-          Create PDF handouts from conversations about mathematical topics. The rendered equations in
-          the PDF export look professional and are ready to distribute to students or colleagues.
+          Create PDF handouts from conversations about mathematical topics. The rendered equations
+          in the PDF export look professional and are ready to distribute to students or colleagues.
         </p>
       </div>
       <div class="feature-card">
@@ -290,8 +330,12 @@ const meta = {
       Markdown format, the resulting file works directly in Obsidian:
     </p>
     <ul>
-      <li>Block equations (<code>$$...$$</code>) render as centered, display-style math.</li>
-      <li>Inline equations (<code>$...$</code>) render within the text flow.</li>
+      <li>
+        Block equations (<code>$$...$$</code>) render as centered, display-style math.
+      </li>
+      <li>
+        Inline equations (<code>$...$</code>) render within the text flow.
+      </li>
       <li>No plugin configuration is required for basic math rendering.</li>
       <li>Equations are searchable as text when you search your vault.</li>
       <li>
@@ -335,7 +379,9 @@ const meta = {
             <td>Usable but requires parsing</td>
           </tr>
           <tr>
-            <td><strong>AI Chat Exporter</strong></td>
+            <td>
+              <strong>AI Chat Exporter</strong>
+            </td>
             <td>Normalizes delimiters, protects backslashes, renders in HTML/PNG</td>
             <td>Clean, portable, render-ready math in every format</td>
           </tr>

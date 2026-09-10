@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && prettier --write ../docs",
     "preview": "astro preview"
   },
   "dependencies": {
