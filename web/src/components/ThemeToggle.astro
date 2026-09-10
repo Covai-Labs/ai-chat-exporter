@@ -71,8 +71,12 @@
     if (!buttons.length) return;
 
     function getStored() {
-      const t = localStorage.getItem('ace-theme');
-      return t === 'dark' || t === 'light' ? t : 'system';
+      try {
+        const t = localStorage.getItem('ace-theme');
+        return t === 'dark' || t === 'light' ? t : 'system';
+      } catch (e) {
+        return 'system';
+      }
     }
 
     function apply(theme) {
