@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Footer from '../components/Footer.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import { SITE, softwareApplicationJsonLd } from '../data/site';
-import { platformGuides, formatGuides, guideHref } from '../data/guides';
 
 const meta = {
   title: 'AI Chat Exporter - Save AI Conversations Instantly',
@@ -291,18 +290,9 @@ const reviewPrompt = (platform: string) =>
       <p class="guides-intro">
         Task-specific walkthroughs for exporting AI conversations from each platform and format.
       </p>
-      <a href="/guides.html" class="btn btn-primary" style="display: inline-flex">
+      <a href="/guides.html" class="btn btn-primary">
         Browse all guides
       </a>
-
-      <div class="guides-grid">
-        {[...platformGuides, ...formatGuides].map((g) => (
-          <a href={guideHref(g.slug)} class="guide-card">
-            <span class="guide-card-title">{g.title}</span>
-            <span class="guide-card-desc">{g.desc}</span>
-          </a>
-        ))}
-      </div>
     </div>
   </main>
 
@@ -378,11 +368,5 @@ const reviewPrompt = (platform: string) =>
 
   .store-btn img {
     filter: saturate(0.9);
-  }
-
-  @media (max-width: 640px) {
-    .guides-grid {
-      grid-template-columns: 1fr;
-    }
   }
 </style>
