@@ -19,6 +19,7 @@ test('wxt.config.ts configures gecko settings and sidebar_action for firefox tar
   assert.match(wxtConfig, /sidebar_action/);
   assert.match(wxtConfig, /browser_specific_settings/);
   assert.match(wxtConfig, /gecko/);
+  assert.match(wxtConfig, /open_at_install:\s*false/);
 });
 
 test('background.js syncs side panel behavior and handles OPEN_SIDE_PANEL', () => {

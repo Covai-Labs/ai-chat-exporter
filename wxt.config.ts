@@ -151,6 +151,7 @@ export default defineConfig({
       baseManifest.sidebar_action = {
         default_panel: 'entrypoints/sidepanel/index.html',
         default_title: '__MSG_extensionName__',
+        open_at_install: false,
         default_icon: {
           '16': 'icons/icon16.png',
           '48': 'icons/icon48.png',
