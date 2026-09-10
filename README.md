@@ -40,11 +40,11 @@ Most AI exporters and extensions send your chat history or API calls to third-pa
 
 **Verifiable by design.** The extension requests only the permissions it strictly needs — no broad host access, no remote code execution:
 
-| Permission | Why it's needed |
-| :--- | :--- |
-| `activeTab` | Read the current tab's DOM to extract the conversation |
-| `storage` | Persist your local preferences (theme, format defaults) |
-| `sidePanel` | Power the Chromium side panel UI |
+| Permission         | Why it's needed                                                                    |
+| :----------------- | :--------------------------------------------------------------------------------- |
+| `activeTab`        | Read the current tab's DOM to extract the conversation                             |
+| `storage`          | Persist your local preferences (theme, format defaults)                            |
+| `sidePanel`        | Power the Chromium side panel UI                                                   |
 | `host_permissions` | Scoped exactly to the supported AI platform domains listed above — no `<all_urls>` |
 
 No background analytics endpoints. No external network fetches. Audit it yourself: [`manifest.json`](manifest.json).
