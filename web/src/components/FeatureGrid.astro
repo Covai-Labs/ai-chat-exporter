@@ -1,0 +1,23 @@
+---
+// Responsive feature card grid.
+export interface FeatureCard {
+  icon?: string;
+  title: string;
+  desc: string;
+}
+
+interface Props {
+  cards: FeatureCard[];
+}
+
+const { cards } = Astro.props;
+---
+<div class="features-grid">
+  {cards.map((c) => (
+    <div class="feature-card">
+      {c.icon && <div class="feature-icon">{c.icon}</div>}
+      <h3>{c.title}</h3>
+      <p>{c.desc}</p>
+    </div>
+  ))}
+</div>

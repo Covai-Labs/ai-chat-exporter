@@ -1,81 +1,45 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ChatGPT to Markdown — Export ChatGPT Conversations as .md Files</title>
-  <meta name="description" content="Convert ChatGPT conversations to clean Markdown files. Preserves code blocks, LaTeX math, tables, and images. Free browser extension." />
-  <link rel="canonical" href="https://ai-chat-exporter.covai.org/chatgpt-to-markdown.html" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://ai-chat-exporter.covai.org/chatgpt-to-markdown.html" />
-  <meta property="og:title" content="ChatGPT to Markdown — Export ChatGPT Conversations as .md Files" />
-  <meta property="og:description" content="Convert ChatGPT conversations to clean Markdown files. Preserves code blocks, LaTeX math, tables, and images. Free browser extension." />
-  <meta property="og:image" content="https://ai-chat-exporter.covai.org/og-image.png" />
-  <meta property="og:site_name" content="AI Chat Exporter" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/seo-pages.css" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "AI Chat Exporter",
-    "operatingSystem": "Chrome, Firefox, Edge",
-    "applicationCategory": "UtilitiesApplication",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "url": "https://ai-chat-exporter.covai.org/",
-    "downloadUrl": "https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
-  }
-  </script>
-</head>
-<body>
-  <header data-testid="header">
-    <a href="index.html" class="logo-container">
-      <img src="icons/icon48.png" alt="AI Chat Exporter Logo" class="logo-img" />
-      <span class="logo-text">AI Chat Exporter</span>
-    </a>
-    <nav class="nav-links">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="https://github.com/Covai-Labs/ai-chat-exporter" class="nav-link" target="_blank" rel="noopener">GitHub</a>
-    </nav>
-  </header>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ChatGPT to Markdown</title><meta name="description" content="Save ChatGPT conversations as .md files"><link rel="canonical" href="https://ai-chat-exporter.covai.org/chatgpt-to-markdown.html"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:url" content="https://ai-chat-exporter.covai.org/chatgpt-to-markdown.html"><meta property="og:title" content="ChatGPT to Markdown"><meta property="og:description" content="Save ChatGPT conversations as .md files"><meta property="og:image" content="https://ai-chat-exporter.covai.org/og-image.png"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="640"><meta property="og:site_name" content="AI Chat Exporter"><meta property="og:locale" content="en_US"><!-- Twitter / X --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://ai-chat-exporter.covai.org/chatgpt-to-markdown.html"><meta name="twitter:title" content="ChatGPT to Markdown"><meta name="twitter:description" content="Save ChatGPT conversations as .md files"><meta name="twitter:image" content="https://ai-chat-exporter.covai.org/og-image.png"><!-- Theme bootstrap (pre-paint — prevents flash) --><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('ace-theme');
+          if (t === 'dark' || t === 'light') {
+            document.documentElement.classList.add(t);
+          }
+        } catch (e) {
+          /* ignore */
+        }
+      })();
+    </script><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><!-- Favicons --><link rel="icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="/icons/android-chrome-192x192.png"><link rel="icon" type="image/png" sizes="512x512" href="/icons/android-chrome-512x512.png"><link rel="manifest" href="/site.webmanifest"><!-- Styles --><link rel="stylesheet" href="/css/global.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"AI Chat Exporter","operatingSystem":"Chrome, Firefox, Edge","applicationCategory":"UtilitiesApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://ai-chat-exporter.covai.org","downloadUrl":"https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"}</script><script defer src="https://covai.org/analytics.js"></script></head><body><header><a href="/index.html" class="logo-container"><img src="/icons/icon48.png" alt="AI Chat Exporter Logo" class="logo-img" width="32" height="32"><span class="logo-text">AI Chat Exporter</span></a><div class="header-nav"><nav class="nav-links" aria-label="Main navigation"><a href="/index.html" class="nav-link">Home</a><a href="/guides.html" class="nav-link">Guides</a><a href="https://github.com/Covai-Labs/ai-chat-exporter" class="nav-link" target="_blank" rel="noopener noreferrer"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg><span>GitHub</span></a></nav><div class="theme-toggle" role="group" aria-label="Theme switcher"><button type="button" data-theme="light" aria-label="Light theme" title="Light" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg></button><button type="button" data-theme="dark" aria-label="Dark theme" title="Dark" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button><button type="button" data-theme="system" aria-label="System theme (follow OS)" title="System" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></button></div><script>
+  (function () {
+    const root = document.documentElement;
+    const buttons = Array.from(document.querySelectorAll('.theme-toggle button[data-theme]'));
+    if (!buttons.length) return;
 
-  <div class="breadcrumb" data-testid="breadcrumb">
-    <a href="index.html">Home</a> <span>›</span> <span>ChatGPT to Markdown</span>
-  </div>
+    function getStored() {
+      const t = localStorage.getItem('ace-theme');
+      return t === 'dark' || t === 'light' ? t : 'system';
+    }
 
-  <main>
-    <div class="hero" data-testid="hero">
-      <span class="badge">Most Popular Format</span>
-      <h1 data-testid="h1">ChatGPT to Markdown — Clean Exports, Every Time</h1>
-      <p class="hero-subtitle">Convert ChatGPT conversations into clean, portable Markdown files. AI Chat Exporter preserves code blocks, LaTeX math, tables, and images — giving you files that work in Obsidian, Notion, GitHub, and any text editor.</p>
-      <div class="cta-group">
-        <a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener" data-testid="cta-chrome">Add to Chrome</a>
-        <a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener" data-testid="cta-firefox">Add to Firefox</a>
-      </div>
-    </div>
+    function apply(theme) {
+      root.classList.remove('light', 'dark');
+      if (theme === 'light' || theme === 'dark') root.classList.add(theme);
+      try {
+        localStorage.setItem('ace-theme', theme);
+      } catch (e) {
+        /* private mode */
+      }
+      buttons.forEach((b) => {
+        b.setAttribute('aria-pressed', String(b.dataset.theme === theme));
+      });
+    }
 
-    <!-- Why Markdown -->
-    <section class="content-section" data-testid="section-why-markdown">
-      <h2>Why Markdown Is the Best Format for ChatGPT Exports</h2>
-      <p>Markdown is the lingua franca of technical writing. It is supported by virtually every note-taking app, documentation tool, and version control platform on the planet. When you export a ChatGPT conversation as Markdown, you get a file that:</p>
-      <ul>
-        <li><strong>Opens anywhere</strong> — Any text editor can read a .md file. No proprietary software required.</li>
-        <li><strong>Imports into knowledge bases</strong> — Drag and drop into Obsidian, Notion, Logseq, Roam Research, or Bear. The formatting is preserved automatically.</li>
-        <li><strong>Works with Git</strong> — Commit your exported conversations to a repository for version control and searchability.</li>
-        <li><strong>Converts to other formats</strong> — Use pandoc, VS Code, or any Markdown renderer to convert to HTML, PDF, DOCX, or LaTeX with a single command.</li>
-        <li><strong>Stays human-readable</strong> — Even without rendering, raw Markdown is clean and readable in any editor.</li>
-      </ul>
-      <p>Other export formats have their place, but Markdown is the format that survives every workflow transition. It is the safe default for long-term archival.</p>
-    </section>
+    apply(getStored());
 
-    <!-- What the Markdown Output Looks Like -->
-    <section class="content-section" data-testid="section-output-preview">
-      <h2>What the Markdown Output Looks Like</h2>
-      <p>AI Chat Exporter produces well-structured Markdown that follows conventions compatible with GitHub Flavored Markdown and CommonMark. Here is an example of what an exported conversation looks like:</p>
-      <div class="callout callout-info" data-testid="callout-md-preview">
-<pre class="md-preview"><code># ChatGPT Conversation: Building a REST API in Python
+    buttons.forEach((b) => {
+      b.addEventListener('click', () => apply(b.dataset.theme));
+    });
+  })();
+</script></div></header><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ai-chat-exporter.covai.org/index.html"},{"@type":"ListItem","position":2,"name":"ChatGPT to Markdown"}]}</script><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span aria-hidden="true">&#8250;</span><span>ChatGPT to Markdown</span></nav><main><div class="hero"><span class="badge">Most Popular Format</span><h1>ChatGPT to Markdown — Clean Exports, Every Time</h1><p class="hero-subtitle">Convert ChatGPT conversations into clean, portable Markdown files. AI Chat Exporter preserves code blocks, LaTeX math, tables, and images — giving you files that work in Obsidian, Notion, GitHub, and any text editor.</p><div class="cta-group"><a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-testid="cta-chrome">Add to Chrome</a><a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" data-testid="cta-firefox">Add to Firefox</a></div></div><section class="content-section"><h2>Why Markdown Is the Best Format for ChatGPT Exports</h2><p>Markdown is the lingua franca of technical writing. It is supported by virtually every note-taking app, documentation tool, and version control platform on the planet. When you export a ChatGPT conversation as Markdown, you get a file that:</p><ul><li><strong>Opens anywhere</strong> — Any text editor can read a .md file. No proprietary software required.</li><li><strong>Imports into knowledge bases</strong> — Drag and drop into Obsidian, Notion, Logseq, Roam Research, or Bear. The formatting is preserved automatically.</li><li><strong>Works with Git</strong> — Commit your exported conversations to a repository for version control and searchability.</li><li><strong>Converts to other formats</strong> — Use pandoc, VS Code, or any Markdown renderer to convert to HTML, PDF, DOCX, or LaTeX with a single command.</li><li><strong>Stays human-readable</strong> — Even without rendering, raw Markdown is clean and readable in any editor.</li></ul><p>Other export formats have their place, but Markdown is the format that survives every workflow transition. It is the safe default for long-term archival.</p></section><section class="content-section"><h2>What the Markdown Output Looks Like</h2><p>AI Chat Exporter produces well-structured Markdown that follows conventions compatible with GitHub Flavored Markdown and CommonMark. Here is an example of what an exported conversation looks like:</p><div class="callout callout-info"><strong>Markdown Preview: </strong><pre class="md-preview"><code># ChatGPT Conversation: Building a REST API in Python
 
 ## Prompt:
 How do I create a REST API with FastAPI?
@@ -110,258 +74,20 @@ engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 ```
 
-This sets up a local SQLite database connection...</code></pre>
-      </div>
-      <p>Each message is clearly attributed to its role (Prompt or Response), code blocks retain their language tags, and the overall structure is flat and scannable.</p>
-    </section>
-
-    <!-- LaTeX Math Handling -->
-    <section class="content-section" data-testid="section-latex">
-      <h2>LaTeX Math Handling</h2>
-      <p>When ChatGPT generates mathematical expressions, AI Chat Exporter preserves them in standard LaTeX notation:</p>
-      <ul>
-        <li><strong>Block math</strong> — Display equations are wrapped in <code>$$...$$</code> delimiters, compatible with KaTeX, MathJax, and most Markdown renderers.</li>
-        <li><strong>Inline math</strong> — Inline expressions use <code>$...$</code> delimiters for seamless integration with surrounding text.</li>
-      </ul>
-      <p>This means exported files render beautifully in Obsidian (with the Math rendering plugin), Jupyter notebooks, GitHub READMEs, and any platform that supports LaTeX in Markdown.</p>
-      <div class="callout callout-info" data-testid="callout-latex-example">
-        <strong>Example:</strong> A quadratic formula from ChatGPT is exported as <code>$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$</code> rather than losing its formatting to plain text.
-      </div>
-    </section>
-
-    <!-- Code Block Preservation -->
-    <section class="content-section" data-testid="section-code-blocks">
-      <h2>Code Block Preservation</h2>
-      <p>Code is one of the most common things people ask ChatGPT about, and losing code formatting is the biggest problem with copy-paste exports. AI Chat Exporter handles code blocks correctly:</p>
-      <ul>
-        <li><strong>Language tags preserved</strong> — If ChatGPT marks a block as Python, JavaScript, SQL, etc., the exported Markdown retains the language identifier for syntax highlighting.</li>
-        <li><strong>Nested code blocks</strong> — Multi-block responses with different languages are each exported with their own language tag.</li>
-        <li><strong>Inline code</strong> — Backtick-wrapped inline code is preserved as-is.</li>
-        <li><strong>Indentation preserved</strong> — Whitespace and indentation within code blocks are maintained exactly as ChatGPT rendered them.</li>
-      </ul>
-      <p>This matters because most Markdown renderers (GitHub, VS Code, Obsidian, Jekyll) use the language tag to apply syntax highlighting. Without it, exported code blocks appear as unstyled plain text.</p>
-    </section>
-
-    <!-- Image Handling -->
-    <section class="content-section" data-testid="section-images">
-      <h2>Image Handling</h2>
-      <p>ChatGPT occasionally generates images (via DALL-E or image analysis). AI Chat Exporter handles images in two ways depending on the export configuration:</p>
-      <ul>
-        <li><strong>Embedded (default)</strong> — Images are included as base64-encoded data URIs within the Markdown file. The file is self-contained — no external dependencies. The tradeoff is larger file sizes.</li>
-        <li><strong>Linked</strong> — Images are referenced by their CDN URL. The Markdown file stays small, but the URLs may expire over time.</li>
-      </ul>
-      <p>For long-term archival, embedded images are recommended. For lightweight sharing, linked images are more practical.</p>
-    </section>
-
-    <!-- Selective Export and Filenames -->
-    <section class="content-section" data-testid="section-selective">
-      <h2>Selective Export and Custom Filenames</h2>
-      <p>You do not have to export entire conversations. AI Chat Exporter lets you select specific messages before exporting — useful when you only need a particular code snippet, answer, or exchange from a long thread.</p>
-      <p>The extension also supports filename templates for automatic, consistent naming:</p>
-      <div class="table-wrapper">
-        <table data-testid="filename-templates">
-          <thead>
-            <tr>
-              <th>Template Variable</th>
-              <th>Output</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>{platform}</code></td>
-              <td>chatgpt</td>
-            </tr>
-            <tr>
-              <td><code>{title}</code></td>
-              <td>The conversation title (sanitized for filenames)</td>
-            </tr>
-            <tr>
-              <td><code>{datetime}</code></td>
-              <td>Current date and time (ISO 8601 format)</td>
-            </tr>
-            <tr>
-              <td><code>{uuid}</code></td>
-              <td>A unique identifier for the conversation</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p>The default template is <code>{platform} - {title} - {datetime}</code>, producing filenames like <code>chatgpt - Building a REST API - 2026-09-09_14-30.md</code>.</p>
-    </section>
-
-    <!-- Copy-Paste vs Extension -->
-    <section class="content-section" data-testid="section-copy-paste">
-      <h2>Copy-Paste vs. AI Chat Exporter</h2>
-      <p>Manually copying ChatGPT responses is the most common workaround, but it has significant limitations:</p>
-      <div class="table-wrapper">
-        <table data-testid="copy-paste-comparison">
-          <thead>
-            <tr>
-              <th>Aspect</th>
-              <th>Copy-Paste</th>
-              <th>AI Chat Exporter</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Code formatting</td>
-              <td>Lost — plain text, no language tags</td>
-              <td>Preserved with fenced blocks and language identifiers</td>
-            </tr>
-            <tr>
-              <td>Tables</td>
-              <td>Collapsed to plain text</td>
-              <td>Rendered as Markdown tables</td>
-            </tr>
-            <tr>
-              <td>Math expressions</td>
-              <td>Often garbled or lost</td>
-              <td>Preserved as LaTeX notation</td>
-            </tr>
-            <tr>
-              <td>Images</td>
-              <td>Not included (manual save required)</td>
-              <td>Automatically embedded or linked</td>
-            </tr>
-            <tr>
-              <td>Role attribution</td>
-              <td>Manual — you must label who said what</td>
-              <td>Automatic — Prompt/Response headers added</td>
-            </tr>
-            <tr>
-              <td>Long conversations</td>
-              <td>Impractical — multiple copy operations</td>
-              <td>One click for the entire conversation</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- How It Works -->
-    <section class="content-section" data-testid="section-how-it-works">
-      <h2>How to Export ChatGPT to Markdown</h2>
-      <div class="steps" data-testid="steps">
-        <div class="step">
-          <div class="step-content">
-            <h3>Install AI Chat Exporter</h3>
-            <p>Add the extension from the Chrome Web Store, Firefox Add-ons, or Edge Add-ons. Takes under 30 seconds with no configuration needed.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-content">
-            <h3>Open Your ChatGPT Conversation</h3>
-            <p>Navigate to any conversation on chatgpt.com. The extension detects the page and activates the export toolbar.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-content">
-            <h3>Click Export as Markdown</h3>
-            <p>Select "Markdown" from the export format dropdown. Optionally select specific messages. The .md file downloads instantly with all formatting preserved.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="content-section" data-testid="section-faq">
-      <h2>Frequently Asked Questions</h2>
-      <div class="faq">
-        <div class="faq-item" data-testid="faq-item-1">
-          <button class="faq-question">Does it preserve code formatting in Markdown?</button>
-          <div class="faq-answer">
-            <p>Yes. Code blocks are exported as fenced Markdown blocks with language tags (e.g., <code>```python</code>). Syntax highlighting is applied by whatever Markdown renderer you use — Obsidian, VS Code, GitHub, etc. Inline code wrapped in backticks is also preserved.</p>
-          </div>
-        </div>
-        <div class="faq-item" data-testid="faq-item-2">
-          <button class="faq-question">Can I export only my prompts from a conversation?</button>
-          <div class="faq-answer">
-            <p>Yes. The extension lets you select individual messages before exporting. Simply check the messages you want — whether that is all your prompts, all assistant responses, or a specific exchange — and only those messages appear in the Markdown output.</p>
-          </div>
-        </div>
-        <div class="faq-item" data-testid="faq-item-3">
-          <button class="faq-question">Does it handle LaTeX math expressions?</button>
-          <div class="faq-answer">
-            <p>Yes. Block-level math is exported as <code>$$...$$</code> and inline math as <code>$...$</code>. This notation is standard across KaTeX, MathJax, and most Markdown rendering engines. Obsidian, Jupyter, and GitHub all render it correctly.</p>
-          </div>
-        </div>
-        <div class="faq-item" data-testid="faq-item-4">
-          <button class="faq-question">How do I import the Markdown into Obsidian?</button>
-          <div class="faq-answer">
-            <p>Drag and drop the .md file into your Obsidian vault folder, or use Obsidian's "Import file" option. The conversation will appear as a note with full formatting — code blocks, math, tables, and images (if embedded) all render correctly. You can also set up a filename template to match your Obsidian naming conventions.</p>
-          </div>
-        </div>
-        <div class="faq-item" data-testid="faq-item-5">
-          <button class="faq-question">Can I include images in the Markdown export?</button>
-          <div class="faq-answer">
-            <p>Yes. By default, images are embedded as base64-encoded data URIs, making the Markdown file self-contained. You can also configure the extension to link images by URL instead, which keeps the file smaller but relies on external image hosting.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Related Pages -->
-    <section class="content-section" data-testid="section-related">
-      <h2>Related Pages</h2>
-      <div class="related-grid">
-        <a href="chatgpt-exporter.html" class="related-link" data-testid="related-1">
-          <h3>ChatGPT Exporter</h3>
-          <p>Full guide to exporting ChatGPT conversations in all supported formats.</p>
-        </a>
-        <a href="chatgpt-to-pdf.html" class="related-link" data-testid="related-2">
-          <h3>ChatGPT to PDF</h3>
-          <p>Generate print-ready PDFs from ChatGPT conversations with custom layouts.</p>
-        </a>
-        <a href="markdown-exporter.html" class="related-link" data-testid="related-3">
-          <h3>Markdown Exporter</h3>
-          <p>General Markdown export features across all supported AI platforms.</p>
-        </a>
-        <a href="obsidian-export.html" class="related-link" data-testid="related-4">
-          <h3>Obsidian Export</h3>
-          <p>How to import AI chat exports directly into your Obsidian vault.</p>
-        </a>
-      </div>
-    </section>
-
-    <!-- Final CTA -->
-    <section class="content-section" data-testid="section-final-cta">
-      <div class="callout callout-success">
-        <strong>Start exporting ChatGPT to Markdown today.</strong> Install the extension, open a conversation, and get a clean .md file in seconds. No account, no servers, no data leaves your browser.
-        <div class="cta-group compact">
-          <a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener">Add to Chrome</a>
-          <a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener">Add to Firefox</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer data-testid="footer">
-    <div class="footer-links">
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="license.html">License (MPL 2.0)</a>
-      <a href="https://github.com/Covai-Labs/ai-chat-exporter" target="_blank" rel="noopener">GitHub</a>
-    </div>
-    <p>&copy; 2026 AI Chat Exporter. Open source under MPL 2.0.</p>
-  </footer>
-
-  <script>
-    document.querySelectorAll('.faq-item').forEach((item, index) => {
-      const btn = item.querySelector('.faq-question');
-      const answer = item.querySelector('.faq-answer');
-      if (!btn || !answer) return;
-      const id = 'faq-' + (index + 1);
-      btn.id = 'q-' + id;
-      btn.setAttribute('aria-expanded', 'false');
-      btn.setAttribute('aria-controls', id);
-      answer.id = id;
-      answer.setAttribute('role', 'region');
-      answer.setAttribute('aria-labelledby', 'q-' + id);
-      btn.addEventListener('click', () => {
-        const open = item.classList.toggle('open');
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        answer.setAttribute('aria-hidden', open ? 'false' : 'true');
-      });
+This sets up a local SQLite database connection...</code></pre></div><p>Each message is clearly attributed to its role (Prompt or Response), code blocks retain their language tags, and the overall structure is flat and scannable.</p></section><section class="content-section"><h2>LaTeX Math Handling</h2><p>When ChatGPT generates mathematical expressions, AI Chat Exporter preserves them in standard LaTeX notation:</p><ul><li><strong>Block math</strong> — Display equations are wrapped in <code>$$...$$</code>delimiters, compatible with KaTeX, MathJax, and most Markdown renderers.</li><li><strong>Inline math</strong> — Inline expressions use <code>$...$</code> delimiters for seamless integration with surrounding text.</li></ul><p>This means exported files render beautifully in Obsidian (with the Math rendering plugin), Jupyter notebooks, GitHub READMEs, and any platform that supports LaTeX in Markdown.</p><div class="callout callout-info"><strong>Example: </strong>A quadratic formula from ChatGPT is exported as<code>$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$</code> rather than losing its formatting to plain text.</div></section><section class="content-section"><h2>Code Block Preservation</h2><p>Code is one of the most common things people ask ChatGPT about, and losing code formatting is the biggest problem with copy-paste exports. AI Chat Exporter handles code blocks correctly:</p><ul><li><strong>Language tags preserved</strong> — If ChatGPT marks a block as Python, JavaScript, SQL, etc., the exported Markdown retains the language identifier for syntax highlighting.</li><li><strong>Nested code blocks</strong> — Multi-block responses with different languages are each exported with their own language tag.</li><li><strong>Inline code</strong> — Backtick-wrapped inline code is preserved as-is.</li><li><strong>Indentation preserved</strong> — Whitespace and indentation within code blocks are maintained exactly as ChatGPT rendered them.</li></ul><p>This matters because most Markdown renderers (GitHub, VS Code, Obsidian, Jekyll) use the language tag to apply syntax highlighting. Without it, exported code blocks appear as unstyled plain text.</p></section><section class="content-section"><h2>Image Handling</h2><p>ChatGPT occasionally generates images (via DALL-E or image analysis). AI Chat Exporter handles images in two ways depending on the export configuration:</p><ul><li><strong>Embedded (default)</strong> — Images are included as base64-encoded data URIs within the Markdown file. The file is self-contained — no external dependencies. The tradeoff is larger file sizes.</li><li><strong>Linked</strong> — Images are referenced by their CDN URL. The Markdown file stays small, but the URLs may expire over time.</li></ul><p>For long-term archival, embedded images are recommended. For lightweight sharing, linked images are more practical.</p></section><section class="content-section"><h2>Selective Export and Custom Filenames</h2><p>You do not have to export entire conversations. AI Chat Exporter lets you select specific messages before exporting — useful when you only need a particular code snippet, answer, or exchange from a long thread.</p><p>The extension also supports filename templates for automatic, consistent naming:</p><div class="table-wrapper"><table><thead><tr><th>Template Variable</th><th>Output</th></tr></thead><tbody><tr><td><code>{platform}</code></td><td>chatgpt</td></tr><tr><td><code>{title}</code></td><td>The conversation title (sanitized for filenames)</td></tr><tr><td><code>{datetime}</code></td><td>Current date and time (ISO 8601 format)</td></tr><tr><td><code>{uuid}</code></td><td>A unique identifier for the conversation</td></tr></tbody></table></div><p>The default template is <code>{platform} - {title} - {datetime}</code>, producing filenames like <code>chatgpt - Building a REST API - 2026-09-09_14-30.md</code>.</p></section><section class="content-section"><h2>Copy-Paste vs. AI Chat Exporter</h2><p>Manually copying ChatGPT responses is the most common workaround, but it has significant limitations:</p><div class="table-wrapper"><table><thead><tr><th>Aspect</th><th>Copy-Paste</th><th>AI Chat Exporter</th></tr></thead><tbody><tr><td>Code formatting</td><td>Lost — plain text, no language tags</td><td>Preserved with fenced blocks and language identifiers</td></tr><tr><td>Tables</td><td>Collapsed to plain text</td><td>Rendered as Markdown tables</td></tr><tr><td>Math expressions</td><td>Often garbled or lost</td><td>Preserved as LaTeX notation</td></tr><tr><td>Images</td><td>Not included (manual save required)</td><td>Automatically embedded or linked</td></tr><tr><td>Role attribution</td><td>Manual — you must label who said what</td><td>Automatic — Prompt/Response headers added</td></tr><tr><td>Long conversations</td><td>Impractical — multiple copy operations</td><td>One click for the entire conversation</td></tr></tbody></table></div></section><section class="content-section"><h2>How to Export ChatGPT to Markdown</h2><div class="steps"><div class="step"><div class="step-content"><h3>Install AI Chat Exporter</h3><p>Add the extension from the Chrome Web Store, Firefox Add-ons, or Edge Add-ons. Takes under 30 seconds with no configuration needed.</p></div></div><div class="step"><div class="step-content"><h3>Open Your ChatGPT Conversation</h3><p>Navigate to any conversation on chatgpt.com. The extension detects the page and activates the export toolbar.</p></div></div><div class="step"><div class="step-content"><h3>Click Export as Markdown</h3><p>Select &quot;Markdown&quot; from the export format dropdown. Optionally select specific messages. The .md file downloads instantly with all formatting preserved.</p></div></div></div></section><section class="content-section"><h2>Frequently Asked Questions</h2><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does it preserve code formatting in Markdown?","acceptedAnswer":{"@type":"Answer","text":"Yes. Code blocks are exported as fenced Markdown blocks with language tags (e.g., ```python). Syntax highlighting is applied by whatever Markdown renderer you use — Obsidian, VS Code, GitHub, etc. Inline code wrapped in backticks is also preserved."}},{"@type":"Question","name":"Can I export only my prompts from a conversation?","acceptedAnswer":{"@type":"Answer","text":"Yes. The extension lets you select individual messages before exporting. Simply check the messages you want — whether that is all your prompts, all assistant responses, or a specific exchange — and only those messages appear in the Markdown output."}},{"@type":"Question","name":"Does it handle LaTeX math expressions?","acceptedAnswer":{"@type":"Answer","text":"Yes. Block-level math is exported as $$...$$ and inline math as $...$. This notation is standard across KaTeX, MathJax, and most Markdown rendering engines. Obsidian, Jupyter, and GitHub all render it correctly."}},{"@type":"Question","name":"How do I import the Markdown into Obsidian?","acceptedAnswer":{"@type":"Answer","text":"Drag and drop the .md file into your Obsidian vault folder, or use Obsidian's \"Import file\" option. The conversation will appear as a note with full formatting — code blocks, math, tables, and images (if embedded) all render correctly. You can also set up a filename template to match your Obsidian naming conventions."}},{"@type":"Question","name":"Can I include images in the Markdown export?","acceptedAnswer":{"@type":"Answer","text":"Yes. By default, images are embedded as base64-encoded data URIs, making the Markdown file self-contained. You can also configure the extension to link images by URL instead, which keeps the file smaller but relies on external image hosting."}}]}</script><div class="faq"><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Does it preserve code formatting in Markdown?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. Code blocks are exported as fenced Markdown blocks with language tags (e.g., <code>```python</code>). Syntax highlighting is applied by whatever Markdown renderer you use — Obsidian, VS Code, GitHub, etc. Inline code wrapped in backticks is also preserved.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Can I export only my prompts from a conversation?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. The extension lets you select individual messages before exporting. Simply check the messages you want — whether that is all your prompts, all assistant responses, or a specific exchange — and only those messages appear in the Markdown output.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Does it handle LaTeX math expressions?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. Block-level math is exported as <code>$$...$$</code> and inline math as <code>$...$</code>. This notation is standard across KaTeX, MathJax, and most Markdown rendering engines. Obsidian, Jupyter, and GitHub all render it correctly.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">How do I import the Markdown into Obsidian?</button><div class="faq-answer" role="region" aria-hidden="true">Drag and drop the .md file into your Obsidian vault folder, or use Obsidian's "Import file" option. The conversation will appear as a note with full formatting — code blocks, math, tables, and images (if embedded) all render correctly. You can also set up a filename template to match your Obsidian naming conventions.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Can I include images in the Markdown export?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. By default, images are embedded as base64-encoded data URIs, making the Markdown file self-contained. You can also configure the extension to link images by URL instead, which keeps the file smaller but relies on external image hosting.</div></div></div><script>
+  document.querySelectorAll('.faq-item').forEach((item, i) => {
+    const btn = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+    if (!btn || !answer) return;
+    const id = 'faq-' + (i + 1);
+    btn.id = 'q-' + id;
+    btn.setAttribute('aria-controls', id);
+    answer.id = id;
+    answer.setAttribute('aria-labelledby', 'q-' + id);
+    btn.addEventListener('click', () => {
+      const open = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      answer.setAttribute('aria-hidden', open ? 'false' : 'true');
     });
-  </script>
-</body>
-</html>
+  });
+</script></section><section class="content-section"><section class="related-pages"><h2>Related Pages</h2><div class="related-grid"><a href="/chatgpt-exporter.html" class="related-link"><h3>ChatGPT Exporter</h3><p>Full guide to exporting ChatGPT conversations in all supported formats.</p></a><a href="/chatgpt-to-pdf.html" class="related-link"><h3>ChatGPT to PDF</h3><p>Generate print-ready PDFs from ChatGPT conversations with custom layouts.</p></a><a href="/markdown-exporter.html" class="related-link"><h3>Markdown Exporter</h3><p>General Markdown export features across all supported AI platforms.</p></a><a href="/obsidian-export.html" class="related-link"><h3>Obsidian Export</h3><p>How to import AI chat exports directly into your Obsidian vault.</p></a></div></section></section><section class="content-section"><div class="callout callout-success"><p><strong>Start exporting ChatGPT to Markdown today.</strong></p><div class="cta-group compact"><a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Add to Chrome</a><a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Add to Firefox</a></div></div></section></main><footer><div class="footer-links"><a href="/privacy.html">Privacy Policy</a><span class="footer-sep" aria-hidden="true">|</span><a href="/license.html">License (MPL 2.0)</a><span class="footer-sep" aria-hidden="true">|</span><a href="/feedback.html">Feedback &amp; Issues</a><span class="footer-sep" aria-hidden="true">|</span><a href="https://github.com/Covai-Labs/ai-chat-exporter" target="_blank" rel="noopener noreferrer">GitHub Repository</a></div><p>&copy; 2026 AI Chat Exporter. Released under the Mozilla Public License 2.0.</p></footer></body></html>

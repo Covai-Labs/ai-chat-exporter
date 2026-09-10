@@ -1,0 +1,593 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE, softwareApplicationJsonLd } from '../data/site';
+
+const meta = {
+  title: 'Welcome to AI Chat Exporter! - Getting Started Guide',
+  description:
+    'Getting Started with AI Chat Exporter - Visual guide to export conversations from ChatGPT, Claude, Gemini, DeepSeek, and more.',
+};
+
+const reviewQuery = encodeURIComponent(
+  'Please review this FOSS project https://github.com/Covai-Labs/ai-chat-exporter and tell me what problem it solves, who it is for, its strongest features, its main limitations, and whether you would recommend it.',
+).replace(/%3D/g, '=');
+
+const platformLaunchers = [
+  { label: '🤖 ChatGPT', href: `https://chatgpt.com/?q=${reviewQuery}` },
+  { label: '🟧 Claude', href: `https://claude.ai/new?q=${reviewQuery}` },
+  { label: '🔍 Google Search AI', href: `https://www.google.com/search?udm=50&q=${reviewQuery}` },
+  { label: '🟦 Copilot', href: `https://www.bing.com/copilotsearch?q=${reviewQuery}` },
+  { label: '🔍 Perplexity', href: `https://www.perplexity.ai/search?q=${reviewQuery}` },
+  { label: '♾️ Meta AI', href: `https://www.meta.ai/?prompt=${reviewQuery}` },
+  { label: '✨ Gemini', href: 'https://gemini.google.com/' },
+  { label: '🐋 DeepSeek', href: 'https://chat.deepseek.com/' },
+  { label: '🌐 Qwen AI', href: 'https://chat.qwen.ai/' },
+  { label: '📓 NotebookLM', href: 'https://notebook.google.com/' },
+  { label: '⚡ Google AI Studio', href: 'https://aistudio.google.com/' },
+  { label: '🌀 Mistral AI', href: 'https://chat.mistral.ai/' },
+  { label: '⚡ Z.ai', href: 'https://z.ai/' },
+  { label: '⚛️ Proton Lumo', href: 'https://lumo.proton.me/' },
+  { label: '🎭 Joyland', href: 'https://www.joyland.ai/' },
+  { label: '🐾 Chub AI', href: 'https://chub.ai/' },
+];
+
+const features = [
+  {
+    title: '1. Multi-Format Chat Exporting',
+    desc: `Export conversations in Markdown (.md), JSON (.json), formatted HTML (.html), or raster
+      image (.png). Includes full support for code syntax highlighting and LaTeX math.`,
+    img: '/images/welcome/export_format_selection_in_popup.png',
+    caption: 'Multi-Format Export Selector in Popup UI',
+    card: 'Format Selection in Popup UI',
+  },
+  {
+    title: '2. Cross-AI Model Chat &amp; Obsidian Transfer',
+    desc: `Transfer your prompt and chat context directly from ChatGPT to Claude, DeepSeek, Gemini,
+      Perplexity, Qwen, or Obsidian (via native <code>obsidian://new</code> URIs) with 1 click.`,
+    img: '/images/welcome/transfer_chat_button.png',
+    caption: 'Cross-AI Chat Transfer Selector',
+    card: 'Smart Continuation & Transfer',
+  },
+  {
+    title: '3. Standalone Tab Document Preview',
+    desc: `Open your formatted chat in a standalone tab before downloading, copying, or printing to
+      PDF.`,
+    img: '/images/welcome/open_in_tab-option.png',
+    caption: 'Standalone Document Preview Tab',
+    card: 'Standalone Tab Preview',
+  },
+  {
+    title: '4. Styled HTML Document Exports',
+    desc: `Export self-contained, beautifully styled HTML files with dark mode and code block copy
+      buttons.`,
+    img: '/images/welcome/html_exported_file_in_newtab_dark.png',
+    caption: 'Standalone Exported Dark Mode HTML Document',
+    card: 'Exported Dark Mode HTML Document',
+  },
+  {
+    title: '5. Extension Settings & Options',
+    desc: `Customize launch behavior, default export formats, image toggles, and filename template
+      rules.`,
+    img: '/images/welcome/simple_settings_page.png',
+    caption: 'Extension Settings & Preferences Tab',
+    card: 'Extension Options & Preferences',
+  },
+  {
+    title: '6. Browser Sidepanel Support',
+    tag: 'Chrome / Edge / Brave',
+    desc: `Open the sidepanel alongside your active chat to preview formatted markdown, code blocks,
+      and citations live while chatting. <em>(Note: Available in Chromium-based browsers like
+      Chrome, Edge, Brave, and Opera).</em>`,
+    img: '/images/welcome/chrome_sidepanel_is_open.png',
+    caption: 'Browser Sidepanel Open Next to ChatGPT (Chromium Browsers)',
+    card: 'Integrated Sidepanel View (Chromium Browsers)',
+  },
+];
+---
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalPath="/welcome.html"
+  jsonLd={softwareApplicationJsonLd()}
+>
+  <Header />
+
+  <main class="welcome-main">
+    <section class="welcome-hero">
+      <span class="badge">🎉 Extension Installed &amp; Ready</span>
+      <h1>Welcome to AI Chat Exporter!</h1>
+      <p class="hero-subtitle">
+        Export your chat history, code blocks, LaTeX math, and images from ChatGPT, Claude, Gemini,
+        DeepSeek, and 8+ platforms into clean Markdown, JSON, HTML, or PNG.
+      </p>
+
+      <div class="welcome-demo-wrap">
+        <a
+          href={SITE.youtubeDemo}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="welcome-demo-btn"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#ef4444" aria-hidden="true">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+          </svg>
+          Watch Video Walkthrough (1 min)
+        </a>
+      </div>
+    </section>
+
+    <!-- Pin Extension Section -->
+    <section class="pin-section">
+      <div class="pin-header">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="currentColor" d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z" />
+        </svg>
+        <div>
+          <div class="pin-title">Step 1: Pin AI Chat Exporter to Your Browser Toolbar</div>
+          <div class="pin-sub">
+            Click the extension puzzle piece icon in your browser toolbar to pin
+            <strong>AI Chat Exporter</strong> for instant 1-click access.
+          </div>
+        </div>
+      </div>
+
+      <div class="pin-grid">
+        <div
+          class="zoomable-card"
+          data-lightbox-img="/images/welcome/chrome_suggest_to_pin.png"
+          data-lightbox-caption="Chrome / Edge: Pin Extension to Toolbar"
+        >
+          <div class="card-header">
+            <span>Chrome / Edge: Pin to Toolbar</span>
+            <span class="zoom-hint">🔍 Click to expand</span>
+          </div>
+          <img
+            src="/images/welcome/chrome_suggest_to_pin.png"
+            alt="Pin Extension in Chrome"
+            class="card-img"
+            loading="lazy"
+          />
+        </div>
+
+        <div
+          class="zoomable-card"
+          data-lightbox-img="/images/welcome/firefox_suggest_to_pin_for_easy_access.png"
+          data-lightbox-caption="Firefox: Pin Extension to Toolbar"
+        >
+          <div class="card-header">
+            <span>Firefox: Pin to Toolbar</span>
+            <span class="zoom-hint">🔍 Click to expand</span>
+          </div>
+          <img
+            src="/images/welcome/firefox_suggest_to_pin_for_easy_access.png"
+            alt="Pin Extension in Firefox"
+            class="card-img"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature Showcase -->
+    <h2 class="welcome-section-title">Visual Tour &amp; Extension Features</h2>
+
+    <div class="feature-showcase">
+      {features.map((f) => (
+        <div class="feature-block">
+          <div class="feature-meta">
+            <div class="feature-title">
+              <Fragment set:html={f.title} />
+              {f.tag && <span class="browser-tag">{f.tag}</span>}
+            </div>
+            <div class="feature-desc">
+              <Fragment set:html={f.desc} />
+            </div>
+          </div>
+          <div
+            class="zoomable-card"
+            data-lightbox-img={f.img}
+            data-lightbox-caption={f.caption}
+          >
+            <div class="card-header">
+              <span>{f.card}</span>
+              <span class="zoom-hint">🔍 Click to expand full image</span>
+            </div>
+            <img src={f.img} alt={f.card} class="card-img" loading="lazy" />
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Platform Launchers -->
+    <section class="launch-section">
+      <h2>Ready to Export? Open Supported Platforms Below</h2>
+      <p>Visit any supported platform to start exporting conversations immediately.</p>
+
+      <div class="launch-grid">
+        {platformLaunchers.map((p) => (
+          <a href={p.href} target="_blank" rel="noopener" class="launch-btn">{p.label}</a>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox-overlay">
+    <div class="lightbox-close-hint">✕ Click anywhere to close</div>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Zoomed Screenshot" class="lightbox-img" />
+      <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function () {
+      const overlay = document.getElementById('lightbox');
+      const img = document.getElementById('lightbox-img');
+      const cap = document.getElementById('lightbox-caption');
+
+      function openLightbox(src, caption) {
+        img.src = src;
+        cap.textContent = caption;
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('.zoomable-card').forEach((card) => {
+        card.addEventListener('click', function () {
+          openLightbox(
+            this.getAttribute('data-lightbox-img'),
+            this.getAttribute('data-lightbox-caption'),
+          );
+        });
+      });
+
+      overlay.addEventListener('click', closeLightbox);
+      document.querySelector('.lightbox-content').addEventListener('click', function (e) {
+        e.stopPropagation();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeLightbox();
+      });
+    })();
+  </script>
+</BaseLayout>
+
+<style>
+  .welcome-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 100px;
+  }
+
+  .welcome-hero {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .welcome-demo-wrap {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .welcome-demo-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    background: rgba(220, 38, 38, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: var(--text-primary);
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .welcome-demo-btn:hover {
+    background: rgba(220, 38, 38, 0.25);
+    transform: translateY(-1px);
+  }
+
+  .pin-section {
+    background: rgba(139, 92, 246, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.25);
+    border-radius: 24px;
+    padding: 36px;
+    margin-bottom: 80px;
+  }
+
+  .pin-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .pin-header svg {
+    width: 36px;
+    height: 36px;
+    fill: #a78bfa;
+    flex-shrink: 0;
+  }
+
+  .pin-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+
+  .pin-sub {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  .pin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 28px;
+  }
+
+  .zoomable-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+
+  .zoomable-card:hover {
+    border-color: rgba(59, 130, 246, 0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  }
+
+  .card-header {
+    padding: 14px 20px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text-primary);
+    background: var(--bg-surface-hover);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .zoom-hint {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #60a5fa;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .card-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .zoomable-card:hover .card-img {
+    transform: scale(1.015);
+  }
+
+  .welcome-section-title {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 48px;
+    text-align: center;
+    background: linear-gradient(to right, var(--text-primary), var(--text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .feature-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    margin-bottom: 80px;
+  }
+
+  .feature-block {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    transition: all 0.25s ease;
+  }
+
+  .feature-block:hover {
+    background: var(--bg-surface-hover);
+    border-color: var(--border-hover);
+  }
+
+  .feature-meta {
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .feature-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .browser-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+  }
+
+  .feature-desc {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .feature-desc code {
+    background: rgba(59, 130, 246, 0.12);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+
+  .launch-section {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .launch-section h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    border-bottom: none;
+  }
+
+  .launch-section p {
+    color: var(--text-secondary);
+    margin-top: 6px;
+  }
+
+  .launch-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+    margin-top: 24px;
+  }
+
+  .launch-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: var(--bg-base);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .launch-btn:hover {
+    background: rgba(59, 130, 246, 0.18);
+    border-color: rgba(59, 130, 246, 0.45);
+    transform: translateY(-2px);
+  }
+
+  .lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(5, 9, 18, 0.92);
+    backdrop-filter: blur(16px);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .lightbox-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lightbox-content {
+    max-width: 95vw;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0.95);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .lightbox-overlay.active .lightbox-content {
+    transform: scale(1);
+  }
+
+  .lightbox-img {
+    max-width: 100%;
+    max-height: 82vh;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--border-color);
+  }
+
+  .lightbox-caption {
+    margin-top: 16px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
+    background: var(--bg-surface);
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+  }
+
+  .lightbox-close-hint {
+    position: absolute;
+    top: 24px;
+    right: 28px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    background: var(--bg-surface);
+    padding: 6px 16px;
+    border-radius: 20px;
+    pointer-events: none;
+  }
+
+  @media (max-width: 640px) {
+    .pin-grid {
+      grid-template-columns: 1fr;
+    }
+    .pin-section {
+      padding: 24px;
+    }
+  }
+</style>

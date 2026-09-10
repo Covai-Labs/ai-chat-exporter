@@ -1,0 +1,249 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import CtaSection from '../components/CtaSection.astro';
+import FAQ from '../components/FAQ.astro';
+import RelatedPages from '../components/RelatedPages.astro';
+import StepList from '../components/StepList.astro';
+import Callout from '../components/Callout.astro';
+
+const meta = {
+  slug: 'json-exporter',
+  title: 'JSON Export',
+  description: 'Structured JSON with a strict schema',
+  heroTitle: 'AI Chat to JSON \u2014 Structured Data Export',
+  heroSubtitle:
+    'Export AI conversations as structured JSON with a normalized schema. Machine-readable output for developers, researchers, and automation workflows.',
+};
+
+const jsonExample = `<pre>{
+  "schema_version": "v1",
+  "source": {
+    "platform": "chatgpt",
+    "url": "https://chatgpt.com/c/abc123",
+    "extension_version": "1.0.0"
+  },
+  "metadata": {
+    "title": "Python recursion explanation",
+    "model": "gpt-4o",
+    "conversation_id": "abc123",
+    "exported_at": "2026-09-09T10:30:00Z"
+  },
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain recursion in Python",
+      "timestamp": "2026-09-09T10:29:00Z",
+      "thinking": null
+    },
+    {
+      "role": "assistant",
+      "content": "Recursion occurs when a function calls itself...",
+      "timestamp": "2026-09-09T10:29:30Z",
+      "thinking": null
+    }
+  ]
+}</pre>`;
+
+const pythonExample = `<pre>import json
+
+with open("conversation.json") as f:
+    data = json.load(f)
+
+for msg in data["messages"]:
+    if msg["role"] == "assistant":
+        print(msg["content"][:200])</pre>`;
+---
+<GuideLayout
+  title={meta.title}
+  description={meta.description}
+  slug={meta.slug}
+  heroTitle={meta.heroTitle}
+  heroSubtitle={meta.heroSubtitle}
+  badge="Developer Friendly"
+>
+  <!-- Features Grid -->
+  <section class="content-section">
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>Normalized Schema</h3>
+        <p>Every export follows a consistent JSON Schema v1 structure regardless of which AI platform produced the conversation. Parse it once, process conversations from any source.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Full Metadata</h3>
+        <p>Model name, platform, conversation ID, timestamp, and message roles are all preserved in structured fields. Build analytics dashboards or filter conversations programmatically.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Role Classification</h3>
+        <p>Every message is tagged with its role: user, assistant, system, tool, artifact, or unknown. This makes it straightforward to separate inputs from outputs in downstream processing.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Machine-Readable</h3>
+        <p>Valid JSON that parses with no errors in any language. Import directly into databases, dataframes, search indexes, or custom pipelines without cleanup or transformation.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Backup and Restore</h3>
+        <p>JSON is the ideal format for programmatic backup and restore. Re-import your conversation archive into tools that accept JSON, or build your own backup system on top of the export files.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Platform Agnostic</h3>
+        <p>Whether the conversation came from ChatGPT, Claude, Gemini, or DeepSeek, the output structure is identical. Your code does not need platform-specific parsers.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- JSON Schema v1 Structure -->
+  <section class="content-section">
+    <h2>JSON Schema v1 Structure</h2>
+    <p>Every JSON export from AI Chat Exporter follows the v1 schema definition. The structure is designed to be both human-inspectable and machine-processable. Here is an overview of the top-level fields:</p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>schema_version</code></td><td>string</td><td>Schema version identifier (currently "v1")</td></tr>
+          <tr><td><code>source</code></td><td>object</td><td>Source metadata: platform name, URL, and extension version</td></tr>
+          <tr><td><code>metadata</code></td><td>object</td><td>Conversation metadata: title, model, timestamp, conversation ID</td></tr>
+          <tr><td><code>messages</code></td><td>array</td><td>Ordered array of message objects</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Each message object in the <code>messages</code> array contains:</p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Field</th><th>Type</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>role</code></td><td>string</td><td>One of: user, assistant, system, tool, artifact, unknown</td></tr>
+          <tr><td><code>content</code></td><td>string</td><td>The message text content in Markdown format</td></tr>
+          <tr><td><code>timestamp</code></td><td>string (ISO 8601)</td><td>When the message was sent, if available</td></tr>
+          <tr><td><code>thinking</code></td><td>string or null</td><td>Extended thinking / chain-of-thought content, if present</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The full schema definition is available in the repository at <code>schemas/export-v1.schema.json</code>. You can use it with JSON Schema validators to enforce structure in your own pipelines.</p>
+  </section>
+
+  <!-- What the Raw JSON Looks Like -->
+  <section class="content-section">
+    <h2>What the Raw JSON Looks Like</h2>
+    <p>Here is a simplified example of a JSON export with two messages:</p>
+    <Callout tone="info" title="Example">
+      <Fragment set:html={jsonExample} />
+    </Callout>
+    <p>This structure is consistent whether the conversation came from ChatGPT, Claude, Gemini, or any other supported platform. The <code>source.platform</code> field tells you where it came from, and the <code>messages</code> array is always a flat, ordered list.</p>
+  </section>
+
+  <!-- Use Cases -->
+  <section class="content-section">
+    <h2>Use Cases for JSON Export</h2>
+    <p><strong>Programmatic Processing</strong> \u2014 Load the JSON into Python, JavaScript, Go, or any language with native JSON support. Filter messages by role, extract code blocks, build summaries, or perform analytics on conversation patterns.</p>
+    <Callout tone="info" title="Python Example">
+      <Fragment set:html={pythonExample} />
+    </Callout>
+    <p><strong>Backup and Restore</strong> \u2014 Build an automated backup pipeline that exports your AI conversations daily. The normalized schema means a single restore script works for conversations from every platform.</p>
+    <p><strong>Training Data Preparation</strong> \u2014 Researchers and ML engineers can use JSON exports as structured input for fine-tuning datasets. The role field cleanly separates prompts from completions without regex or heuristics.</p>
+    <p><strong>Analytics and Dashboards</strong> \u2014 Import JSON exports into databases like PostgreSQL (via JSONB), Elasticsearch, or MongoDB. Build dashboards showing conversation volume, platform usage, model distribution, and response patterns.</p>
+    <p><strong>Migration Between Platforms</strong> \u2014 Moving from ChatGPT to Claude or vice versa? Export your conversations as JSON and write a simple script to reconstruct them in the target platform's format, or simply archive them for reference.</p>
+    <p><strong>Custom Tooling</strong> \u2014 Build your own chat interface, search engine, or knowledge base on top of exported JSON data. The structured format makes indexing, full-text search, and retrieval straightforward.</p>
+  </section>
+
+  <!-- JSON Export vs ChatGPT's Official Export -->
+  <section class="content-section">
+    <h2>JSON Export vs. ChatGPT's Official Export</h2>
+    <p>OpenAI offers a data export feature in ChatGPT settings, but the output is a ZIP file containing unstructured conversation dumps in a custom format that changes between versions. Here is how AI Chat Exporter's JSON export compares:</p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>ChatGPT Official Export</th><th>AI Chat Exporter JSON</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Format</td><td>Proprietary, undocumented</td><td>JSON Schema v1, documented</td></tr>
+          <tr><td>Platform coverage</td><td>ChatGPT only</td><td>17 platforms</td></tr>
+          <tr><td>Role labels</td><td>Inconsistent</td><td>Normalized (user, assistant, tool, etc.)</td></tr>
+          <tr><td>Model metadata</td><td>Not always present</td><td>Captured when available</td></tr>
+          <tr><td>Thinking traces</td><td>Not included</td><td>Preserved in thinking field</td></tr>
+          <tr><td>Export trigger</td><td>Full account export (all conversations)</td><td>Per-conversation, on demand</td></tr>
+          <tr><td>Availability</td><td>Request and wait for email</td><td>Instant download</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Supported Platforms -->
+  <section class="content-section">
+    <h2>Supported Platforms</h2>
+    <p>JSON export is available for all 17 platforms: ChatGPT, Claude, Gemini, DeepSeek, Perplexity, Copilot, Qwen, Mistral, Meta AI, NotebookLM, Google AI Studio, Google Cloud Assist, Google Search AI, Z.AI, Proton Lumo, Joyland, and Chub. The output schema is identical across all platforms.</p>
+  </section>
+
+  <!-- How It Works -->
+  <section class="content-section">
+    <h2>How to Export AI Chats to JSON</h2>
+    <StepList
+      steps={[
+        {
+          title: 'Install the Extension',
+          body: 'Add AI Chat Exporter from the Chrome Web Store or Firefox Add-ons. Free, no account required, no configuration needed.',
+        },
+        {
+          title: 'Open Any Supported AI Chat',
+          body: 'Navigate to a conversation on any of the 17 supported platforms. The extension detects the active chat and parses the DOM.',
+        },
+        {
+          title: 'Click Export and Select JSON',
+          body: 'Click the toolbar icon and choose JSON. The file downloads immediately as a <code>.json</code> file named after the conversation title.',
+        },
+      ]}
+    />
+  </section>
+
+  <!-- FAQ -->
+  <section class="content-section">
+    <h2>Frequently Asked Questions</h2>
+    <FAQ
+      items={[
+        {
+          q: 'What does the JSON look like?',
+          a: 'The JSON has a top-level structure with schema_version, source, metadata, and messages fields. Each message has a role (user, assistant, system, tool, artifact, or unknown) and content in Markdown. The full schema definition is available at schemas/export-v1.schema.json in the GitHub repository.',
+        },
+        {
+          q: 'Can I import into databases?',
+          a: 'Yes. The JSON is valid and well-structured for direct import into PostgreSQL (JSONB columns), MongoDB documents, Elasticsearch indices, or any data store that accepts JSON. The consistent schema means you can write a single import script that works for all platforms.',
+        },
+        {
+          q: 'What metadata is included?',
+          a: 'Each export includes the source platform, the source URL, the extension version, the conversation title, the AI model name (when available), the conversation ID, the export timestamp, and the timestamp of each individual message. This metadata enables filtering, sorting, and analytics.',
+        },
+        {
+          q: 'Is there a schema definition?',
+          a: 'Yes. The JSON Schema v1 definition is published in the GitHub repository at schemas/export-v1.schema.json. You can use this file with JSON Schema validators in any language to enforce structure and catch anomalies in your data pipeline.',
+        },
+        {
+          q: 'How do I parse it in Python?',
+          a: 'Use Python\'s built-in json module: <code>import json; data = json.load(open("export.json"))</code>. The data["messages"] array contains all messages, each with a role and content field. You can filter by role, iterate over messages, or load the entire structure into a pandas DataFrame for analysis.',
+        },
+      ]}
+    />
+  </section>
+
+  <!-- Related Pages -->
+  <section class="content-section">
+    <RelatedPages
+      items={[
+        {
+          title: 'Markdown Export',
+          href: '/markdown-exporter.html',
+          desc: 'Export conversations to portable Markdown files for note-taking workflows.',
+        },
+        {
+          title: 'AI Chat Backup',
+          href: '/ai-chat-backup.html',
+          desc: 'Build automated backup pipelines for your AI conversation archives.',
+        },
+      ]}
+    />
+  </section>
+
+  <CtaSection prompt="Ready to export your AI chats to JSON?" />
+</GuideLayout>

@@ -1,0 +1,192 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import CtaSection from '../components/CtaSection.astro';
+import FAQ from '../components/FAQ.astro';
+import RelatedPages from '../components/RelatedPages.astro';
+import StepList from '../components/StepList.astro';
+import Callout from '../components/Callout.astro';
+
+const meta = {
+  slug: 'png-exporter',
+  title: 'PNG Export',
+  description: 'Share AI chats as polished images',
+  heroTitle: 'AI Chat to PNG \u2014 Shareable Conversation Images',
+  heroSubtitle:
+    'Export AI conversations as high-resolution PNG images with 12 curated color themes. Built for social sharing, presentations, and visual documentation.',
+};
+---
+<GuideLayout
+  title={meta.title}
+  description={meta.description}
+  slug={meta.slug}
+  heroTitle={meta.heroTitle}
+  heroSubtitle={meta.heroSubtitle}
+  badge="12 Themes"
+>
+  <!-- Features Grid -->
+  <section class="content-section">
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>12 Curated Themes</h3>
+        <p>Choose from modern-light, modern-dark, github-light, github-dark, nord, dracula, solarized-light, solarized-dark, catppuccin, monokai, synthwave, and gruvbox. Each theme is hand-tuned for readability and visual appeal.</p>
+      </div>
+      <div class="feature-card">
+        <h3>2x High Resolution</h3>
+        <p>Enable the high-quality rendering option, which targets 2x pixel density. The output looks crisp on Retina displays, in presentations, and when shared on social media platforms that compress images.</p>
+      </div>
+      <div class="feature-card">
+        <h3>KaTeX Math in Images</h3>
+        <p>Mathematical expressions are rendered through KaTeX before the image capture, so equations appear as sharp text in the PNG rather than broken notation or screenshots of the original.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Selective Capture</h3>
+        <p>Capture individual messages or entire conversation sections as separate images. This is useful when you want to share a specific AI response without including the full conversation context.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Syntax Highlighted Code</h3>
+        <p>Code blocks in the image retain their syntax highlighting colors and monospace font. The code is readable even when the image is viewed at smaller sizes on mobile screens.</p>
+      </div>
+      <div class="feature-card">
+        <h3>No Watermarks</h3>
+        <p>PNG exports are clean images with no branding, watermarks, or overlays added by the extension. The output is purely your conversation content rendered in your chosen theme.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How PNG Export Works -->
+  <section class="content-section">
+    <h2>How PNG Export Works</h2>
+    <p>AI Chat Exporter uses html2canvas to capture the conversation DOM as a pixel-perfect image. Before capture, the extension applies the selected theme's CSS, renders all math through KaTeX, and ensures code blocks are properly highlighted. The result is a PNG that faithfully reproduces the visual appearance of the conversation.</p>
+    <p>The rendering happens entirely in your browser. No data is sent to any server for image processing. The html2canvas library reads the rendered DOM and draws it to an off-screen canvas, which is then exported as a PNG file and downloaded to your machine.</p>
+    <p>For conversations with many messages, the extension captures the full scrollable height of the conversation content, producing a tall image that contains the complete exchange. The high-resolution option doubles the pixel dimensions for sharper output.</p>
+  </section>
+
+  <!-- Available Themes -->
+  <section class="content-section">
+    <h2>Available Themes</h2>
+    <p>Each theme provides a complete visual palette including background, text, code block, heading, link, and border colors. Here is the full list of 12 themes:</p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Theme</th><th>Style</th><th>Best For</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>modern-light</td><td>Clean white with subtle borders</td><td>Printing, documents, general use</td></tr>
+          <tr><td>modern-dark</td><td>Deep gray with light text</td><td>Screenshots, presentations</td></tr>
+          <tr><td>github-light</td><td>GitHub's light code theme</td><td>Technical sharing, documentation</td></tr>
+          <tr><td>github-dark</td><td>GitHub's dark code theme</td><td>Developer presentations</td></tr>
+          <tr><td>nord</td><td>Arctic blue-gray palette</td><td>Minimalist aesthetics</td></tr>
+          <tr><td>dracula</td><td>Purple-pink pastel on dark</td><td>Social media, visual impact</td></tr>
+          <tr><td>solarized-light</td><td>Warm cream background</td><td>Extended reading</td></tr>
+          <tr><td>solarized-dark</td><td>Dark teal background</td><td>Screens, projectors</td></tr>
+          <tr><td>catppuccin</td><td>Soft pastel on dark mauve</td><td>Modern developer aesthetic</td></tr>
+          <tr><td>monokai</td><td>High-contrast warm dark</td><td>Code-heavy conversations</td></tr>
+          <tr><td>synthwave</td><td>Neon retro-futurism</td><td>Social media, visual flair</td></tr>
+          <tr><td>gruvbox</td><td>Warm retro dark with oranges</td><td>Cozy aesthetic, code</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- High-Resolution Rendering -->
+  <section class="content-section">
+    <h2>High-Resolution Rendering</h2>
+    <p>The standard export produces a 1x image suitable for most use cases. When you enable the high-quality option, the extension targets 2x pixel density, effectively doubling the resolution in each dimension when your device and the conversation length allow it. For very long conversations, the renderer may fall back to a lower scale to stay within canvas memory limits. Either way you get a sharper image that holds up well on:</p>
+    <p>High-DPI monitors and Retina displays, where standard-resolution images appear blurry. Social media platforms like Twitter and LinkedIn, which compress uploaded images and benefit from higher source resolution. Printed materials and slide decks, where images are often scaled up from their original size.</p>
+    <p>Higher-resolution images are larger in file size. For conversations with many messages, the 2x option may produce images several megabytes in size. Use the standard resolution for quick shares and the high-quality option for polished deliverables.</p>
+  </section>
+
+  <!-- Selective Export -->
+  <section class="content-section">
+    <h2>Selective Export</h2>
+    <p>You do not always want to capture an entire conversation as one image. The selective capture feature lets you choose specific messages or sections. This is useful when:</p>
+    <p>You want to share a single AI response on social media without the preceding prompts. You need to highlight a particular code block or table from a longer exchange. You are building documentation and want to capture individual Q&A pairs as separate images.</p>
+    <p>To use selective capture, click the extension icon, select PNG, and then choose which messages to include. The image renders only the selected content with consistent spacing and theme application.</p>
+  </section>
+
+  <!-- Use Cases -->
+  <section class="content-section">
+    <h2>Use Cases</h2>
+    <p><strong>Social Media Sharing</strong> \u2014 AI conversations look polished as images on Twitter, LinkedIn, Reddit, and Hacker News. A themed PNG with syntax-highlighted code is far more visually engaging than a text paste or a plain screenshot.</p>
+    <p><strong>Documentation</strong> \u2014 Technical writers and developer advocates embed AI conversation images in blog posts, README files, and knowledge bases. The consistent theming makes the images look professional and on-brand.</p>
+    <p><strong>Presentations</strong> \u2014 Drop PNG exports directly into slide decks. Unlike screenshots of the AI interface, these images are themed, cropped to content, and free of browser chrome and UI distractions.</p>
+    <p><strong>Slack and Discord</strong> \u2014 Share AI-generated insights, code snippets, or explanations as images in team channels. The image renders inline in Slack and Discord, making it immediately visible without clicking through.</p>
+    <p><strong>Client Reports</strong> \u2014 When AI tools are part of your client workflow, PNG exports provide polished, presentable artifacts that can be included in deliverables without revealing your browser setup or platform UI.</p>
+  </section>
+
+  <!-- Supported Platforms -->
+  <section class="content-section">
+    <h2>Supported Platforms</h2>
+    <p>PNG export works with all 17 platforms supported by AI Chat Exporter: ChatGPT, Claude, Gemini, DeepSeek, Perplexity, Copilot, Qwen, Mistral, Meta AI, NotebookLM, Google AI Studio, Google Cloud Assist, Google Search AI, Z.AI, Proton Lumo, Joyland, and Chub.</p>
+  </section>
+
+  <!-- How It Works -->
+  <section class="content-section">
+    <h2>How to Export AI Chats as PNG</h2>
+    <StepList
+      steps={[
+        {
+          title: 'Install the Extension',
+          body: 'Add AI Chat Exporter from the Chrome Web Store or Firefox Add-ons. Free, open-source, no account or API key needed.',
+        },
+        {
+          title: 'Open Any Supported AI Chat',
+          body: 'Navigate to a conversation on any of the 17 supported platforms. Ensure the messages you want to capture are visible in the chat window.',
+        },
+        {
+          title: 'Select Theme and Export',
+          body: 'Click the toolbar icon, choose PNG, select your preferred theme, and optionally enable high resolution. The image downloads immediately as a PNG file.',
+        },
+      ]}
+    />
+  </section>
+
+  <!-- FAQ -->
+  <section class="content-section">
+    <h2>Frequently Asked Questions</h2>
+    <FAQ
+      items={[
+        {
+          q: 'How do I get high quality images?',
+          a: 'Enable the high-resolution (2x) option in the PNG export settings before generating the image. This targets double the pixel density in both dimensions, producing a sharper image suitable for Retina displays, presentations, and social media where compression is applied.',
+        },
+        {
+          q: 'Can I select which messages to capture?',
+          a: 'Yes. The selective capture mode lets you choose specific messages or sections from the conversation to include in the image. This is ideal for sharing individual responses without exporting the entire conversation.',
+        },
+        {
+          q: 'Does math render in the image?',
+          a: 'Yes. LaTeX math is rendered through KaTeX before the image capture. Both inline and display equations appear as crisp, readable math in the PNG rather than broken LaTeX syntax or DOM artifacts.',
+        },
+        {
+          q: 'What themes are available?',
+          a: 'There are 12 themes: modern-light, modern-dark, github-light, github-dark, nord, dracula, solarized-light, solarized-dark, catppuccin, monokai, synthwave, and gruvbox. Each theme provides a complete color palette optimized for readability and visual appeal.',
+        },
+        {
+          q: 'Why is PNG export slow on long chats?',
+          a: 'PNG export uses html2canvas to render the DOM to a canvas element. For conversations with many messages, the rendering process takes longer because the library must paint every element, including code blocks and images. High-resolution mode doubles the render time. For very long conversations, consider using selective capture to export only the relevant sections, or use Markdown export for a fast, text-based alternative.',
+        },
+      ]}
+    />
+  </section>
+
+  <!-- Related Pages -->
+  <section class="content-section">
+    <RelatedPages
+      items={[
+        {
+          title: 'Markdown Export',
+          href: '/markdown-exporter.html',
+          desc: 'Export to portable Markdown files for note-taking and documentation workflows.',
+        },
+        {
+          title: 'ChatGPT Exporter',
+          href: '/chatgpt-exporter.html',
+          desc: 'Export conversations from OpenAI ChatGPT in multiple formats.',
+        },
+      ]}
+    />
+  </section>
+
+  <CtaSection prompt="Ready to export your AI chats as images?" />
+</GuideLayout>

@@ -1,0 +1,63 @@
+---
+// Layout for SEO guide pages: header, breadcrumbs, hero, content slot, footer.
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE, softwareApplicationJsonLd } from '../data/site';
+import type { SeoJsonLd } from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  slug: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  badge?: string;
+  jsonLd?: SeoJsonLd[];
+}
+
+const {
+  title,
+  description,
+  slug,
+  heroTitle,
+  heroSubtitle,
+  badge = 'Free &amp; Open Source',
+  jsonLd = [],
+} = Astro.props;
+
+const canonicalPath = `/${slug}.html`;
+const combinedJsonLd: SeoJsonLd[] = [softwareApplicationJsonLd(), ...jsonLd];
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={canonicalPath}
+  jsonLd={combinedJsonLd}
+>
+  <Header />
+
+  <Breadcrumbs
+    items={[
+      { label: 'Home', href: '/index.html' },
+      { label: title },
+    ]}
+  />
+
+  <main>
+    <div class="hero">
+      <span class="badge" set:html={badge}></span>
+      <h1>{heroTitle}</h1>
+      <p class="hero-subtitle">{heroSubtitle}</p>
+      <div class="cta-group">
+        <a href={SITE.chromeStore} class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-testid="cta-chrome">Add to Chrome</a>
+        <a href={SITE.firefoxAddons} class="btn btn-secondary" target="_blank" rel="noopener noreferrer" data-testid="cta-firefox">Add to Firefox</a>
+      </div>
+    </div>
+
+    <slot />
+  </main>
+
+  <Footer />
+</BaseLayout>

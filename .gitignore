@@ -1,6 +1,9 @@
 # Dependencies
 node_modules/
 
+# Astro generated types (web/)
+.astro/
+
 # Build and distribution outputs
 dist/
 .output/

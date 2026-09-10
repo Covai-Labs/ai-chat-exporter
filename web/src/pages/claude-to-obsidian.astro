@@ -1,0 +1,240 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import CtaSection from '../components/CtaSection.astro';
+import FAQ from '../components/FAQ.astro';
+import RelatedPages from '../components/RelatedPages.astro';
+import StepList from '../components/StepList.astro';
+import Callout from '../components/Callout.astro';
+
+const meta = {
+  slug: 'claude-to-obsidian',
+  title: 'Claude to Obsidian',
+  description:
+    'Sync Claude chats into your Obsidian vault',
+  heroTitle: 'Claude to Obsidian — One-Click Vault Transfer',
+  heroSubtitle:
+    'Send Claude conversations directly into your Obsidian vault as properly formatted Markdown notes. No copy-paste, no file management. Just one click.',
+};
+---
+<GuideLayout
+  title={meta.title}
+  description={meta.description}
+  slug={meta.slug}
+  heroTitle={meta.heroTitle}
+  heroSubtitle={meta.heroSubtitle}
+  badge="Direct Obsidian Integration"
+>
+  <!-- How Obsidian Integration Works -->
+  <section class="content-section">
+    <h2>How Obsidian Integration Works</h2>
+    <p>
+      AI Chat Exporter uses Obsidian's native <code>obsidian://new</code> URI scheme to create
+      notes directly in your vault. When you click the Obsidian transfer button, the extension
+      constructs a URI with the conversation content, vault name, and target folder, then opens it
+      in a new tab. Obsidian intercepts the URI and creates the note instantly.
+    </p>
+    <p>
+      This approach has several advantages over file-based imports. There is no need to locate your
+      vault folder on disk, no need to manually move files, and no risk of saving to the wrong
+      location. The note appears in Obsidian exactly where you configured it to go, with the
+      filename and folder path you specified.
+    </p>
+    <p>
+      The URI scheme approach also means the transfer works regardless of your operating system.
+      Whether you are on Windows, macOS, or Linux, the obsidian:// protocol is handled uniformly by
+      the Obsidian desktop application.
+    </p>
+  </section>
+
+  <!-- Vault Name Configuration -->
+  <section class="content-section">
+    <h2>Vault Name Configuration</h2>
+    <p>
+      To use the Obsidian transfer feature, you need to tell the extension the name of your target
+      vault. This is the display name of the vault as it appears in Obsidian&rsquo;s vault
+      switcher, not the folder name on disk.
+    </p>
+    <p>
+      Open the extension settings and enter your vault name in the Obsidian vault field. If you
+      have multiple vaults, you can configure different target folders for each. The extension
+      stores this configuration in your browser's local extension storage&mdash;it is never shared
+      with any external service.
+    </p>
+    <Callout tone="info" title="Tip">
+      Your vault name is the name you see in Obsidian's top-left corner or in the vault switcher.
+      It is not the folder path. For example, if your vault is called "Personal Knowledge Base",
+      enter that exact name in the settings field.
+    </Callout>
+  </section>
+
+  <!-- What Gets Transferred to Obsidian -->
+  <section class="content-section">
+    <h2>What Gets Transferred to Obsidian</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>Full Conversation Messages</h3>
+        <p>
+          All user and assistant messages are included in the note. Messages are formatted as a clean
+          Markdown document with clear speaker labels and timestamp markers where available.
+        </p>
+      </div>
+      <div class="feature-card">
+        <h3>Artifacts as Code Blocks</h3>
+        <p>
+          Claude Artifacts are embedded inline with proper code fencing and language tags. They
+          appear in the note at the point where they were created in the conversation, maintaining
+          context.
+        </p>
+      </div>
+      <div class="feature-card">
+        <h3>Code with Syntax Tags</h3>
+        <p>
+          All code blocks retain their language identifiers for syntax highlighting in Obsidian. The
+          Obsidian theme you use will color-code the blocks automatically.
+        </p>
+      </div>
+      <div class="feature-card">
+        <h3>LaTeX Math Equations</h3>
+        <p>
+          Inline and display math notation is preserved. With Obsidian's MathJax plugin (enabled by
+          default), equations render as proper mathematical notation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filename and Folder Structure -->
+  <section class="content-section">
+    <h2>Filename and Folder Structure</h2>
+    <p>
+      When a note is created in Obsidian, the filename is derived from the conversation title. The
+      extension sanitizes the title to remove characters that are invalid in filenames (such as
+      slashes, colons, and question marks) while preserving readability.
+    </p>
+    <p>The default folder structure follows a date-based organization:</p>
+    <ul>
+      <li><strong>Folder:</strong> <code>Claude/2026/03/</code></li>
+      <li><strong>Filename:</strong> <code>Claude-Refactor-React-Component.md</code></li>
+      <li>
+        <strong>Full path:</strong>
+        <code>Claude/2026/03/Claude-Refactor-React-Component.md</code>
+      </li>
+    </ul>
+    <p>
+      You can customize the filename template in the extension settings. For example, setting it to
+      <code>{'Claude - {title} - {datetime}'}</code> produces unique, sortable filenames for every
+      conversation. Note that filename separators like <code>/</code> are stripped for filesystem
+      safety, so all exports land as flat files in your vault.
+    </p>
+  </section>
+
+  <!-- Why Obsidian Users Love This Workflow -->
+  <section class="content-section">
+    <h2>Why Obsidian Users Love This Workflow</h2>
+    <p>
+      Obsidian has become the go-to tool for developers and researchers who want a local-first,
+      Markdown-based knowledge base. Claude conversations are a rich source of knowledge&mdash;code
+      explanations, research summaries, creative drafts, and problem-solving threads. But manually
+      copying these conversations into Obsidian is tedious and error-prone.
+    </p>
+    <p>
+      The AI Chat Exporter Obsidian integration bridges this gap. Instead of opening a conversation,
+      selecting all text, copying it, switching to Obsidian, creating a new note, and pasting (while
+      losing code formatting and images), you click one button. The note appears in your vault with
+      all formatting intact.
+    </p>
+    <p>
+      Over time, this creates a searchable archive of your AI interactions that you can link, tag,
+      and reference just like any other Obsidian note. Cross-reference Claude's explanations with
+      your own notes, create Maps of Content that link related conversations, or use Dataview
+      queries to find all conversations about a specific topic.
+    </p>
+  </section>
+
+  <!-- Privacy -->
+  <section class="content-section">
+    <Callout tone="success" title="Privacy preserved">
+      The Obsidian transfer uses a local URI scheme. No data is transmitted to the internet. The
+      note is created directly in your local Obsidian vault by the Obsidian application itself.
+    </Callout>
+  </section>
+
+  <!-- FAQ -->
+  <section class="content-section">
+    <h2>Frequently Asked Questions</h2>
+    <FAQ
+      items={[
+        {
+          q: 'How do I find my Obsidian vault name?',
+          a: 'Open Obsidian and look at the top-left corner of the window. The vault name is displayed there. Alternatively, use the vault switcher (click the vault name or the icon next to it) to see all your vaults and their names. Enter the exact name in the extension\'s settings field.',
+        },
+        {
+          q: 'Will images from Claude conversations appear in Obsidian?',
+          a: 'Images are embedded as base64 data URIs in the Markdown note. Obsidian renders these inline. For conversations with many large images, the note file size may be significant. You can optionally disable image embedding in the extension settings if you prefer smaller notes.',
+        },
+        {
+          q: 'Can I choose which conversations to send to Obsidian?',
+          a: 'Yes. You can export the full conversation or use selective turn export to send only specific message turns. The Obsidian transfer respects the same selection settings as file-based exports.',
+        },
+        {
+          q: 'What happens if a note with the same name already exists?',
+          a: 'Obsidian\'s obsidian://new URI scheme appends a numeric suffix to avoid overwriting existing notes. If "React Refactor.md" already exists, the new note will be named "React Refactor 2.md" or similar. Your existing notes are never overwritten.',
+        },
+        {
+          q: 'Are Claude Artifacts handled differently in Obsidian?',
+          a: 'Artifacts are included as labeled code blocks within the note. They appear under a heading with the artifact title, followed by a fenced code block with the appropriate language tag. This format is native Markdown, so Obsidian renders it correctly with syntax highlighting.',
+        },
+      ]}
+    />
+  </section>
+
+  <!-- Related Pages -->
+  <section class="content-section">
+    <RelatedPages
+      items={[
+        {
+          title: 'Claude Exporter (All Formats)',
+          href: '/claude-exporter.html',
+          desc: 'Full overview of Claude export features across all supported formats.',
+        },
+        {
+          title: 'Claude to Markdown',
+          href: '/claude-to-markdown.html',
+          desc: 'Export Claude conversations as clean Markdown files.',
+        },
+        {
+          title: 'Obsidian Export Guide',
+          href: '/obsidian-export.html',
+          desc: 'How to import AI chat exports directly into your Obsidian vault.',
+        },
+      ]}
+    />
+  </section>
+
+  <!-- How It Works -->
+  <section class="content-section">
+    <h2>How to Send Claude Chats to Obsidian</h2>
+    <StepList
+      steps={[
+        {
+          title: 'Configure Your Vault Name',
+          body: 'Open the AI Chat Exporter settings and enter your Obsidian vault name exactly as it appears in the vault switcher. The note will be created at the root of your vault.',
+        },
+        {
+          title: 'Open a Claude Conversation',
+          body: 'Navigate to claude.ai and open any conversation. Works with conversations containing Artifacts, Thinking blocks, and Tool Use steps.',
+        },
+        {
+          title: 'Click the Obsidian Transfer Button',
+          body: 'In the extension popup or side panel, click the Obsidian button. The extension constructs the note content and triggers the obsidian://new URI.',
+        },
+        {
+          title: 'Note Appears in Your Vault',
+          body: 'Obsidian opens (or comes to the foreground) with the new note created. The conversation is now part of your knowledge base, ready to be linked, tagged, and searched.',
+        },
+      ]}
+    />
+  </section>
+
+  <CtaSection prompt="Send your Claude conversations to Obsidian today." />
+</GuideLayout>

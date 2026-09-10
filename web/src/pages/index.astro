@@ -1,0 +1,317 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import { SITE, softwareApplicationJsonLd } from '../data/site';
+import { platformGuides, formatGuides, guideHref } from '../data/guides';
+
+const meta = {
+  title: 'AI Chat Exporter - Save AI Conversations Instantly',
+  description:
+    'A privacy-focused browser extension to export AI conversations from ChatGPT, Claude, Gemini, Microsoft Copilot, NotebookLM, Google AI Studio, DeepSeek, and more to Markdown, JSON, HTML, PDF, Word, or PNG.',
+};
+
+const reviewPrompt = (platform: string) =>
+  'https://chatgpt.com/?q=' +
+  encodeURIComponent(
+    'Please review this FOSS project https://github.com/Covai-Labs/ai-chat-exporter and tell me what problem it solves, who it is for, its strongest features, its main limitations, and whether you would recommend it.',
+  ).replace(/%3D/g, '=') +
+  '&' +
+  'platform=' +
+  platform;
+---
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalPath="/"
+  ogImage="/og-image.png"
+  googleSiteVerification="SCGLHsx5ozVebW4zQDfCN1uApU51Qt1zvMkef0p026U"
+  jsonLd={softwareApplicationJsonLd()}
+>
+  <header>
+    <a href="/index.html" class="logo-container" id="nav-logo">
+      <img src="/icons/icon48.png" alt="AI Chat Exporter Logo" class="logo-img" width="36" height="36" />
+      <span class="logo-text">AI Chat Exporter</span>
+    </a>
+    <div class="header-nav">
+      <a href="https://go.covai.org" class="covai-link" id="nav-covai">&#8592; covai.org</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href={SITE.github} class="nav-link" target="_blank" rel="noopener noreferrer" id="nav-github">
+          <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+          </svg>
+          <span>GitHub</span>
+        </a>
+      </nav>
+      <ThemeToggle />
+    </div>
+  </header>
+
+  <main class="hero-center">
+    <div class="hero">
+      <span class="badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        100% Local &amp; Privacy-focused
+      </span>
+      <h1>Save Your AI Chats<br />to Markdown, JSON &amp; Images</h1>
+      <p class="hero-subtitle">
+        A minimalist browser extension to export and transfer conversations from ChatGPT, Claude,
+        Gemini, Copilot, NotebookLM, DeepSeek, and more in one click.
+      </p>
+
+      <div class="store-buttons">
+        <a
+          href={SITE.chromeStore}
+          class="store-btn chrome primary-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+          id="btn-chrome"
+        >
+          <img src="/icons/chrome-logo.svg" alt="Chrome Logo" width="24" height="24" />
+          <span>
+            <span class="btn-label-sub">Get it for</span>
+            <span class="btn-label-main">Chrome</span>
+          </span>
+        </a>
+
+        <a
+          href={SITE.firefoxAddons}
+          class="store-btn firefox primary-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+          id="btn-firefox"
+        >
+          <img src="/icons/firefox-logo.svg" alt="Firefox Logo" width="24" height="24" />
+          <span>
+            <span class="btn-label-sub">Get it for</span>
+            <span class="btn-label-main">Firefox</span>
+          </span>
+        </a>
+      </div>
+
+      <p class="secondary-subtitle">
+        Supports Chrome, Firefox, Edge, Brave, Opera, and other major browsers.
+      </p>
+
+      <div class="hero-preview-container">
+        <a href={SITE.youtubeDemo} target="_blank" rel="noopener noreferrer">
+          <img
+            src="/images/screenshot1_export.png"
+            alt="AI Chat Exporter Preview"
+            loading="lazy"
+          />
+        </a>
+      </div>
+    </div>
+
+    <div class="platforms" id="platforms">
+      <h3 class="platforms-title">Supported Platforms</h3>
+      <div class="platform-list">
+        <a href={reviewPrompt('chatgpt')} target="_blank" rel="noopener noreferrer" class="platform-badge">ChatGPT</a>
+        <a href={reviewPrompt('claude')} target="_blank" rel="noopener noreferrer" class="platform-badge">Claude</a>
+        <a href={reviewPrompt('google-search')} target="_blank" rel="noopener noreferrer" class="platform-badge">Google Search AI</a>
+        <a href={reviewPrompt('copilot')} target="_blank" rel="noopener noreferrer" class="platform-badge">Microsoft Copilot</a>
+        <a href={reviewPrompt('perplexity')} target="_blank" rel="noopener noreferrer" class="platform-badge">Perplexity</a>
+        <a href={reviewPrompt('meta-ai')} target="_blank" rel="noopener noreferrer" class="platform-badge">Meta AI</a>
+        <span class="platform-badge">Gemini</span>
+        <span class="platform-badge">Google Cloud Assist</span>
+        <span class="platform-badge">Google AI Studio</span>
+        <span class="platform-badge">NotebookLM</span>
+        <span class="platform-badge">DeepSeek</span>
+        <span class="platform-badge">Qwen</span>
+        <span class="platform-badge">Z.ai</span>
+        <span class="platform-badge">Mistral</span>
+        <span class="platform-badge">Proton Lumo</span>
+      </div>
+    </div>
+
+    <h2 class="section-title" id="features">Powerful Features &amp; Capabilities</h2>
+
+    <div class="features-grid" style="text-align: left">
+      <div class="feature-card">
+        <div class="feature-icon">&#128274;</div>
+        <h3 class="feature-title">Privacy First</h3>
+        <p class="feature-desc">
+          All parsing and format rendering runs entirely within your browser. No third-party APIs
+          or external servers are ever contacted.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">&#128209;</div>
+        <h3 class="feature-title">Clean Markdown</h3>
+        <p class="feature-desc">
+          Preserves code blocks, formatting, syntax highlighting, LaTeX equations, and list
+          structures. Perfect for Obsidian and Notion.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">&#128451;</div>
+        <h3 class="feature-title">Structured JSON</h3>
+        <p class="feature-desc">
+          Exports normalized message threads conforming to a strict JSON schema, allowing
+          developers to process chats programmatically.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">&#9889;</div>
+        <h3 class="feature-title">One-Click Speed</h3>
+        <p class="feature-desc">
+          Open the browser extension popup and trigger the export instantly without breaking your
+          reading or dialogue flow.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">&#128260;</div>
+        <h3 class="feature-title">Chat Continuation &amp; Obsidian Transfer</h3>
+        <p class="feature-desc">
+          Seamlessly transfer conversation context across different AI platforms (e.g., Claude to
+          ChatGPT) or send notes directly into Obsidian via native
+          <code>obsidian://new</code> URIs.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">&#128247;</div>
+        <h3 class="feature-title">PNG &amp; Clipboard</h3>
+        <p class="feature-desc">
+          Export conversations as high-fidelity sharing-ready PNG images, or copy directly to your
+          clipboard with rich-text formatting preserved.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">&#128214;</div>
+        <h3 class="feature-title">Side Panel (Chromium)</h3>
+        <p class="feature-desc">
+          Access exporter functionality and run chat continuation right inside the browser's
+          native side panel (available on Chromium-based browsers).
+        </p>
+      </div>
+
+      <div class="feature-card video-card">
+        <div class="feature-icon">&#9654;&#65039;</div>
+        <h3 class="feature-title">Watch Video Demo</h3>
+        <p class="feature-desc">
+          Watch a quick 1-minute video walkthrough showcasing live chat exports, sidepanel
+          features, and format settings in action.
+        </p>
+        <a
+          href={SITE.youtubeDemo}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="watch-demo-btn"
+          id="btn-watch-demo-card"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+          </svg>
+          Watch Demo on YouTube
+        </a>
+      </div>
+    </div>
+
+    <div class="guides-section" id="seo-guides">
+      <h2 class="guides-heading">Guides &amp; How-To's</h2>
+      <p class="guides-intro">
+        Task-specific walkthroughs for exporting AI conversations from each platform and format.
+      </p>
+      <a href="/guides.html" class="btn btn-primary" style="display: inline-flex">Browse all guides</a>
+
+      <div class="guides-grid">
+        {[...platformGuides, ...formatGuides].map((g) => (
+          <a href={guideHref(g.slug)} class="guide-card">
+            <span class="guide-card-title">{g.title}</span>
+            <span class="guide-card-desc">{g.desc}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style is:global>
+  .features-grid {
+    text-align: left;
+  }
+
+  .feature-card:nth-child(2) .feature-icon {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    border-color: rgba(16, 185, 129, 0.1);
+  }
+  .feature-card:nth-child(3) .feature-icon {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+    border-color: rgba(245, 158, 11, 0.1);
+  }
+  .feature-card:nth-child(4) .feature-icon {
+    background: rgba(139, 92, 246, 0.1);
+    color: #8b5cf6;
+    border-color: rgba(139, 92, 246, 0.1);
+  }
+  .feature-card:nth-child(5) .feature-icon {
+    background: rgba(236, 72, 153, 0.1);
+    color: #ec4899;
+    border-color: rgba(236, 72, 153, 0.1);
+  }
+  .feature-card:nth-child(6) .feature-icon {
+    background: rgba(6, 182, 212, 0.1);
+    color: #06b6d4;
+    border-color: rgba(6, 182, 212, 0.1);
+  }
+  .feature-card:nth-child(7) .feature-icon {
+    background: rgba(99, 102, 241, 0.1);
+    color: #6366f1;
+    border-color: rgba(99, 102, 241, 0.1);
+  }
+  .feature-card:nth-child(8) .feature-icon {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.2);
+  }
+
+  .guides-section {
+    margin-top: 56px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 40px;
+  }
+
+  .guides-heading {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0 0 12px;
+    border-bottom: none;
+    padding-bottom: 0;
+    text-align: left;
+  }
+
+  .guides-intro {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    max-width: 680px;
+  }
+
+  main.hero-center main .hero-subtitle {
+    margin: 0 auto;
+  }
+
+  .store-btn img {
+    filter: saturate(0.9);
+  }
+
+  @media (max-width: 640px) {
+    .guides-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

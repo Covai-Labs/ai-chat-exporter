@@ -1,212 +1,58 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Chat to PDF — Export Any AI Conversation as PDF</title>
-  <meta name="description" content="Export conversations from ChatGPT, Claude, Gemini and more to PDF with custom themes, page breaks, and table of contents. Free extension." />
-  <link rel="canonical" href="https://ai-chat-exporter.covai.org/pdf-exporter.html" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://ai-chat-exporter.covai.org/pdf-exporter.html" />
-  <meta property="og:title" content="AI Chat to PDF — Export Any AI Conversation as PDF" />
-  <meta property="og:description" content="Export conversations from ChatGPT, Claude, Gemini and more to PDF with custom themes, page breaks, and table of contents. Free extension." />
-  <meta property="og:image" content="https://ai-chat-exporter.covai.org/og-image.png" />
-  <meta property="og:site_name" content="AI Chat Exporter" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/seo-pages.css" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "AI Chat Exporter",
-    "operatingSystem": "Chrome, Firefox, Edge",
-    "applicationCategory": "UtilitiesApplication",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "url": "https://ai-chat-exporter.covai.org/",
-    "downloadUrl": "https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
-  }
-  </script>
-</head>
-<body>
-  <header>
-    <a href="index.html" class="logo-container">
-      <img src="icons/icon48.png" alt="AI Chat Exporter Logo" class="logo-img" />
-      <span class="logo-text">AI Chat Exporter</span>
-    </a>
-    <nav class="nav-links">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="https://github.com/Covai-Labs/ai-chat-exporter" class="nav-link" target="_blank" rel="noopener">GitHub</a>
-    </nav>
-  </header>
-  <div class="breadcrumb"><a href="index.html">Home</a> <span>›</span> PDF Export</div>
-  <main>
-    <div class="hero">
-      <span class="badge">Print Ready</span>
-      <h1>AI Chat to PDF — Print-Ready Conversation Exports</h1>
-      <p class="hero-subtitle">Convert AI conversations from all 17 supported platforms into print-optimized PDF files with custom themes, page breaks, and a table of contents.</p>
-      <div class="cta-group">
-        <a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener">Add to Chrome</a>
-        <a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener">Add to Firefox</a>
-      </div>
-    </div>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PDF Export</title><meta name="description" content="Generate PDFs from AI conversations"><link rel="canonical" href="https://ai-chat-exporter.covai.org/pdf-exporter.html"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:url" content="https://ai-chat-exporter.covai.org/pdf-exporter.html"><meta property="og:title" content="PDF Export"><meta property="og:description" content="Generate PDFs from AI conversations"><meta property="og:image" content="https://ai-chat-exporter.covai.org/og-image.png"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="640"><meta property="og:site_name" content="AI Chat Exporter"><meta property="og:locale" content="en_US"><!-- Twitter / X --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://ai-chat-exporter.covai.org/pdf-exporter.html"><meta name="twitter:title" content="PDF Export"><meta name="twitter:description" content="Generate PDFs from AI conversations"><meta name="twitter:image" content="https://ai-chat-exporter.covai.org/og-image.png"><!-- Theme bootstrap (pre-paint — prevents flash) --><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('ace-theme');
+          if (t === 'dark' || t === 'light') {
+            document.documentElement.classList.add(t);
+          }
+        } catch (e) {
+          /* ignore */
+        }
+      })();
+    </script><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><!-- Favicons --><link rel="icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="/icons/android-chrome-192x192.png"><link rel="icon" type="image/png" sizes="512x512" href="/icons/android-chrome-512x512.png"><link rel="manifest" href="/site.webmanifest"><!-- Styles --><link rel="stylesheet" href="/css/global.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"AI Chat Exporter","operatingSystem":"Chrome, Firefox, Edge","applicationCategory":"UtilitiesApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://ai-chat-exporter.covai.org","downloadUrl":"https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"}</script><script defer src="https://covai.org/analytics.js"></script></head><body><header><a href="/index.html" class="logo-container"><img src="/icons/icon48.png" alt="AI Chat Exporter Logo" class="logo-img" width="32" height="32"><span class="logo-text">AI Chat Exporter</span></a><div class="header-nav"><nav class="nav-links" aria-label="Main navigation"><a href="/index.html" class="nav-link">Home</a><a href="/guides.html" class="nav-link">Guides</a><a href="https://github.com/Covai-Labs/ai-chat-exporter" class="nav-link" target="_blank" rel="noopener noreferrer"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg><span>GitHub</span></a></nav><div class="theme-toggle" role="group" aria-label="Theme switcher"><button type="button" data-theme="light" aria-label="Light theme" title="Light" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg></button><button type="button" data-theme="dark" aria-label="Dark theme" title="Dark" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button><button type="button" data-theme="system" aria-label="System theme (follow OS)" title="System" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></button></div><script>
+  (function () {
+    const root = document.documentElement;
+    const buttons = Array.from(document.querySelectorAll('.theme-toggle button[data-theme]'));
+    if (!buttons.length) return;
 
-    <section class="features-grid">
-      <div class="feature-card">
-        <h3>Print-Optimized Layout</h3>
-        <p>PDF export generates a print-ready HTML document and opens the browser's native print dialog. Margins, page breaks, and typography are tuned for clean A4 and Letter output.</p>
-      </div>
-      <div class="feature-card">
-        <h3>Dark and Light Themes</h3>
-        <p>Choose between dark and light color themes for your PDF. The dark theme works well for screen viewing and projectors, while the light theme is optimized for ink-efficient printing.</p>
-      </div>
-      <div class="feature-card">
-        <h3>Page Breaks per Prompt</h3>
-        <p>Enable page breaks between conversation turns so each prompt-response pair starts on a new page. This makes long conversations easy to navigate when printed or reviewed as a document.</p>
-      </div>
-      <div class="feature-card">
-        <h3>Table of Contents</h3>
-        <p>Generate a table of contents at the top of the PDF with clickable page references. Each user prompt becomes a TOC entry, giving you a structured overview of the conversation.</p>
-      </div>
-      <div class="feature-card">
-        <h3>Math Renders Correctly</h3>
-        <p>LaTeX math is rendered into crisp vector graphics using KaTeX before PDF generation. Inline and display equations appear exactly as they do in the original AI interface.</p>
-      </div>
-      <div class="feature-card">
-        <h3>Highlighted Code Blocks</h3>
-        <p>Code blocks retain syntax highlighting in the PDF output. Language-specific coloring makes code readable and scannable, even in a printed document.</p>
-      </div>
-    </section>
+    function getStored() {
+      const t = localStorage.getItem('ace-theme');
+      return t === 'dark' || t === 'light' ? t : 'system';
+    }
 
-    <section>
-      <h2>How PDF Export Works</h2>
-      <p>AI Chat Exporter does not send your conversation to a server to generate a PDF. Instead, it constructs a self-contained HTML document from the conversation data, applies print-optimized CSS, and then invokes the browser's built-in print dialog. From the print dialog, you choose "Save as PDF" to produce the final file.</p>
-      <p>This approach has several advantages. First, your data never leaves your browser. Second, the PDF quality is identical to what you see on screen because it uses the same rendering engine. Third, there is no file-size limit — the PDF scales to conversations of any length.</p>
-      <p>The generated HTML is self-contained. Fonts, styles, math rendering, and images are all embedded. When you save the PDF, it is a single portable file that looks the same on any device.</p>
-    </section>
-
-    <section>
-      <h2>Customization Options</h2>
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr><th>Option</th><th>Description</th><th>Default</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Color Theme</td><td>Light or dark background for the PDF</td><td>Light</td></tr>
-            <tr><td>Page Breaks</td><td>Insert a page break before each new prompt</td><td>Off</td></tr>
-            <tr><td>Table of Contents</td><td>Generate a clickable TOC at the top of the document</td><td>Off</td></tr>
-            <tr><td>Page Size</td><td>A4 or Letter — controlled through the print dialog</td><td>A4</td></tr>
-            <tr><td>Margins</td><td>Adjustable through the browser print dialog (normal, narrow, wide)</td><td>Normal</td></tr>
-            <tr><td>Header/Footer</td><td>Browser print options for page numbers, dates, and URLs</td><td>Varies</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p>To access these options, click the AI Chat Exporter icon while on a supported chat page and select the PDF export option. The settings panel appears before the print dialog opens, so you can preview the layout and adjust as needed.</p>
-    </section>
-
-    <section>
-      <h2>Use Cases for PDF Export</h2>
-      <p><strong>Archiving and Compliance</strong> — Many organizations require conversations with AI tools to be archived in a non-editable, universally readable format. PDF is the standard for long-term document preservation and meets most compliance requirements.</p>
-      <p><strong>Sharing with Non-Technical Colleagues</strong> — Not everyone has Markdown editors or Obsidian installed. A PDF file opens on any device with a browser. Share AI-generated research, brainstorming sessions, or technical explanations as attachments without worrying about compatibility.</p>
-      <p><strong>Presentations and Reports</strong> — Embed PDF pages from AI conversations into slide decks, reports, and proposals. The print-optimized layout ensures the content looks professional when included in formal documents.</p>
-      <p><strong>Printing</strong> — Sometimes you need a physical copy. The light theme is optimized for ink-efficient printing, and page breaks per prompt keep each exchange on its own page for easy annotation with a pen.</p>
-      <p><strong>Client Deliverables</strong> — If you use AI tools as part of client work, a PDF export provides a clean, branded-looking document you can deliver alongside your work products.</p>
-    </section>
-
-    <section>
-      <h2>Quality You Can Trust</h2>
-      <p>The PDF export preserves visual fidelity from the original conversation. Here is what that means in practice:</p>
-      <p>Mathematical equations render through KaTeX before the print dialog opens, so they appear as sharp vector graphics rather than pixelated screenshots. Code blocks use monospace fonts with proper indentation and syntax highlighting colors that remain readable in print. Tables retain their grid structure with clear column alignment.</p>
-      <p>Images from AI conversations — diagrams, charts, and generated visuals — are embedded in the PDF at their original resolution. The PDF does not compress or downsample these images.</p>
-    </section>
-
-    <section>
-      <h2>Supported Platforms</h2>
-      <p>PDF export works with all 17 platforms supported by AI Chat Exporter, including ChatGPT, Claude, Gemini, DeepSeek, Perplexity, Copilot, Qwen, Mistral, Meta AI, NotebookLM, Google AI Studio, Google Cloud Assist, Google Search AI, Z.AI, Proton Lumo, Joyland, and Chub.</p>
-    </section>
-
-    <section class="steps">
-      <h2>How to Export AI Chats to PDF</h2>
-      <div class="step">
-        <h3>1. Install the Extension</h3>
-        <p>Add AI Chat Exporter from the Chrome Web Store or Firefox Add-ons. It is free and requires no account, API key, or configuration.</p>
-      </div>
-      <div class="step">
-        <h3>2. Open Any Supported AI Chat</h3>
-        <p>Start or continue a conversation on any of the 17 supported AI platforms. The extension detects the active chat page automatically.</p>
-      </div>
-      <div class="step">
-        <h3>3. Click Export and Choose Settings</h3>
-        <p>Click the extension icon, select PDF, and adjust your theme, page break, and TOC preferences. The browser print dialog opens — click "Save" to download the PDF.</p>
-      </div>
-    </section>
-
-    <section class="faq">
-      <h2>Frequently Asked Questions</h2>
-      <div class="faq-item">
-        <button class="faq-question">How do I save as PDF?</button>
-        <div class="faq-answer"><p>Click the AI Chat Exporter toolbar icon on a supported AI chat page, then select the PDF export option. The browser's print dialog opens with "Save as PDF" pre-selected as the destination. Click Save and choose where to store the file. The entire process takes a few seconds.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">Can I customize the layout?</button>
-        <div class="faq-answer"><p>Yes. Before the print dialog opens, the extension provides options for color theme (light or dark), page breaks between prompts, and a table of contents. Additional layout controls like margins and page size are available through the browser's print dialog settings.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">Does math render in the PDF?</button>
-        <div class="faq-answer"><p>Yes. LaTeX math notation is rendered through KaTeX into vector graphics before the PDF is generated. Both inline ($...$) and display ($$...$$) equations appear as crisp, scalable math in the final document.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">Is there a page limit?</button>
-        <div class="faq-answer"><p>No. The PDF export scales to conversations of any length. Very long conversations may take slightly longer to render before the print dialog appears, but there is no artificial limit. The browser's print engine handles multi-page documents natively.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">How do I get dark mode PDFs?</button>
-        <div class="faq-answer"><p>Select the dark theme option in the PDF export settings panel. This produces a PDF with a dark background and light text, which is ideal for on-screen reading, presentations, and projectors. For printing on paper, the light theme is recommended to conserve ink.</p></div>
-      </div>
-    </section>
-
-    <section class="related-pages">
-      <h2>Related Pages</h2>
-      <div class="related-grid">
-        <a href="chatgpt-to-pdf.html" class="related-link">
-          <h3>ChatGPT to PDF</h3>
-          <p>Export OpenAI ChatGPT conversations to print-ready PDF documents.</p>
-        </a>
-        <a href="markdown-exporter.html" class="related-link">
-          <h3>Markdown Export</h3>
-          <p>Export to portable Markdown files for note-taking and documentation workflows.</p>
-        </a>
-      </div>
-    </section>
-  </main>
-  <footer>
-    <div class="footer-links">
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="license.html">License (MPL 2.0)</a>
-      <a href="https://github.com/Covai-Labs/ai-chat-exporter" target="_blank" rel="noopener">GitHub</a>
-    </div>
-    <p>&copy; 2026 AI Chat Exporter. Open source under MPL 2.0.</p>
-  </footer>
-  <script>
-    document.querySelectorAll('.faq-item').forEach((item, index) => {
-      const btn = item.querySelector('.faq-question');
-      const answer = item.querySelector('.faq-answer');
-      if (!btn || !answer) return;
-      const id = 'faq-' + (index + 1);
-      btn.id = 'q-' + id;
-      btn.setAttribute('aria-expanded', 'false');
-      btn.setAttribute('aria-controls', id);
-      answer.id = id;
-      answer.setAttribute('role', 'region');
-      answer.setAttribute('aria-labelledby', 'q-' + id);
-      btn.addEventListener('click', () => {
-        const open = item.classList.toggle('open');
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    function apply(theme) {
+      root.classList.remove('light', 'dark');
+      if (theme === 'light' || theme === 'dark') root.classList.add(theme);
+      try {
+        localStorage.setItem('ace-theme', theme);
+      } catch (e) {
+        /* private mode */
+      }
+      buttons.forEach((b) => {
+        b.setAttribute('aria-pressed', String(b.dataset.theme === theme));
       });
+    }
+
+    apply(getStored());
+
+    buttons.forEach((b) => {
+      b.addEventListener('click', () => apply(b.dataset.theme));
     });
-  </script>
-</body>
-</html>
+  })();
+</script></div></header><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ai-chat-exporter.covai.org/index.html"},{"@type":"ListItem","position":2,"name":"PDF Export"}]}</script><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span aria-hidden="true">&#8250;</span><span>PDF Export</span></nav><main><div class="hero"><span class="badge">Print Ready</span><h1>AI Chat to PDF — Print-Ready Conversation Exports</h1><p class="hero-subtitle">Convert AI conversations from all 17 supported platforms into print-optimized PDF files with custom themes, page breaks, and a table of contents.</p><div class="cta-group"><a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-testid="cta-chrome">Add to Chrome</a><a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" data-testid="cta-firefox">Add to Firefox</a></div></div><section class="content-section"><div class="features-grid"><div class="feature-card"><h3>Print-Optimized Layout</h3><p>PDF export generates a print-ready HTML document and opens the browser's native print dialog. Margins, page breaks, and typography are tuned for clean A4 and Letter output.</p></div><div class="feature-card"><h3>Dark and Light Themes</h3><p>Choose between dark and light color themes for your PDF. The dark theme works well for screen viewing and projectors, while the light theme is optimized for ink-efficient printing.</p></div><div class="feature-card"><h3>Page Breaks per Prompt</h3><p>Enable page breaks between conversation turns so each prompt-response pair starts on a new page. This makes long conversations easy to navigate when printed or reviewed as a document.</p></div><div class="feature-card"><h3>Table of Contents</h3><p>Generate a table of contents at the top of the PDF with clickable page references. Each user prompt becomes a TOC entry, giving you a structured overview of the conversation.</p></div><div class="feature-card"><h3>Math Renders Correctly</h3><p>LaTeX math is rendered into crisp vector graphics using KaTeX before PDF generation. Inline and display equations appear exactly as they do in the original AI interface.</p></div><div class="feature-card"><h3>Highlighted Code Blocks</h3><p>Code blocks retain syntax highlighting in the PDF output. Language-specific coloring makes code readable and scannable, even in a printed document.</p></div></div></section><section class="content-section"><h2>How PDF Export Works</h2><p>AI Chat Exporter does not send your conversation to a server to generate a PDF. Instead, it constructs a self-contained HTML document from the conversation data, applies print-optimized CSS, and then invokes the browser's built-in print dialog. From the print dialog, you choose "Save as PDF" to produce the final file.</p><p>This approach has several advantages. First, your data never leaves your browser. Second, the PDF quality is identical to what you see on screen because it uses the same rendering engine. Third, there is no file-size limit \u2014 the PDF scales to conversations of any length.</p><p>The generated HTML is self-contained. Fonts, styles, math rendering, and images are all embedded. When you save the PDF, it is a single portable file that looks the same on any device.</p></section><section class="content-section"><h2>Customization Options</h2><div class="table-wrapper"><table><thead><tr><th>Option</th><th>Description</th><th>Default</th></tr></thead><tbody><tr><td>Color Theme</td><td>Light or dark background for the PDF</td><td>Light</td></tr><tr><td>Page Breaks</td><td>Insert a page break before each new prompt</td><td>Off</td></tr><tr><td>Table of Contents</td><td>Generate a clickable TOC at the top of the document</td><td>Off</td></tr><tr><td>Page Size</td><td>A4 or Letter \u2014 controlled through the print dialog</td><td>A4</td></tr><tr><td>Margins</td><td>Adjustable through the browser print dialog (normal, narrow, wide)</td><td>Normal</td></tr><tr><td>Header/Footer</td><td>Browser print options for page numbers, dates, and URLs</td><td>Varies</td></tr></tbody></table></div><p>To access these options, click the AI Chat Exporter icon while on a supported chat page and select the PDF export option. The settings panel appears before the print dialog opens, so you can preview the layout and adjust as needed.</p></section><section class="content-section"><h2>Use Cases for PDF Export</h2><p><strong>Archiving and Compliance</strong> \u2014 Many organizations require conversations with AI tools to be archived in a non-editable, universally readable format. PDF is the standard for long-term document preservation and meets most compliance requirements.</p><p><strong>Sharing with Non-Technical Colleagues</strong> \u2014 Not everyone has Markdown editors or Obsidian installed. A PDF file opens on any device with a browser. Share AI-generated research, brainstorming sessions, or technical explanations as attachments without worrying about compatibility.</p><p><strong>Presentations and Reports</strong> \u2014 Embed PDF pages from AI conversations into slide decks, reports, and proposals. The print-optimized layout ensures the content looks professional when included in formal documents.</p><p><strong>Printing</strong> \u2014 Sometimes you need a physical copy. The light theme is optimized for ink-efficient printing, and page breaks per prompt keep each exchange on its own page for easy annotation with a pen.</p><p><strong>Client Deliverables</strong> \u2014 If you use AI tools as part of client work, a PDF export provides a clean, branded-looking document you can deliver alongside your work products.</p></section><section class="content-section"><h2>Quality You Can Trust</h2><p>The PDF export preserves visual fidelity from the original conversation. Here is what that means in practice:</p><p>Mathematical equations render through KaTeX before the print dialog opens, so they appear as sharp vector graphics rather than pixelated screenshots. Code blocks use monospace fonts with proper indentation and syntax highlighting colors that remain readable in print. Tables retain their grid structure with clear column alignment.</p><p>Images from AI conversations \u2014 diagrams, charts, and generated visuals \u2014 are embedded in the PDF at their original resolution. The PDF does not compress or downsample these images.</p></section><section class="content-section"><h2>Supported Platforms</h2><p>PDF export works with all 17 platforms supported by AI Chat Exporter, including ChatGPT, Claude, Gemini, DeepSeek, Perplexity, Copilot, Qwen, Mistral, Meta AI, NotebookLM, Google AI Studio, Google Cloud Assist, Google Search AI, Z.AI, Proton Lumo, Joyland, and Chub.</p></section><section class="content-section"><h2>How to Export AI Chats to PDF</h2><div class="steps"><div class="step"><div class="step-content"><h3>Install the Extension</h3><p>Add AI Chat Exporter from the Chrome Web Store or Firefox Add-ons. It is free and requires no account, API key, or configuration.</p></div></div><div class="step"><div class="step-content"><h3>Open Any Supported AI Chat</h3><p>Start or continue a conversation on any of the 17 supported AI platforms. The extension detects the active chat page automatically.</p></div></div><div class="step"><div class="step-content"><h3>Click Export and Choose Settings</h3><p>Click the extension icon, select PDF, and adjust your theme, page break, and TOC preferences. The browser print dialog opens — click &quot;Save&quot; to download the PDF.</p></div></div></div></section><section class="content-section"><h2>Frequently Asked Questions</h2><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I save as PDF?","acceptedAnswer":{"@type":"Answer","text":"Click the AI Chat Exporter toolbar icon on a supported AI chat page, then select the PDF export option. The browser's print dialog opens with \"Save as PDF\" pre-selected as the destination. Click Save and choose where to store the file. The entire process takes a few seconds."}},{"@type":"Question","name":"Can I customize the layout?","acceptedAnswer":{"@type":"Answer","text":"Yes. Before the print dialog opens, the extension provides options for color theme (light or dark), page breaks between prompts, and a table of contents. Additional layout controls like margins and page size are available through the browser's print dialog settings."}},{"@type":"Question","name":"Does math render in the PDF?","acceptedAnswer":{"@type":"Answer","text":"Yes. LaTeX math notation is rendered through KaTeX into vector graphics before the PDF is generated. Both inline ($...$) and display ($$...$$) equations appear as crisp, scalable math in the final document."}},{"@type":"Question","name":"Is there a page limit?","acceptedAnswer":{"@type":"Answer","text":"No. The PDF export scales to conversations of any length. Very long conversations may take slightly longer to render before the print dialog appears, but there is no artificial limit. The browser's print engine handles multi-page documents natively."}},{"@type":"Question","name":"How do I get dark mode PDFs?","acceptedAnswer":{"@type":"Answer","text":"Select the dark theme option in the PDF export settings panel. This produces a PDF with a dark background and light text, which is ideal for on-screen reading, presentations, and projectors. For printing on paper, the light theme is recommended to conserve ink."}}]}</script><div class="faq"><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">How do I save as PDF?</button><div class="faq-answer" role="region" aria-hidden="true">Click the AI Chat Exporter toolbar icon on a supported AI chat page, then select the PDF export option. The browser's print dialog opens with "Save as PDF" pre-selected as the destination. Click Save and choose where to store the file. The entire process takes a few seconds.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Can I customize the layout?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. Before the print dialog opens, the extension provides options for color theme (light or dark), page breaks between prompts, and a table of contents. Additional layout controls like margins and page size are available through the browser's print dialog settings.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Does math render in the PDF?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. LaTeX math notation is rendered through KaTeX into vector graphics before the PDF is generated. Both inline ($...$) and display ($$...$$) equations appear as crisp, scalable math in the final document.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Is there a page limit?</button><div class="faq-answer" role="region" aria-hidden="true">No. The PDF export scales to conversations of any length. Very long conversations may take slightly longer to render before the print dialog appears, but there is no artificial limit. The browser's print engine handles multi-page documents natively.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">How do I get dark mode PDFs?</button><div class="faq-answer" role="region" aria-hidden="true">Select the dark theme option in the PDF export settings panel. This produces a PDF with a dark background and light text, which is ideal for on-screen reading, presentations, and projectors. For printing on paper, the light theme is recommended to conserve ink.</div></div></div><script>
+  document.querySelectorAll('.faq-item').forEach((item, i) => {
+    const btn = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+    if (!btn || !answer) return;
+    const id = 'faq-' + (i + 1);
+    btn.id = 'q-' + id;
+    btn.setAttribute('aria-controls', id);
+    answer.id = id;
+    answer.setAttribute('aria-labelledby', 'q-' + id);
+    btn.addEventListener('click', () => {
+      const open = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    });
+  });
+</script></section><section class="content-section"><section class="related-pages"><h2>Related Pages</h2><div class="related-grid"><a href="/chatgpt-to-pdf.html" class="related-link"><h3>ChatGPT to PDF</h3><p>Export OpenAI ChatGPT conversations to print-ready PDF documents.</p></a><a href="/markdown-exporter.html" class="related-link"><h3>Markdown Export</h3><p>Export to portable Markdown files for note-taking and documentation workflows.</p></a></div></section></section><section class="content-section"><div class="callout callout-success"><p><strong>Ready to export your AI chats to PDF?</strong></p><div class="cta-group compact"><a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Add to Chrome</a><a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Add to Firefox</a></div></div></section></main><footer><div class="footer-links"><a href="/privacy.html">Privacy Policy</a><span class="footer-sep" aria-hidden="true">|</span><a href="/license.html">License (MPL 2.0)</a><span class="footer-sep" aria-hidden="true">|</span><a href="/feedback.html">Feedback &amp; Issues</a><span class="footer-sep" aria-hidden="true">|</span><a href="https://github.com/Covai-Labs/ai-chat-exporter" target="_blank" rel="noopener noreferrer">GitHub Repository</a></div><p>&copy; 2026 AI Chat Exporter. Released under the Mozilla Public License 2.0.</p></footer></body></html>

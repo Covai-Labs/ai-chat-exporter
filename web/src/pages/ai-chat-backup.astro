@@ -1,0 +1,417 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import CtaSection from '../components/CtaSection.astro';
+import FAQ from '../components/FAQ.astro';
+import RelatedPages from '../components/RelatedPages.astro';
+import StepList from '../components/StepList.astro';
+import Callout from '../components/Callout.astro';
+
+const meta = {
+  slug: 'ai-chat-backup',
+  title: 'AI Chat Backup',
+  description: 'Keep safe, searchable archives',
+  heroTitle: 'AI Chat Backup — Never Lose a Conversation',
+  heroSubtitle:
+    'Back up conversations from ChatGPT, Claude, Gemini and 14 other AI platforms. Structured Markdown, JSON, or PDF. Everything stays on your machine.',
+};
+---
+<GuideLayout
+  title={meta.title}
+  description={meta.description}
+  slug={meta.slug}
+  heroTitle={meta.heroTitle}
+  heroSubtitle={meta.heroSubtitle}
+  badge="100% Local"
+>
+  <!-- Why Backup AI Conversations? -->
+  <section class="content-section">
+    <h2>Why Backup AI Conversations?</h2>
+    <p>
+      You use AI platforms every day for work, study, and creative projects. You generate code, draft
+      documents, research topics, brainstorm ideas, and solve problems in conversations that span
+      hours or days. But none of these conversations are truly yours.
+    </p>
+    <p>
+      AI platforms store your data on their servers, and you have limited control over what happens
+      to it. Conversations can be deleted when you clear your history, removed during account
+      issues, or lost during platform changes. OpenAI's data export gives you a single unwieldy JSON
+      archive that is nearly impossible to use. Anthropic offers no bulk export at all. Most smaller
+      platforms offer nothing.
+    </p>
+    <p>
+      A regular backup habit protects your work. If a conversation contains valuable code, important
+      research findings, or creative work you spent hours developing, having a local backup means
+      you never have to worry about losing it.
+    </p>
+  </section>
+
+  <!-- The Problem with Built-in Exports -->
+  <section class="content-section">
+    <h2>The Problem with Built-in Exports</h2>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Built-in Export</th>
+            <th>Quality</th>
+            <th>Usability</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ChatGPT</strong></td>
+            <td>Settings &gt; Data Export (all conversations)</td>
+            <td>Raw JSON archive, URLs expire</td>
+            <td>Nearly unusable without scripting</td>
+          </tr>
+          <tr>
+            <td><strong>Claude</strong></td>
+            <td>Limited export feature</td>
+            <td>Basic JSON</td>
+            <td>No formatting, no Artifacts</td>
+          </tr>
+          <tr>
+            <td><strong>Gemini</strong></td>
+            <td>Google Takeout</td>
+            <td>JSON with nested structure</td>
+            <td>Requires Google account data request</td>
+          </tr>
+          <tr>
+            <td><strong>DeepSeek</strong></td>
+            <td>None</td>
+            <td>N/A</td>
+            <td>N/A</td>
+          </tr>
+          <tr>
+            <td><strong>Perplexity</strong></td>
+            <td>None</td>
+            <td>N/A</td>
+            <td>N/A</td>
+          </tr>
+          <tr>
+            <td><strong>Most Others</strong></td>
+            <td>None</td>
+            <td>N/A</td>
+            <td>N/A</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      AI Chat Exporter solves this by giving you per-conversation, on-demand exports in clean,
+      readable formats. No waiting for email archives. No parsing nested JSON. No API keys. Just
+      click, choose a format, and save.
+    </p>
+  </section>
+
+  <!-- Recommended Backup Formats -->
+  <section class="content-section">
+    <h2>Recommended Backup Formats</h2>
+    <p>
+      Different formats serve different backup purposes. Here is what to use depending on your
+      goals:
+    </p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>Markdown (.md)</h3>
+        <p>
+          <strong>Best for:</strong> Human-readable archives, Obsidian vaults, searchable backup
+          folders. Markdown is lightweight, universal, and works with virtually every text editor and
+          knowledge management tool. Code blocks preserve syntax, tables stay structured, and math
+          equations render in compatible editors.
+        </p>
+      </div>
+      <div class="feature-card">
+        <h3>JSON (.json)</h3>
+        <p>
+          <strong>Best for:</strong> Programmatic access, data analysis, automated pipelines. The
+          JSON export includes structured metadata: source platform, conversation title, timestamps,
+          and message roles. You can query, filter, and analyze your conversation history with
+          scripts or data tools.
+        </p>
+      </div>
+      <div class="feature-card">
+        <h3>PDF (.pdf)</h3>
+        <p>
+          <strong>Best for:</strong> Permanent archival, legal records, printing. PDFs are
+          self-contained and render identically on any device. AI Chat Exporter supports dark and
+          light themes, table of contents, and page breaks for clean printed output.
+        </p>
+      </div>
+    </div>
+    <Callout tone="info" title="Pro tip">
+      Use Markdown as your primary backup format and JSON as a secondary structured archive.
+      Markdown gives you human-readable, searchable files. JSON gives you machine-readable data with
+      metadata that Markdown cannot represent.
+    </Callout>
+  </section>
+
+  <!-- Recommended Backup Workflow -->
+  <section class="content-section">
+    <h2>Recommended Backup Workflow</h2>
+    <StepList
+      steps={[
+        {
+          title: 'Create a Backup Directory',
+          body: 'Set up a dedicated folder for your AI conversation backups. A good structure is organized by platform and date: <code>backups/chatgpt/2026/</code>, <code>backups/claude/2026/</code>. This keeps things organized from the start.',
+        },
+        {
+          title: 'Configure Filename Templates',
+          body: 'AI Chat Exporter supports filename templates that control how exported files are named. A useful backup template is <code>{platform} - {title} - {datetime}</code>. This produces unique, sortable filenames for every export.',
+        },
+        {
+          title: 'Export Important Conversations',
+          body: 'After completing an important conversation, click the extension icon and export to Markdown (for readability) or JSON (for structured data). For critical conversations, export to both formats. The whole process takes under 5 seconds.',
+        },
+        {
+          title: 'Sync to Cloud Storage (Optional)',
+          body: 'Since the export files are standard formats stored on your local machine, you can sync them to any cloud storage service (iCloud, Google Drive, Dropbox, Syncthing) using your preferred sync tool. This adds an off-machine backup layer without trusting any third-party backup service with your AI data.',
+        },
+      ]}
+    />
+  </section>
+
+  <!-- JSON Backup Schema -->
+  <section class="content-section">
+    <h2>JSON Backup Schema</h2>
+    <p>
+      For users who want to build tools around their backup archive, here is the structure of the
+      JSON export:
+    </p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>source</code></td>
+            <td>string</td>
+            <td>Platform name (e.g., "ChatGPT", "Claude")</td>
+          </tr>
+          <tr>
+            <td><code>title</code></td>
+            <td>string</td>
+            <td>Conversation title as shown on the platform</td>
+          </tr>
+          <tr>
+            <td><code>exportDate</code></td>
+            <td>ISO 8601</td>
+            <td>Timestamp of the export operation</td>
+          </tr>
+          <tr>
+            <td><code>messages</code></td>
+            <td>array</td>
+            <td>Array of message objects with role, content, and optional metadata</td>
+          </tr>
+          <tr>
+            <td><code>messages[].role</code></td>
+            <td>string</td>
+            <td>"user" or "assistant" (or "system" where applicable)</td>
+          </tr>
+          <tr>
+            <td><code>messages[].content</code></td>
+            <td>string</td>
+            <td>Message text content with Markdown formatting</td>
+          </tr>
+          <tr>
+            <td><code>messages[].timestamp</code></td>
+            <td>ISO 8601</td>
+            <td>Message timestamp (when the platform provides it)</td>
+          </tr>
+          <tr>
+            <td><code>metadata</code></td>
+            <td>object</td>
+            <td
+              >Platform-specific metadata preserved from the parser (model name, reasoning type, etc.
+              where available)</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      This schema makes it straightforward to write scripts that parse your backup archive, search
+      for specific conversations, extract code snippets, or import conversations into other tools.
+    </p>
+  </section>
+
+  <!-- Filename Templates for Organized Backups -->
+  <section class="content-section">
+    <h2>Filename Templates for Organized Backups</h2>
+    <p>
+      AI Chat Exporter's filename template system lets you control exactly how backup files are
+      named. Available variables include:
+    </p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Output</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>{'{platform}'}</code></td>
+            <td>AI platform name</td>
+            <td>ChatGPT</td>
+          </tr>
+          <tr>
+            <td><code>{'{title}'}</code></td>
+            <td>Conversation title (sanitized)</td>
+            <td>React Hooks Debugging</td>
+          </tr>
+          <tr>
+            <td><code>{'{datetime}'}</code></td>
+            <td>Export timestamp</td>
+            <td>2026-09-08_14-30</td>
+          </tr>
+          <tr>
+            <td><code>{'{date}'}</code></td>
+            <td>Date only</td>
+            <td>2026-09-08</td>
+          </tr>
+          <tr>
+            <td><code>{'{time}'}</code></td>
+            <td>Time only</td>
+            <td>14-30</td>
+          </tr>
+          <tr>
+            <td><code>{'{timestamp}'}</code></td>
+            <td>Date + time</td>
+            <td>2026-09-08_14-30</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      Since filename separators like <code>/</code> are stripped for filesystem safety, all exports
+      land as flat files. Use the <code>{'{platform} - {title} - {datetime}'}</code> template to
+      produce unique, sortable filenames that make it easy to browse and find specific conversations.
+    </p>
+  </section>
+
+  <!-- Privacy-First Backup -->
+  <section class="content-section">
+    <h2>Privacy-First Backup</h2>
+    <p>
+      Most backup solutions ask you to trust a third-party service with your data. Cloud backup
+      tools send your files to remote servers. Browser-based tools may phone home analytics. Even
+      "local" tools sometimes include telemetry that leaks metadata about your conversations.
+    </p>
+    <Callout tone="success" title="Absolutely zero data leaves your browser">
+      AI Chat Exporter runs entirely in the browser extension sandbox. All parsing, formatting, and
+      file generation happen locally. The extension makes no network requests to any server. The
+      source code is open under MPL 2.0 and auditable on GitHub.
+    </Callout>
+    <p>
+      Your backup files are standard Markdown, JSON, or PDF files saved directly to your local
+      filesystem. You control where they go, who can access them, and how they are synced. No
+      third-party backup service has access to your conversation data unless you explicitly give it
+      to them.
+    </p>
+  </section>
+
+  <!-- Backup All Your Conversations -->
+  <section class="content-section">
+    <h2>Backup All Your Conversations</h2>
+    <p>
+      AI Chat Exporter exports the conversation open in your current tab. To back up your entire
+      history, you export conversations one at a time as you work through them, using filename
+      templates to organize the output. This is practical for:
+    </p>
+    <ul>
+      <li>
+        <strong>Periodic backups</strong> &mdash; Export important conversations at the end of each
+        week or month.
+      </li>
+      <li>
+        <strong>Platform migration</strong> &mdash; Back up valuable threads before switching to a
+        different AI platform.
+      </li>
+      <li>
+        <strong>Compliance archiving</strong> &mdash; Create a record of AI-assisted work for audit
+        purposes.
+      </li>
+      <li>
+        <strong>Pre-deletion cleanup</strong> &mdash; Export conversations before clearing your
+        history on platforms that enforce limits.
+      </li>
+    </ul>
+    <Callout tone="info" title="Tip">
+      The filename template <code>{'{platform} - {title} - {datetime}'}</code> adds the source
+      platform, conversation title, and timestamp to every export, so files from multiple platforms
+      and sessions never collide and sort cleanly in your backup folder.
+    </Callout>
+  </section>
+
+  <!-- FAQ -->
+  <section class="content-section">
+    <h2>Frequently Asked Questions</h2>
+    <FAQ
+      items={[
+        {
+          q: 'How do I backup all my chats at once?',
+          a: 'AI Chat Exporter backs up the conversation currently open in your tab. You export each important conversation as you go; filename templates (such as <code>{platform} - {title} - {datetime}</code>) keep every file uniquely named and organized. There is no background auto-backup, but exporting an open conversation takes a single click, so a quick run through your recent chats produces a complete archive.',
+        },
+        {
+          q: 'What format should I use for backup?',
+          a: 'For most users, Markdown is the best primary backup format. It is human-readable, universally supported, and preserves code blocks and formatting. Use JSON as a secondary format if you want to build scripts or tools around your backup archive. PDF is best for permanent archival where visual fidelity matters. Export to multiple formats for important conversations.',
+        },
+        {
+          q: 'Can I automate backups?',
+          a: 'AI Chat Exporter is a browser extension and requires user interaction to initiate exports. There is no built-in scheduled backup feature. However, you can combine the extension with your operating system\'s file sync tools (Syncthing, iCloud, Google Drive) to automatically sync exported files to other devices once they are saved locally. The extension also supports keyboard shortcuts for faster manual exports.',
+        },
+        {
+          q: 'How do I restore from a backup?',
+          a: 'Markdown backups can be opened in any text editor, Obsidian, or knowledge management tool. JSON backups can be read by scripts or imported into databases. PDF backups can be opened in any PDF reader. To continue a conversation on an AI platform, use the cross-AI transfer feature to send the conversation content to the platform\'s chat input. AI Chat Exporter cannot directly import files back into platform-specific conversation formats.',
+        },
+        {
+          q: 'Is my data sent to any server during export?',
+          a: 'No. All processing happens locally within your browser extension. The extension reads the conversation from the page DOM, formats it, and saves the file directly to your filesystem. No data is transmitted to any external server, including our own. The extension\'s source code is open and auditable on GitHub.',
+        },
+        {
+          q: 'How large are the backup files?',
+          a: 'File size depends on conversation length and format. A typical 20-message conversation exports to approximately 15-30 KB in Markdown, 20-40 KB in JSON, and 50-100 KB in PDF (due to embedded fonts and formatting). Conversations with many code blocks or images will be larger. A year of daily AI usage might produce 50-200 MB of backup files in Markdown format.',
+        },
+      ]}
+    />
+  </section>
+
+  <!-- Related Pages -->
+  <section class="content-section">
+    <RelatedPages
+      items={[
+        {
+          title: 'JSON Exporter',
+          href: '/json-exporter.html',
+          desc: 'Structured JSON export with metadata, timestamps, and message roles for programmatic use.',
+        },
+        {
+          title: 'Markdown Exporter',
+          href: '/markdown-exporter.html',
+          desc: 'Clean Markdown export with code highlighting, math, and formatting for human-readable backups.',
+        },
+        {
+          title: 'ChatGPT Exporter',
+          href: '/chatgpt-exporter.html',
+          desc: 'Export ChatGPT conversations including Deep Research, Canvas placeholders, and thought process.',
+        },
+        {
+          title: 'Cross-AI Transfer',
+          href: '/cross-ai-transfer.html',
+          desc: 'Move conversations between AI platforms to continue work on the best tool for the job.',
+        },
+      ]}
+    />
+  </section>
+
+  <CtaSection prompt="Start backing up your AI conversations today." />
+</GuideLayout>

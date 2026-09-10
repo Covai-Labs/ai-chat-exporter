@@ -1,351 +1,58 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ChatGPT Exporter — Export ChatGPT Conversations to Markdown, PDF & More</title>
-  <meta name="description" content="Export ChatGPT conversations to Markdown, PDF, JSON, HTML, Word and PNG. Free, open-source browser extension. 100% local and private." />
-  <link rel="canonical" href="https://ai-chat-exporter.covai.org/chatgpt-exporter.html" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://ai-chat-exporter.covai.org/chatgpt-exporter.html" />
-  <meta property="og:title" content="ChatGPT Exporter — Export ChatGPT Conversations to Markdown, PDF & More" />
-  <meta property="og:description" content="Export ChatGPT conversations to Markdown, PDF, JSON, HTML, Word and PNG. Free, open-source browser extension. 100% local and private." />
-  <meta property="og:image" content="https://ai-chat-exporter.covai.org/og-image.png" />
-  <meta property="og:site_name" content="AI Chat Exporter" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/seo-pages.css" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "AI Chat Exporter",
-    "operatingSystem": "Chrome, Firefox, Edge",
-    "applicationCategory": "UtilitiesApplication",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "url": "https://ai-chat-exporter.covai.org/",
-    "downloadUrl": "https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
-  }
-  </script>
-</head>
-<body>
-  <header data-testid="header">
-    <a href="index.html" class="logo-container">
-      <img src="icons/icon48.png" alt="AI Chat Exporter Logo" class="logo-img" />
-      <span class="logo-text">AI Chat Exporter</span>
-    </a>
-    <nav class="nav-links">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="https://github.com/Covai-Labs/ai-chat-exporter" class="nav-link" target="_blank" rel="noopener">GitHub</a>
-    </nav>
-  </header>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ChatGPT Exporter - Export ChatGPT Conversations to Markdown, PDF &amp; More</title><meta name="description" content="Export ChatGPT conversations to Markdown, PDF, JSON, HTML, Word and PNG. Free, open-source browser extension. 100% local and private."><link rel="canonical" href="https://ai-chat-exporter.covai.org/chatgpt-exporter.html"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:url" content="https://ai-chat-exporter.covai.org/chatgpt-exporter.html"><meta property="og:title" content="ChatGPT Exporter - Export ChatGPT Conversations to Markdown, PDF &amp; More"><meta property="og:description" content="Export ChatGPT conversations to Markdown, PDF, JSON, HTML, Word and PNG. Free, open-source browser extension. 100% local and private."><meta property="og:image" content="https://ai-chat-exporter.covai.org/og-image.png"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="640"><meta property="og:site_name" content="AI Chat Exporter"><meta property="og:locale" content="en_US"><!-- Twitter / X --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://ai-chat-exporter.covai.org/chatgpt-exporter.html"><meta name="twitter:title" content="ChatGPT Exporter - Export ChatGPT Conversations to Markdown, PDF &amp; More"><meta name="twitter:description" content="Export ChatGPT conversations to Markdown, PDF, JSON, HTML, Word and PNG. Free, open-source browser extension. 100% local and private."><meta name="twitter:image" content="https://ai-chat-exporter.covai.org/og-image.png"><!-- Theme bootstrap (pre-paint — prevents flash) --><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('ace-theme');
+          if (t === 'dark' || t === 'light') {
+            document.documentElement.classList.add(t);
+          }
+        } catch (e) {
+          /* ignore */
+        }
+      })();
+    </script><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><!-- Favicons --><link rel="icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="/icons/android-chrome-192x192.png"><link rel="icon" type="image/png" sizes="512x512" href="/icons/android-chrome-512x512.png"><link rel="manifest" href="/site.webmanifest"><!-- Styles --><link rel="stylesheet" href="/css/global.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"AI Chat Exporter","operatingSystem":"Chrome, Firefox, Edge","applicationCategory":"UtilitiesApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://ai-chat-exporter.covai.org","downloadUrl":"https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"}</script><script defer src="https://covai.org/analytics.js"></script></head><body><header><a href="/index.html" class="logo-container"><img src="/icons/icon48.png" alt="AI Chat Exporter Logo" class="logo-img" width="32" height="32"><span class="logo-text">AI Chat Exporter</span></a><div class="header-nav"><nav class="nav-links" aria-label="Main navigation"><a href="/index.html" class="nav-link">Home</a><a href="/guides.html" class="nav-link">Guides</a><a href="https://github.com/Covai-Labs/ai-chat-exporter" class="nav-link" target="_blank" rel="noopener noreferrer"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg><span>GitHub</span></a></nav><div class="theme-toggle" role="group" aria-label="Theme switcher"><button type="button" data-theme="light" aria-label="Light theme" title="Light" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg></button><button type="button" data-theme="dark" aria-label="Dark theme" title="Dark" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button><button type="button" data-theme="system" aria-label="System theme (follow OS)" title="System" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></button></div><script>
+  (function () {
+    const root = document.documentElement;
+    const buttons = Array.from(document.querySelectorAll('.theme-toggle button[data-theme]'));
+    if (!buttons.length) return;
 
-  <div class="breadcrumb" data-testid="breadcrumb">
-    <a href="index.html">Home</a> <span>›</span> <span>ChatGPT Exporter</span>
-  </div>
+    function getStored() {
+      const t = localStorage.getItem('ace-theme');
+      return t === 'dark' || t === 'light' ? t : 'system';
+    }
 
-  <main>
-    <div class="hero" data-testid="hero">
-      <span class="badge">Free &amp; Open Source</span>
-      <h1 data-testid="h1">ChatGPT Exporter — Save Every Conversation</h1>
-      <p class="hero-subtitle">Export your ChatGPT conversations to Markdown, PDF, JSON, HTML, Word, PNG and more. AI Chat Exporter is a free, open-source browser extension that runs entirely in your browser — no servers, no sign-up, no data leaves your machine.</p>
-      <div class="cta-group">
-        <a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener" data-testid="cta-chrome">Add to Chrome</a>
-        <a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener" data-testid="cta-firefox">Add to Firefox</a>
-      </div>
-    </div>
-
-    <!-- Why Export ChatGPT Conversations -->
-    <section class="content-section" data-testid="section-why-export">
-      <h2>Why Export Your ChatGPT Conversations?</h2>
-      <p>ChatGPT stores your conversations in OpenAI's cloud, but you have no meaningful way to back them up, search them offline, or own a local copy. OpenAI's built-in data export bundles your entire account into an unusable JSON archive that requires technical effort to parse. AI Chat Exporter solves this problem by giving you clean, readable exports of individual conversations right from the ChatGPT interface.</p>
-      <p>Whether you are a developer preserving code-generation sessions, a researcher archiving literature reviews, or a professional keeping records of AI-assisted work, having a local copy of your conversations protects your work against accidental deletion, account issues, or platform changes.</p>
-      <p>Common reasons people export ChatGPT conversations:</p>
-      <ul>
-        <li><strong>Backup and archival</strong> — Keep a permanent local record before conversations are deleted or chats are purged.</li>
-        <li><strong>Knowledge management</strong> — Import conversations into Obsidian, Notion, Logseq, or any personal knowledge base as Markdown files.</li>
-        <li><strong>Sharing with colleagues</strong> — Send a clean PDF or Word document instead of a screenshot or copy-pasted text.</li>
-        <li><strong>Legal and compliance</strong> — Maintain audit trails of AI-assisted decisions and generated content.</li>
-        <li><strong>Research reference</strong> — Save technical discussions for future reference without relying on ChatGPT's search.</li>
-      </ul>
-    </section>
-
-    <!-- Supported Formats -->
-    <section class="content-section" data-testid="section-formats">
-      <h2>Supported Export Formats</h2>
-      <p>AI Chat Exporter supports seven output formats, each optimized for different use cases. You choose the format that fits your workflow — the extension handles parsing, formatting, and download.</p>
-      <div class="table-wrapper">
-        <table data-testid="formats-table">
-          <thead>
-            <tr>
-              <th>Format</th>
-              <th>Best For</th>
-              <th>Key Features</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Markdown</strong></td>
-              <td>Knowledge bases, documentation, Obsidian/Notion</td>
-              <td>Preserves code blocks, LaTeX math, tables, and images. Clean and editable.</td>
-            </tr>
-            <tr>
-              <td><strong>JSON</strong></td>
-              <td>Developers, automation pipelines, API integration</td>
-              <td>Structured data with source platform, timestamps, message roles, and a normalized schema.</td>
-            </tr>
-            <tr>
-              <td><strong>HTML</strong></td>
-              <td>Web archives, visual fidelity, embedding</td>
-              <td>Full visual representation with styled output that mirrors the chat interface.</td>
-            </tr>
-            <tr>
-              <td><strong>Word (.doc)</strong></td>
-              <td>Sharing with non-technical audiences, reports</td>
-              <td>Formatted document with headings, code blocks, and images. Editable in Word.</td>
-            </tr>
-            <tr>
-              <td><strong>PDF</strong></td>
-              <td>Archiving, printing, legal/compliance</td>
-              <td>Page breaks, table of contents, dark/light themes, custom fonts.</td>
-            </tr>
-            <tr>
-              <td><strong>PNG</strong></td>
-              <td>Visual sharing, social media, quick screenshots</td>
-              <td>Full conversation rendered as a scrollable image. Shareable anywhere.</td>
-            </tr>
-            <tr>
-              <td><strong>Continuation</strong></td>
-              <td>Resuming exported chats in Claude or other platforms</td>
-              <td>Special format that preserves conversation structure for re-import.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- ChatGPT-Specific Features -->
-    <section class="content-section" data-testid="section-chatgpt-features">
-      <h2>ChatGPT-Specific Features</h2>
-      <p>AI Chat Exporter is not a generic web scraper — it is purpose-built for every AI chat platform. For ChatGPT specifically, it handles features that other tools ignore:</p>
-      <div class="features-grid">
-        <div class="feature-card" data-testid="feature-deep-research">
-          <h3>Deep Research Export</h3>
-          <p>ChatGPT's Deep Research feature produces long, citation-heavy responses with embedded sources. AI Chat Exporter captures the full research output including citations, source links, and structured analysis — not just the visible text.</p>
-        </div>
-        <div class="feature-card" data-testid="feature-canvas">
-          <h3>Canvas Support</h3>
-          <p>ChatGPT Canvas documents are detected and represented in exports. Canvas outputs appear as clearly labeled placeholders (e.g. <code>[Canvas: title]</code>) so the conversation flow stays intact and you know a Canvas document was part of the exchange.</p>
-        </div>
-        <div class="feature-card" data-testid="feature-thought-process">
-          <h3>Thought Process Export</h3>
-          <p>When ChatGPT displays its reasoning or thinking steps, the extension captures them. This is useful for understanding how the model arrived at an answer — especially for technical and mathematical discussions.</p>
-        </div>
-        <div class="feature-card" data-testid="feature-group-conversations">
-          <h3>Group Conversation Support</h3>
-          <p>ChatGPT allows multiple models in a single conversation (e.g., switching between GPT-4o and o1). AI Chat Exporter correctly attributes each response to its model, preserving the conversation's true structure.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ChatGPT Built-in Export vs AI Chat Exporter -->
-    <section class="content-section" data-testid="section-comparison">
-      <h2>ChatGPT's Built-in Export vs. AI Chat Exporter</h2>
-      <p>OpenAI offers a "Export data" option in ChatGPT settings. Here is what you actually get and why it falls short:</p>
-      <div class="table-wrapper">
-        <table data-testid="comparison-table">
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>OpenAI Data Export</th>
-              <th>AI Chat Exporter</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Export scope</td>
-              <td>All conversations at once (entire account)</td>
-              <td>Individual conversations or selected messages</td>
-            </tr>
-            <tr>
-              <td>Output format</td>
-              <td>Single JSON archive</td>
-              <td>Markdown, JSON, HTML, Word, PDF, PNG, Continuation</td>
-            </tr>
-            <tr>
-              <td>Readability</td>
-              <td>Raw JSON — not human-readable</td>
-              <td>Clean, formatted output ready to read and share</td>
-            </tr>
-            <tr>
-              <td>Selective export</td>
-              <td>No — all or nothing</td>
-              <td>Yes — choose specific messages or the full conversation</td>
-            </tr>
-            <tr>
-              <td>Code formatting</td>
-              <td>Stripped of formatting</td>
-              <td>Preserved with syntax highlighting and language tags</td>
-            </tr>
-            <tr>
-              <td>Images</td>
-              <td>Included as URLs (expire)</td>
-              <td>Embedded inline in the output</td>
-            </tr>
-            <tr>
-              <td>Speed</td>
-              <td>Hours to receive via email</td>
-              <td>Instant — exported in seconds</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="callout callout-info" data-testid="callout-info">
-        <strong>Tip:</strong> OpenAI's data export is useful for GDPR compliance requests, but for everyday use, AI Chat Exporter gives you clean, usable files in seconds.
-      </div>
-    </section>
-
-    <!-- How It Works -->
-    <section class="content-section" data-testid="section-how-it-works">
-      <h2>How It Works</h2>
-      <div class="steps" data-testid="steps">
-        <div class="step">
-          <div class="step-content">
-            <h3>Install the Extension</h3>
-            <p>Add AI Chat Exporter from the Chrome Web Store, Firefox Add-ons, or Edge Add-ons. The extension installs in seconds and requires no configuration to start exporting.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-content">
-            <h3>Open a ChatGPT Conversation</h3>
-            <p>Navigate to any conversation in ChatGPT. The extension detects the active conversation and enables the export toolbar automatically.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-content">
-            <h3>Choose Format and Export</h3>
-            <p>Select your desired format from the export dropdown. The extension parses the conversation, applies formatting, and downloads the file to your machine. Optionally select specific messages before exporting.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Privacy -->
-    <section class="content-section" data-testid="section-privacy">
-      <h2>Your Data Never Leaves Your Browser</h2>
-      <p>AI Chat Exporter is built with privacy as a core principle. The extension runs entirely within your browser's sandbox — there are no external servers, no analytics, no telemetry, and no data collection of any kind.</p>
-      <div class="callout callout-success" data-testid="callout-privacy">
-        <strong>100% Local:</strong> All parsing, formatting, and file generation happen in your browser. The extension never contacts any external server. Your conversations stay on your machine.
-      </div>
-      <p>The source code is fully open under the MPL 2.0 license. You can audit every line of code on <a href="https://github.com/Covai-Labs/ai-chat-exporter" target="_blank" rel="noopener">GitHub</a>. If you have security concerns, you can download the source and load it as an unpacked extension yourself.</p>
-    </section>
-
-    <!-- FAQ -->
-    <section class="content-section" data-testid="section-faq">
-      <h2>Frequently Asked Questions</h2>
-      <div class="faq">
-        <div class="faq-item" data-testid="faq-item-1">
-          <button class="faq-question">Does it export ChatGPT Plus conversations?</button>
-          <div class="faq-answer">
-            <p>Yes. AI Chat Exporter works with all ChatGPT tiers, including the free tier, Plus, Team, and Enterprise. It exports any conversation visible in your ChatGPT interface regardless of your subscription level.</p>
-          </div>
-        </div>
-        <div class="faq-item" data-testid="faq-item-2">
-          <button class="faq-question">Can I export specific messages instead of the entire conversation?</button>
-          <div class="faq-answer">
-            <p>Yes. The extension lets you select individual messages before exporting. Check the messages you want, choose your format, and only those messages will be included in the output. This is useful for extracting a single code snippet or a specific answer from a long conversation.</p>
-          </div>
-        </div>
-        <div class="faq-item" data-testid="faq-item-3">
-          <button class="faq-question">Does it support ChatGPT Deep Research?</button>
-          <div class="faq-answer">
-            <p>Yes. Deep Research outputs are fully captured, including all citations, source references, and the structured analysis that ChatGPT generates. The extension preserves the research hierarchy and formatting in every export format.</p>
-          </div>
-        </div>
-        <div class="faq-item" data-testid="faq-item-4">
-          <button class="faq-question">What about Canvas outputs?</button>
-          <div class="faq-answer">
-            <p>ChatGPT Canvas documents are detected and represented in exports as labeled placeholders (e.g. <code>[Canvas: title]</code>). This keeps the conversation flow intact and makes it clear a Canvas document was part of the exchange, even though the live Canvas preview itself cannot be re-embedded in a Markdown or JSON file.</p>
-          </div>
-        </div>
-        <div class="faq-item" data-testid="faq-item-5">
-          <button class="faq-question">Is AI Chat Exporter completely free?</button>
-          <div class="faq-answer">
-            <p>Yes. AI Chat Exporter is free and open source under the MPL 2.0 license. There are no premium tiers, no subscriptions, and no in-app purchases. All features are available to all users.</p>
-          </div>
-        </div>
-        <div class="faq-item" data-testid="faq-item-6">
-          <button class="faq-question">Does it work on mobile browsers?</button>
-          <div class="faq-answer">
-            <p>AI Chat Exporter is a browser extension and works on desktop browsers (Chrome, Firefox, Edge). Mobile browsers like Chrome for Android and Safari for iOS do not support browser extensions. For mobile use, open ChatGPT on a desktop browser and export from there.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Related Pages -->
-    <section class="content-section" data-testid="section-related">
-      <h2>Related Pages</h2>
-      <div class="related-grid">
-        <a href="chatgpt-to-markdown.html" class="related-link" data-testid="related-1">
-          <h3>ChatGPT to Markdown</h3>
-          <p>Export ChatGPT conversations as clean Markdown files with code blocks and LaTeX preserved.</p>
-        </a>
-        <a href="chatgpt-to-pdf.html" class="related-link" data-testid="related-2">
-          <h3>ChatGPT to PDF</h3>
-          <p>Generate print-ready PDFs from ChatGPT conversations with custom themes and layouts.</p>
-        </a>
-        <a href="claude-exporter.html" class="related-link" data-testid="related-3">
-          <h3>Claude Exporter</h3>
-          <p>Export Claude conversations to Markdown, PDF, JSON, HTML, Word, and PNG.</p>
-        </a>
-        <a href="gemini-exporter.html" class="related-link" data-testid="related-4">
-          <h3>Gemini Exporter</h3>
-          <p>Export Google Gemini conversations with the same formats and privacy guarantees.</p>
-        </a>
-      </div>
-    </section>
-
-    <!-- Additional CTA -->
-    <section class="content-section" data-testid="section-final-cta">
-      <div class="callout callout-success">
-        <strong>Ready to export your ChatGPT conversations?</strong> Install AI Chat Exporter and start saving your conversations in seconds. No account required. No data leaves your browser.
-        <div class="cta-group compact">
-          <a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener">Add to Chrome</a>
-          <a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener">Add to Firefox</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer data-testid="footer">
-    <div class="footer-links">
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="license.html">License (MPL 2.0)</a>
-      <a href="https://github.com/Covai-Labs/ai-chat-exporter" target="_blank" rel="noopener">GitHub</a>
-    </div>
-    <p>&copy; 2026 AI Chat Exporter. Open source under MPL 2.0.</p>
-  </footer>
-
-  <script>
-    document.querySelectorAll('.faq-item').forEach((item, index) => {
-      const btn = item.querySelector('.faq-question');
-      const answer = item.querySelector('.faq-answer');
-      if (!btn || !answer) return;
-      const id = 'faq-' + (index + 1);
-      btn.id = 'q-' + id;
-      btn.setAttribute('aria-expanded', 'false');
-      btn.setAttribute('aria-controls', id);
-      answer.id = id;
-      answer.setAttribute('role', 'region');
-      answer.setAttribute('aria-labelledby', 'q-' + id);
-      btn.addEventListener('click', () => {
-        const open = item.classList.toggle('open');
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    function apply(theme) {
+      root.classList.remove('light', 'dark');
+      if (theme === 'light' || theme === 'dark') root.classList.add(theme);
+      try {
+        localStorage.setItem('ace-theme', theme);
+      } catch (e) {
+        /* private mode */
+      }
+      buttons.forEach((b) => {
+        b.setAttribute('aria-pressed', String(b.dataset.theme === theme));
       });
+    }
+
+    apply(getStored());
+
+    buttons.forEach((b) => {
+      b.addEventListener('click', () => apply(b.dataset.theme));
     });
-  </script>
-</body>
-</html>
+  })();
+</script></div></header><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ai-chat-exporter.covai.org/index.html"},{"@type":"ListItem","position":2,"name":"ChatGPT Exporter - Export ChatGPT Conversations to Markdown, PDF & More"}]}</script><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span aria-hidden="true">&#8250;</span><span>ChatGPT Exporter - Export ChatGPT Conversations to Markdown, PDF &amp; More</span></nav><main><div class="hero"><span class="badge">Free &amp; Open Source</span><h1>ChatGPT Exporter - Save Every Conversation</h1><p class="hero-subtitle">Export your ChatGPT conversations to Markdown, PDF, JSON, HTML, Word, PNG and more. AI Chat Exporter is a free, open-source browser extension that runs entirely in your browser - no servers, no sign-up, no data leaves your machine.</p><div class="cta-group"><a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-testid="cta-chrome">Add to Chrome</a><a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" data-testid="cta-firefox">Add to Firefox</a></div></div><section class="content-section"><h2>Why Export Your ChatGPT Conversations?</h2><p>ChatGPT stores your conversations in OpenAI's cloud, but you have no meaningful way to back them up, search them offline, or own a local copy. OpenAI's built-in data export bundles your entire account into an unusable JSON archive that requires technical effort to parse. AI Chat Exporter solves this problem by giving you clean, readable exports of individual conversations right from the ChatGPT interface.</p><p>Whether you are a developer preserving code-generation sessions, a researcher archiving literature reviews, or a professional keeping records of AI-assisted work, having a local copy of your conversations protects your work against accidental deletion, account issues, or platform changes.</p><p>Common reasons people export ChatGPT conversations:</p><ul><li><strong>Backup and archival</strong> - Keep a permanent local record before conversations are deleted or chats are purged.</li><li><strong>Knowledge management</strong> - Import conversations into Obsidian, Notion, Logseq, or any personal knowledge base as Markdown files.</li><li><strong>Sharing with colleagues</strong> - Send a clean PDF or Word document instead of a screenshot or copy-pasted text.</li><li><strong>Legal and compliance</strong> - Maintain audit trails of AI-assisted decisions and generated content.</li><li><strong>Research reference</strong> - Save technical discussions for future reference without relying on ChatGPT's search.</li></ul></section><section class="content-section"><h2>Supported Export Formats</h2><p>AI Chat Exporter supports seven output formats, each optimized for different use cases. You choose the format that fits your workflow - the extension handles parsing, formatting, and download.</p><div class="table-wrapper"><table><thead><tr><th>Format</th><th>Best For</th><th>Key Features</th></tr></thead><tbody><tr><td><strong>Markdown</strong></td><td>Knowledge bases, documentation, Obsidian/Notion</td><td>Preserves code blocks, LaTeX math, tables, and images. Clean and editable.</td></tr><tr><td><strong>JSON</strong></td><td>Developers, automation pipelines, API integration</td><td>Structured data with source platform, timestamps, message roles, and a normalized schema.</td></tr><tr><td><strong>HTML</strong></td><td>Web archives, visual fidelity, embedding</td><td>Full visual representation with styled output that mirrors the chat interface.</td></tr><tr><td><strong>Word (.doc)</strong></td><td>Sharing with non-technical audiences, reports</td><td>Formatted document with headings, code blocks, and images. Editable in Word.</td></tr><tr><td><strong>PDF</strong></td><td>Archiving, printing, legal/compliance</td><td>Page breaks, table of contents, dark/light themes, custom fonts.</td></tr><tr><td><strong>PNG</strong></td><td>Visual sharing, social media, quick screenshots</td><td>Full conversation rendered as a scrollable image. Shareable anywhere.</td></tr><tr><td><strong>Continuation</strong></td><td>Resuming exported chats in Claude or other platforms</td><td>Special format that preserves conversation structure for re-import.</td></tr></tbody></table></div></section><section class="content-section"><h2>ChatGPT-Specific Features</h2><p>AI Chat Exporter is not a generic web scraper - it is purpose-built for every AI chat platform. For ChatGPT specifically, it handles features that other tools ignore:</p><div class="features-grid"><div class="feature-card"><h3>Deep Research Export</h3><p>ChatGPT's Deep Research feature produces long, citation-heavy responses with embedded sources. AI Chat Exporter captures the full research output including citations, source links, and structured analysis - not just the visible text.</p></div><div class="feature-card"><h3>Canvas Support</h3><p>ChatGPT Canvas documents are detected and represented in exports. Canvas outputs appear as clearly labeled placeholders (e.g. <code>[Canvas: title]</code>) so the conversation flow stays intact and you know a Canvas document was part of the exchange.</p></div><div class="feature-card"><h3>Thought Process Export</h3><p>When ChatGPT displays its reasoning or thinking steps, the extension captures them. This is useful for understanding how the model arrived at an answer - especially for technical and mathematical discussions.</p></div><div class="feature-card"><h3>Group Conversation Support</h3><p>ChatGPT allows multiple models in a single conversation (e.g., switching between GPT-4o and o1). AI Chat Exporter correctly attributes each response to its model, preserving the conversation's true structure.</p></div></div></section><section class="content-section"><h2>ChatGPT's Built-in Export vs. AI Chat Exporter</h2><p>OpenAI offers a "Export data" option in ChatGPT settings. Here is what you actually get and why it falls short:</p><div class="table-wrapper"><table><thead><tr><th>Feature</th><th>OpenAI Data Export</th><th>AI Chat Exporter</th></tr></thead><tbody><tr><td>Export scope</td><td>All conversations at once (entire account)</td><td>Individual conversations or selected messages</td></tr><tr><td>Output format</td><td>Single JSON archive</td><td>Markdown, JSON, HTML, Word, PDF, PNG, Continuation</td></tr><tr><td>Readability</td><td>Raw JSON - not human-readable</td><td>Clean, formatted output ready to read and share</td></tr><tr><td>Selective export</td><td>No - all or nothing</td><td>Yes - choose specific messages or the full conversation</td></tr><tr><td>Code formatting</td><td>Stripped of formatting</td><td>Preserved with syntax highlighting and language tags</td></tr><tr><td>Images</td><td>Included as URLs (expire)</td><td>Embedded inline in the output</td></tr><tr><td>Speed</td><td>Hours to receive via email</td><td>Instant - exported in seconds</td></tr></tbody></table></div><div class="callout callout-info"><strong>Tip: </strong>OpenAI's data export is useful for GDPR compliance requests, but for everyday use, AI Chat Exporter gives you clean, usable files in seconds.</div></section><section class="content-section"><h2>How It Works</h2><div class="steps"><div class="step"><div class="step-content"><h3>Install the Extension</h3><p>Add AI Chat Exporter from the Chrome Web Store, Firefox Add-ons, or Edge Add-ons. The extension installs in seconds and requires no configuration to start exporting.</p></div></div><div class="step"><div class="step-content"><h3>Open a ChatGPT Conversation</h3><p>Navigate to any conversation in ChatGPT. The extension detects the active conversation and enables the export toolbar automatically.</p></div></div><div class="step"><div class="step-content"><h3>Choose Format and Export</h3><p>Select your desired format from the export dropdown. The extension parses the conversation, applies formatting, and downloads the file to your machine. Optionally select specific messages before exporting.</p></div></div></div></section><section class="content-section"><h2>Your Data Never Leaves Your Browser</h2><p>AI Chat Exporter is built with privacy as a core principle. The extension runs entirely within your browser's sandbox - there are no external servers, no analytics, no telemetry, and no data collection of any kind.</p><div class="callout callout-success"><strong>100% Local: </strong>All parsing, formatting, and file generation happen in your browser. The extension never contacts any external server. Your conversations stay on your machine.</div><p>The source code is fully open under the MPL 2.0 license. You can audit every line of code on<a href="https://github.com/Covai-Labs/ai-chat-exporter" target="_blank" rel="noopener noreferrer">GitHub</a>. If you have security concerns, you can download the source and load it as an unpacked extension yourself.</p></section><section class="content-section"><h2>Frequently Asked Questions</h2><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does it export ChatGPT Plus conversations?","acceptedAnswer":{"@type":"Answer","text":"Yes. AI Chat Exporter works with all ChatGPT tiers, including the free tier, Plus, Team, and Enterprise. It exports any conversation visible in your ChatGPT interface regardless of your subscription level."}},{"@type":"Question","name":"Can I export specific messages instead of the entire conversation?","acceptedAnswer":{"@type":"Answer","text":"Yes. The extension lets you select individual messages before exporting. Check the messages you want, choose your format, and only those messages will be included in the output. This is useful for extracting a single code snippet or a specific answer from a long conversation."}},{"@type":"Question","name":"Does it support ChatGPT Deep Research?","acceptedAnswer":{"@type":"Answer","text":"Yes. Deep Research outputs are fully captured, including all citations, source references, and the structured analysis that ChatGPT generates. The extension preserves the research hierarchy and formatting in every export format."}},{"@type":"Question","name":"What about Canvas outputs?","acceptedAnswer":{"@type":"Answer","text":"ChatGPT Canvas documents are detected and represented in exports as labeled placeholders (e.g. [Canvas: title]). This keeps the conversation flow intact and makes it clear a Canvas document was part of the exchange, even though the live Canvas preview itself cannot be re-embedded in a Markdown or JSON file."}},{"@type":"Question","name":"Is AI Chat Exporter completely free?","acceptedAnswer":{"@type":"Answer","text":"Yes. AI Chat Exporter is free and open source under the MPL 2.0 license. There are no premium tiers, no subscriptions, and no in-app purchases. All features are available to all users."}},{"@type":"Question","name":"Does it work on mobile browsers?","acceptedAnswer":{"@type":"Answer","text":"AI Chat Exporter is a browser extension and works on desktop browsers (Chrome, Firefox, Edge). Mobile browsers like Chrome for Android and Safari for iOS do not support browser extensions. For mobile use, open ChatGPT on a desktop browser and export from there."}}]}</script><div class="faq"><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Does it export ChatGPT Plus conversations?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. AI Chat Exporter works with all ChatGPT tiers, including the free tier, Plus, Team, and Enterprise. It exports any conversation visible in your ChatGPT interface regardless of your subscription level.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Can I export specific messages instead of the entire conversation?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. The extension lets you select individual messages before exporting. Check the messages you want, choose your format, and only those messages will be included in the output. This is useful for extracting a single code snippet or a specific answer from a long conversation.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Does it support ChatGPT Deep Research?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. Deep Research outputs are fully captured, including all citations, source references, and the structured analysis that ChatGPT generates. The extension preserves the research hierarchy and formatting in every export format.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">What about Canvas outputs?</button><div class="faq-answer" role="region" aria-hidden="true">ChatGPT Canvas documents are detected and represented in exports as labeled placeholders (e.g. <code>[Canvas: title]</code>). This keeps the conversation flow intact and makes it clear a Canvas document was part of the exchange, even though the live Canvas preview itself cannot be re-embedded in a Markdown or JSON file.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Is AI Chat Exporter completely free?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. AI Chat Exporter is free and open source under the MPL 2.0 license. There are no premium tiers, no subscriptions, and no in-app purchases. All features are available to all users.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Does it work on mobile browsers?</button><div class="faq-answer" role="region" aria-hidden="true">AI Chat Exporter is a browser extension and works on desktop browsers (Chrome, Firefox, Edge). Mobile browsers like Chrome for Android and Safari for iOS do not support browser extensions. For mobile use, open ChatGPT on a desktop browser and export from there.</div></div></div><script>
+  document.querySelectorAll('.faq-item').forEach((item, i) => {
+    const btn = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+    if (!btn || !answer) return;
+    const id = 'faq-' + (i + 1);
+    btn.id = 'q-' + id;
+    btn.setAttribute('aria-controls', id);
+    answer.id = id;
+    answer.setAttribute('aria-labelledby', 'q-' + id);
+    btn.addEventListener('click', () => {
+      const open = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    });
+  });
+</script></section><section class="content-section"><section class="related-pages"><h2>Related Pages</h2><div class="related-grid"><a href="/chatgpt-to-markdown.html" class="related-link"><h3>ChatGPT to Markdown</h3><p>Export ChatGPT conversations as clean Markdown files with code blocks and LaTeX preserved.</p></a><a href="/chatgpt-to-pdf.html" class="related-link"><h3>ChatGPT to PDF</h3><p>Generate print-ready PDFs from ChatGPT conversations with custom themes and layouts.</p></a><a href="/claude-exporter.html" class="related-link"><h3>Claude Exporter</h3><p>Export Claude conversations to Markdown, PDF, JSON, HTML, Word, and PNG.</p></a><a href="/gemini-exporter.html" class="related-link"><h3>Gemini Exporter</h3><p>Export Google Gemini conversations with the same formats and privacy guarantees.</p></a></div></section></section><section class="content-section"><div class="callout callout-success"><p><strong>Ready to export your ChatGPT conversations?</strong></p><div class="cta-group compact"><a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Add to Chrome</a><a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Add to Firefox</a></div></div></section></main><footer><div class="footer-links"><a href="/privacy.html">Privacy Policy</a><span class="footer-sep" aria-hidden="true">|</span><a href="/license.html">License (MPL 2.0)</a><span class="footer-sep" aria-hidden="true">|</span><a href="/feedback.html">Feedback &amp; Issues</a><span class="footer-sep" aria-hidden="true">|</span><a href="https://github.com/Covai-Labs/ai-chat-exporter" target="_blank" rel="noopener noreferrer">GitHub Repository</a></div><p>&copy; 2026 AI Chat Exporter. Released under the Mozilla Public License 2.0.</p></footer></body></html>

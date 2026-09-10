@@ -1,0 +1,120 @@
+---
+// Shared document shell: head, meta, fonts, CSS, theme bootstrap, analytics.
+export interface SeoJsonLd {
+  [key: string]: unknown;
+  '@type'?: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  /** Canonical path handled by the current request. Use the full URL config below. */
+  canonicalPath?: string;
+  ogType?: 'website' | 'article';
+  ogImage?: string;
+  /** Google Search Console verification content (index page only). */
+  googleSiteVerification?: string;
+  noindex?: boolean;
+  jsonLd?: SeoJsonLd | SeoJsonLd[];
+  includeAnalytics?: boolean;
+  lang?: string;
+  viewportContent?: string;
+}
+
+const {
+  title,
+  description,
+  canonicalPath = '/',
+  ogType = 'website',
+  ogImage = '/og-image.png',
+  googleSiteVerification,
+  noindex = false,
+  jsonLd,
+  includeAnalytics = true,
+  lang = 'en',
+  viewportContent = 'width=device-width, initial-scale=1.0',
+} = Astro.props;
+
+const SITE = 'https://ai-chat-exporter.covai.org';
+const canonical = new URL(canonicalPath, SITE).toString();
+const image = new URL(ogImage, SITE).toString();
+const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content={viewportContent} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    {googleSiteVerification && (
+      <meta name="google-site-verification" content={googleSiteVerification} />
+    )}
+
+    {noindex ? (
+      <meta name="robots" content="noindex, nofollow" />
+    ) : (
+      <link rel="canonical" href={canonical} />
+    )}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="640" />
+    <meta property="og:site_name" content="AI Chat Exporter" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonical} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- Theme bootstrap (pre-paint — prevents flash) -->
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('ace-theme');
+          if (t === 'dark' || t === 'light') {
+            document.documentElement.classList.add(t);
+          }
+        } catch (e) {
+          /* ignore */
+        }
+      })();
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icons/android-chrome-512x512.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/global.css" />
+
+    {jsonLdArray.map((ld) => <script type="application/ld+json" set:html={JSON.stringify(ld)}></script>)}
+
+    {includeAnalytics && <script defer src="https://covai.org/analytics.js"></script>}
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

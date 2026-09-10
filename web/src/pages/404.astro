@@ -1,0 +1,320 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const meta = {
+  title: '404 — Chasing Ghosts? | Covai Labs',
+  description: "This will-o'-the-wisp has wandered off with the page. Covai Labs 404 Page.",
+};
+---
+<BaseLayout title={meta.title} description={meta.description} noindex canonicalPath="/404.html">
+  <div class="nf-wrap">
+    <header class="nf-header">
+      <a href="https://www.covai.org" class="nf-brand" target="_blank" rel="noopener noreferrer">
+        <picture>
+          <source srcset="/covai-logo.avif" type="image/avif" />
+          <source srcset="/covai-logo.webp" type="image/webp" />
+          <img src="/covai-logo.avif" alt="Covai Logo" class="nf-logo" loading="lazy" />
+        </picture>
+        <span>Covai Labs</span>
+      </a>
+      <div class="nf-signal">
+        <span class="nf-dot"></span>
+        HTTP 404 // SIGNAL LOST
+      </div>
+    </header>
+
+    <main class="nf-main">
+      <div class="ghost-glow">
+        <svg class="ghost" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.5"
+            d="M12 3c-4.97 0-9 4.03-9 9v7.5c0 .83.67 1.5 1.5 1.5.42 0 .8-.17 1.08-.45L7 19.12l1.42 1.43c.28.28.66.45 1.08.45.42 0 .8-.17 1.08-.45L12 19.12l1.42 1.43c.28.28.66.45 1.08.45.42 0 .8-.17 1.08-.45L17 19.12l1.42 1.43c.28.28.66.45 1.08.45.83 0 1.5-.67 1.5-1.5V12c0-4.97-4.03-9-9-9z"
+          ></path>
+          <circle cx="9" cy="10" r="1.25" fill="currentColor"></circle>
+          <circle cx="15" cy="10" r="1.25" fill="currentColor"></circle>
+        </svg>
+      </div>
+
+      <h1>404 — Chasing ghosts?</h1>
+      <p class="nf-subtitle">This will-o'-the-wisp has wandered off with the page.</p>
+
+      <div class="nf-actions">
+        <button type="button" class="nf-btn nf-btn-ghost" data-go-back>
+          ← Go Back
+        </button>
+        <a href="/index.html" class="nf-btn nf-btn-primary">Return Home</a>
+      </div>
+
+      <div class="nf-links">
+        <div class="nf-links-title">// COVAI PORTALS</div>
+        <div class="nf-links-grid">
+          <a href="https://www.covai.org" target="_blank" rel="noopener" class="nf-card">
+            <div>covai.org</div>
+            <span>Covai Labs Main Hub</span>
+          </a>
+          <a href="https://go.covai.org" target="_blank" rel="noopener" class="nf-card">
+            <div>go.covai.org</div>
+            <span>Services &amp; Applications</span>
+          </a>
+          <a href="https://smb.covai.org" target="_blank" rel="noopener" class="nf-card">
+            <div>smb.covai.org</div>
+            <span>SMB Solutions</span>
+          </a>
+          <a href="https://jay.covai.org" target="_blank" rel="noopener" class="nf-card">
+            <div>jay.covai.org</div>
+            <span>Jay's Personal Portal</span>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="nf-footer">© Covai Labs</footer>
+  </div>
+
+  <script is:inline>
+    document.querySelector('[data-go-back]').addEventListener('click', function () {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = '/index.html';
+      }
+    });
+  </script>
+</BaseLayout>
+
+<style>
+  .nf-wrap {
+    max-width: 56rem;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding: 2.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .nf-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .nf-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  .nf-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+  }
+
+  .nf-signal {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #fb7185;
+    background: rgba(244, 63, 94, 0.1);
+    border: 1px solid rgba(159, 18, 57, 0.5);
+    border-radius: 6px;
+  }
+
+  .nf-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #f43f5e;
+    animation: nfPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes nfPulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  .nf-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2.5rem 0;
+  }
+
+  .ghost-glow {
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 16px;
+    background: var(--bg-surface);
+    border: 2px solid var(--border-hover);
+    box-shadow: 4px 4px 0 0 var(--border-hover);
+    color: #38bdf8;
+    animation: floatGlow 4s ease-in-out infinite alternate;
+  }
+
+  .ghost {
+    width: 80px;
+    height: 80px;
+  }
+
+  @keyframes floatGlow {
+    0% {
+      transform: translateY(0);
+      filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.2));
+    }
+    100% {
+      transform: translateY(-8px);
+      filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.4));
+    }
+  }
+
+  .nf-main h1 {
+    font-size: clamp(1.75rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  .nf-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--text-secondary);
+    max-width: 36rem;
+    font-weight: 500;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .nf-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .nf-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid var(--border-hover);
+    box-shadow: 3px 3px 0 0 var(--border-hover);
+    transition: all 0.15s ease-in-out;
+  }
+
+  .nf-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 0 var(--link-color);
+  }
+
+  .nf-btn-ghost {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+  }
+
+  .nf-btn-primary {
+    background: #0284c7;
+    color: #fff;
+    border-color: #0284c7;
+  }
+
+  .nf-btn-primary:hover {
+    box-shadow: 5px 5px 0 0 var(--border-hover);
+  }
+
+  .nf-links {
+    width: 100%;
+    max-width: 42rem;
+    text-align: left;
+  }
+
+  .nf-links-title {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    padding: 0 0.25rem;
+  }
+
+  .nf-links-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .nf-links-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .nf-card {
+    padding: 0.875rem;
+    border-radius: 10px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    box-shadow: 3px 3px 0 0 var(--border-color);
+    text-decoration: none;
+    transition: all 0.15s ease-in-out;
+  }
+
+  .nf-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 0 var(--link-color);
+    border-color: var(--link-color);
+  }
+
+  .nf-card div {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+  }
+
+  .nf-card span {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+  }
+
+  .nf-footer {
+    width: 100%;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+  }
+</style>

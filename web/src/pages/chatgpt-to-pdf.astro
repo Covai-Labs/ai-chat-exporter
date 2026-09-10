@@ -1,0 +1,303 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import CtaSection from '../components/CtaSection.astro';
+import FAQ from '../components/FAQ.astro';
+import RelatedPages from '../components/RelatedPages.astro';
+import StepList from '../components/StepList.astro';
+import Callout from '../components/Callout.astro';
+
+const meta = {
+  slug: 'chatgpt-to-pdf',
+  title: 'ChatGPT to PDF',
+  description:
+    'Turn ChatGPT chats into polished PDFs',
+  heroTitle: 'ChatGPT to PDF — Print-Ready Conversation Exports',
+  heroSubtitle:
+    'Export ChatGPT conversations as professional PDF documents with custom page breaks, table of contents, dark and light themes, and typography options. AI Chat Exporter makes PDF generation simple and fast.',
+};
+---
+<GuideLayout
+  title={meta.title}
+  description={meta.description}
+  slug={meta.slug}
+  heroTitle={meta.heroTitle}
+  heroSubtitle={meta.heroSubtitle}
+  badge="Print Ready"
+>
+  <!-- Why PDF -->
+  <section class="content-section">
+    <h2>Why Export ChatGPT Conversations as PDF?</h2>
+    <p>
+      PDF is the universal format for documents that need to look the same on every device. When you
+      export a ChatGPT conversation as a PDF, you get a portable, print-ready file that preserves
+      formatting without requiring any specific app to view it.
+    </p>
+    <p>
+      Unlike Markdown (which requires a renderer) or HTML (which requires a browser), PDF files are
+      self-contained. The person receiving the document does not need any special software — every
+      operating system, phone, and tablet can open a PDF natively.
+    </p>
+    <p>Common use cases for ChatGPT PDF exports:</p>
+    <ul>
+      <li>
+        <strong>Archiving</strong> — Keep a permanent, fixed-layout record of important conversations
+        that will not change over time.
+      </li>
+      <li>
+        <strong>Sharing with non-technical people</strong> — Send a clean, formatted document to
+        colleagues, clients, or managers who do not use Markdown or code editors.
+      </li>
+      <li>
+        <strong>Legal and compliance</strong> — Produce printable audit trails of AI-assisted work
+        for regulatory or documentation requirements.
+      </li>
+      <li>
+        <strong>Presentations</strong> — Attach a conversation excerpt as supporting material in a
+        report or proposal.
+      </li>
+      <li>
+        <strong>Printing</strong> — Generate hard copies of research discussions, code reviews, or
+        tutoring sessions.
+      </li>
+    </ul>
+  </section>
+
+  <!-- How PDF Export Works -->
+  <section class="content-section">
+    <h2>How PDF Export Works</h2>
+    <p>
+      AI Chat Exporter generates PDFs using the browser's native print engine combined with custom
+      CSS stylesheets. This approach has several advantages over server-side PDF generation:
+    </p>
+    <ul>
+      <li>
+        <strong>No external services</strong> — The PDF is generated entirely in your browser. No
+        data is uploaded to any server.
+      </li>
+      <li>
+        <strong>Pixel-perfect rendering</strong> — The browser renders the conversation exactly as it
+        appears in the extension, then the print engine converts it to PDF with accurate fonts,
+        colors, and layouts.
+      </li>
+      <li>
+        <strong>Full math support</strong> — LaTeX expressions are rendered by the browser's
+        built-in math rendering before PDF conversion, so equations appear as properly typeset math
+        — not as raw LaTeX code.
+      </li>
+      <li>
+        <strong>Syntax-highlighted code</strong> — Code blocks retain their syntax highlighting in
+        the PDF output, making them readable and visually distinct.
+      </li>
+    </ul>
+    <p>
+      The extension applies custom print styles that handle page margins, avoid orphaned headings,
+      and ensure code blocks break cleanly across pages rather than cutting off mid-block.
+    </p>
+  </section>
+
+  <!-- PDF Customization Options -->
+  <section class="content-section">
+    <h2>PDF Customization Options</h2>
+    <p>
+      AI Chat Exporter gives you control over how your PDF looks without requiring any design
+      skills:
+    </p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>Page Break Per Prompt</h3>
+        <p>
+          Enable page breaks before each user prompt so that every question-and-answer exchange
+          starts on a new page. This makes long conversations easier to navigate when printed or
+          reviewed in a PDF reader.
+        </p>
+      </div>
+      <div class="feature-card">
+        <h3>Table of Contents</h3>
+        <p>
+          When enabled, the extension generates a table of contents at the beginning of the PDF with
+          clickable links to each section. Essential for conversations with 20+ exchanges.
+        </p>
+      </div>
+      <div class="feature-card">
+        <h3>Dark and Light Themes</h3>
+        <p>
+          Choose between a dark theme (dark background, light text) for screen reading and a light
+          theme (white background, dark text) for printing. Both themes are optimized for readability
+          and ink efficiency.
+        </p>
+      </div>
+      <div class="feature-card">
+        <h3>Custom Filenames</h3>
+        <p>
+          Use template variables like <code>{'{platform}'}</code>, <code>{'{title}'}</code>, and
+          <code>{'{datetime}'}</code> to generate consistent, descriptive filenames automatically. No
+          more "chat.pdf" in your downloads folder.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PDF Output Quality -->
+  <section class="content-section">
+    <h2>PDF Output Quality</h2>
+    <p>
+      AI Chat Exporter is designed to produce PDFs that look professional without manual cleanup:
+    </p>
+    <ul>
+      <li>
+        <strong>Mathematical notation</strong> — LaTeX equations render as properly typeset math with
+        correct sizing, spacing, and symbols. Both block equations ($$...$$) and inline math ($...$)
+        display correctly.
+      </li>
+      <li>
+        <strong>Code blocks</strong> — Fenced code blocks retain syntax highlighting, monospace
+        fonts, and proper indentation. Long lines wrap naturally within page margins.
+      </li>
+      <li>
+        <strong>Tables</strong> — Markdown tables render as grid tables with aligned columns,
+        borders, and proper cell padding.
+      </li>
+      <li>
+        <strong>Images</strong> — Embedded images display inline at appropriate sizes. The extension
+        scales images to fit within page margins without distortion.
+      </li>
+      <li>
+        <strong>Typography</strong> — The extension uses system fonts optimized for PDF rendering,
+        ensuring consistent character spacing and line heights across platforms.
+      </li>
+    </ul>
+    <Callout tone="info" title="Print Tip">
+      For the best print results, use the Light theme and enable page breaks per prompt. This
+      produces clean, professional-looking pages when sent to a printer or exported to PDF from the
+      browser's print dialog.
+    </Callout>
+  </section>
+
+  <!-- Use Cases in Detail -->
+  <section class="content-section">
+    <h2>When to Use PDF vs. Other Formats</h2>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>Best Format</th>
+            <th>Why</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sending to a non-technical colleague</td>
+            <td><strong>PDF</strong></td>
+            <td>Universal viewer, no software required, looks professional.</td>
+          </tr>
+          <tr>
+            <td>Importing into Obsidian or Notion</td>
+            <td><strong>Markdown</strong></td>
+            <td>Native format for knowledge bases, searchable, editable.</td>
+          </tr>
+          <tr>
+            <td>Version controlling conversations</td>
+            <td><strong>Markdown</strong> or <strong>JSON</strong></td>
+            <td>Text-based, diffable, lightweight in Git.</td>
+          </tr>
+          <tr>
+            <td>Archiving with fixed formatting</td>
+            <td><strong>PDF</strong></td>
+            <td>Self-contained, rendering-independent, long-term stable.</td>
+          </tr>
+          <tr>
+            <td>Sharing on social media</td>
+            <td><strong>PNG</strong></td>
+            <td>Image format, visually shareable, no file opening required.</td>
+          </tr>
+          <tr>
+            <td>Feeding into automation pipelines</td>
+            <td><strong>JSON</strong></td>
+            <td>Structured data, machine-readable, easy to parse.</td>
+          </tr>
+          <tr>
+            <td>Printing a physical copy</td>
+            <td><strong>PDF</strong></td>
+            <td>Optimized for print with page breaks and margins.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="content-section">
+    <h2>How to Export ChatGPT to PDF</h2>
+    <StepList
+      steps={[
+        {
+          title: 'Install the Extension',
+          body: 'Add AI Chat Exporter from the Chrome Web Store, Firefox Add-ons, or Edge Add-ons. It installs in seconds with no configuration required.',
+        },
+        {
+          title: 'Open Your ChatGPT Conversation',
+          body: 'Navigate to any conversation on chatgpt.com. The export toolbar activates automatically when the extension detects a ChatGPT page.',
+        },
+        {
+          title: 'Select PDF and Customize',
+          body: 'Choose "PDF" from the format dropdown. Select your options — page breaks, table of contents, dark or light theme — then click Export. The PDF generates in your browser and downloads instantly.',
+        },
+      ]}
+    />
+  </section>
+
+  <!-- FAQ -->
+  <section class="content-section">
+    <h2>Frequently Asked Questions</h2>
+    <FAQ
+      items={[
+        {
+          q: 'How do I save the ChatGPT conversation as a PDF?',
+          a: 'Install AI Chat Exporter, open a ChatGPT conversation, and select "PDF" from the export format dropdown. The extension generates the PDF in your browser and triggers a download. You can customize page breaks, table of contents, and theme before exporting.',
+        },
+        {
+          q: 'Can I customize the PDF layout?',
+          a: 'Yes. The extension provides options for page breaks (one per user prompt), a table of contents, dark or light theme, and custom filenames using template variables. These options are accessible from the export dropdown before generating the PDF.',
+        },
+        {
+          q: 'Does math render correctly in the PDF?',
+          a: 'Yes. LaTeX math expressions are rendered by the browser before PDF conversion, so equations appear as properly typeset math — not as raw code. Both block equations ($$...$$) and inline math ($...$) display with correct symbols, fractions, and spacing.',
+        },
+        {
+          q: 'Is there a page limit for PDF exports?',
+          a: 'No. The extension handles conversations of any length. Very long conversations (100+ exchanges) will produce proportionally longer PDFs. For readability, consider enabling page breaks per prompt so each exchange starts on a fresh page.',
+        },
+        {
+          q: 'Can I select specific messages for the PDF?',
+          a: 'Yes. Before exporting, you can select individual messages using the checkboxes. Only the selected messages will be included in the PDF. This is useful for extracting a particular Q&A exchange from a longer conversation without including the full thread.',
+        },
+      ]}
+    />
+  </section>
+
+  <!-- Related Pages -->
+  <section class="content-section">
+    <RelatedPages
+      items={[
+        {
+          title: 'ChatGPT Exporter',
+          href: '/chatgpt-exporter.html',
+          desc: 'Full overview of exporting ChatGPT conversations in all supported formats.',
+        },
+        {
+          title: 'ChatGPT to Markdown',
+          href: '/chatgpt-to-markdown.html',
+          desc: 'Export ChatGPT conversations as clean Markdown files with code and math preserved.',
+        },
+        {
+          title: 'PDF Exporter',
+          href: '/pdf-exporter.html',
+          desc: 'PDF export features across all supported AI chat platforms.',
+        },
+      ]}
+    />
+  </section>
+
+  <CtaSection prompt="Need a print-ready copy of your ChatGPT conversation?" />
+</GuideLayout>

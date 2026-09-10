@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { platformGuides, formatGuides, guideHref } from '../data/guides';
+
+const meta = {
+  title: "Guides & How-To's - AI Chat Exporter",
+  description:
+    'Guides and how-to articles for exporting, backing up, and transferring AI conversations with AI Chat Exporter.',
+};
+---
+<BaseLayout title={meta.title} description={meta.description} canonicalPath="/guides.html">
+  <Header />
+
+  <Breadcrumbs
+    items={[
+      { label: 'Home', href: '/index.html' },
+      { label: "Guides & How-To's" },
+    ]}
+  />
+
+  <main>
+    <div class="hero">
+      <span class="badge">Guides &amp; How-To's</span>
+      <h1>Export AI Conversations Your Way</h1>
+      <p class="hero-subtitle">
+        Choose a platform, format, or workflow to find the guide that fits what you want to do.
+      </p>
+    </div>
+
+    <section class="related-pages">
+      <h2>By platform</h2>
+      <div class="related-grid">
+        {platformGuides.map((g) => (
+          <a class="related-link" href={guideHref(g.slug)}>{g.title}</a>
+        ))}
+      </div>
+    </section>
+
+    <section class="related-pages">
+      <h2>By format or workflow</h2>
+      <div class="related-grid">
+        {formatGuides.map((g) => (
+          <a class="related-link" href={guideHref(g.slug)}>{g.title}</a>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

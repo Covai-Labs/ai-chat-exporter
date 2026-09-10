@@ -1,0 +1,13 @@
+---
+// Callout / info box. Slots arbitrary HTML.
+interface Props {
+  tone?: 'info' | 'success' | 'warning';
+}
+
+const { tone = 'info' } = Astro.props;
+const { title } = Astro.props;
+---
+<div class={`callout callout-${tone}`}>
+  {title && <strong>{title}: </strong>}
+  <slot />
+</div>

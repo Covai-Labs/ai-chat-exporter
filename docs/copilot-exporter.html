@@ -1,273 +1,58 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Microsoft Copilot Exporter — Export Copilot Chats to Markdown &amp; More</title>
-  <meta name="description" content="Export Microsoft Copilot conversations to Markdown, PDF, JSON, HTML, Word and PNG. Works with copilot.com and Bing Chat. Free extension." />
-  <link rel="canonical" href="https://ai-chat-exporter.covai.org/copilot-exporter.html" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://ai-chat-exporter.covai.org/copilot-exporter.html" />
-  <meta property="og:title" content="Microsoft Copilot Exporter — Export Copilot Chats to Markdown &amp; More" />
-  <meta property="og:description" content="Export Microsoft Copilot conversations to Markdown, PDF, JSON, HTML, Word and PNG. Works with copilot.com and Bing Chat. Free extension." />
-  <meta property="og:image" content="https://ai-chat-exporter.covai.org/og-image.png" />
-  <meta property="og:site_name" content="AI Chat Exporter" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/seo-pages.css" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "AI Chat Exporter",
-    "operatingSystem": "Chrome, Firefox, Edge",
-    "applicationCategory": "UtilitiesApplication",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "url": "https://ai-chat-exporter.covai.org/",
-    "downloadUrl": "https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"
-  }
-  </script>
-</head>
-<body>
-  <header>
-    <a href="index.html" class="logo-container">
-      <img src="icons/icon48.png" alt="AI Chat Exporter Logo" class="logo-img" />
-      <span class="logo-text">AI Chat Exporter</span>
-    </a>
-    <nav class="nav-links">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="https://github.com/Covai-Labs/ai-chat-exporter" class="nav-link" target="_blank" rel="noopener">GitHub</a>
-    </nav>
-  </header>
-  <div class="breadcrumb"><a href="index.html">Home</a> <span>›</span> Copilot Exporter</div>
-  <main>
-    <div class="hero">
-      <span class="badge">Bing &amp; Copilot</span>
-      <h1>Microsoft Copilot Exporter — Save Copilot Conversations</h1>
-      <p class="hero-subtitle">Export Microsoft Copilot and Bing Chat conversations to Markdown, JSON, HTML, PDF, Word, or PNG. Works across multiple Microsoft AI domains. Free and open source.</p>
-      <div class="cta-group">
-        <a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener">Add to Chrome</a>
-        <a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener">Add to Firefox</a>
-      </div>
-    </div>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Copilot Exporter</title><meta name="description" content="Save Microsoft Copilot conversations"><link rel="canonical" href="https://ai-chat-exporter.covai.org/copilot-exporter.html"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:url" content="https://ai-chat-exporter.covai.org/copilot-exporter.html"><meta property="og:title" content="Copilot Exporter"><meta property="og:description" content="Save Microsoft Copilot conversations"><meta property="og:image" content="https://ai-chat-exporter.covai.org/og-image.png"><meta property="og:image:width" content="1280"><meta property="og:image:height" content="640"><meta property="og:site_name" content="AI Chat Exporter"><meta property="og:locale" content="en_US"><!-- Twitter / X --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://ai-chat-exporter.covai.org/copilot-exporter.html"><meta name="twitter:title" content="Copilot Exporter"><meta name="twitter:description" content="Save Microsoft Copilot conversations"><meta name="twitter:image" content="https://ai-chat-exporter.covai.org/og-image.png"><!-- Theme bootstrap (pre-paint — prevents flash) --><script>
+      (function () {
+        try {
+          var t = localStorage.getItem('ace-theme');
+          if (t === 'dark' || t === 'light') {
+            document.documentElement.classList.add(t);
+          }
+        } catch (e) {
+          /* ignore */
+        }
+      })();
+    </script><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"><!-- Favicons --><link rel="icon" href="/favicon.ico"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="192x192" href="/icons/android-chrome-192x192.png"><link rel="icon" type="image/png" sizes="512x512" href="/icons/android-chrome-512x512.png"><link rel="manifest" href="/site.webmanifest"><!-- Styles --><link rel="stylesheet" href="/css/global.css"><script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"AI Chat Exporter","operatingSystem":"Chrome, Firefox, Edge","applicationCategory":"UtilitiesApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"url":"https://ai-chat-exporter.covai.org","downloadUrl":"https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj"}</script><script defer src="https://covai.org/analytics.js"></script></head><body><header><a href="/index.html" class="logo-container"><img src="/icons/icon48.png" alt="AI Chat Exporter Logo" class="logo-img" width="32" height="32"><span class="logo-text">AI Chat Exporter</span></a><div class="header-nav"><nav class="nav-links" aria-label="Main navigation"><a href="/index.html" class="nav-link">Home</a><a href="/guides.html" class="nav-link">Guides</a><a href="https://github.com/Covai-Labs/ai-chat-exporter" class="nav-link" target="_blank" rel="noopener noreferrer"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg><span>GitHub</span></a></nav><div class="theme-toggle" role="group" aria-label="Theme switcher"><button type="button" data-theme="light" aria-label="Light theme" title="Light" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg></button><button type="button" data-theme="dark" aria-label="Dark theme" title="Dark" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button><button type="button" data-theme="system" aria-label="System theme (follow OS)" title="System" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></button></div><script>
+  (function () {
+    const root = document.documentElement;
+    const buttons = Array.from(document.querySelectorAll('.theme-toggle button[data-theme]'));
+    if (!buttons.length) return;
 
-    <h2>Microsoft Copilot's Unique Challenge</h2>
-    <p>Microsoft Copilot lives across multiple domains and has evolved through several branding changes. The same AI assistant is accessible at copilot.microsoft.com, copilot.com, and through Bing Chat at bing.com/chat. Each of these entry points uses a slightly different DOM structure, making generic export tools unreliable. Some miss messages entirely, others fail to capture Bing's search integration panels, and most do not handle the transition between Bing Chat and Copilot-branded pages gracefully.</p>
-    <p>Microsoft does not provide a built-in export or download feature for Copilot conversations. Once a chat session ends or you navigate away, the conversation is gone unless you manually copy it. For users who rely on Copilot for daily tasks, coding assistance, or content generation, this is a significant gap.</p>
+    function getStored() {
+      const t = localStorage.getItem('ace-theme');
+      return t === 'dark' || t === 'light' ? t : 'system';
+    }
 
-    <h2>Supported Copilot Domains</h2>
-    <p>AI Chat Exporter includes dedicated parsers for each Copilot variant. The extension automatically detects which domain you are on and applies the correct parsing logic.</p>
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th>Domain</th>
-            <th>Also Known As</th>
-            <th>Parser Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>copilot.microsoft.com</strong></td>
-            <td>Microsoft Copilot (current)</td>
-            <td>Full support</td>
-          </tr>
-          <tr>
-            <td><strong>copilot.com</strong></td>
-            <td>Redirect to Microsoft Copilot</td>
-            <td>Full support</td>
-          </tr>
-          <tr>
-            <td><strong>bing.com/chat</strong></td>
-            <td>Bing Chat</td>
-            <td>Full support</td>
-          </tr>
-          <tr>
-            <td><strong>www.bing.com/search</strong></td>
-            <td>Bing Search with AI answers</td>
-            <td>Partial support</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h2>Features for Copilot Export</h2>
-    <div class="features-grid">
-      <div class="feature-card">
-        <h4>Bing Search Integration</h4>
-        <p>Copilot responses often include inline search results and source citations from Bing. The parser captures these reference panels and preserves their URLs in the export output.</p>
-      </div>
-      <div class="feature-card">
-        <h4>Multi-Domain Detection</h4>
-        <p>The extension identifies which Copilot domain you are using and loads the appropriate DOM parser. No manual configuration is needed regardless of which entry point you used.</p>
-      </div>
-      <div class="feature-card">
-        <h4>Image Descriptions</h4>
-        <p>When Copilot generates or references images, the export captures the image descriptions and alt text. In HTML and PNG exports, images are included where the source URLs are accessible.</p>
-      </div>
-      <div class="feature-card">
-        <h4>Conversation History</h4>
-        <p>Both current and historical conversations visible on the page are captured. The parser handles the lazy-loaded message list that Copilot uses for long conversations.</p>
-      </div>
-    </div>
-
-    <h2>Export Formats</h2>
-    <p>All major formats are available for Copilot conversations, just as they are for every other supported platform.</p>
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th>Format</th>
-            <th>Best For</th>
-            <th>Citations</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Markdown</strong></td>
-            <td>Note-taking, documentation</td>
-            <td>Inline links preserved</td>
-          </tr>
-          <tr>
-            <td><strong>JSON</strong></td>
-            <td>Data processing, automation</td>
-            <td>Structured citation objects</td>
-          </tr>
-          <tr>
-            <td><strong>HTML</strong></td>
-            <td>Web archives, sharing</td>
-            <td>Clickable source links</td>
-          </tr>
-          <tr>
-            <td><strong>PDF</strong></td>
-            <td>Printed records, compliance</td>
-            <td>Numbered references</td>
-          </tr>
-          <tr>
-            <td><strong>Word (.doc)</strong></td>
-            <td>Collaboration, editing</td>
-            <td>Hyperlinked footnotes</td>
-          </tr>
-          <tr>
-            <td><strong>PNG Image</strong></td>
-            <td>Social sharing, screenshots</td>
-            <td>Rendered visually</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h2>How to Export a Copilot Conversation</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-content">
-          <h4>Install the Extension</h4>
-          <p>Add AI Chat Exporter from the Chrome Web Store or Firefox Add-ons. The extension activates automatically on supported Microsoft domains.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-content">
-          <h4>Open Your Copilot Chat</h4>
-          <p>Navigate to copilot.microsoft.com or bing.com/chat and open the conversation you want to export. Both Copilot and Bing Chat are supported.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-content">
-          <h4>Click the Extension Icon</h4>
-          <p>Click the AI Chat Exporter icon in your browser toolbar. The extension detects the domain and loads the correct parser for your conversation.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-content">
-          <h4>Choose Format and Download</h4>
-          <p>Select your preferred format from the popup. The file downloads immediately with all messages, citations, and formatting preserved.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="callout callout-warning">
-      <p><strong>Known limitation:</strong> AI Chat Exporter is a read-only tool for Copilot. It can export conversations but cannot continue or resume them. For conversation continuation, see the full feature list on the home page for supported platforms.</p>
-    </div>
-
-    <h2>Copilot vs Other AI Platforms</h2>
-    <p>Microsoft Copilot has specific characteristics that affect how export works compared to other AI chatbots.</p>
-    <ul>
-      <li><strong>Domain fragmentation:</strong> Copilot is spread across multiple domains with different DOM structures. AI Chat Exporter handles each variant, while generic scrapers often break on one or more.</li>
-      <li><strong>Bing search integration:</strong> Copilot responses frequently cite web search results inline. The parser preserves these citations as structured data rather than stripping them.</li>
-      <li><strong>No official export:</strong> Unlike some competitors that offer export buttons, Microsoft provides no way to download Copilot conversations. Third-party tools fill this gap.</li>
-      <li><strong>Enterprise variants:</strong> Microsoft 365 Copilot uses a different interface entirely. AI Chat Exporter focuses on the consumer Copilot at copilot.microsoft.com. Enterprise Copilot export is not currently supported.</li>
-    </ul>
-
-    <div class="faq">
-      <h2>Frequently Asked Questions</h2>
-      <div class="faq-item">
-        <button class="faq-question">Which Copilot domains are supported?</button>
-        <div class="faq-answer">
-          <p>AI Chat Exporter supports copilot.microsoft.com, copilot.com, and bing.com/chat. The Bing search page at bing.com/search has partial support for AI-generated answers. The extension automatically detects which domain you are on and applies the correct parser.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">Does it work with the old Bing Chat?</button>
-        <div class="faq-answer">
-          <p>Yes. Bing Chat at bing.com/chat is fully supported. Whether you access Copilot through the Bing sidebar, the dedicated Bing Chat page, or the current copilot.microsoft.com interface, the extension captures your conversations correctly.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">What about Microsoft 365 Copilot in Office apps?</button>
-        <div class="faq-answer">
-          <p>AI Chat Exporter does not support Microsoft 365 Copilot within Word, Excel, PowerPoint, or Outlook. These embedded AI assistants use entirely different interfaces. The extension works with the standalone Copilot web application only.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">What formats can I export Copilot chats to?</button>
-        <div class="faq-answer">
-          <p>All major formats are supported: Markdown, JSON, HTML, PDF, Word (.doc), PNG image, and Continuation. Choose the format that fits your workflow from the extension popup.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">Are there any limitations I should know about?</button>
-        <div class="faq-answer">
-          <p>The extension is export-only for Copilot. It captures what is currently visible in the conversation. If Copilot limits the scrollable history on a page, only the visible messages are captured. There is no continuation or resume feature for Copilot conversations. All export is local with no data leaving your browser.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="related-pages">
-      <h3>Other Exporters You Might Need</h3>
-      <div class="related-grid">
-        <a href="chatgpt-exporter.html" class="related-link">ChatGPT Exporter</a>
-        <a href="claude-exporter.html" class="related-link">Claude Exporter</a>
-        <a href="markdown-exporter.html" class="related-link">Markdown Exporter</a>
-      </div>
-    </div>
-  </main>
-  <footer>
-    <div class="footer-links">
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="license.html">License (MPL 2.0)</a>
-      <a href="https://github.com/Covai-Labs/ai-chat-exporter" target="_blank" rel="noopener">GitHub</a>
-    </div>
-    <p>&copy; 2026 AI Chat Exporter. Open source under MPL 2.0.</p>
-  </footer>
-  <script>
-    document.querySelectorAll('.faq-item').forEach((item, index) => {
-      const btn = item.querySelector('.faq-question');
-      const answer = item.querySelector('.faq-answer');
-      if (!btn || !answer) return;
-      const id = 'faq-' + (index + 1);
-      btn.id = 'q-' + id;
-      btn.setAttribute('aria-expanded', 'false');
-      btn.setAttribute('aria-controls', id);
-      answer.id = id;
-      answer.setAttribute('role', 'region');
-      answer.setAttribute('aria-labelledby', 'q-' + id);
-      btn.addEventListener('click', () => {
-        const open = item.classList.toggle('open');
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    function apply(theme) {
+      root.classList.remove('light', 'dark');
+      if (theme === 'light' || theme === 'dark') root.classList.add(theme);
+      try {
+        localStorage.setItem('ace-theme', theme);
+      } catch (e) {
+        /* private mode */
+      }
+      buttons.forEach((b) => {
+        b.setAttribute('aria-pressed', String(b.dataset.theme === theme));
       });
+    }
+
+    apply(getStored());
+
+    buttons.forEach((b) => {
+      b.addEventListener('click', () => apply(b.dataset.theme));
     });
-  </script>
-</body>
-</html>
+  })();
+</script></div></header><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ai-chat-exporter.covai.org/index.html"},{"@type":"ListItem","position":2,"name":"Copilot Exporter"}]}</script><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span aria-hidden="true">&#8250;</span><span>Copilot Exporter</span></nav><main><div class="hero"><span class="badge">Bing &amp; Copilot</span><h1>Microsoft Copilot Exporter — Save Copilot Conversations</h1><p class="hero-subtitle">Export Microsoft Copilot and Bing Chat conversations to Markdown, JSON, HTML, PDF, Word, or PNG. Works across multiple Microsoft AI domains. Free and open source.</p><div class="cta-group"><a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-testid="cta-chrome">Add to Chrome</a><a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" data-testid="cta-firefox">Add to Firefox</a></div></div><section class="content-section"><h2>Microsoft Copilot's Unique Challenge</h2><p>Microsoft Copilot lives across multiple domains and has evolved through several branding changes. The same AI assistant is accessible at copilot.microsoft.com, copilot.com, and through Bing Chat at bing.com/chat. Each of these entry points uses a slightly different DOM structure, making generic export tools unreliable. Some miss messages entirely, others fail to capture Bing's search integration panels, and most do not handle the transition between Bing Chat and Copilot-branded pages gracefully.</p><p>Microsoft does not provide a built-in export or download feature for Copilot conversations. Once a chat session ends or you navigate away, the conversation is gone unless you manually copy it. For users who rely on Copilot for daily tasks, coding assistance, or content generation, this is a significant gap.</p></section><section class="content-section"><h2>Supported Copilot Domains</h2><p>AI Chat Exporter includes dedicated parsers for each Copilot variant. The extension automatically detects which domain you are on and applies the correct parsing logic.</p><div class="table-wrapper"><table><thead><tr><th>Domain</th><th>Also Known As</th><th>Parser Status</th></tr></thead><tbody><tr><td><strong>copilot.microsoft.com</strong></td><td>Microsoft Copilot (current)</td><td>Full support</td></tr><tr><td><strong>copilot.com</strong></td><td>Redirect to Microsoft Copilot</td><td>Full support</td></tr><tr><td><strong>bing.com/chat</strong></td><td>Bing Chat</td><td>Full support</td></tr><tr><td><strong>www.bing.com/search</strong></td><td>Bing Search with AI answers</td><td>Partial support</td></tr></tbody></table></div></section><section class="content-section"><h2>Features for Copilot Export</h2><div class="features-grid"><div class="feature-card"><h3>Bing Search Integration</h3><p>Copilot responses often include inline search results and source citations from Bing. The parser captures these reference panels and preserves their URLs in the export output.</p></div><div class="feature-card"><h3>Multi-Domain Detection</h3><p>The extension identifies which Copilot domain you are using and loads the appropriate DOM parser. No manual configuration is needed regardless of which entry point you used.</p></div><div class="feature-card"><h3>Image Descriptions</h3><p>When Copilot generates or references images, the export captures the image descriptions and alt text. In HTML and PNG exports, images are included where the source URLs are accessible.</p></div><div class="feature-card"><h3>Conversation History</h3><p>Both current and historical conversations visible on the page are captured. The parser handles the lazy-loaded message list that Copilot uses for long conversations.</p></div></div></section><section class="content-section"><h2>Export Formats</h2><p>All major formats are available for Copilot conversations, just as they are for every other supported platform.</p><div class="table-wrapper"><table><thead><tr><th>Format</th><th>Best For</th><th>Citations</th></tr></thead><tbody><tr><td><strong>Markdown</strong></td><td>Note-taking, documentation</td><td>Inline links preserved</td></tr><tr><td><strong>JSON</strong></td><td>Data processing, automation</td><td>Structured citation objects</td></tr><tr><td><strong>HTML</strong></td><td>Web archives, sharing</td><td>Clickable source links</td></tr><tr><td><strong>PDF</strong></td><td>Printed records, compliance</td><td>Numbered references</td></tr><tr><td><strong>Word (.doc)</strong></td><td>Collaboration, editing</td><td>Hyperlinked footnotes</td></tr><tr><td><strong>PNG Image</strong></td><td>Social sharing, screenshots</td><td>Rendered visually</td></tr></tbody></table></div></section><section class="content-section"><h2>How to Export a Copilot Conversation</h2><div class="steps"><div class="step"><div class="step-content"><h3>Install the Extension</h3><p>Add AI Chat Exporter from the Chrome Web Store or Firefox Add-ons. The extension activates automatically on supported Microsoft domains.</p></div></div><div class="step"><div class="step-content"><h3>Open Your Copilot Chat</h3><p>Navigate to copilot.microsoft.com or bing.com/chat and open the conversation you want to export. Both Copilot and Bing Chat are supported.</p></div></div><div class="step"><div class="step-content"><h3>Click the Extension Icon</h3><p>Click the AI Chat Exporter icon in your browser toolbar. The extension detects the domain and loads the correct parser for your conversation.</p></div></div><div class="step"><div class="step-content"><h3>Choose Format and Download</h3><p>Select your preferred format from the popup. The file downloads immediately with all messages, citations, and formatting preserved.</p></div></div></div></section><section class="content-section"><div class="callout callout-warning"><strong>Known limitation: </strong>AI Chat Exporter is a read-only tool for Copilot. It can export conversations but cannot continue or resume them. For conversation continuation, see the full feature list on the home page for supported platforms.</div></section><section class="content-section"><h2>Copilot vs Other AI Platforms</h2><p>Microsoft Copilot has specific characteristics that affect how export works compared to other AI chatbots.</p><ul><li><strong>Domain fragmentation:</strong> Copilot is spread across multiple domains with different DOM structures. AI Chat Exporter handles each variant, while generic scrapers often break on one or more.</li><li><strong>Bing search integration:</strong> Copilot responses frequently cite web search results inline. The parser preserves these citations as structured data rather than stripping them.</li><li><strong>No official export:</strong> Unlike some competitors that offer export buttons, Microsoft provides no way to download Copilot conversations. Third-party tools fill this gap.</li><li><strong>Enterprise variants:</strong> Microsoft 365 Copilot uses a different interface entirely. AI Chat Exporter focuses on the consumer Copilot at copilot.microsoft.com. Enterprise Copilot export is not currently supported.</li></ul></section><section class="content-section"><h2>Frequently Asked Questions</h2><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which Copilot domains are supported?","acceptedAnswer":{"@type":"Answer","text":"AI Chat Exporter supports copilot.microsoft.com, copilot.com, and bing.com/chat. The Bing search page at bing.com/search has partial support for AI-generated answers. The extension automatically detects which domain you are on and applies the correct parser."}},{"@type":"Question","name":"Does it work with the old Bing Chat?","acceptedAnswer":{"@type":"Answer","text":"Yes. Bing Chat at bing.com/chat is fully supported. Whether you access Copilot through the Bing sidebar, the dedicated Bing Chat page, or the current copilot.microsoft.com interface, the extension captures your conversations correctly."}},{"@type":"Question","name":"What about Microsoft 365 Copilot in Office apps?","acceptedAnswer":{"@type":"Answer","text":"AI Chat Exporter does not support Microsoft 365 Copilot within Word, Excel, PowerPoint, or Outlook. These embedded AI assistants use entirely different interfaces. The extension works with the standalone Copilot web application only."}},{"@type":"Question","name":"What formats can I export Copilot chats to?","acceptedAnswer":{"@type":"Answer","text":"All major formats are supported: Markdown, JSON, HTML, PDF, Word (.doc), PNG image, and Continuation. Choose the format that fits your workflow from the extension popup."}},{"@type":"Question","name":"Are there any limitations I should know about?","acceptedAnswer":{"@type":"Answer","text":"The extension is export-only for Copilot. It captures what is currently visible in the conversation. If Copilot limits the scrollable history on a page, only the visible messages are captured. There is no continuation or resume feature for Copilot conversations. All export is local with no data leaving your browser."}}]}</script><div class="faq"><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Which Copilot domains are supported?</button><div class="faq-answer" role="region" aria-hidden="true">AI Chat Exporter supports copilot.microsoft.com, copilot.com, and bing.com/chat. The Bing search page at bing.com/search has partial support for AI-generated answers. The extension automatically detects which domain you are on and applies the correct parser.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Does it work with the old Bing Chat?</button><div class="faq-answer" role="region" aria-hidden="true">Yes. Bing Chat at bing.com/chat is fully supported. Whether you access Copilot through the Bing sidebar, the dedicated Bing Chat page, or the current copilot.microsoft.com interface, the extension captures your conversations correctly.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">What about Microsoft 365 Copilot in Office apps?</button><div class="faq-answer" role="region" aria-hidden="true">AI Chat Exporter does not support Microsoft 365 Copilot within Word, Excel, PowerPoint, or Outlook. These embedded AI assistants use entirely different interfaces. The extension works with the standalone Copilot web application only.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">What formats can I export Copilot chats to?</button><div class="faq-answer" role="region" aria-hidden="true">All major formats are supported: Markdown, JSON, HTML, PDF, Word (.doc), PNG image, and Continuation. Choose the format that fits your workflow from the extension popup.</div></div><div class="faq-item"><button type="button" class="faq-question" aria-expanded="false" aria-controls="">Are there any limitations I should know about?</button><div class="faq-answer" role="region" aria-hidden="true">The extension is export-only for Copilot. It captures what is currently visible in the conversation. If Copilot limits the scrollable history on a page, only the visible messages are captured. There is no continuation or resume feature for Copilot conversations. All export is local with no data leaving your browser.</div></div></div><script>
+  document.querySelectorAll('.faq-item').forEach((item, i) => {
+    const btn = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+    if (!btn || !answer) return;
+    const id = 'faq-' + (i + 1);
+    btn.id = 'q-' + id;
+    btn.setAttribute('aria-controls', id);
+    answer.id = id;
+    answer.setAttribute('aria-labelledby', 'q-' + id);
+    btn.addEventListener('click', () => {
+      const open = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    });
+  });
+</script></section><section class="content-section"><section class="related-pages"><h2>Related Pages</h2><div class="related-grid"><a href="/chatgpt-exporter.html" class="related-link"><h3>ChatGPT Exporter</h3><p>Export ChatGPT to Markdown, PDF, JSON &amp; more</p></a><a href="/claude-exporter.html" class="related-link"><h3>Claude Exporter</h3><p>Export Claude conversations &amp; artifacts</p></a><a href="/markdown-exporter.html" class="related-link"><h3>Markdown Exporter</h3><p>Export any AI chat as Markdown</p></a></div></section></section><section class="content-section"><div class="callout callout-success"><p><strong>Ready to export your Copilot conversations?</strong></p><div class="cta-group compact"><a href="https://chromewebstore.google.com/detail/cgakhbhkplndjjknhgegfcipffflcaoj" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Add to Chrome</a><a href="https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Add to Firefox</a></div></div></section></main><footer><div class="footer-links"><a href="/privacy.html">Privacy Policy</a><span class="footer-sep" aria-hidden="true">|</span><a href="/license.html">License (MPL 2.0)</a><span class="footer-sep" aria-hidden="true">|</span><a href="/feedback.html">Feedback &amp; Issues</a><span class="footer-sep" aria-hidden="true">|</span><a href="https://github.com/Covai-Labs/ai-chat-exporter" target="_blank" rel="noopener noreferrer">GitHub Repository</a></div><p>&copy; 2026 AI Chat Exporter. Released under the Mozilla Public License 2.0.</p></footer></body></html>
