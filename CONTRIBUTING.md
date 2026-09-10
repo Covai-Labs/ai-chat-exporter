@@ -17,6 +17,14 @@ npm run lint && npm run format:check && npm test
 
 Please keep Pull Requests focused on a single bug fix or feature, and provide descriptive commit messages.
 
+## Adding or Fixing a Platform Parser
+
+All platform parsers (ChatGPT, Claude, Gemini, DeepSeek, etc.) live in the shared **[decant-core](https://github.com/Covai-Labs/decant-core)** library, not in this repository.
+
+If an AI platform changes its DOM or you want to add support for a new platform, please open your PR there. See [decant-core's CONTRIBUTING guide](https://github.com/Covai-Labs/decant-core/blob/main/CONTRIBUTING.md) for parser contribution guidelines, selector resilience rules, and test fixture instructions.
+
+---
+
 ## Contributor License Agreement (CLA)
 
 By submitting a Pull Request or contributing code/materials to this repository, you explicitly agree to the following terms:

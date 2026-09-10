@@ -6,7 +6,11 @@
 
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/cgakhbhkplndjjknhgegfcipffflcaoj?label=Chrome%20Web%20Store&color=blue)](https://chromewebstore.google.com/detail/ai-chat-exporter-free-pri/cgakhbhkplndjjknhgegfcipffflcaoj)
 [![Firefox Add-ons](https://img.shields.io/amo/v/ai-chat-export?label=Firefox%20Add-ons&color=orange)](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/)
-[![Microsoft Edge](https://img.shields.io/github/package-json/v/Covai-Labs/ai-chat-exporter?label=Microsoft%20Edge&logo=microsoft-edge&logoColor=white&color=0078D7)](https://microsoftedge.microsoft.com/addons/detail/ai-chat-exporter-free-/hbgckjgfhnaedlihmkogenclfcnobicg)
+[![Microsoft Edge](https://img.shields.io/badge/Microsoft%20Edge-Add--on-0078D7?logo=microsoft-edge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/ai-chat-exporter-free-/hbgckjgfhnaedlihmkogenclfcnobicg)
+
+[![Chrome Users](https://img.shields.io/chrome-web-store/users/cgakhbhkplndjjknhgegfcipffflcaoj?label=Chrome%20Users&color=blue)](https://chromewebstore.google.com/detail/ai-chat-exporter-free-pri/cgakhbhkplndjjknhgegfcipffflcaoj)
+[![Firefox Users](https://img.shields.io/amo/users/ai-chat-export?label=Firefox%20Users&color=orange)](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/)
+[![GitHub Stars](https://img.shields.io/github/stars/Covai-Labs/ai-chat-exporter?style=flat&color=yellow&label=Stars)](https://github.com/Covai-Labs/ai-chat-exporter/stargazers)
 
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](LICENSE)
 
@@ -34,6 +38,17 @@ Most AI exporters and extensions send your chat history or API calls to third-pa
 - **Zero Telemetry / Zero Tracking:** No analytics, no trackers, no external logging, and no remote dependencies.
 - **Your Data Remains Yours:** Chat threads, custom instructions, and exported files never leave your machine.
 
+**Verifiable by design.** The extension requests only the permissions it strictly needs — no broad host access, no remote code execution:
+
+| Permission | Why it's needed |
+| :--- | :--- |
+| `activeTab` | Read the current tab's DOM to extract the conversation |
+| `storage` | Persist your local preferences (theme, format defaults) |
+| `sidePanel` | Power the Chromium side panel UI |
+| `host_permissions` | Scoped exactly to the supported AI platform domains listed above — no `<all_urls>` |
+
+No background analytics endpoints. No external network fetches. Audit it yourself: [`manifest.json`](manifest.json).
+
 ---
 
 ## ✨ Key Features
@@ -43,6 +58,7 @@ Most AI exporters and extensions send your chat history or API calls to third-pa
   - Standardizes LaTeX math formatting (`$$...$$` block and `$...$` inline) without broken backslashes. Ready for **Obsidian**, **Logseq**, and **Notion**.
 - **🔄 Cross-Model Chat Continuation:**
   - Hand off active conversations between platforms in a single click (e.g., take a ChatGPT conversation and continue it directly in Claude or Gemini).
+  - See [Chat Continuation](#-cross-model-chat-continuation) below for details.
 - **📓 Direct PKM App Transfer:**
   - Export straight into **Obsidian** via `obsidian://new` URIs, or trigger URL schemes for **Logseq**, **Bear**, **Drafts**, and **NotePlan**.
 - **🗂️ Standardized JSON Schema:**
@@ -85,6 +101,26 @@ AI Chat Exporter extracts full conversation threads from all major AI chat platf
 | **Generic Web Articles**                                      |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
 
 > **Continuation Targets:** Seamless prompt injection is supported for general-purpose chat models (ChatGPT, Claude, Gemini, DeepSeek, Proton Lumo, Perplexity, Qwen, Mistral) and PKM note-taking apps (**Obsidian**, **Logseq**, **Bear**, **NotePlan**, **Drafts**). Platforms requiring character selection (Joyland, Chub AI) or workspace setup (NotebookLM) are supported for clean export only.
+
+---
+
+## 🔄 Cross-Model Chat Continuation
+
+Chat Continuation is the feature that sets AI Chat Exporter apart from every other exporter — it lets you hand off a live conversation from one AI to another in a single click, with full context preserved.
+
+```
+ChatGPT  ──►  [ Export + Inject ]  ──►  Claude
+Claude   ──►  [ Export + Inject ]  ──►  Gemini
+Gemini   ──►  [ Export + Inject ]  ──►  DeepSeek  (or any supported target)
+```
+
+**How it works:**
+
+1. **Extract** — Click the extension on any supported platform. The full conversation thread is parsed locally.
+2. **Format** — The thread is wrapped into a structured handoff prompt that preserves roles (user / assistant), turn order, and any code or math blocks.
+3. **Inject** — The formatted context is placed directly into the input field of your chosen target platform. You resume the conversation immediately — no copy-pasting, no reformatting.
+
+**Also works with PKM apps:** Send the conversation directly into **Obsidian** (via `obsidian://new`), **Logseq**, **Bear**, **NotePlan**, or **Drafts** with frontmatter metadata (`title`, `date`, `model`, `source`) pre-populated.
 
 ---
 
