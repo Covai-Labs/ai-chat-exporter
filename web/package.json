@@ -1,6 +1,7 @@
 {
   "name": "ai-chat-exporter-docs",
   "version": "1.0.0",
+  "license": "MPL-2.0",
   "type": "module",
   "private": true,
   "scripts": {
