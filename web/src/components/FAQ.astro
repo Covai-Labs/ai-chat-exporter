@@ -1,0 +1,57 @@
+---
+// Accessible FAQ accordion + FAQPage JSON-LD.
+export interface FaqItem {
+  q: string;
+  /** Trusted HTML allowed (e.g. <code>, <strong>, <a>). */
+  a: string;
+}
+
+interface Props {
+  items: FaqItem[];
+}
+
+const { items } = Astro.props;
+
+const stripTags = (html: string) => html.replace(/<[^>]*>/g, '').trim();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: stripTags(item.a) },
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
+
+<div class="faq">
+  {items.map((item) => (
+    <div class="faq-item">
+      <button type="button" class="faq-question" aria-expanded="false" aria-controls="">
+        {item.q}
+      </button>
+      <div class="faq-answer" role="region" aria-hidden="true" set:html={item.a} />
+    </div>
+  ))}
+</div>
+
+<script is:inline>
+  document.querySelectorAll('.faq-item').forEach((item, i) => {
+    const btn = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+    if (!btn || !answer) return;
+    const id = 'faq-' + (i + 1);
+    btn.id = 'q-' + id;
+    btn.setAttribute('aria-controls', id);
+    answer.id = id;
+    answer.setAttribute('aria-labelledby', 'q-' + id);
+    btn.addEventListener('click', () => {
+      const open = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      answer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    });
+  });
+</script>

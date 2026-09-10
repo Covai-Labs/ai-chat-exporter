@@ -1,0 +1,24 @@
+---
+// Numbered workflow steps.
+export interface Step {
+  title: string;
+  body: string;
+}
+
+interface Props {
+  steps: Step[];
+}
+
+const { steps } = Astro.props;
+---
+
+<div class="steps">
+  {steps.map((s) => (
+    <div class="step">
+      <div class="step-content">
+        <h3>{s.title}</h3>
+        <p set:html={s.body} />
+      </div>
+    </div>
+  ))}
+</div>

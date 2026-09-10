@@ -1,0 +1,27 @@
+---
+// Grid of links to related pages.
+export interface RelatedLink {
+  title: string;
+  href: string;
+  desc?: string;
+}
+
+interface Props {
+  items: RelatedLink[];
+  heading?: string;
+}
+
+const { items, heading = 'Related Pages' } = Astro.props;
+---
+
+<section class="related-pages">
+  <h2>{heading}</h2>
+  <div class="related-grid">
+    {items.map((r) => (
+      <a href={r.href} class="related-link">
+        <h3>{r.title}</h3>
+        {r.desc && <p>{r.desc}</p>}
+      </a>
+    ))}
+  </div>
+</section>

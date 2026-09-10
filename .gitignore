@@ -1,6 +1,9 @@
 # Dependencies
 node_modules/
 
+# Astro generated types (web/)
+.astro/
+
 # Build and distribution outputs
 dist/
 .output/
@@ -11,6 +14,9 @@ web-ext-artifacts/
 *.zip
 *.crx
 *.xpi
+
+# Site build output (generated from web/ by CI)
+docs/
 
 # Environment & local configurations
 .env

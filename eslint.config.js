@@ -12,6 +12,7 @@ export default [
       '.output/**',
       '.wxt/**',
       'Scratch/**',
+      'web/**',
     ],
   },
   js.configs.recommended,

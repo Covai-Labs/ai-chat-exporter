@@ -1,0 +1,247 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import CtaSection from '../components/CtaSection.astro';
+import FAQ from '../components/FAQ.astro';
+import RelatedPages from '../components/RelatedPages.astro';
+import StepList from '../components/StepList.astro';
+import Callout from '../components/Callout.astro';
+
+const meta = {
+  slug: 'claude-to-markdown',
+  title: 'Claude to Markdown',
+  description: 'Claude conversations as clean .md files',
+  heroTitle: 'Claude to Markdown — Clean, Structured Exports',
+  heroSubtitle:
+    'Convert your Claude conversations into clean, portable Markdown files. Code blocks, LaTeX equations, Artifacts, and images are all preserved with proper formatting.',
+};
+---
+
+<GuideLayout
+  title={meta.title}
+  description={meta.description}
+  slug={meta.slug}
+  heroTitle={meta.heroTitle}
+  heroSubtitle={meta.heroSubtitle}
+  badge="Preserves Artifacts"
+>
+  <!-- Why Markdown for Claude Conversations -->
+  <section class="content-section">
+    <h2>Why Markdown for Claude Conversations?</h2>
+    <p>
+      Markdown is the lingua franca of technical documentation, note-taking, and knowledge
+      management. It renders beautifully in Obsidian, Notion, GitHub, VS Code, and virtually every
+      text editor. Unlike PDF or HTML, Markdown files are plain text&mdash;they are lightweight,
+      diffable, version-controllable, and future-proof.
+    </p>
+    <p>
+      For Claude conversations specifically, Markdown is the natural choice because Claude itself
+      produces Markdown-formatted responses. Code blocks, bullet lists, bold and italic text,
+      headings, and tables all translate directly. The exporter preserves this structure rather than
+      converting it to a less flexible format.
+    </p>
+    <p>
+      Whether you are archiving research threads, saving code generation sessions for later
+      reference, or building a personal knowledge base, Markdown output keeps your Claude
+      conversations in a format that remains useful years from now.
+    </p>
+  </section>
+
+  <!-- How Artifacts Appear in Markdown -->
+  <section class="content-section">
+    <h2>How Artifacts Appear in Markdown</h2>
+    <p>
+      One of the key differentiators of the Claude to Markdown export is how Artifacts are handled.
+      Claude Artifacts&mdash;the code, documents, and visual content Claude generates in the side
+      panel&mdash;are exported as clearly labeled sections within the Markdown file.
+    </p>
+    <p>
+      Each artifact appears under a level-3 heading with its title, followed by the artifact content
+      in a fenced code block with the appropriate language tag. If an artifact went through multiple
+      versions during the conversation, the exporter includes the latest version by default, with a
+      note indicating version history was present. This approach keeps the Markdown file linear and
+      readable while preserving the artifact context.
+    </p>
+    <p>For example, a React component artifact exported to Markdown would appear as:</p>
+    <Callout tone="info" title="Artifact Example">
+      The artifact code is wrapped in a <code>```jsx</code> fence with the artifact title as a
+      heading above it, making it easy to find and copy.
+    </Callout>
+  </section>
+
+  <!-- Code Block Handling with Syntax Highlighting -->
+  <section class="content-section">
+    <h2>Code Block Handling with Syntax Highlighting</h2>
+    <p>
+      Claude frequently generates code in its responses, and the quality of code preservation
+      matters enormously for developers. The exporter uses PrismJS-compatible language detection to
+      ensure every code block is tagged with the correct language identifier.
+    </p>
+    <p>
+      This means that when you open the exported Markdown file in any editor with syntax
+      highlighting support (VS Code, Obsidian, Typora, GitHub), the code renders with proper
+      coloring. Language tags like <code>python</code>, <code>javascript</code>,{' '}
+      <code>typescript</code>,<code>rust</code>, <code>go</code>, and dozens more are automatically
+      detected based on Claude's own language annotations and heuristics.
+    </p>
+    <p>
+      Inline code (backtick-wrapped phrases) is preserved as-is, and nested code blocks within lists
+      or other structures are handled correctly without breaking the surrounding Markdown syntax.
+    </p>
+  </section>
+
+  <!-- LaTeX Math Equations -->
+  <section class="content-section">
+    <h2>LaTeX Math Equations</h2>
+    <p>
+      When Claude produces mathematical content, it uses LaTeX notation with dollar-sign delimiters.
+      The exporter preserves these equations exactly as Claude outputs them. Both inline math (
+      <code>$...$</code>) and display math (<code>$$...$$</code>) are maintained.
+    </p>
+    <p>
+      This is particularly important for academic and scientific conversations where equations are
+      core content. When you open the exported file in a Markdown renderer that supports LaTeX (like
+      Obsidian with the Math plugin, or a Jupyter-compatible viewer), the equations render as proper
+      mathematical notation rather than raw syntax.
+    </p>
+  </section>
+
+  <!-- Image Embedding -->
+  <section class="content-section">
+    <h2>Image Embedding</h2>
+    <p>
+      Claude can generate and reference images in conversations. The exporter captures these images
+      and embeds them as base64 data URIs directly within the Markdown file. This means the exported
+      .md file is fully self-contained&mdash;no external image links that could break over time.
+    </p>
+    <p>
+      For conversations where images were uploaded by the user (such as screenshots or documents
+      sent to Claude for analysis), those images are also captured and embedded. The result is a
+      complete record of the visual context alongside the textual conversation.
+    </p>
+  </section>
+
+  <!-- Selective Turn Export -->
+  <section class="content-section">
+    <h2>Selective Turn Export</h2>
+    <p>
+      Sometimes you only need a specific exchange from a long Claude conversation. The selective
+      turn export lets you choose exactly which message turns to include in the Markdown output.
+      After clicking export, the extension presents the conversation turns and lets you select the
+      range you want.
+    </p>
+    <p>
+      This feature is especially useful for research conversations where Claude might have explored
+      multiple topics across dozens of exchanges. Instead of exporting everything, you can extract
+      just the section where Claude produced the final analysis or recommendation you need.
+    </p>
+  </section>
+
+  <!-- Filename Templates -->
+  <section class="content-section">
+    <h2>Filename Templates</h2>
+    <p>
+      Exported Markdown files use intelligent filename templates that include the conversation title
+      and a timestamp. The default template produces filenames like:
+    </p>
+    <ul>
+      <li>
+        <code>Claude-React-Refactor-2026-03-15.md</code>
+      </li>
+      <li>
+        <code>Claude-Math-Proof-Derivation-2026-03-15.md</code>
+      </li>
+    </ul>
+    <p>
+      You can customize the filename template in the extension settings to match your preferred
+      naming convention. Options include adding project names, conversation IDs, or custom prefixes.
+    </p>
+  </section>
+
+  <!-- Privacy -->
+  <section class="content-section">
+    <Callout tone="success" title="100% local processing">
+      The Markdown rendering happens entirely within the browser extension. Your conversation data
+      is never transmitted to any external server. The exported .md file is generated in memory and
+      saved directly to your downloads folder.
+    </Callout>
+  </section>
+
+  <!-- FAQ -->
+  <section class="content-section">
+    <h2>Frequently Asked Questions</h2>
+    <FAQ
+      items={[
+        {
+          q: 'How are Artifacts represented in the Markdown output?',
+          a: 'Each Artifact appears as a labeled section under a level-3 heading with its title. The artifact content is wrapped in a fenced code block with the appropriate language tag. If the artifact went through multiple versions, the latest version is included with a version note. In the exported file, artifacts are placed inline at the point where they were created in the conversation.',
+        },
+        {
+          q: 'Does the exporter preserve code block language tags?',
+          a: "Yes. Language detection uses Claude's own annotations combined with heuristic analysis. The exported code blocks include the language identifier (e.g., ```python, ```typescript, ```rust) so syntax highlighting works correctly in any Markdown renderer that supports it.",
+        },
+        {
+          q: 'Can I export LaTeX math equations properly?',
+          a: 'Yes. Both inline ($...$) and display ($$...$$) LaTeX notation is preserved exactly as Claude outputs it. The equations will render correctly in any Markdown viewer with LaTeX support, such as Obsidian (with MathJax), Typora, or GitHub with MathJax enabled.',
+        },
+        {
+          q: 'Are images embedded in the Markdown file or linked externally?',
+          a: 'Images are embedded as base64 data URIs directly within the Markdown file. This makes the export self-contained&mdash;no external image links that could break. The tradeoff is that the file size will be larger when conversations contain many images.',
+        },
+        {
+          q: 'How do I export only part of a conversation?',
+          a: 'Use the selective turn export feature. After clicking the export button, the extension shows the conversation turns and lets you select a range. Only the selected turns are included in the Markdown output. This works across all export formats, not just Markdown.',
+        },
+      ]}
+    />
+  </section>
+
+  <!-- Related Pages -->
+  <section class="content-section">
+    <RelatedPages
+      items={[
+        {
+          title: 'Claude Exporter (All Formats)',
+          href: '/claude-exporter.html',
+          desc: 'Full overview of Claude export features across all supported formats.',
+        },
+        {
+          title: 'Claude to Obsidian',
+          href: '/claude-to-obsidian.html',
+          desc: 'Send Claude conversations directly into your Obsidian vault.',
+        },
+        {
+          title: 'ChatGPT to Markdown',
+          href: '/chatgpt-to-markdown.html',
+          desc: 'Export ChatGPT conversations as clean Markdown files.',
+        },
+      ]}
+    />
+  </section>
+
+  <!-- How It Works -->
+  <section class="content-section">
+    <h2>How to Export Claude as Markdown</h2>
+    <StepList
+      steps={[
+        {
+          title: 'Install AI Chat Exporter',
+          body: 'Install the extension from the Chrome Web Store or Firefox Add-ons. No account or API key is needed&mdash;just add the extension and it is ready to use.',
+        },
+        {
+          title: 'Open Your Claude Conversation',
+          body: 'Navigate to claude.ai and open the conversation you want to export. The extension works with any active conversation, including those with Artifacts and Thinking blocks.',
+        },
+        {
+          title: 'Select Markdown Format',
+          body: 'Click the extension icon and choose Markdown as the output format. Optionally configure filename templates, and include or exclude images using the settings panel.',
+        },
+        {
+          title: 'Download the .md File',
+          body: 'The extension generates and downloads a clean Markdown file. Open it in your preferred editor or move it to your note-taking vault for permanent access.',
+        },
+      ]}
+    />
+  </section>
+
+  <CtaSection prompt="Export your Claude conversations to Markdown today." />
+</GuideLayout>

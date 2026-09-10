@@ -1,0 +1,155 @@
+---
+// Shared layout for legal/documentation pages (privacy, license).
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  updatedText: string;
+}
+
+const { title, description, canonicalPath, updatedText } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} canonicalPath={canonicalPath}>
+  <Header />
+
+  <main class="legal">
+    <div class="legal-container">
+      <a href="/index.html" class="legal-back">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back to home
+      </a>
+      <header class="legal-header">
+        <h1>{title}</h1>
+        <p class="legal-date">{updatedText}</p>
+      </header>
+      <slot />
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style is:global>
+  main.legal {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+    display: block;
+  }
+  .legal-container {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    padding: 40px;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+  }
+  .legal-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    transition: transform 0.2s ease;
+  }
+  .legal-back:hover {
+    transform: translateX(-3px);
+  }
+  .legal-header {
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+  }
+  .legal-header h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    background: linear-gradient(to right, var(--text-primary), var(--text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .legal-date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+  .legal-highlight {
+    background: rgba(16, 185, 129, 0.06);
+    border-left: 4px solid #10b981;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 30px 0 10px;
+    font-size: 1.05rem;
+  }
+  .legal-highlight strong:first-child {
+    color: #10b981;
+  }
+  .legal-highlight strong {
+    color: var(--text-primary);
+  }
+  .legal-body h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-top: 40px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+  }
+  .legal-body p,
+  .legal-body ul {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    font-size: 1.02rem;
+    line-height: 1.75;
+  }
+  .legal-body ul {
+    padding-left: 20px;
+  }
+  .legal-body li {
+    margin-bottom: 10px;
+  }
+  .legal-body li strong {
+    color: var(--text-primary);
+  }
+  .license-block {
+    background: var(--bg-base);
+    border: 1px solid var(--border-color);
+    padding: 24px;
+    border-radius: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 500px;
+    overflow-y: auto;
+    margin-top: 20px;
+  }
+  @media (max-width: 640px) {
+    .legal-container {
+      padding: 24px 20px;
+    }
+  }
+</style>

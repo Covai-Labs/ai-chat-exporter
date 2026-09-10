@@ -1,0 +1,35 @@
+---
+// Breadcrumb trail with BreadcrumbList JSON-LD.
+export interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: Crumb[];
+}
+
+const { items } = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.label,
+    item: item.href ? `https://ai-chat-exporter.covai.org${item.href}` : undefined,
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  {items.map((item, i) => (
+    <Fragment>
+      {i === items.length - 1 ? <span>{item.label}</span> : <a href={item.href}>{item.label}</a>}
+      {i < items.length - 1 && <span aria-hidden="true">&#8250;</span>}
+    </Fragment>
+  ))}
+</nav>

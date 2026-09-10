@@ -1,0 +1,38 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import mpl2 from '../data/mpl2.txt?raw';
+---
+
+<LegalLayout
+  title="Software License"
+  description="AI Chat Exporter is distributed under the Mozilla Public License Version 2.0 (MPL-2.0)."
+  canonicalPath="/license.html"
+  updatedText="Mozilla Public License Version 2.0 (MPL-2.0)"
+>
+  <div class="legal-highlight">
+    <strong>Summary:</strong> AI Chat Exporter is open-source software distributed under the
+    <strong>Mozilla Public License v2.0</strong>. You are free to use, modify, and distribute this
+    software, provided that any modifications to covered files remain open under the same MPL 2.0
+    license.
+  </div>
+
+  <div class="legal-body">
+    <h2>1. Overview</h2>
+    <p>
+      AI Chat Exporter is designed with privacy and open source values at its core. The complete
+      source code is available on
+      <a
+        href="https://github.com/Covai-Labs/ai-chat-exporter"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>
+      .
+    </p>
+
+    <h2>2. License Text</h2>
+    <p>Below is the full text of the Mozilla Public License Version 2.0:</p>
+    <pre class="license-block">{mpl2}</pre>
+  </div>
+</LegalLayout>
