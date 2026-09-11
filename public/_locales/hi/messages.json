@@ -201,6 +201,10 @@
     "message": "डिफ़ॉल्ट रूप से निर्यात में छवियां शामिल करें",
     "description": "Label for default include images checkbox"
   },
+  "includeAttributionDefault": {
+    "message": "निर्यात में \"Exported with AI Chat Exporter\" क्रेडिट शामिल करें",
+    "description": "Label for default include attribution credit checkbox"
+  },
   "parserModeTitle": {
     "message": "पार्सर निष्कर्षण मोड",
     "description": "Title for parser mode section"

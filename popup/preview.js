@@ -64,9 +64,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Load and apply extension theme
   let currentSyncTheme = 'system';
+  let includeAttribution = true;
   try {
-    const syncData = await chrome.storage.sync.get('theme');
+    const syncData = await chrome.storage.sync.get(['theme', 'includeAttribution']);
     currentSyncTheme = syncData.theme || 'system';
+    if (syncData.includeAttribution !== undefined) {
+      includeAttribution = syncData.includeAttribution;
+    }
     applyTheme(currentSyncTheme, document);
   } catch {
     // Ignore theme loading errors when running standalone
@@ -372,10 +376,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     titleEl.textContent = title;
 
     if (conversation) {
-      htmlContent = htmlFormatter.format(conversation);
-      markdownContent = markdownFormatter.format(conversation);
+      htmlContent = htmlFormatter.format(conversation, { includeAttribution });
+      markdownContent = markdownFormatter.format(conversation, { includeAttribution });
       jsonContent = jsonFormatter.format(conversation);
-      docContent = docFormatter.format(conversation);
+      docContent = docFormatter.format(conversation, { includeAttribution });
     } else {
       const fallbackContent = data.previewContent || '';
       htmlContent = sanitizeHtml(fallbackContent);
@@ -531,6 +535,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               highQuality: isHighQuality,
               includeImages,
               theme: activeTheme,
+              includeAttribution,
             });
           }
           cachedPngBlob = pngBlob;

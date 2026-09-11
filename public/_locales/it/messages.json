@@ -201,6 +201,10 @@
     "message": "Includi immagini nelle esportazioni per impostazione predefinita",
     "description": "Label for default include images checkbox"
   },
+  "includeAttributionDefault": {
+    "message": "Includi la dicitura \"Exported with AI Chat Exporter\" nelle esportazioni",
+    "description": "Label for default include attribution credit checkbox"
+  },
   "parserModeTitle": {
     "message": "Modalità di estrazione del parser",
     "description": "Title for parser mode section"
