@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const languageSelect = document.getElementById('language-select');
   const defaultFormatSelect = document.getElementById('default-format-select');
   const defaultIncludeImages = document.getElementById('default-include-images');
+  const includeAttribution = document.getElementById('include-attribution');
   const filenameTemplateInput = document.getElementById('filename-template-input');
   const filenamePreview = document.getElementById('filename-preview');
   const parserModeSelect = document.getElementById('parser-mode-select');
@@ -79,6 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     'uiLanguage',
     'defaultFormat',
     'includeImages',
+    'includeAttribution',
     'filenameTemplate',
     'parserMode',
     'defaultTransferTarget',
@@ -103,6 +105,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (stored.defaultFormat) defaultFormatSelect.value = stored.defaultFormat;
   if (stored.includeImages !== undefined) defaultIncludeImages.checked = stored.includeImages;
+  if (stored.includeAttribution !== undefined)
+    includeAttribution.checked = stored.includeAttribution;
   if (filenameTemplateInput) {
     filenameTemplateInput.value = stored.filenameTemplate || DEFAULT_FILENAME_TEMPLATE;
     updateFilenamePreview(filenameTemplateInput.value);
@@ -142,6 +146,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   defaultIncludeImages.addEventListener('change', () => {
     chrome.storage.sync.set({ includeImages: defaultIncludeImages.checked });
+    showToast();
+  });
+
+  includeAttribution.addEventListener('change', () => {
+    chrome.storage.sync.set({ includeAttribution: includeAttribution.checked });
     showToast();
   });
 

@@ -219,6 +219,10 @@
     "message": "預設在匯出內容中包含圖片",
     "description": "Label for default include images checkbox"
   },
+  "includeAttributionDefault": {
+    "message": "在匯出中包含 \"Exported with AI Chat Exporter\" 署名",
+    "description": "Label for default include attribution credit checkbox"
+  },
   "parserModeTitle": {
     "message": "解析器擷取模式",
     "description": "Title for parser mode section"
