@@ -32,6 +32,7 @@ import {
   DEFAULT_FILENAME_TEMPLATE,
 } from './utils/filename.js';
 import { createLogger } from './utils/logger.js';
+import { getAttributionSetting } from './utils/preferences.js';
 
 const logger = createLogger('ContentScript');
 
@@ -174,18 +175,6 @@ function stripImages(content) {
   cleaned = cleaned.replace(/\n{3,}/g, '\n\n').trim();
 
   return cleaned;
-}
-
-async function getAttributionSetting() {
-  try {
-    const syncData = await chrome.storage.sync.get('includeAttribution');
-    if (syncData && syncData.includeAttribution !== undefined) {
-      return syncData.includeAttribution;
-    }
-  } catch {
-    // Ignore storage errors and fall back to the default
-  }
-  return true;
 }
 
 let activeParser = null;

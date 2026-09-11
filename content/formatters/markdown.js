@@ -1,4 +1,4 @@
-import { ExportFormatter } from './base.js';
+import { ExportFormatter, shouldIncludeAttribution } from './base.js';
 
 function cleanLatexMath(latex) {
   if (!latex || typeof latex !== 'string') return '';
@@ -103,7 +103,7 @@ export class MarkdownFormatter extends ExportFormatter {
 
     let output = `# ${title || 'AI Chat Export'}\n\n`;
 
-    if (options.includeAttribution !== false) {
+    if (shouldIncludeAttribution(options)) {
       output += `**Exported with:** [AI Chat Exporter](https://ai-chat-exporter.covai.org)  \n`;
     }
 

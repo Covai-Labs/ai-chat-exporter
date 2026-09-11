@@ -1,4 +1,4 @@
-import { ExportFormatter } from './base.js';
+import { ExportFormatter, shouldIncludeAttribution } from './base.js';
 import { sanitizeHtml } from '../utils/sanitizer.js';
 import { katexCss, katexJs, autoRenderJs, prismCss, prismJs } from '../lib/assets.js';
 
@@ -959,7 +959,7 @@ ${prismJs}
         <div class="metadata">
           <span class="badge">${escapeHtml(platform)}</span>
           <span class="meta-item">Exported: ${formattedDate}</span>
-          ${options.includeAttribution !== false ? `<span class="meta-item"><a href="https://ai-chat-exporter.covai.org/" target="_blank" style="color: inherit;">AI Chat Exporter</a></span>` : ''}
+          ${shouldIncludeAttribution(options) ? `<span class="meta-item"><a href="https://ai-chat-exporter.covai.org/" target="_blank" style="color: inherit;">AI Chat Exporter</a></span>` : ''}
           ${link ? `<span class="meta-item"><a href="${escapeHtml(link)}" target="_blank" style="color: inherit;">Original Link</a></span>` : ''}
           ${model ? `<span class="meta-item">Model: ${escapeHtml(model)}</span>` : ''}
           ${method ? `<span class="meta-item">Method: ${escapeHtml(method)}</span>` : ''}
@@ -974,7 +974,7 @@ ${prismJs}
     </main>
 
     ${
-      options.includeAttribution !== false
+      shouldIncludeAttribution(options)
         ? `
     <footer class="export-footer">
       <p>Exported with <a href="https://ai-chat-exporter.covai.org/" target="_blank" rel="noopener noreferrer">AI Chat Exporter</a></p>

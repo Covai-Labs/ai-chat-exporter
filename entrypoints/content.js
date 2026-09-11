@@ -32,6 +32,7 @@ import {
 } from '../content/utils/filename.js';
 import { stripImages } from '../content/utils/strip-images.js';
 import { createLogger } from '../content/utils/logger.js';
+import { getAttributionSetting } from '../content/utils/preferences.js';
 
 const logger = createLogger('ContentScript');
 
@@ -154,18 +155,6 @@ export default defineContentScript({
     }
 
     let activeParser = null;
-
-    async function getAttributionSetting() {
-      try {
-        const syncData = await chrome.storage.sync.get('includeAttribution');
-        if (syncData && syncData.includeAttribution !== undefined) {
-          return syncData.includeAttribution;
-        }
-      } catch {
-        // Ignore storage errors and fall back to the default
-      }
-      return true;
-    }
 
     function detectParser() {
       const currentUrl = window.location.href;

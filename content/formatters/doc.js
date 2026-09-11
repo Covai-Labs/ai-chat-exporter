@@ -1,4 +1,4 @@
-import { ExportFormatter } from './base.js';
+import { ExportFormatter, shouldIncludeAttribution } from './base.js';
 import { markdownToHtml, escapeHtml } from './html.js';
 
 export class DocFormatter extends ExportFormatter {
@@ -13,7 +13,7 @@ export class DocFormatter extends ExportFormatter {
     const method = conversation.metadata?.Method || '';
 
     const metaParts = [`Exported from ${escapeHtml(platform)}`, formattedDate];
-    if (options.includeAttribution !== false) {
+    if (shouldIncludeAttribution(options)) {
       metaParts.push(
         '<a href="https://ai-chat-exporter.covai.org/" style="color: #64748b;">AI Chat Exporter</a>',
       );
