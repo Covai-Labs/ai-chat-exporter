@@ -4,19 +4,18 @@
 
 **Export, back up, and transfer AI conversations to Markdown, JSON, HTML, Word (.doc), and PNG — 100% locally.**
 
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/cgakhbhkplndjjknhgegfcipffflcaoj?label=Chrome%20Web%20Store&color=blue)](https://chromewebstore.google.com/detail/ai-chat-exporter-free-pri/cgakhbhkplndjjknhgegfcipffflcaoj)
-[![Firefox Add-ons](https://img.shields.io/amo/v/ai-chat-export?label=Firefox%20Add-ons&color=orange)](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/)
-[![Microsoft Edge](https://img.shields.io/badge/Microsoft%20Edge-Add--on-0078D7?logo=microsoft-edge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/ai-chat-exporter-free-/hbgckjgfhnaedlihmkogenclfcnobicg)
-
-[![Chrome Users](https://img.shields.io/chrome-web-store/users/cgakhbhkplndjjknhgegfcipffflcaoj?label=Chrome%20Users&color=blue)](https://chromewebstore.google.com/detail/ai-chat-exporter-free-pri/cgakhbhkplndjjknhgegfcipffflcaoj)
-[![Firefox Users](https://img.shields.io/amo/users/ai-chat-export?label=Firefox%20Users&color=orange)](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/)
-[![GitHub Stars](https://img.shields.io/github/stars/Covai-Labs/ai-chat-exporter?style=flat&color=yellow&label=Stars)](https://github.com/Covai-Labs/ai-chat-exporter/stargazers)
-
+[![Website](https://img.shields.io/badge/Website-ai--chat--exporter.covai.org-blueviolet)](https://ai-chat-exporter.covai.org/)
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](LICENSE)
 
-[![Website](https://img.shields.io/badge/Website-ai--chat--exporter.covai.org-blueviolet)](https://ai-chat-exporter.covai.org/)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/cgakhbhkplndjjknhgegfcipffflcaoj?logo=google-chrome&logoColor=white&label=Chrome%20Web%20Store&color=blue)](https://chromewebstore.google.com/detail/ai-chat-exporter-free-pri/cgakhbhkplndjjknhgegfcipffflcaoj)
+[![Firefox Add-ons](https://img.shields.io/amo/v/ai-chat-export?logo=firefox-browser&logoColor=white&label=Firefox%20Add-ons&color=orange)](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/)
+[![Microsoft Edge](https://img.shields.io/badge/Microsoft%20Edge-Add--on-0078D7?logo=microsoft-edge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/ai-chat-exporter-free-/hbgckjgfhnaedlihmkogenclfcnobicg)
 
-[Quick Install](#quick-install) • [Supported Platforms](#supported-platforms) • [Features](#key-features) • [Local Development](#local-development)
+[![Chrome Users](https://img.shields.io/chrome-web-store/users/cgakhbhkplndjjknhgegfcipffflcaoj?logo=google-chrome&logoColor=white&label=Chrome%20Users&color=blue)](https://chromewebstore.google.com/detail/ai-chat-exporter-free-pri/cgakhbhkplndjjknhgegfcipffflcaoj)
+[![Firefox Users](https://img.shields.io/amo/users/ai-chat-export?logo=firefox-browser&logoColor=white&label=Firefox%20Users&color=orange)](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/)
+[![GitHub Stars](https://img.shields.io/github/stars/Covai-Labs/ai-chat-exporter?logo=github&logoColor=white&color=yellow&label=Stars)](https://github.com/Covai-Labs/ai-chat-exporter/stargazers)
+
+[Quick Install](#quick-install) • [Supported Platforms](#supported-platforms) • [Features](#key-features) • [Chat Continuation](#cross-model-chat-continuation)
 
 ---
 
@@ -28,7 +27,7 @@
 
 ---
 
-## 🔒 Why AI Chat Exporter? (Privacy First)
+## Why AI Chat Exporter? (Privacy First)
 
 Most AI exporters and extensions send your chat history or API calls to third-party backend servers for conversion.
 
@@ -38,27 +37,27 @@ Most AI exporters and extensions send your chat history or API calls to third-pa
 - **Zero Telemetry / Zero Tracking:** No analytics, no trackers, no external logging, and no remote dependencies.
 - **Your Data Remains Yours:** Chat threads, custom instructions, and exported files never leave your machine.
 
-**Verifiable by design.** The extension requests only the permissions it strictly needs — no broad host access, no remote code execution:
+**Verifiable by design.** The extension runs 100% client-side with zero remote code execution:
 
-| Permission         | Why it's needed                                                                    |
-| :----------------- | :--------------------------------------------------------------------------------- |
-| `activeTab`        | Read the current tab's DOM to extract the conversation                             |
-| `storage`          | Persist your local preferences (theme, format defaults)                            |
-| `sidePanel`        | Power the Chromium side panel UI                                                   |
-| `host_permissions` | Scoped exactly to the supported AI platform domains listed above — no `<all_urls>` |
+| Permission                        | Why it's needed                                                                       |
+| :-------------------------------- | :------------------------------------------------------------------------------------ |
+| `activeTab` / `tabs`              | Read the active conversation and coordinate continuation tabs                         |
+| `storage`                         | Persist local preferences (theme, format defaults)                                    |
+| `sidePanel`                       | Power the Chromium side panel UI                                                      |
+| `host_permissions` (`<all_urls>`) | Extract web articles and detect embedded chat frames (e.g., Copilot in Microsoft 365) |
 
-No background analytics endpoints. No external network fetches. Audit it yourself: [`manifest.json`](manifest.json).
+Zero external analytics endpoints. Zero remote dependencies. Zero outbound network fetches. Audit it yourself: [`wxt.config.ts`](wxt.config.ts).
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 - **📝 Clean Markdown with Math & Code:**
   - Preserves syntax highlighting, code languages, tables, and nested lists.
   - Standardizes LaTeX math formatting (`$$...$$` block and `$...$` inline) without broken backslashes. Ready for **Obsidian**, **Logseq**, and **Notion**.
 - **🔄 Cross-Model Chat Continuation:**
   - Hand off active conversations between platforms in a single click (e.g., take a ChatGPT conversation and continue it directly in Claude or Gemini).
-  - See [Chat Continuation](#-cross-model-chat-continuation) below for details.
+  - See [Chat Continuation](#cross-model-chat-continuation) below for details.
 - **📓 Direct PKM App Transfer:**
   - Export straight into **Obsidian** via `obsidian://new` URIs, or trigger URL schemes for **Logseq**, **Bear**, **Drafts**, and **NotePlan**.
 - **🗂️ Standardized JSON Schema:**
@@ -75,9 +74,9 @@ No background analytics endpoints. No external network fetches. Audit it yoursel
 
 ---
 
-## 🌐 Supported Platforms
+## Supported Platforms
 
-AI Chat Exporter extracts full conversation threads from all major AI chat platforms, AI search overviews, and web articles. Context continuation allows you to hand off conversations directly to leading LLMs and PKM note-taking apps.
+AI Chat Exporter extracts full conversation threads from all major AI chat platforms and AI search overviews. Context continuation lets you hand off conversations directly to leading LLMs and PKM note-taking apps.
 
 | Platform                                                      | Markdown | JSON | HTML / Doc / PNG |    Continuation Target     |
 | :------------------------------------------------------------ | :------: | :--: | :--------------: | :------------------------: |
@@ -98,13 +97,13 @@ AI Chat Exporter extracts full conversation threads from all major AI chat platf
 | **[Z.ai](https://z.ai)**                                      |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
 | **[Joyland](https://www.joyland.ai)**                         |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
 | **[Chub AI](https://chub.ai)**                                |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
-| **Generic Web Articles**                                      |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
+| **Generic Web Articles** _(single-page convenience)_          |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
 
 > **Continuation Targets:** Seamless prompt injection is supported for general-purpose chat models (ChatGPT, Claude, Gemini, DeepSeek, Proton Lumo, Perplexity, Qwen, Mistral) and PKM note-taking apps (**Obsidian**, **Logseq**, **Bear**, **NotePlan**, **Drafts**). Platforms requiring character selection (Joyland, Chub AI) or workspace setup (NotebookLM) are supported for clean export only.
 
 ---
 
-## 🔄 Cross-Model Chat Continuation
+## Cross-Model Chat Continuation
 
 Chat Continuation is the feature that sets AI Chat Exporter apart from every other exporter — it lets you hand off a live conversation from one AI to another in a single click, with full context preserved.
 
@@ -124,7 +123,7 @@ Gemini   ──►  [ Export + Inject ]  ──►  DeepSeek  (or any supported 
 
 ---
 
-## 🚀 Quick Install
+## Quick Install
 
 ### Official Stores
 
@@ -156,43 +155,25 @@ Gemini   ──►  [ Export + Inject ]  ──►  DeepSeek  (or any supported 
 
 </details>
 
----
+### Choosing Between AI Chat Exporter and Decant
 
-## 🛠️ Local Development
+AI Chat Exporter and [Decant](https://github.com/Covai-Labs/decant) share an extraction engine ([decant-core](https://github.com/Covai-Labs/decant-core)) but solve different jobs:
 
-Contributions are welcome! If an AI chat interface updates its DOM or you want to add support for a new platform, follow these steps:
+| Your goal                                                                                               | Use                  |
+| :------------------------------------------------------------------------------------------------------ | :------------------- |
+| Export, back up, or **continue a conversation** between AI platforms                                    | **AI Chat Exporter** |
+| Trim generic AI search overviews (and single pages) into Markdown                                       | **AI Chat Exporter** |
+| **Clip arbitrary web pages** — batch whole tabs into a research ZIP, or hand one page to your PKM vault | **Decant**           |
 
-```bash
-# 1. Clone the repository
-git clone https://github.com/Covai-Labs/ai-chat-exporter.git
-cd ai-chat-exporter
-
-# 2. Install dependencies
-npm install
-
-# 3. Start development mode with auto-reload
-npm run dev
-
-# 4. Build extension bundle for production
-npm run build          # Builds Chromium (Chrome/Edge/Brave) into .output/chrome-mv3
-npm run build:firefox  # Builds Firefox MV3 into .output/firefox-mv3
-
-# 5. Run automated test suite and linter
-npm test
-npm run lint
-npm run format:check
-```
-
-### Loading Unpacked Build
-
-- **Chromium:** Load the `.output/chrome-mv3` folder at `chrome://extensions/`.
-- **Firefox:** Load `.output/firefox-mv3/manifest.json` at `about:debugging#/runtime/this-firefox`.
-
-For complete architectural details, parser guidelines, and test harnesses, refer to the [Development Guide](DEVELOPMENT.md).
+As a convenience, AI Chat Exporter's single-page export walks any web article through the same local pipeline — handy for saving one page next to a chat. For serious web clipping — multi-tab batches, frontmatter-driven note hand-off, and reading view — use **Decant**.
 
 ---
 
-## 🤝 Contributing
+## Contributing
+
+Contributions are welcome! If an AI chat interface updates its DOM or you want to add support for
+a new platform, see the [Development Guide](DEVELOPMENT.md) for build steps, parser guidelines, and
+the test harness.
 
 Platform web layouts evolve frequently. If an exporter encounters issues on a modified layout:
 
@@ -201,13 +182,13 @@ Platform web layouts evolve frequently. If an exporter encounters issues on a mo
 
 ---
 
-## 📄 License
+## License
 
 This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. See [LICENSE](LICENSE) for the full license text.
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [decant-core](https://github.com/Covai-Labs/decant-core) — Shared parser engine and intelligent article extraction.
 - [Turndown.js](https://github.com/mixmark-io/turndown) — HTML to Markdown conversion.

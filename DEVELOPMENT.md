@@ -1,71 +1,81 @@
 # AI Chat Exporter - Development Guide
 
-This guide contains instructions for setting up, building, and contributing to the AI Chat Exporter extension.
+This guide covers setting up, building, and contributing to the AI Chat Exporter extension.
+
+## Prerequisites
+
+- **Node.js 20+** with npm
 
 ## Development
 
-### Prerequisites
-
-- **Python 3.x** (for build script modifiers)
-- **zip utility** (for packaging targets)
-- **Node.js** (for running tests and linter/formatter)
-
-### Build Instructions
-
-The extension source code and build/packaging scripts live directly in the repository root directory.
-
-To build for all targets:
+### Install dependencies
 
 ```bash
-chmod +x build.sh
-./build.sh
+npm install
 ```
 
-To build for a specific target:
+### Run in development mode with auto-reload
 
 ```bash
-./build.sh chromium  # Or firefox
+npm run dev
 ```
 
-The output zip files will be created in the `releases/` directory.
+Opens a Chromium browser with the extension loaded and hot-reload.
 
-### Running Tests
+### Build production bundles
 
-To run the automated test suite:
+```bash
+npm run build          # Chromium (Chrome, Edge, Brave) -> .output/chrome-mv3
+npm run build:firefox  # Firefox MV3 -> .output/firefox-mv3
+```
+
+To create distributable `.zip` archives:
+
+```bash
+npm run zip         # .output/*.zip for Chromium targets
+npm run zip:firefox # .output/*.zip for Firefox
+```
+
+### Load the unpacked build
+
+- **Chromium:** Load the `.output/chrome-mv3` folder at `chrome://extensions/`.
+- **Firefox:** Load `.output/firefox-mv3/manifest.json` at `about:debugging#/runtime/this-firefox`.
+
+### Run tests, lint, and formatting
 
 ```bash
 npm test
+npm run lint
+npm run format:check
 ```
 
-To run linting and formatting validation before committing:
+### Add or update a platform parser
 
-```bash
-npm run lint && npm run format:check && npm test
-```
+Platform parsers live in `content/parsers`. If an AI chat interface changes its DOM or you want
+to add support for a new platform:
 
----
+1. Copy an existing parser as a starting point and add it to the parsers registry in `content/main.js`.
+2. Add a DOM fixture under `tests/fixtures/` and a matching `tests/<platform>-parser.test.mjs`.
+3. Run `npm test && npm run lint && npm run format:check` before committing.
 
 ## Project Structure
 
-Here is an overview of the key folders and files inside the repository:
-
 ```
-├── background/          # Background service worker
-├── content/             # Content scripts & platform parsers
-│   ├── parsers/         # 15+ platform-specific parsers
-│   ├── formatters/      # Markdown, JSON, HTML, Image, Doc formatters
-│   ├── utils/           # Parser & DOM helpers
-│   └── lib/             # Third-party libraries (Turndown, Prism, KaTeX)
-├── popup/               # Extension popup UI
-├── sidepanel/           # Browser side panel UI (Chromium)
-├── options/             # Extension preferences page UI
-├── schemas/             # JSON export schemas (v1)
-├── tests/               # Node test suite
-├── docs/                # Web landing page & extension welcome/privacy docs
-├── manifest.json        # Web Extension manifest (v3)
-├── build.sh             # Main build script launcher
-├── build.py             # Target bundler script (Chromium / Firefox)
-└── build.js             # JavaScript build runner
+├── entrypoints/          # WXT entry points (background, content script, popup, sidepanel)
+├── content/              # Content-script logic
+│   ├── parsers/          # Platform-specific AI chat parsers
+│   ├── formatters/       # Markdown, JSON, HTML, Image, Doc formatters
+│   ├── utils/            # Parser & DOM helpers
+│   └── lib/              # Third-party libraries (Turndown, Prism, KaTeX)
+├── popup/                # Extension popup UI
+├── sidepanel/            # Browser side panel UI (Chromium)
+├── options/              # Extension preferences page UI
+├── schemas/              # JSON export schemas (v1)
+├── tests/                # Node test suite + DOM fixtures
+├── public/               # Static assets copied into the build
+├── wxt.config.ts         # WXT extension configuration
+└── web/                  # Marketing site source (Astro, deploys to docs/)
 ```
 
-For general information about the extension, installation, and usage, see [README.md](./README.md). For contribution guidelines and licensing terms, see [CONTRIBUTING.md](./CONTRIBUTING.md).
+For general information about the extension, installation, and usage, see [README.md](./README.md).
+For contribution guidelines and licensing terms, see [CONTRIBUTING.md](./CONTRIBUTING.md).
