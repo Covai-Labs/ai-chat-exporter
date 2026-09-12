@@ -15,7 +15,7 @@
 [![Firefox Users](https://img.shields.io/amo/users/ai-chat-export?logo=firefox-browser&logoColor=white&label=Firefox%20Users&color=orange)](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/)
 [![GitHub Stars](https://img.shields.io/github/stars/Covai-Labs/ai-chat-exporter?logo=github&logoColor=white&color=yellow&label=Stars)](https://github.com/Covai-Labs/ai-chat-exporter/stargazers)
 
-[Quick Install](#quick-install) • [Supported Platforms](#supported-platforms) • [Features](#key-features)
+[Quick Install](#quick-install) • [Supported Platforms](#supported-platforms) • [Features](#key-features) • [Chat Continuation](#cross-model-chat-continuation)
 
 ---
 
@@ -37,16 +37,16 @@ Most AI exporters and extensions send your chat history or API calls to third-pa
 - **Zero Telemetry / Zero Tracking:** No analytics, no trackers, no external logging, and no remote dependencies.
 - **Your Data Remains Yours:** Chat threads, custom instructions, and exported files never leave your machine.
 
-**Verifiable by design.** The extension requests only the permissions it strictly needs — no broad host access, no remote code execution:
+**Verifiable by design.** The extension runs 100% client-side with zero remote code execution:
 
-| Permission         | Why it's needed                                                                    |
-| :----------------- | :--------------------------------------------------------------------------------- |
-| `activeTab`        | Read the current tab's DOM to extract the conversation                             |
-| `storage`          | Persist your local preferences (theme, format defaults)                            |
-| `sidePanel`        | Power the Chromium side panel UI                                                   |
-| `host_permissions` | Scoped exactly to the supported AI platform domains listed above — no `<all_urls>` |
+| Permission                        | Why it's needed                                                                       |
+| :-------------------------------- | :------------------------------------------------------------------------------------ |
+| `activeTab` / `tabs`              | Read the active conversation and coordinate continuation tabs                         |
+| `storage`                         | Persist local preferences (theme, format defaults)                                    |
+| `sidePanel`                       | Power the Chromium side panel UI                                                      |
+| `host_permissions` (`<all_urls>`) | Extract web articles and detect embedded chat frames (e.g., Copilot in Microsoft 365) |
 
-No background analytics endpoints. No external network fetches. Audit it yourself: [`manifest.json`](manifest.json).
+Zero external analytics endpoints. Zero remote dependencies. Zero outbound network fetches. Audit it yourself: [`wxt.config.ts`](wxt.config.ts).
 
 ---
 
@@ -101,18 +101,6 @@ AI Chat Exporter extracts full conversation threads from all major AI chat platf
 
 > **Continuation Targets:** Seamless prompt injection is supported for general-purpose chat models (ChatGPT, Claude, Gemini, DeepSeek, Proton Lumo, Perplexity, Qwen, Mistral) and PKM note-taking apps (**Obsidian**, **Logseq**, **Bear**, **NotePlan**, **Drafts**). Platforms requiring character selection (Joyland, Chub AI) or workspace setup (NotebookLM) are supported for clean export only.
 
-### Which tool should I install?
-
-AI Chat Exporter and [Decant](https://github.com/Covai-Labs/decant) share an extraction engine ([decant-core](https://github.com/Covai-Labs/decant-core)) but solve different jobs:
-
-| Your goal                                                                                               | Use                  |
-| :------------------------------------------------------------------------------------------------------ | :------------------- |
-| Export, back up, or **continue a conversation** between AI platforms                                    | **AI Chat Exporter** |
-| Trim generic AI search overviews (and single pages) into Markdown                                       | **AI Chat Exporter** |
-| **Clip arbitrary web pages** — batch whole tabs into a research ZIP, or hand one page to your PKM vault | **Decant**           |
-
-As a convenience, AI Chat Exporter's single-page export walks any web article through the same local pipeline — handy for saving one page next to a chat. For serious web clipping — multi-tab batches, frontmatter-driven note hand-off, and reading view — use **Decant**.
-
 ---
 
 ## Cross-Model Chat Continuation
@@ -166,6 +154,18 @@ Gemini   ──►  [ Export + Inject ]  ──►  DeepSeek  (or any supported 
 5. Select `manifest.json` inside the extracted folder.
 
 </details>
+
+### Choosing Between AI Chat Exporter and Decant
+
+AI Chat Exporter and [Decant](https://github.com/Covai-Labs/decant) share an extraction engine ([decant-core](https://github.com/Covai-Labs/decant-core)) but solve different jobs:
+
+| Your goal                                                                                               | Use                  |
+| :------------------------------------------------------------------------------------------------------ | :------------------- |
+| Export, back up, or **continue a conversation** between AI platforms                                    | **AI Chat Exporter** |
+| Trim generic AI search overviews (and single pages) into Markdown                                       | **AI Chat Exporter** |
+| **Clip arbitrary web pages** — batch whole tabs into a research ZIP, or hand one page to your PKM vault | **Decant**           |
+
+As a convenience, AI Chat Exporter's single-page export walks any web article through the same local pipeline — handy for saving one page next to a chat. For serious web clipping — multi-tab batches, frontmatter-driven note hand-off, and reading view — use **Decant**.
 
 ---
 
