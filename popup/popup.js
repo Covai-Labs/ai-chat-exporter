@@ -509,8 +509,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             includeImages: includeImagesCheckbox ? includeImagesCheckbox.checked : true,
           });
 
+          const formatCode = format === 'markdown' ? 'md' : format;
           await chrome.tabs.create({
-            url: chrome.runtime.getURL('popup/preview.html'),
+            url:
+              chrome.runtime.getURL('popup/preview.html') +
+              `?export_format=${encodeURIComponent(formatCode)}`,
           });
 
           setStatus('ready', t('statusExportSuccess') || 'Export Successful!');
@@ -627,8 +630,12 @@ document.addEventListener('DOMContentLoaded', async () => {
           includeImages: includeImagesCheckbox ? includeImagesCheckbox.checked : true,
         });
 
+        const activeFormat = formatSelect ? formatSelect.value : 'markdown';
+        const formatCode = activeFormat === 'markdown' ? 'md' : activeFormat;
         await chrome.tabs.create({
-          url: chrome.runtime.getURL('popup/preview.html'),
+          url:
+            chrome.runtime.getURL('popup/preview.html') +
+            `?export_format=${encodeURIComponent(formatCode)}`,
         });
 
         setStatus('ready', t('statusOpenedInTab') || 'Opened in New Tab!');

@@ -255,7 +255,56 @@ document.addEventListener('DOMContentLoaded', async () => {
     downloadBtn.innerHTML = `${svgIcon} ${label}`;
   };
 
+  const mapTabToFormatParam = (tabName) => {
+    switch (tabName) {
+      case 'markdown':
+        return 'md';
+      case 'json':
+        return 'json';
+      case 'html-render':
+        return 'html';
+      case 'html-source':
+        return 'source';
+      case 'doc':
+        return 'doc';
+      case 'png':
+        return 'png';
+      default:
+        return null;
+    }
+  };
+
+  const mapFormatParamToTab = (param) => {
+    if (!param) return null;
+    const p = String(param).trim().toLowerCase();
+    if (p === 'md' || p === 'markdown') return 'markdown';
+    if (p === 'json') return 'json';
+    if (p === 'html' || p === 'live' || p === 'html-render') return 'html-render';
+    if (p === 'source' || p === 'html-source') return 'html-source';
+    if (p === 'doc' || p === 'word') return 'doc';
+    if (p === 'png' || p === 'image') return 'png';
+    return null;
+  };
+
+  const syncUrlFormat = (tabName) => {
+    const code = mapTabToFormatParam(tabName);
+    if (!code || typeof window === 'undefined' || !window.location) return;
+    try {
+      const url = new URL(window.location.href);
+      if (url.searchParams.get('export_format') !== code) {
+        url.searchParams.set('export_format', code);
+        if (url.searchParams.has('format')) {
+          url.searchParams.delete('format');
+        }
+        window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+      }
+    } catch {
+      // Ignore URL sync errors
+    }
+  };
+
   const switchTab = (tabName) => {
+    syncUrlFormat(tabName);
     const buttons = formatTabsContainer.querySelectorAll('.control-btn');
     buttons.forEach((btn) => {
       if (btn.getAttribute('data-tab') === tabName) {
@@ -395,6 +444,19 @@ document.addEventListener('DOMContentLoaded', async () => {
       initialTab = 'png';
     } else if (initialFormat === 'html' || initialFormat === 'pdf') {
       initialTab = 'html-render';
+    }
+
+    try {
+      if (typeof window !== 'undefined' && window.location && window.location.search) {
+        const searchParams = new URLSearchParams(window.location.search);
+        const urlFormat = searchParams.get('export_format') || searchParams.get('format');
+        const mappedUrlTab = mapFormatParamToTab(urlFormat);
+        if (mappedUrlTab) {
+          initialTab = mappedUrlTab;
+        }
+      }
+    } catch {
+      // Fall back to storage initialFormat
     }
 
     if (autoPrint && (initialFormat === 'pdf' || initialFormat === 'html')) {

@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chat Export Preview</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
+    <link rel="shortcut icon" href="/icons/favicon.ico" />
     <link rel="stylesheet" href="preview.css" />
   </head>
   <body>
@@ -182,17 +185,8 @@
       <main class="preview-main">
         <aside id="turn-selector-drawer" class="turn-selector-drawer hidden">
           <div class="drawer-header">
-            <h3 data-i18n="turnSelectorTitle">Select Messages</h3>
-            <div class="drawer-actions">
-              <button id="turn-select-all-btn" class="drawer-btn" data-i18n="selectAll">
-                Select All
-              </button>
-              <button id="turn-deselect-all-btn" class="drawer-btn" data-i18n="deselectAll">
-                Deselect All
-              </button>
-              <button id="turn-done-btn" class="drawer-btn drawer-btn-primary" data-i18n="done">
-                Done
-              </button>
+            <div class="drawer-header-top">
+              <h3 data-i18n="turnSelectorTitle">Select Messages</h3>
               <button
                 id="turn-drawer-close-btn"
                 class="drawer-close-btn"
@@ -200,6 +194,21 @@
                 data-i18n-title="closeSelector"
               >
                 &times;
+              </button>
+            </div>
+            <div class="drawer-actions">
+              <button id="turn-select-all-btn" class="drawer-btn" data-i18n="selectAll">All</button>
+              <button id="turn-select-prompts-btn" class="drawer-btn" data-i18n="selectPrompts">
+                Prompts
+              </button>
+              <button id="turn-select-responses-btn" class="drawer-btn" data-i18n="selectResponses">
+                Responses
+              </button>
+              <button id="turn-deselect-all-btn" class="drawer-btn" data-i18n="deselectAll">
+                None
+              </button>
+              <button id="turn-done-btn" class="drawer-btn drawer-btn-primary" data-i18n="done">
+                Done
               </button>
             </div>
           </div>
