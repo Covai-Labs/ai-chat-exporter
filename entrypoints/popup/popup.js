@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   applyI18n();
 
   const statusEl = document.getElementById('status');
+  const reparseBtn = document.getElementById('reparse-btn');
   const chatInfoEl = document.getElementById('chat-info');
   const actionsEl = document.getElementById('actions');
   const errorEl = document.getElementById('error-msg');
@@ -53,6 +54,41 @@ document.addEventListener('DOMContentLoaded', async () => {
   const previewableFormats = new Set(['markdown', 'json', 'html', 'doc', 'png', 'pdf']);
   const copyableFormats = new Set(['markdown', 'json', 'html']);
 
+  function setStatus(state, message) {
+    if (!statusEl) return;
+    statusEl.className = `status status-${state}`;
+    let textNode = statusEl.querySelector('.status-text');
+    let indicator = statusEl.querySelector('.status-indicator');
+    if (!indicator || !textNode) {
+      statusEl.innerHTML = `<span class="status-indicator ${state}"></span><span class="status-text"></span>`;
+      textNode = statusEl.querySelector('.status-text');
+    }
+    if (textNode) {
+      textNode.textContent = message;
+    } else {
+      statusEl.textContent = message;
+    }
+  }
+
+  let sessionPort = null;
+  function establishSession(targetTabId) {
+    if (sessionPort) {
+      try {
+        sessionPort.disconnect();
+      } catch {
+        // Ignore
+      }
+      sessionPort = null;
+    }
+    if (typeof chrome !== 'undefined' && chrome.tabs?.connect && targetTabId) {
+      try {
+        sessionPort = chrome.tabs.connect(targetTabId, { name: 'popup-tab-session' });
+      } catch {
+        // Ignore
+      }
+    }
+  }
+
   const openOptionsBtn = document.getElementById('open-options-btn');
   if (openOptionsBtn) {
     openOptionsBtn.addEventListener('click', () => {
@@ -60,6 +96,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         chrome.runtime.openOptionsPage();
       } else {
         chrome.tabs.create({ url: chrome.runtime.getURL('options.html') });
+      }
+    });
+  }
+
+  if (reparseBtn) {
+    reparseBtn.addEventListener('click', async () => {
+      if (reparseBtn.disabled) return;
+      reparseBtn.classList.add('spin');
+      reparseBtn.disabled = true;
+      try {
+        await checkAvailability({ force: true });
+      } finally {
+        reparseBtn.classList.remove('spin');
+        reparseBtn.disabled = false;
       }
     });
   }
@@ -157,7 +207,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (!tab) {
     logger.warn('No active tab found');
-    statusEl.textContent = 'Error: No active tab';
+    setStatus('error', 'Error: No active tab');
     return;
   }
 
@@ -186,25 +236,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     return score;
   }
 
-  async function discoverBestFrame(tabId) {
+  async function discoverBestFrame(tabId, options = {}) {
     return new Promise((resolve) => {
       const reports = [];
       const queryId = `${Date.now()}_${Math.random()}`;
-
-      const listener = (msg, sender) => {
-        if (msg?.action === 'FRAME_REPORT' && msg?.queryId === queryId && msg.data) {
-          const fid =
-            typeof sender.frameId === 'number' ? sender.frameId : msg.data.isTopFrame ? 0 : null;
-          reports.push({
-            ...msg.data,
-            frameId: fid,
-          });
-        }
-      };
-
-      if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
-        chrome.runtime.onMessage.addListener(listener);
-      }
 
       let resolved = false;
       const finish = () => {
@@ -221,27 +256,78 @@ document.addEventListener('DOMContentLoaded', async () => {
         resolve(reports[0]);
       };
 
-      chrome.tabs.sendMessage(tabId, { action: 'DISCOVER_FRAMES', queryId }).catch(() => {});
-      setTimeout(finish, 200);
+      const listener = (msg, sender) => {
+        if (msg?.action === 'FRAME_REPORT' && msg?.queryId === queryId && msg.data) {
+          const fid =
+            typeof sender.frameId === 'number' ? sender.frameId : msg.data.isTopFrame ? 0 : null;
+          reports.push({
+            ...msg.data,
+            frameId: fid,
+          });
+
+          if (msg.data.platform) {
+            setStatus(
+              'scanning',
+              `${t('statusScanning') || 'Scanning messages...'} (${msg.data.platform})`,
+            );
+          }
+        }
+      };
+
+      if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
+        chrome.runtime.onMessage.addListener(listener);
+      }
+
+      chrome.tabs
+        .sendMessage(tabId, {
+          action: 'DISCOVER_FRAMES',
+          queryId,
+          force: Boolean(options.force),
+          parserMode: storedSettings.parserMode || 'auto',
+        })
+        .catch(() => {});
+
+      setTimeout(finish, 350);
     });
   }
 
   const MAX_RETRIES = 3;
   const RETRY_DELAY_MS = 500;
+  let availabilityCheckSeq = 0;
 
-  async function checkAvailability() {
+  async function checkAvailability(options = {}) {
+    const currentSeq = ++availabilityCheckSeq;
+    const isForce = Boolean(options.force);
     tab = await getActiveTab();
-    logger.debug('checkAvailability() starting for tab:', tab?.id, tab?.url);
+    if (currentSeq !== availabilityCheckSeq) return;
+    logger.debug('checkAvailability() starting for tab:', tab?.id, tab?.url, { isForce });
     if (!tab || !tab.id) {
       logger.warn('Tab or Tab ID invalid');
-      statusEl.textContent = 'Error: No active tab';
+      setStatus('error', 'Error: No active tab');
       showError();
       return;
     }
+
+    establishSession(tab.id);
+
+    if (isForce) {
+      setStatus('scanning', t('statusScanning') || 'Scanning messages...');
+    } else {
+      setStatus('connecting', t('statusConnecting') || 'Connecting...');
+    }
+
     for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+      if (currentSeq !== availabilityCheckSeq) return;
       try {
+        if (!isForce && attempt === 0) {
+          setStatus('connecting', t('statusConnecting') || 'Connecting...');
+        } else {
+          setStatus('detecting', t('statusDetecting') || 'Detecting...');
+        }
+
         logger.debug(`Attempt ${attempt + 1}/${MAX_RETRIES}: Discovering frames in tab ${tab.id}`);
-        let bestReport = await discoverBestFrame(tab.id);
+        let bestReport = await discoverBestFrame(tab.id, options);
+        if (currentSeq !== availabilityCheckSeq) return;
         let response = null;
 
         if (bestReport && bestReport.available) {
@@ -249,8 +335,11 @@ document.addEventListener('DOMContentLoaded', async () => {
           response = bestReport;
         } else if (!bestReport) {
           logger.debug('No DISCOVER_FRAMES reports, falling back to CHECK_AVAILABILITY');
+          setStatus('scanning', t('statusScanning') || 'Scanning messages...');
           response = await chrome.tabs.sendMessage(tab.id, {
             action: 'CHECK_AVAILABILITY',
+            force: isForce,
+            parserMode: storedSettings.parserMode || 'auto',
           });
           activeTargetFrameId = null;
         }
@@ -260,7 +349,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           logger.info(
             `Successfully connected to platform: ${response.platform} with ${response.count} messages (frameId: ${activeTargetFrameId})`,
           );
-          statusEl.textContent = `${t('statusReady') || 'Ready'}: ${response.platform}`;
+          setStatus('ready', `${t('statusReady') || 'Ready'}: ${response.platform}`);
           const platformName = response.platform || 'AI';
           const displayTitle = resolveConversationTitle(response.title, platformName, {
             title: tab.title,
@@ -371,7 +460,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function showError() {
-    statusEl.textContent = t('statusError') || 'Not Supported';
+    setStatus('error', t('statusError') || 'Not Supported');
     errorEl.classList.remove('hidden');
     if (copilotRedirectBox) {
       const isCopilotMs = Boolean(tab?.url && tab.url.includes('copilot.microsoft.com'));
@@ -420,14 +509,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             includeImages: includeImagesCheckbox ? includeImagesCheckbox.checked : true,
           });
 
+          const formatCode = format === 'markdown' ? 'md' : format;
           await chrome.tabs.create({
-            url: chrome.runtime.getURL('preview.html'),
+            url:
+              chrome.runtime.getURL('preview.html') +
+              `?export_format=${encodeURIComponent(formatCode)}`,
           });
 
-          statusEl.textContent = t('statusExportSuccess') || 'Export Successful!';
+          setStatus('ready', t('statusExportSuccess') || 'Export Successful!');
         } else {
-          statusEl.textContent =
-            (t('statusError') || 'Export Failed') + ': ' + (response?.error || 'Unknown');
+          setStatus(
+            'error',
+            (t('statusError') || 'Export Failed') + ': ' + (response?.error || 'Unknown'),
+          );
         }
       } else {
         const response = await sendTabMessage({
@@ -441,14 +535,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         if (response && response.success) {
-          statusEl.textContent = t('statusExportSuccess') || 'Export Successful!';
+          setStatus('ready', t('statusExportSuccess') || 'Export Successful!');
         } else {
-          statusEl.textContent =
-            (t('statusError') || 'Export Failed') + ': ' + (response?.error || 'Unknown');
+          setStatus(
+            'error',
+            (t('statusError') || 'Export Failed') + ': ' + (response?.error || 'Unknown'),
+          );
         }
       }
     } catch (e) {
-      statusEl.textContent = 'Error: ' + e.message;
+      setStatus('error', 'Error: ' + e.message);
     } finally {
       exportBtn.disabled = false;
       updateCopyButtonVisibility();
@@ -459,6 +555,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const format = formatSelect.value;
     copyBtn.disabled = true;
     copyBtn.textContent = t('statusExporting') || 'Copying...';
+    setStatus('exporting', t('statusExporting') || 'Copying...');
 
     try {
       const response = await sendTabMessage({
@@ -491,12 +588,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
           await navigator.clipboard.writeText(response.content);
         }
-        statusEl.textContent = t('statusCopied') || 'Copied to clipboard!';
+        setStatus('ready', t('statusCopied') || 'Copied to clipboard!');
       } else {
-        statusEl.textContent = 'Copy Failed: ' + (response?.error || 'Unknown');
+        setStatus('error', 'Copy Failed: ' + (response?.error || 'Unknown'));
       }
     } catch (e) {
-      statusEl.textContent = 'Error: ' + e.message;
+      setStatus('error', 'Error: ' + e.message);
     } finally {
       copyBtn.disabled = false;
       copyBtn.textContent = t('copyChat') || '📋 Copy Chat';
@@ -507,6 +604,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const format = formatSelect.value;
     previewBtn.disabled = true;
     previewBtn.textContent = t('loadingContent') || 'Opening...';
+    setStatus('exporting', t('loadingContent') || 'Opening...');
 
     try {
       const formatToRequest = format === 'pdf' ? 'html' : format === 'png' ? 'markdown' : format;
@@ -532,16 +630,20 @@ document.addEventListener('DOMContentLoaded', async () => {
           includeImages: includeImagesCheckbox ? includeImagesCheckbox.checked : true,
         });
 
+        const activeFormat = formatSelect ? formatSelect.value : 'markdown';
+        const formatCode = activeFormat === 'markdown' ? 'md' : activeFormat;
         await chrome.tabs.create({
-          url: chrome.runtime.getURL('preview.html'),
+          url:
+            chrome.runtime.getURL('preview.html') +
+            `?export_format=${encodeURIComponent(formatCode)}`,
         });
 
-        statusEl.textContent = t('statusOpenedInTab') || 'Opened in New Tab!';
+        setStatus('ready', t('statusOpenedInTab') || 'Opened in New Tab!');
       } else {
-        statusEl.textContent = 'Preview Failed: ' + (response?.error || 'Unknown');
+        setStatus('error', 'Preview Failed: ' + (response?.error || 'Unknown'));
       }
     } catch (e) {
-      statusEl.textContent = 'Error: ' + e.message;
+      setStatus('error', 'Error: ' + e.message);
     } finally {
       previewBtn.disabled = false;
       previewBtn.textContent = t('openInTab') || '👁️ Open in Tab';
@@ -555,6 +657,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const targetPlatform = continueTargetSelect ? continueTargetSelect.value : 'chatgpt';
       transferBtn.disabled = true;
       transferBtn.textContent = t('statusExporting') || 'Transferring...';
+      setStatus('exporting', t('statusExporting') || 'Transferring...');
 
       try {
         const response = await sendTabMessage({
@@ -569,12 +672,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             title: filenameInput ? filenameInput.value : 'AI Conversation',
             payload: response.payload,
           });
-          statusEl.textContent = `Opening ${targetPlatform}...`;
+          setStatus('ready', `Opening ${targetPlatform}...`);
         } else {
-          statusEl.textContent = 'Transfer Failed: ' + (response?.error || 'No content');
+          setStatus('error', 'Transfer Failed: ' + (response?.error || 'No content'));
         }
       } catch (e) {
-        statusEl.textContent = 'Error: ' + e.message;
+        setStatus('error', 'Error: ' + e.message);
       } finally {
         transferBtn.disabled = false;
         transferBtn.textContent = t('transferBtn') || '↗ Transfer';

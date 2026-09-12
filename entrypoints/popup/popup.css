@@ -310,6 +310,27 @@ header {
   flex-shrink: 0;
 }
 
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.75);
+  }
+}
+
+@keyframes spin-btn {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .status {
   font-size: 11px;
   font-weight: 600;
@@ -321,10 +342,11 @@ header {
   align-items: center;
   gap: 5px;
   border: 1px solid rgba(16, 185, 129, 0.25);
-  max-width: calc(100% - 36px);
+  max-width: calc(100% - 76px);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: all 0.2s ease;
 }
 
 .status::before {
@@ -333,6 +355,51 @@ header {
   width: 6px;
   height: 6px;
   border-radius: 50%;
+  background-color: var(--status-color);
+  box-shadow: 0 0 6px var(--status-color);
+  flex-shrink: 0;
+}
+
+.status-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status.status-detecting,
+.status.status-connecting,
+.status.status-scanning {
+  color: #f59e0b;
+  background-color: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.status.status-detecting::before,
+.status.status-connecting::before,
+.status.status-scanning::before {
+  background-color: #f59e0b;
+  box-shadow: 0 0 6px #f59e0b;
+  animation: pulse-dot 1.2s ease-in-out infinite;
+}
+
+.status.status-error {
+  color: #ef4444;
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.status.status-error::before {
+  background-color: #ef4444;
+  box-shadow: 0 0 6px #ef4444;
+}
+
+.status.status-ready {
+  color: var(--status-color);
+  background-color: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.status.status-ready::before {
   background-color: var(--status-color);
   box-shadow: 0 0 6px var(--status-color);
 }
@@ -352,6 +419,12 @@ header {
 .sidepanel-icon-btn:hover {
   background-color: var(--secondary-hover);
   border-color: var(--accent-color);
+}
+
+.sidepanel-icon-btn.spin {
+  animation: spin-btn 0.75s linear infinite;
+  pointer-events: none;
+  opacity: 0.8;
 }
 
 .chat-info {

@@ -11,6 +11,32 @@
     "message": "Rilevamento in corso...",
     "description": "Status shown while detecting chat"
   },
+  "statusConnecting": {
+    "message": "Connessione in corso...",
+    "description": "Status shown while connecting to tab"
+  },
+  "statusScanning": {
+    "message": "Scansione messaggi in corso...",
+    "description": "Status shown while scanning conversation messages"
+  },
+  "reparseChat": {
+    "message": "Rianalizza chat",
+    "description": "Tooltip and label for reparse button"
+  },
+  "toastChatReady": {
+    "message": "⚡ Chat $PLATFORM$ pronta per l'esportazione ($COUNT$ messaggi)",
+    "description": "Toast message shown on page when chat is ready for export",
+    "placeholders": {
+      "platform": {
+        "content": "$1",
+        "example": "ChatGPT"
+      },
+      "count": {
+        "content": "$2",
+        "example": "12"
+      }
+    }
+  },
   "statusReady": {
     "message": "Pronto",
     "description": "Status shown when chat is detected"

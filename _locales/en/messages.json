@@ -11,6 +11,32 @@
     "message": "Detecting...",
     "description": "Status shown while detecting chat"
   },
+  "statusConnecting": {
+    "message": "Connecting...",
+    "description": "Status shown while connecting to tab"
+  },
+  "statusScanning": {
+    "message": "Scanning messages...",
+    "description": "Status shown while scanning conversation messages"
+  },
+  "reparseChat": {
+    "message": "Reparse Chat",
+    "description": "Tooltip and label for reparse button"
+  },
+  "toastChatReady": {
+    "message": "⚡ $PLATFORM$ chat ready to export ($COUNT$ messages)",
+    "description": "Toast message shown on page when chat is ready for export",
+    "placeholders": {
+      "platform": {
+        "content": "$1",
+        "example": "ChatGPT"
+      },
+      "count": {
+        "content": "$2",
+        "example": "12"
+      }
+    }
+  },
   "statusReady": {
     "message": "Ready",
     "description": "Status shown when chat is detected"
@@ -388,11 +414,19 @@
     "description": "Title of message selector drawer"
   },
   "selectAll": {
-    "message": "Select All",
+    "message": "All",
     "description": "Select all button in turn selector"
   },
+  "selectPrompts": {
+    "message": "Prompts",
+    "description": "Select only user prompt turns"
+  },
+  "selectResponses": {
+    "message": "Responses",
+    "description": "Select only assistant response turns"
+  },
   "deselectAll": {
-    "message": "Deselect All",
+    "message": "None",
     "description": "Deselect all button in turn selector"
   },
   "done": {

@@ -345,6 +345,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const turnCountBadge = document.getElementById('turn-count-badge');
   const turnDrawer = document.getElementById('turn-selector-drawer');
   const turnSelectAllBtn = document.getElementById('turn-select-all-btn');
+  const turnSelectPromptsBtn = document.getElementById('turn-select-prompts-btn');
+  const turnSelectResponsesBtn = document.getElementById('turn-select-responses-btn');
   const turnDeselectAllBtn = document.getElementById('turn-deselect-all-btn');
   const turnCloseBtn = document.getElementById('turn-drawer-close-btn');
   const turnListContainer = document.getElementById('turn-list-container');
@@ -479,6 +481,32 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     });
   }
+  if (turnSelectPromptsBtn) {
+    turnSelectPromptsBtn.addEventListener('click', () => {
+      if (conversation?.messages) {
+        selectedIndices = new Set(
+          conversation.messages
+            .map((msg, idx) => (msg.role === 'User' ? idx : null))
+            .filter((idx) => idx !== null),
+        );
+        renderTurnList();
+        recalculateContent();
+      }
+    });
+  }
+  if (turnSelectResponsesBtn) {
+    turnSelectResponsesBtn.addEventListener('click', () => {
+      if (conversation?.messages) {
+        selectedIndices = new Set(
+          conversation.messages
+            .map((msg, idx) => (msg.role !== 'User' ? idx : null))
+            .filter((idx) => idx !== null),
+        );
+        renderTurnList();
+        recalculateContent();
+      }
+    });
+  }
   if (turnDeselectAllBtn) {
     turnDeselectAllBtn.addEventListener('click', () => {
       selectedIndices.clear();
@@ -562,8 +590,60 @@ document.addEventListener('DOMContentLoaded', async () => {
     downloadBtn.innerHTML = `${icon} ${label}`;
   };
 
+  const mapTabToFormatParam = (tabName) => {
+    switch (tabName) {
+      case 'markdown':
+        return 'md';
+      case 'json':
+        return 'json';
+      case 'html-render':
+        return 'html';
+      case 'html-source':
+        return 'source';
+      case 'doc':
+        return 'doc';
+      case 'png':
+        return 'png';
+      case 'pdf':
+        return 'pdf';
+      default:
+        return null;
+    }
+  };
+
+  const mapFormatParamToTab = (param) => {
+    if (!param) return null;
+    const p = String(param).trim().toLowerCase();
+    if (p === 'md' || p === 'markdown') return 'markdown';
+    if (p === 'json') return 'json';
+    if (p === 'html' || p === 'live' || p === 'html-render') return 'html-render';
+    if (p === 'source' || p === 'html-source') return 'html-source';
+    if (p === 'doc' || p === 'word') return 'doc';
+    if (p === 'png' || p === 'image') return 'png';
+    if (p === 'pdf') return 'pdf';
+    return null;
+  };
+
+  const syncUrlFormat = (tabName) => {
+    const code = mapTabToFormatParam(tabName);
+    if (!code || typeof window === 'undefined' || !window.location) return;
+    try {
+      const url = new URL(window.location.href);
+      if (url.searchParams.get('export_format') !== code || url.searchParams.has('format')) {
+        url.searchParams.set('export_format', code);
+        if (url.searchParams.has('format')) {
+          url.searchParams.delete('format');
+        }
+        window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+      }
+    } catch {
+      // Ignore URL sync errors in restricted environments or tests
+    }
+  };
+
   const switchTab = (tabName) => {
     currentActiveTab = tabName;
+    syncUrlFormat(tabName);
     const buttons = formatTabsContainer.querySelectorAll('.control-btn');
     buttons.forEach((btn) => {
       if (btn.getAttribute('data-tab') === tabName) {
@@ -775,6 +855,19 @@ document.addEventListener('DOMContentLoaded', async () => {
       initialTab = 'pdf';
     } else if (initialFormat === 'html') {
       initialTab = 'html-render';
+    }
+
+    try {
+      if (typeof window !== 'undefined' && window.location && window.location.search) {
+        const searchParams = new URLSearchParams(window.location.search);
+        const urlFormat = searchParams.get('export_format') || searchParams.get('format');
+        const mappedUrlTab = mapFormatParamToTab(urlFormat);
+        if (mappedUrlTab) {
+          initialTab = mappedUrlTab;
+        }
+      }
+    } catch {
+      // Fall back to storage initialFormat
     }
 
     if (autoPrint && (initialFormat === 'pdf' || initialFormat === 'html')) {

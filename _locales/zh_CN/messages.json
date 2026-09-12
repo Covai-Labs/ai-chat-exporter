@@ -11,6 +11,32 @@
     "message": "正在检测...",
     "description": "Status shown while detecting chat"
   },
+  "statusConnecting": {
+    "message": "连接中...",
+    "description": "Status shown while connecting to tab"
+  },
+  "statusScanning": {
+    "message": "正在扫描消息...",
+    "description": "Status shown while scanning conversation messages"
+  },
+  "reparseChat": {
+    "message": "重新解析对话",
+    "description": "Tooltip and label for reparse button"
+  },
+  "toastChatReady": {
+    "message": "⚡ $PLATFORM$ 对话已准备好导出（$COUNT$ 条消息）",
+    "description": "Toast message shown on page when chat is ready for export",
+    "placeholders": {
+      "platform": {
+        "content": "$1",
+        "example": "ChatGPT"
+      },
+      "count": {
+        "content": "$2",
+        "example": "12"
+      }
+    }
+  },
   "statusReady": {
     "message": "就绪",
     "description": "Status shown when chat is detected"
