@@ -6,6 +6,7 @@ const previewHtml = fs.readFileSync('entrypoints/preview/index.html', 'utf8');
 const previewJs = fs.readFileSync('entrypoints/preview/preview.js', 'utf8');
 const previewCss = fs.readFileSync('entrypoints/preview/preview.css', 'utf8');
 const popupPreviewHtml = fs.readFileSync('popup/preview.html', 'utf8');
+const popupPreviewJs = fs.readFileSync('popup/preview.js', 'utf8');
 const popupPreviewCss = fs.readFileSync('popup/preview.css', 'utf8');
 const messagesJson = JSON.parse(fs.readFileSync('_locales/en/messages.json', 'utf8'));
 
@@ -57,4 +58,12 @@ test('preview script parses URL export_format parameter and synchronizes on tab 
   assert.match(previewJs, /syncUrlFormat/);
   assert.match(previewJs, /searchParams\.get\(['"]export_format['"]\)/);
   assert.match(previewJs, /history\.replaceState/);
+});
+
+test('popup preview script parses URL export_format parameter and synchronizes on tab switch', () => {
+  assert.match(popupPreviewJs, /mapTabToFormatParam/);
+  assert.match(popupPreviewJs, /mapFormatParamToTab/);
+  assert.match(popupPreviewJs, /syncUrlFormat/);
+  assert.match(popupPreviewJs, /searchParams\.get\(['"]export_format['"]\)/);
+  assert.match(popupPreviewJs, /history\.replaceState/);
 });

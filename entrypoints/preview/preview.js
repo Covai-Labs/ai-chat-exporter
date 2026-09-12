@@ -629,7 +629,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!code || typeof window === 'undefined' || !window.location) return;
     try {
       const url = new URL(window.location.href);
-      if (url.searchParams.get('export_format') !== code) {
+      if (url.searchParams.get('export_format') !== code || url.searchParams.has('format')) {
         url.searchParams.set('export_format', code);
         if (url.searchParams.has('format')) {
           url.searchParams.delete('format');

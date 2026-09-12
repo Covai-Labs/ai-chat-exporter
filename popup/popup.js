@@ -271,11 +271,6 @@ document.addEventListener('DOMContentLoaded', async () => {
               `${t('statusScanning') || 'Scanning messages...'} (${msg.data.platform})`,
             );
           }
-
-          // Fast resolution if dedicated AI report found
-          if (msg.data.available && msg.data.isDedicatedAi && msg.data.count > 0) {
-            finish();
-          }
         }
       };
 
@@ -298,10 +293,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const MAX_RETRIES = 3;
   const RETRY_DELAY_MS = 500;
+  let availabilityCheckSeq = 0;
 
   async function checkAvailability(options = {}) {
+    const currentSeq = ++availabilityCheckSeq;
     const isForce = Boolean(options.force);
     tab = await getActiveTab();
+    if (currentSeq !== availabilityCheckSeq) return;
     logger.debug('checkAvailability() starting for tab:', tab?.id, tab?.url, { isForce });
     if (!tab || !tab.id) {
       logger.warn('Tab or Tab ID invalid');
@@ -319,6 +317,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+      if (currentSeq !== availabilityCheckSeq) return;
       try {
         if (!isForce && attempt === 0) {
           setStatus('connecting', t('statusConnecting') || 'Connecting...');
@@ -328,6 +327,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         logger.debug(`Attempt ${attempt + 1}/${MAX_RETRIES}: Discovering frames in tab ${tab.id}`);
         let bestReport = await discoverBestFrame(tab.id, options);
+        if (currentSeq !== availabilityCheckSeq) return;
         let response = null;
 
         if (bestReport && bestReport.available) {

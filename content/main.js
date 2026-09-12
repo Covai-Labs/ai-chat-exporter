@@ -236,38 +236,53 @@ function setupDomObserver() {
   }
   if (domObserver) return;
 
+  function isToastNode(node) {
+    if (!node) return false;
+    if (node.nodeType === 1) {
+      return (
+        node.id === 'ai-chat-exporter-toast' || Boolean(node.closest?.('#ai-chat-exporter-toast'))
+      );
+    }
+    return Boolean(node.parentElement?.closest?.('#ai-chat-exporter-toast'));
+  }
+
   domObserver = new MutationObserver((mutations) => {
-    let hasAddedNodes = false;
+    let hasRelevantMutation = false;
     for (const m of mutations) {
-      if (m.addedNodes && m.addedNodes.length > 0) {
-        for (let i = 0; i < m.addedNodes.length; i++) {
-          const node = m.addedNodes[i];
-          if (
-            node.nodeType === 1 &&
-            node.id !== 'ai-chat-exporter-toast' &&
-            !node.closest?.('#ai-chat-exporter-toast')
-          ) {
-            hasAddedNodes = true;
+      if (m.type === 'characterData') {
+        if (!isToastNode(m.target)) {
+          hasRelevantMutation = true;
+          break;
+        }
+      } else if (m.type === 'childList') {
+        const nodes = [...(m.addedNodes || []), ...(m.removedNodes || [])];
+        for (const node of nodes) {
+          if (!isToastNode(node)) {
+            hasRelevantMutation = true;
             break;
           }
         }
-        if (hasAddedNodes) break;
+        if (hasRelevantMutation) break;
       }
     }
 
-    if (hasAddedNodes) {
+    if (hasRelevantMutation) {
+      if (parseCache) {
+        parseCache.dirty = true;
+      }
       clearTimeout(mutationDebounceTimer);
       mutationDebounceTimer = setTimeout(() => {
-        if (parseCache) {
-          logger.debug('Chat DOM mutation detected, marking parse cache dirty');
-          parseCache.dirty = true;
-        }
+        logger.debug('Chat DOM mutation detected and debounced');
       }, 600);
     }
   });
 
   try {
-    domObserver.observe(document.body, { childList: true, subtree: true });
+    domObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
   } catch (e) {
     logger.debug('DOM MutationObserver registration failed:', e);
   }
@@ -355,7 +370,10 @@ if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
 
             const elapsed = Date.now() - startTime;
             if (!isPopupOpen && currentFrameIsTop && count > 0 && elapsed > 250) {
-              showExporterToast(`⚡ ${platformName} chat ready to export (${count} messages)`);
+              const toastMsg =
+                chrome.i18n?.getMessage('toastChatReady', [platformName, String(count)]) ||
+                `⚡ ${platformName} chat ready to export (${count} messages)`;
+              showExporterToast(toastMsg);
             }
           } catch (e) {
             logger.error('Discover frames parse error:', e);
@@ -450,7 +468,10 @@ if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
 
             const elapsed = Date.now() - startTime;
             if (!isPopupOpen && currentFrameIsTop && count > 0 && elapsed > 250) {
-              showExporterToast(`⚡ ${platformName} chat ready to export (${count} messages)`);
+              const toastMsg =
+                chrome.i18n?.getMessage('toastChatReady', [platformName, String(count)]) ||
+                `⚡ ${platformName} chat ready to export (${count} messages)`;
+              showExporterToast(toastMsg);
             }
           } catch (e) {
             logger.error('Check availability parse threw error:', e);
