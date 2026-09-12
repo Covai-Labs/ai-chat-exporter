@@ -176,6 +176,80 @@ export default defineContentScript({
       }
     }
 
+    const PARSE_CACHE_TTL_MS = 90 * 1000;
+    let parseCache = null;
+    let isPopupOpen = false;
+    let domObserver = null;
+    let mutationDebounceTimer = null;
+
+    if (typeof chrome !== 'undefined' && chrome.runtime?.onConnect) {
+      chrome.runtime.onConnect.addListener((port) => {
+        if (port && port.name === 'popup-tab-session') {
+          isPopupOpen = true;
+          port.onDisconnect.addListener(() => {
+            isPopupOpen = false;
+          });
+        }
+      });
+    }
+
+    function isCacheValid(requestedMode) {
+      if (!parseCache || parseCache.dirty || !parseCache.report) return false;
+      if (parseCache.url !== window.location.href) return false;
+      if (requestedMode && parseCache.parserMode && parseCache.parserMode !== requestedMode) {
+        return false;
+      }
+      const age = Date.now() - parseCache.timestamp;
+      return age < PARSE_CACHE_TTL_MS;
+    }
+
+    function setupDomObserver() {
+      if (
+        typeof MutationObserver === 'undefined' ||
+        typeof document === 'undefined' ||
+        !document.body
+      ) {
+        return;
+      }
+      if (domObserver) return;
+
+      domObserver = new MutationObserver((mutations) => {
+        let hasAddedNodes = false;
+        for (const m of mutations) {
+          if (m.addedNodes && m.addedNodes.length > 0) {
+            for (let i = 0; i < m.addedNodes.length; i++) {
+              const node = m.addedNodes[i];
+              if (
+                node.nodeType === 1 &&
+                node.id !== 'ai-chat-exporter-toast' &&
+                !node.closest?.('#ai-chat-exporter-toast')
+              ) {
+                hasAddedNodes = true;
+                break;
+              }
+            }
+            if (hasAddedNodes) break;
+          }
+        }
+
+        if (hasAddedNodes) {
+          clearTimeout(mutationDebounceTimer);
+          mutationDebounceTimer = setTimeout(() => {
+            if (parseCache) {
+              logger.debug('Chat DOM mutation detected, marking parse cache dirty');
+              parseCache.dirty = true;
+            }
+          }, 600);
+        }
+      });
+
+      try {
+        domObserver.observe(document.body, { childList: true, subtree: true });
+      } catch (e) {
+        logger.debug('DOM MutationObserver registration failed:', e);
+      }
+    }
+
     if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
       chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         const currentFrameIsTop = typeof window === 'undefined' || window.self === window.top;
@@ -183,13 +257,42 @@ export default defineContentScript({
           `Message received: action=${request.action} on frame=${currentFrameIsTop ? 'TOP' : 'IFRAME'}`,
         );
 
+        if (request.action === 'CLEAR_CACHE') {
+          parseCache = null;
+          sendResponse({ success: true });
+          return true;
+        }
+
+        if (request.action === 'SHOW_TOAST') {
+          showExporterToast(request.message, request.toastType || 'success');
+          sendResponse({ success: true });
+          return true;
+        }
+
         if (request.action === 'DISCOVER_FRAMES') {
           detectParser();
+          setupDomObserver();
           const queryId = request.queryId;
+          const isForce = Boolean(request.force);
+          const parserMode = request.parserMode || 'auto';
+
           if (activeParser) {
             (async () => {
               try {
-                const conversation = enrichConversation(await activeParser.parse({ full: false }));
+                if (!isForce && isCacheValid(parserMode)) {
+                  logger.debug('DISCOVER_FRAMES returning cached report');
+                  chrome.runtime.sendMessage({
+                    action: 'FRAME_REPORT',
+                    queryId,
+                    data: parseCache.report,
+                  });
+                  return;
+                }
+
+                const startTime = Date.now();
+                const conversation = enrichConversation(
+                  await activeParser.parse({ full: false, parserMode }),
+                );
                 const count = conversation?.messages?.length || 0;
                 if (!currentFrameIsTop && count === 0) {
                   return;
@@ -202,18 +305,34 @@ export default defineContentScript({
                     ? activeParser.getPlatformName()
                     : activeParser.name || activeParser.constructor.name.replace('Parser', '');
 
+                const reportData = {
+                  available: true,
+                  platform: platformName,
+                  isDedicatedAi,
+                  count,
+                  title: conversation?.title || '',
+                  isTopFrame: currentFrameIsTop,
+                };
+
+                parseCache = {
+                  url: window.location.href,
+                  timestamp: Date.now(),
+                  parserMode,
+                  report: reportData,
+                  conversation,
+                  dirty: false,
+                };
+
                 chrome.runtime.sendMessage({
                   action: 'FRAME_REPORT',
                   queryId,
-                  data: {
-                    available: true,
-                    platform: platformName,
-                    isDedicatedAi,
-                    count,
-                    title: conversation?.title || '',
-                    isTopFrame: currentFrameIsTop,
-                  },
+                  data: reportData,
                 });
+
+                const elapsed = Date.now() - startTime;
+                if (!isPopupOpen && currentFrameIsTop && count > 0 && elapsed > 250) {
+                  showExporterToast(`⚡ ${platformName} chat ready to export (${count} messages)`);
+                }
               } catch (e) {
                 logger.error('Discover frames parse error:', e);
                 if (currentFrameIsTop) {
@@ -252,15 +371,29 @@ export default defineContentScript({
 
         if (request.action === 'CHECK_AVAILABILITY') {
           detectParser();
+          setupDomObserver();
+          const isForce = Boolean(request.force);
+          const parserMode = request.parserMode || 'auto';
+
           if (activeParser) {
             (async () => {
               try {
-                logger.debug('Executing activeParser.parse({ full: false })...');
-                const conversation = enrichConversation(await activeParser.parse({ full: false }));
-                logger.debug(
-                  `Availability check parsed ${conversation.messages.length} messages, title: "${conversation.title || ''}"`,
+                if (!isForce && isCacheValid(parserMode)) {
+                  logger.debug('CHECK_AVAILABILITY returning cached report');
+                  sendResponse(parseCache.report);
+                  return;
+                }
+
+                const startTime = Date.now();
+                logger.debug('Executing activeParser.parse({ full: false, parserMode })...');
+                const conversation = enrichConversation(
+                  await activeParser.parse({ full: false, parserMode }),
                 );
-                if (!currentFrameIsTop && conversation.messages.length === 0) {
+                const count = conversation?.messages?.length || 0;
+                logger.debug(
+                  `Availability check parsed ${count} messages, title: "${conversation?.title || ''}"`,
+                );
+                if (!currentFrameIsTop && count === 0) {
                   logger.debug('Subframe has 0 messages, ignoring subframe response');
                   return;
                 }
@@ -271,11 +404,30 @@ export default defineContentScript({
                 const responseData = {
                   available: true,
                   platform: platformName,
-                  count: conversation.messages.length,
-                  title: conversation.title || '',
+                  count,
+                  title: conversation?.title || '',
+                  isDedicatedAi:
+                    activeParser.name !== 'WebArticle' &&
+                    activeParser.constructor?.name !== 'ArticleParser',
+                  isTopFrame: currentFrameIsTop,
                 };
+
+                parseCache = {
+                  url: window.location.href,
+                  timestamp: Date.now(),
+                  parserMode,
+                  report: responseData,
+                  conversation,
+                  dirty: false,
+                };
+
                 logger.debug('Sending CHECK_AVAILABILITY response:', responseData);
                 sendResponse(responseData);
+
+                const elapsed = Date.now() - startTime;
+                if (!isPopupOpen && currentFrameIsTop && count > 0 && elapsed > 250) {
+                  showExporterToast(`⚡ ${platformName} chat ready to export (${count} messages)`);
+                }
               } catch (e) {
                 logger.error('Check availability parse threw error:', e);
                 if (currentFrameIsTop) {

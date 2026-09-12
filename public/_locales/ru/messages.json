@@ -11,6 +11,32 @@
     "message": "Поиск чата...",
     "description": "Status shown while detecting chat"
   },
+  "statusConnecting": {
+    "message": "Подключение...",
+    "description": "Status shown while connecting to tab"
+  },
+  "statusScanning": {
+    "message": "Сканирование сообщений...",
+    "description": "Status shown while scanning conversation messages"
+  },
+  "reparseChat": {
+    "message": "Переанализировать чат",
+    "description": "Tooltip and label for reparse button"
+  },
+  "toastChatReady": {
+    "message": "⚡ Чат $PLATFORM$ готов к экспорту ($COUNT$ сообщений)",
+    "description": "Toast message shown on page when chat is ready for export",
+    "placeholders": {
+      "platform": {
+        "content": "$1",
+        "example": "ChatGPT"
+      },
+      "count": {
+        "content": "$2",
+        "example": "12"
+      }
+    }
+  },
   "statusReady": {
     "message": "Готово",
     "description": "Status shown when chat is detected"

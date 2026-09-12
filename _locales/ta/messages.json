@@ -11,6 +11,32 @@
     "message": "கண்டறிகிறது...",
     "description": "Status shown while detecting chat"
   },
+  "statusConnecting": {
+    "message": "இணைக்கப்படுகிறது...",
+    "description": "Status shown while connecting to tab"
+  },
+  "statusScanning": {
+    "message": "செய்திகள் ஸ்கேன் செய்யப்படுகின்றன...",
+    "description": "Status shown while scanning conversation messages"
+  },
+  "reparseChat": {
+    "message": "அரட்டையை மீண்டும் பாகுபடுத்து",
+    "description": "Tooltip and label for reparse button"
+  },
+  "toastChatReady": {
+    "message": "⚡ $PLATFORM$ அரட்டை ஏற்றுமதிக்கு தயார் ($COUNT$ செய்திகள்)",
+    "description": "Toast message shown on page when chat is ready for export",
+    "placeholders": {
+      "platform": {
+        "content": "$1",
+        "example": "ChatGPT"
+      },
+      "count": {
+        "content": "$2",
+        "example": "12"
+      }
+    }
+  },
   "statusReady": {
     "message": "தயார்",
     "description": "Status shown when chat is detected"

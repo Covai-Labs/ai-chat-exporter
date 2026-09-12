@@ -11,6 +11,32 @@
     "message": "पहचान जारी है...",
     "description": "Status shown while detecting chat"
   },
+  "statusConnecting": {
+    "message": "कनेक्ट हो रहा है...",
+    "description": "Status shown while connecting to tab"
+  },
+  "statusScanning": {
+    "message": "संदेश स्कैन किए जा रहे हैं...",
+    "description": "Status shown while scanning conversation messages"
+  },
+  "reparseChat": {
+    "message": "चैट पुन: पार्स करें",
+    "description": "Tooltip and label for reparse button"
+  },
+  "toastChatReady": {
+    "message": "⚡ $PLATFORM$ चैट निर्यात के लिए तैयार ($COUNT$ संदेश)",
+    "description": "Toast message shown on page when chat is ready for export",
+    "placeholders": {
+      "platform": {
+        "content": "$1",
+        "example": "ChatGPT"
+      },
+      "count": {
+        "content": "$2",
+        "example": "12"
+      }
+    }
+  },
   "statusReady": {
     "message": "तैयार",
     "description": "Status shown when chat is detected"

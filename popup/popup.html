@@ -8,8 +8,21 @@
     <div class="container">
       <header>
         <div class="header-row">
-          <div id="status" class="status" data-i18n="statusDetecting">Detecting...</div>
+          <div id="status" class="status">
+            <span class="status-indicator detecting"></span>
+            <span class="status-text" data-i18n="statusDetecting">Detecting...</span>
+          </div>
           <div class="header-actions">
+            <button
+              id="reparse-btn"
+              class="sidepanel-icon-btn"
+              title="Reparse Chat"
+              aria-label="Reparse Chat"
+              data-i18n-title="reparseChat"
+              data-i18n-aria-label="reparseChat"
+            >
+              ↻
+            </button>
             <button
               id="open-options-btn"
               class="sidepanel-icon-btn"

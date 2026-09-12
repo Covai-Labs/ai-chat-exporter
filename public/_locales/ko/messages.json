@@ -11,6 +11,32 @@
     "message": "대화 감지 중...",
     "description": "Status shown while detecting chat"
   },
+  "statusConnecting": {
+    "message": "연결 중...",
+    "description": "Status shown while connecting to tab"
+  },
+  "statusScanning": {
+    "message": "메시지 검사 중...",
+    "description": "Status shown while scanning conversation messages"
+  },
+  "reparseChat": {
+    "message": "채팅 다시 파싱",
+    "description": "Tooltip and label for reparse button"
+  },
+  "toastChatReady": {
+    "message": "⚡ $PLATFORM$ 채팅 내보내기 준비 완료 ($COUNT$개 메시지)",
+    "description": "Toast message shown on page when chat is ready for export",
+    "placeholders": {
+      "platform": {
+        "content": "$1",
+        "example": "ChatGPT"
+      },
+      "count": {
+        "content": "$2",
+        "example": "12"
+      }
+    }
+  },
   "statusReady": {
     "message": "준비 완료",
     "description": "Status shown when chat is detected"
