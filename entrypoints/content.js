@@ -32,6 +32,7 @@ import {
 } from '../content/utils/filename.js';
 import { stripImages } from '../content/utils/strip-images.js';
 import { createLogger } from '../content/utils/logger.js';
+import { getAttributionSetting } from '../content/utils/preferences.js';
 
 const logger = createLogger('ContentScript');
 
@@ -517,6 +518,7 @@ export default defineContentScript({
               const options = {
                 highQuality: request.highQualityPng !== false,
                 theme: request.theme,
+                includeAttribution: await getAttributionSetting(),
               };
               const formattedResult = await formatter.format(conversation, options);
               const mimeType = formatter.getMimeType();
@@ -617,7 +619,10 @@ export default defineContentScript({
                 });
               }
               logger.debug('Parsed conversation with', conversation.messages.length, 'messages');
-              const formatOptions = request.theme ? { theme: request.theme } : {};
+              const formatOptions = {
+                theme: request.theme,
+                includeAttribution: await getAttributionSetting(),
+              };
               const primaryContent = formatter.format(conversation, formatOptions);
               const htmlFormatter = formatters.html;
               const richHtmlContent = htmlFormatter
@@ -724,7 +729,9 @@ export default defineContentScript({
               }
 
               const formatter = formatters.markdown;
-              const markdownContent = formatter.format(conversation);
+              const markdownContent = formatter.format(conversation, {
+                includeAttribution: await getAttributionSetting(),
+              });
 
               if (shortcut === 'copy_markdown') {
                 const copied = await copyToClipboard(markdownContent);

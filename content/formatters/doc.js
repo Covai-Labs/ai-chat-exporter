@@ -1,8 +1,8 @@
-import { ExportFormatter } from './base.js';
+import { ExportFormatter, shouldIncludeAttribution } from './base.js';
 import { markdownToHtml, escapeHtml } from './html.js';
 
 export class DocFormatter extends ExportFormatter {
-  format(conversation) {
+  format(conversation, options = {}) {
     const { title, messages } = conversation;
     const now = new Date();
     const formattedDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.toLocaleTimeString('en-US', { hour12: false })}`;
@@ -13,9 +13,11 @@ export class DocFormatter extends ExportFormatter {
     const method = conversation.metadata?.Method || '';
 
     const metaParts = [`Exported from ${escapeHtml(platform)}`, formattedDate];
-    metaParts.push(
-      '<a href="https://ai-chat-exporter.covai.org/" style="color: #64748b;">AI Chat Exporter</a>',
-    );
+    if (shouldIncludeAttribution(options)) {
+      metaParts.push(
+        '<a href="https://ai-chat-exporter.covai.org/" style="color: #64748b;">AI Chat Exporter</a>',
+      );
+    }
     if (link) {
       metaParts.push(`<a href="${escapeHtml(link)}" style="color: #64748b;">Original Link</a>`);
     }

@@ -1,4 +1,4 @@
-import { ExportFormatter } from './base.js';
+import { ExportFormatter, shouldIncludeAttribution } from './base.js';
 
 function cleanLatexMath(latex) {
   if (!latex || typeof latex !== 'string') return '';
@@ -96,14 +96,16 @@ export function extractBase64ImagesToReference(
 }
 
 export class MarkdownFormatter extends ExportFormatter {
-  format(conversation) {
+  format(conversation, options = {}) {
     const { title, messages } = conversation;
     const now = new Date();
     const formattedDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.toLocaleTimeString('en-US', { hour12: false })}`;
 
     let output = `# ${title || 'AI Chat Export'}\n\n`;
 
-    output += `**Exported with:** [AI Chat Exporter](https://ai-chat-exporter.covai.org)  \n`;
+    if (shouldIncludeAttribution(options)) {
+      output += `**Exported with:** [AI Chat Exporter](https://ai-chat-exporter.covai.org)  \n`;
+    }
 
     const metadata = conversation.metadata || {};
     const platform = metadata.Source || 'AI';

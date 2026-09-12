@@ -227,6 +227,10 @@
     "message": "내보낼 때 기본적으로 이미지 포함",
     "description": "Label for default include images checkbox"
   },
+  "includeAttributionDefault": {
+    "message": "내보내기에 \"Exported with AI Chat Exporter\" 크레딧 포함",
+    "description": "Label for default include attribution credit checkbox"
+  },
   "parserModeTitle": {
     "message": "파서 추출 모드",
     "description": "Title for parser mode section"

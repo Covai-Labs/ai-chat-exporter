@@ -1,3 +1,13 @@
+/**
+ * Determines whether attribution should be included based on formatter options.
+ * Attribution is included by default and only omitted when explicitly disabled.
+ * @param {{ includeAttribution?: boolean }} [options]
+ * @returns {boolean}
+ */
+export function shouldIncludeAttribution(options = {}) {
+  return options.includeAttribution !== false;
+}
+
 export class ExportFormatter {
   constructor() {}
 

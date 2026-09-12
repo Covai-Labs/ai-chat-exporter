@@ -93,9 +93,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   const transferTargetSelect = document.getElementById('transfer-target-select');
 
   let currentSyncTheme = 'system';
+  let includeAttribution = true;
   try {
-    const syncData = await chrome.storage.sync.get('theme');
+    const syncData = await chrome.storage.sync.get(['theme', 'includeAttribution']);
     currentSyncTheme = syncData.theme || 'system';
+    if (syncData.includeAttribution !== undefined) {
+      includeAttribution = syncData.includeAttribution;
+    }
     applyTheme(currentSyncTheme, document);
   } catch {
     // Ignore theme loading errors when running standalone
@@ -440,10 +444,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     htmlContent = htmlFormatter.format(activeConv, {
       theme: currentSyncTheme,
       includeToc: shouldIncludeToc,
+      includeAttribution,
     });
-    markdownContent = markdownFormatter.format(activeConv);
+    markdownContent = markdownFormatter.format(activeConv, { includeAttribution });
     jsonContent = jsonFormatter.format(activeConv);
-    docContent = docFormatter.format(activeConv);
+    docContent = docFormatter.format(activeConv, { includeAttribution });
 
     cachedPngBlob = null;
     switchTab(currentActiveTab);
@@ -828,10 +833,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         return msg;
       });
       const initialConv = { ...conversation, messages: initialMessages };
-      htmlContent = htmlFormatter.format(initialConv, { theme: currentSyncTheme });
-      markdownContent = markdownFormatter.format(initialConv);
+      htmlContent = htmlFormatter.format(initialConv, {
+        theme: currentSyncTheme,
+        includeAttribution,
+      });
+      markdownContent = markdownFormatter.format(initialConv, { includeAttribution });
       jsonContent = jsonFormatter.format(initialConv);
-      docContent = docFormatter.format(initialConv);
+      docContent = docFormatter.format(initialConv, { includeAttribution });
     } else {
       const fallbackContent = data.previewContent || '';
       htmlContent = sanitizeHtml(fallbackContent);
@@ -1024,6 +1032,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               highQuality: isHighQuality,
               includeImages,
               theme: activeTheme,
+              includeAttribution,
             });
           }
           cachedPngBlob = pngBlob;

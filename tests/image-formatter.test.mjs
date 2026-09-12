@@ -87,6 +87,32 @@ test('ImageFormatter creates styled screenshot container with conversation conte
   assert.ok(html.includes('.code-card'));
 });
 
+test('ImageFormatter.createScreenshotContainer omits footer watermark when includeAttribution is false', async () => {
+  const { ImageFormatter } = await importFormatter();
+  const formatter = new ImageFormatter();
+
+  if (typeof globalThis.document === 'undefined') {
+    const { document, window } = parseHTML('<!DOCTYPE html><html><body></body></html>');
+    globalThis.document = document;
+    globalThis.window = window;
+  }
+
+  const conversation = {
+    title: 'No Watermark Test',
+    messages: [{ role: 'User', content: 'Hello AI!' }],
+    metadata: { Source: 'ChatGPT' },
+  };
+
+  const container = formatter.createScreenshotContainer(conversation, {
+    includeAttribution: false,
+  });
+
+  const html = container.innerHTML;
+  assert.ok(!html.includes('Exported with'));
+  assert.ok(!html.includes('AI Chat Exporter'));
+  assert.ok(!html.includes('https://ai-chat-exporter.covai.org'));
+});
+
 test('ImageFormatter.preloadImages sanitizes cross-origin images to prevent canvas taint', async () => {
   const { ImageFormatter } = await importFormatter();
   const formatter = new ImageFormatter();

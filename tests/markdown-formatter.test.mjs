@@ -33,6 +33,25 @@ test('MarkdownFormatter includes top site link, platform source, hyperlinked URL
   assert.ok(output.includes('**Method:** API'));
 });
 
+test('MarkdownFormatter omits Exported with credit when includeAttribution is false', () => {
+  const formatter = new MarkdownFormatter();
+
+  const conversation = {
+    title: 'No Credit Test',
+    messages: [{ role: 'User', content: 'Hello' }],
+    metadata: {
+      Source: 'Claude',
+      Date: '8/6/2026 12:00:00',
+    },
+  };
+
+  const output = formatter.format(conversation, { includeAttribution: false });
+
+  assert.ok(!output.includes('**Exported with:**'));
+  assert.ok(output.includes('**Source:** Claude'));
+  assert.ok(output.includes('**Date:** 8/6/2026 12:00:00'));
+});
+
 test('MarkdownFormatter omits Model and Link when missing', () => {
   const formatter = new MarkdownFormatter();
 

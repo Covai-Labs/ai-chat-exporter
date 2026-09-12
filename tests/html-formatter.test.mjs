@@ -187,6 +187,25 @@ test('HTML formatter renders task list checkboxes, collapsible thinking blocks, 
   );
 });
 
+test('HTML formatter omits export footer when includeAttribution is false', async () => {
+  const { HtmlFormatter } = await importFormatter();
+  const formatter = new HtmlFormatter();
+
+  const conversation = {
+    title: 'No Footer Test',
+    messages: [{ role: 'User', content: 'Hello' }],
+    metadata: { Source: 'Claude' },
+  };
+
+  const withFooter = formatter.format(conversation);
+  assert.ok(withFooter.includes('<footer class="export-footer">'));
+
+  const withoutFooter = formatter.format(conversation, { includeAttribution: false });
+  assert.ok(!withoutFooter.includes('<footer class="export-footer">'));
+  assert.ok(!withoutFooter.includes('href="https://ai-chat-exporter.covai.org/"'));
+  assert.ok(withoutFooter.includes('<title>No Footer Test</title>'));
+});
+
 test('HTML formatter formats LaTeX math equations with bracket and dollar delimiters', async () => {
   const { HtmlFormatter } = await importFormatter();
   const formatter = new HtmlFormatter();

@@ -46,6 +46,24 @@ test('DocFormatter returns correct file extension (.doc) and MIME type (applicat
   assert.equal(formatter.getMimeType(), 'application/msword');
 });
 
+test('DocFormatter omits AI Chat Exporter credit when includeAttribution is false', async () => {
+  const { DocFormatter } = await importFormatter();
+  const formatter = new DocFormatter();
+
+  const conversation = {
+    title: 'No Credit Test',
+    messages: [{ role: 'User', content: 'Hello' }],
+    metadata: { Source: 'Claude' },
+  };
+
+  const withCredit = formatter.format(conversation);
+  assert.ok(withCredit.includes('https://ai-chat-exporter.covai.org'));
+
+  const withoutCredit = formatter.format(conversation, { includeAttribution: false });
+  assert.ok(!withoutCredit.includes('https://ai-chat-exporter.covai.org'));
+  assert.ok(withoutCredit.includes('Exported from Claude'));
+});
+
 test('DocFormatter generates Word-compliant HTML document with MSO XML headers', async () => {
   const { DocFormatter } = await importFormatter();
   const formatter = new DocFormatter();

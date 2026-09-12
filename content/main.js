@@ -32,6 +32,7 @@ import {
   DEFAULT_FILENAME_TEMPLATE,
 } from './utils/filename.js';
 import { createLogger } from './utils/logger.js';
+import { getAttributionSetting } from './utils/preferences.js';
 
 const logger = createLogger('ContentScript');
 
@@ -533,6 +534,7 @@ if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
           const options = {
             highQuality: request.highQualityPng !== false,
             theme: request.theme,
+            includeAttribution: await getAttributionSetting(),
           };
           const formattedResult = await formatter.format(conversation, options);
           const mimeType = formatter.getMimeType();
@@ -625,7 +627,10 @@ if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
             });
           }
           console.log('Parsed conversation with', conversation.messages.length, 'messages');
-          const formatOptions = request.theme ? { theme: request.theme } : {};
+          const formatOptions = {
+            theme: request.theme,
+            includeAttribution: await getAttributionSetting(),
+          };
           const primaryContent = formatter.format(conversation, formatOptions);
           const htmlFormatter = formatters.html;
           const richHtmlContent = htmlFormatter
@@ -718,7 +723,9 @@ if (typeof chrome !== 'undefined' && chrome.runtime?.onMessage) {
           }
 
           const formatter = formatters.markdown;
-          const markdownContent = formatter.format(conversation);
+          const markdownContent = formatter.format(conversation, {
+            includeAttribution: await getAttributionSetting(),
+          });
 
           if (shortcut === 'copy_markdown') {
             const copied = await copyToClipboard(markdownContent);
