@@ -76,7 +76,7 @@ No background analytics endpoints. No external network fetches. Audit it yoursel
 
 ## Supported Platforms
 
-AI Chat Exporter extracts full conversation threads from all major AI chat platforms, AI search overviews, and web articles. Context continuation allows you to hand off conversations directly to leading LLMs and PKM note-taking apps.
+AI Chat Exporter extracts full conversation threads from all major AI chat platforms and AI search overviews. Context continuation lets you hand off conversations directly to leading LLMs and PKM note-taking apps.
 
 | Platform                                                      | Markdown | JSON | HTML / Doc / PNG |    Continuation Target     |
 | :------------------------------------------------------------ | :------: | :--: | :--------------: | :------------------------: |
@@ -97,9 +97,21 @@ AI Chat Exporter extracts full conversation threads from all major AI chat platf
 | **[Z.ai](https://z.ai)**                                      |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
 | **[Joyland](https://www.joyland.ai)**                         |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
 | **[Chub AI](https://chub.ai)**                                |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
-| **Generic Web Articles**                                      |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
+| **Generic Web Articles** _(single-page convenience)_          |    ✅    |  ✅  |        ✅        |     — _(Export only)_      |
 
 > **Continuation Targets:** Seamless prompt injection is supported for general-purpose chat models (ChatGPT, Claude, Gemini, DeepSeek, Proton Lumo, Perplexity, Qwen, Mistral) and PKM note-taking apps (**Obsidian**, **Logseq**, **Bear**, **NotePlan**, **Drafts**). Platforms requiring character selection (Joyland, Chub AI) or workspace setup (NotebookLM) are supported for clean export only.
+
+### Which tool should I install?
+
+AI Chat Exporter and [Decant](https://github.com/Covai-Labs/decant) share an extraction engine ([decant-core](https://github.com/Covai-Labs/decant-core)) but solve different jobs:
+
+| Your goal                                                                                               | Use                  |
+| :------------------------------------------------------------------------------------------------------ | :------------------- |
+| Export, back up, or **continue a conversation** between AI platforms                                    | **AI Chat Exporter** |
+| Trim generic AI search overviews (and single pages) into Markdown                                       | **AI Chat Exporter** |
+| **Clip arbitrary web pages** — batch whole tabs into a research ZIP, or hand one page to your PKM vault | **Decant**           |
+
+As a convenience, AI Chat Exporter's single-page export walks any web article through the same local pipeline — handy for saving one page next to a chat. For serious web clipping — multi-tab batches, frontmatter-driven note hand-off, and reading view — use **Decant**.
 
 ---
 
