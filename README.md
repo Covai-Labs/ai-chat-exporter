@@ -15,7 +15,7 @@
 [![Firefox Users](https://img.shields.io/amo/users/ai-chat-export?logo=firefox-browser&logoColor=white&label=Firefox%20Users&color=orange)](https://addons.mozilla.org/en-US/firefox/addon/ai-chat-export/)
 [![GitHub Stars](https://img.shields.io/github/stars/Covai-Labs/ai-chat-exporter?logo=github&logoColor=white&color=yellow&label=Stars)](https://github.com/Covai-Labs/ai-chat-exporter/stargazers)
 
-[Quick Install](#quick-install) • [Supported Platforms](#supported-platforms) • [Features](#key-features) • [Local Development](#local-development)
+[Quick Install](#quick-install) • [Supported Platforms](#supported-platforms) • [Features](#key-features)
 
 ---
 
@@ -169,41 +169,11 @@ Gemini   ──►  [ Export + Inject ]  ──►  DeepSeek  (or any supported 
 
 ---
 
-## Local Development
-
-Contributions are welcome! If an AI chat interface updates its DOM or you want to add support for a new platform, follow these steps:
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/Covai-Labs/ai-chat-exporter.git
-cd ai-chat-exporter
-
-# 2. Install dependencies
-npm install
-
-# 3. Start development mode with auto-reload
-npm run dev
-
-# 4. Build extension bundle for production
-npm run build          # Builds Chromium (Chrome/Edge/Brave) into .output/chrome-mv3
-npm run build:firefox  # Builds Firefox MV3 into .output/firefox-mv3
-
-# 5. Run automated test suite and linter
-npm test
-npm run lint
-npm run format:check
-```
-
-### Loading Unpacked Build
-
-- **Chromium:** Load the `.output/chrome-mv3` folder at `chrome://extensions/`.
-- **Firefox:** Load `.output/firefox-mv3/manifest.json` at `about:debugging#/runtime/this-firefox`.
-
-For complete architectural details, parser guidelines, and test harnesses, refer to the [Development Guide](DEVELOPMENT.md).
-
----
-
 ## Contributing
+
+Contributions are welcome! If an AI chat interface updates its DOM or you want to add support for
+a new platform, see the [Development Guide](DEVELOPMENT.md) for build steps, parser guidelines, and
+the test harness.
 
 Platform web layouts evolve frequently. If an exporter encounters issues on a modified layout:
 
