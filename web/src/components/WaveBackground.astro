@@ -32,14 +32,14 @@
     background-position: center top;
   }
 
-  html.dark .fixed-bg-grid {
+  :global(html.dark) .fixed-bg-grid {
     background-image:
       linear-gradient(to right, rgba(148, 163, 184, 0.075) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(148, 163, 184, 0.075) 1px, transparent 1px);
   }
 
   @media (prefers-color-scheme: dark) {
-    html:not(.light):not(.dark) .fixed-bg-grid {
+    :global(html:not(.light):not(.dark)) .fixed-bg-grid {
       background-image:
         linear-gradient(to right, rgba(148, 163, 184, 0.075) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(148, 163, 184, 0.075) 1px, transparent 1px);
@@ -102,6 +102,12 @@
       var height = 0;
       var time = 0;
       var animId = 0;
+      var reducedMotion = false;
+      try {
+        reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      } catch (e) {
+        /* ignore */
+      }
 
       function resize() {
         var dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -110,6 +116,7 @@
         canvas.width = Math.floor(width * dpr);
         canvas.height = Math.floor(height * dpr);
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        if (reducedMotion) drawFrame();
       }
 
       function drawFrame() {
@@ -141,9 +148,7 @@
         ctx.beginPath();
         for (var x2 = 0; x2 <= width; x2 += 2) {
           var y2 =
-            height / 2 +
-            Math.sin(x2 * 0.007 + time) * 26 +
-            Math.sin(x2 * 0.018 + time * 1.5) * 12;
+            height / 2 + Math.sin(x2 * 0.007 + time) * 26 + Math.sin(x2 * 0.018 + time * 1.5) * 12;
           if (x2 === 0) ctx.moveTo(x2, y2);
           else ctx.lineTo(x2, y2);
         }
@@ -160,20 +165,16 @@
 
       window.addEventListener('resize', resize);
       document.addEventListener('visibilitychange', function () {
-        if (!document.hidden && !animId) animate();
+        if (!reducedMotion && !document.hidden && !animId) animate();
       });
       document.addEventListener('astro:page-load', function () {
         resize();
       });
       resize();
 
-      try {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          drawFrame();
-          return;
-        }
-      } catch (e) {
-        /* ignore */
+      if (reducedMotion) {
+        drawFrame();
+        return;
       }
       animate();
     }
