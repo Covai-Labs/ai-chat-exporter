@@ -1,5 +1,6 @@
 ---
-// Shared document shell: head, meta, fonts, CSS, theme bootstrap, analytics.
+ // Shared document shell: head, meta, fonts, CSS, theme bootstrap, analytics.
+import WaveBackground from '../components/WaveBackground.astro';
 export interface SeoJsonLd {
   [key: string]: unknown;
   '@type'?: string;
@@ -117,6 +118,7 @@ const jsonLdArray = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     {includeAnalytics && <script defer src="https://covai.org/analytics.js"></script>}
   </head>
   <body>
+    <WaveBackground />
     <slot />
   </body>
 </html>
